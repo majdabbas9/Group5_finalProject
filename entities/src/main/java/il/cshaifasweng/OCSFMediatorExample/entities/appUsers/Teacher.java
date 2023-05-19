@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "students")
+@Table(name = "teachers")
 public class Teacher extends User implements Serializable {
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -50,5 +50,45 @@ public class Teacher extends User implements Serializable {
     }
     public Teacher() {
 
+    }
+
+    public List<Course> getTeacherCourses() {
+        return teacherCourses;
+    }
+
+    public void setTeacherCourses(List<Course> teacherCourses) {
+        this.teacherCourses = teacherCourses;
+    }
+
+    public List<Subject> getTeacherSubjects() {
+        return teacherSubjects;
+    }
+
+    public void setTeacherSubjects(List<Subject> teacherSubjects) {
+        this.teacherSubjects = teacherSubjects;
+    }
+
+    public List<Exam> getExams() {
+        return exams;
+    }
+
+    public void setExams(List<Exam> exams) {
+        this.exams = exams;
+    }
+
+    public List<ComputerizedExamToExecute> getExecutedExams() {
+        return executedExams;
+    }
+
+    public void setExecutedExams(List<ComputerizedExamToExecute> executedExams) {
+        this.executedExams = executedExams;
+    }
+
+    public List<Question> getQuestionsCreated() {
+        return questionsCreated;
+    }
+
+    public void setQuestionsCreated(List<Question> questionsCreated) {
+        this.questionsCreated = questionsCreated;
     }
 }

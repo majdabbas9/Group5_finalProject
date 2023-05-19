@@ -14,9 +14,41 @@ public class Copy {
     @JoinColumn(name = "grade_id")
     private Grade grade;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "compexamToExcute_id")
+    @JoinColumn(name = "compExam_ID")
     private ComputerizedExamToExecute compExamToExecute;
 
-    public Copy() {
+    public Copy(){}
+
+    public Copy(String answers,ComputerizedExamToExecute compExamToExecute)
+    {
+        this.answers=answers;
+        setCompExamToExecute(compExamToExecute);
+    }
+
+    public int getId() {
+        return id;
+    }
+    public String getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(String answers) {
+        this.answers = answers;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
+
+    public ComputerizedExamToExecute getCompExamToExecute() {
+        return compExamToExecute;
+    }
+
+    public void setCompExamToExecute(ComputerizedExamToExecute compExamToExecute) {
+        this.compExamToExecute = compExamToExecute;
     }
 }

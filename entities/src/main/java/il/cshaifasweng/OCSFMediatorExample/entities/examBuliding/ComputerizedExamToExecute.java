@@ -5,16 +5,17 @@ import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "exams")
+@Table(name = "compExams")
 public class ComputerizedExamToExecute implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int average;
+    private int examAverage;
     @ElementCollection
     private List<Integer> histogram;
     @Column(name = "inTime")
@@ -29,4 +30,79 @@ public class ComputerizedExamToExecute implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatExecuted;
+
+    public ComputerizedExamToExecute(Exam exam, Teacher teacherThatExecuted) {
+        this.examAverage = 0;
+        this.histogram = new ArrayList<>();
+        this.numberOfStudentDoneInTime = 0;
+        this.numberOfStudentNotDoneInTime = 0;
+        setExam(exam);
+        this.copies =new ArrayList<>();
+        setTeacherThatExecuted(teacherThatExecuted);
+    }
+
+    public ComputerizedExamToExecute() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    public int getExamAverage() {
+        return examAverage;
+    }
+
+    public void setExamAverage(int average) {
+        this.examAverage = average;
+    }
+
+    public List<Integer> getHistogram() {
+        return histogram;
+    }
+
+    public void setHistogram(List<Integer> histogram) {
+        this.histogram = histogram;
+    }
+
+    public int getNumberOfStudentDoneInTime() {
+        return numberOfStudentDoneInTime;
+    }
+
+    public void setNumberOfStudentDoneInTime(int numberOfStudentDoneInTime) {
+        this.numberOfStudentDoneInTime = numberOfStudentDoneInTime;
+    }
+
+    public int getNumberOfStudentNotDoneInTime() {
+        return numberOfStudentNotDoneInTime;
+    }
+
+    public void setNumberOfStudentNotDoneInTime(int numberOfStudentNotDoneInTime) {
+        this.numberOfStudentNotDoneInTime = numberOfStudentNotDoneInTime;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
+    public List<Copy> getCopies() {
+        return copies;
+    }
+
+    public void setCopies(List<Copy> copies) {
+        this.copies = copies;
+    }
+
+    public Teacher getTeacherThatExecuted() {
+        return teacherThatExecuted;
+    }
+
+    public void setTeacherThatExecuted(Teacher teacherThatExecuted) {
+        this.teacherThatExecuted = teacherThatExecuted;
+    }
 }

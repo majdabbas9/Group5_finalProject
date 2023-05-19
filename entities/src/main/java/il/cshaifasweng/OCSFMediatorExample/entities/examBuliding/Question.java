@@ -16,8 +16,8 @@ public class Question implements Serializable {
     private int id;
 
     private String teacherNotes;
-    private String studentNotes;
-    private String ID;
+    private String studentNotes; // this the content of the question
+    private String questionID;
     @ElementCollection
     private List<String> choices;
     private String correctChoice;
@@ -39,17 +39,31 @@ public class Question implements Serializable {
     )
     private List<Course> questionCourses;
 
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            targetEntity = Exam.class
+    )
+    @JoinTable(
+            name="questions_exams",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_id")
+    )
+    private List<Exam> questionExams;
+
+
     public Question() {
 
     }
-    public Question(String teacherNotes, String studentNotes, String ID,List<String> choices,String correctChoice,Subject questionSubject) {
+    public Question(String teacherNotes, String studentNotes, String questionID, List<String> choices, String correctChoice, Subject questionSubject, Teacher teacherThatCreated) {
         this.teacherNotes = teacherNotes;
         this.studentNotes = studentNotes;
-        this.ID = ID;
+        this.questionID = questionID;
         this.choices=choices;
         this.correctChoice = correctChoice;
         this.setQuestionSubject(questionSubject);
+        this.setTeacherThatCreated(teacherThatCreated);
         this.questionCourses=new ArrayList<>();
+        this.questionExams=new ArrayList<>();
     }
     public int getId() {
         return id;
@@ -70,12 +84,12 @@ public class Question implements Serializable {
         this.studentNotes = studentNotes;
     }
 
-    public String getID() {
-        return ID;
+    public String getQuestionID() {
+        return questionID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setQuestionID(String ID) {
+        this.questionID = ID;
     }
 
 
@@ -107,5 +121,21 @@ public class Question implements Serializable {
 
     public void setQuestionSubject(Subject questionSubject) {
         this.questionSubject = questionSubject;
+    }
+
+    public Teacher getTeacherThatCreated() {
+        return teacherThatCreated;
+    }
+
+    public void setTeacherThatCreated(Teacher teacherThatCreated) {
+        this.teacherThatCreated = teacherThatCreated;
+    }
+
+    public List<Exam> getQuestionExams() {
+        return questionExams;
+    }
+
+    public void setQuestionExams(List<Exam> questionExams) {
+        this.questionExams = questionExams;
     }
 }

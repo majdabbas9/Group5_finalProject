@@ -43,4 +43,27 @@ public class Student extends User implements  Serializable{
         super();
     }
 
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public List<Course> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(List<Course> studentCourses) {
+        this.studentCourses = studentCourses;
+    }
+
+    public List<Subject> getStudentSubjects() {
+        return studentSubjects;
+    }
+
+    public void setStudentSubjects(List<Subject> studentSubjects) {
+        this.studentSubjects = studentSubjects;
+    }
 }
