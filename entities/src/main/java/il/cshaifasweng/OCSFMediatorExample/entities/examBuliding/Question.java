@@ -1,4 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.examBuliding;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "questions")
-public class Question {
+public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -23,10 +24,13 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     private Subject questionSubject;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacherThatCreated;
 
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Question.class
+            targetEntity = Course.class
     )
     @JoinTable(
             name="questions_courses",

@@ -1,5 +1,15 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.Generating_Educational;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.Generating_Users;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.HibernateException;
@@ -8,14 +18,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+
 import java.io.IOException;
-import java.util.List;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.*;
-
-import java.io.IOException;
 
 import aidClasses.Warning;
 
@@ -32,9 +38,18 @@ public class SimpleServer extends AbstractServer {
 
 
 	private static SessionFactory getSessionFactory() throws HibernateException {
+
 		Configuration configuration = new Configuration();
-		configuration.addAnnotatedClass(Subject.class);
+		configuration.addAnnotatedClass(User.class);
+		configuration.addAnnotatedClass(Student.class);
+		configuration.addAnnotatedClass(Teacher.class);
 		configuration.addAnnotatedClass(Course.class);
+		configuration.addAnnotatedClass(Subject.class);
+		configuration.addAnnotatedClass(ComputerizedExamToExecute.class);
+		configuration.addAnnotatedClass(Exam.class);
+		configuration.addAnnotatedClass(Question.class);
+		configuration.addAnnotatedClass(Copy.class);
+		configuration.addAnnotatedClass(Grade.class);
 
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
@@ -49,7 +64,7 @@ public class SimpleServer extends AbstractServer {
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		Generating_Educational.genareteSubjectCourses(session);  // moving the students to the database
-		Generating_Educational.getCourse(session);
+		Generating_Users.generateUsers(session);
 		session.getTransaction().commit();
 		
 	}

@@ -1,12 +1,31 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.appUsers;
 
+import javax.persistence.*;
 import java.io.Serializable;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "users")
 public abstract class User implements  Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String userID;
     private String passWord;
     private String userName;
     private String firstName;
     private String lastName;
+    public User() {
+
+    }
+    public User(String userID, String passWord, String userName, String firstName, String lastName) {
+        this.userID = userID;
+        this.passWord = passWord;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+
 
     public String getUserID() {
         return userID;

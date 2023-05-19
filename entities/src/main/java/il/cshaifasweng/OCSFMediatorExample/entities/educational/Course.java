@@ -1,4 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.educational;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 
 import javax.persistence.*;
@@ -22,6 +24,16 @@ public class Course implements  Serializable{
             targetEntity = Question.class
     )
     private List<Question> courseQuestions;
+    @ManyToMany(mappedBy = "studentCourses",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            targetEntity = Student.class
+    )
+    private List<Student> courseStudents;
+    @ManyToMany(mappedBy = "teacherCourses",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            targetEntity = Teacher.class
+    )
+    private List<Teacher> courseTeachers;
     public Course() {
 
     }
@@ -29,6 +41,8 @@ public class Course implements  Serializable{
         this.courseName = courseName;
         setCourseSubject(subject);
         this.courseQuestions=new ArrayList<>();
+        this.courseStudents=new ArrayList<>();
+        this.courseTeachers=new ArrayList<>();
     }
 
     public int getId() {
