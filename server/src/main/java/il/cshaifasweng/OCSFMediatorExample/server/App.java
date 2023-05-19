@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import java.io.IOException;
+import aidClasses.Color;
 
 /**
  * Hello world!
@@ -14,5 +15,6 @@ public class App
     {
         server = new SimpleServer(3000);
         server.listen();
+        System.out.println(Color.RED_BOLD+"Server is listening"+Color.ANSI_RESET);
     }
 }
