@@ -49,6 +49,7 @@ public class SimpleServer extends AbstractServer {
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		Generating_Educational.genareteSubjectCourses(session);  // moving the students to the database
+		Generating_Educational.getCourse(session);
 		session.getTransaction().commit();
 		
 	}
