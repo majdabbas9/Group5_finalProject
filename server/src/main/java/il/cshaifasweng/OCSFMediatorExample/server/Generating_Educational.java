@@ -11,6 +11,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
@@ -54,5 +56,16 @@ public class Generating_Educational {
         query.from(Course.class);
         List<Course> data = session.createQuery(query).getResultList();
         return data;
+    }
+    public  static void getCourse(Session session)
+    {
+     Query query=session.createQuery("from Course where courseName='linear algebra 3'");
+     if(query.getResultList().size()==0)
+     {
+         System.out.println("none");
+         return;
+     }
+     List<Course> c=(List<Course>) query.getResultList();
+     System.out.println("\n");
     }
 }

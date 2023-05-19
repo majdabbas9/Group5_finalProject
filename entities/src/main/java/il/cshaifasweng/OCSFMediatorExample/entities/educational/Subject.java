@@ -1,4 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.educational;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,12 +16,15 @@ public class Subject implements  Serializable{
     private String subjectName;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseSubject")
     private List<Course> subjectCourses;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionSubject")
+    private List<Question> subjectQuestions;
     public Subject() {
 
     }
     public Subject(String subjectName) {
         this.subjectName = subjectName;
         this.subjectCourses=new ArrayList<>();
+        this.subjectQuestions=new ArrayList<>();
     }
     public int getId() {
         return id;
@@ -44,4 +49,11 @@ public class Subject implements  Serializable{
         this.subjectCourses.add(course);
     }
 
+    public List<Question> getSubjectQuestions() {
+        return subjectQuestions;
+    }
+
+    public void setSubjectQuestions(List<Question> subjectQuestions) {
+        this.subjectQuestions = subjectQuestions;
+    }
 }
