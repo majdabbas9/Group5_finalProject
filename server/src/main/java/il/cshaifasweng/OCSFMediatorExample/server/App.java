@@ -15,7 +15,7 @@ public class App
     {
         server = new SimpleServer(3020);
         server.listen();
-        System.out.println(Color.RED_BOLD+"Server is listening"+Color.ANSI_RESET);
+        System.out.println(Color.GREEN_BOLD+"Server is listening"+Color.ANSI_RESET);
     }
 
 }
