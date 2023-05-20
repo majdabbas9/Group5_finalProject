@@ -60,12 +60,12 @@ public class GenerateAll {
 
         global_subjects.add(math);global_subjects.add(cs);
 
-        Student student=new Student("33333","123","majd","majd","abbas");
-        Student student1=new Student("111","456","asfa","hdfhfh","jfjtj");
+        Student student=new Student("33333","1","1","majd","abbas");
+        Student student1=new Student("111","2","2","hdfhfh","jfjtj");
         session.save(student);
         session.save(student1);
         session.flush();
-        Teacher t1=new Teacher("33333","123","mohamed","mohamed","abbas");
+        Teacher t1=new Teacher("33333","teacher","teacher","mohamed","abbas");
         session.save(t1);
         session.flush();
 

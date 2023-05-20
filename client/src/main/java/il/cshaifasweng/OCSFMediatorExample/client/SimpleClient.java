@@ -1,12 +1,19 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import aidClasses.GlobalDataSaved;
+import aidClasses.Message;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import aidClasses.Warning;
 
+import javax.xml.crypto.Data;
+import java.io.IOException;
+
 public class SimpleClient extends AbstractClient {
-	
+
 	private static SimpleClient client = null;
 
 	private SimpleClient(String host, int port) {
@@ -16,16 +23,37 @@ public class SimpleClient extends AbstractClient {
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		if (msg.getClass().equals(Warning.class)) {
-			EventBus.getDefault().post(new WarningEvent((Warning) msg));
+			Warning warning=(Warning)msg;
+				EventBus.getDefault().post(new WarningEvent((Warning) msg));
+			}
+			if(msg.getClass().equals(Message.class)) {
+				try {
+					Message msgFromServer=(Message) msg;
+					String contentOfMsg=msgFromServer.getMsg();
+					if(contentOfMsg.equals("successful login")) {
+						User LogedInUser=(User) msgFromServer.getObj();
+						if(LogedInUser.getClass().equals(Student.class)) {
+							GlobalDataSaved.connectedUser=LogedInUser;
+							App.setRoot("studentHome");
+						}
+					}
+					if(contentOfMsg.equals("successful logout")) {
+						GlobalDataSaved.connectedUser=null;
+						App.setRoot("login");
+					}
+				}
+            catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+			}
+
 		}
 
-	}
-	
-	public static SimpleClient getClient() {
-		if (client == null) {
-			client = new SimpleClient("localhost", 3020);
+		public static SimpleClient getClient() {
+			if (client == null) {
+				client = new SimpleClient("localhost", 3020);
+			}
+			return client;
 		}
-		return client;
-	}
 
 }

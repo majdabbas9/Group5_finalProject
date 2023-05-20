@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
@@ -21,10 +22,13 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
+import java.util.List;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.*;
 
 import aidClasses.Warning;
+
+import javax.persistence.Query;
 
 public class SimpleServer extends AbstractServer {
 	private static Session session;
@@ -67,22 +71,105 @@ public class SimpleServer extends AbstractServer {
 		GenerateAll.generateEducational(session);  // moving the students to the database
 		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
-		
+
+	}
+	public void logout(User user)
+	{
+		session.beginTransaction();
+		user.setConnected(false);
+		session.update(user);
+		session.getTransaction().commit();
+	}
+	public void login(User user)
+	{
+		session.beginTransaction();
+		user.setConnected(true);
+		session.update(user);
+		session.getTransaction().commit();
 	}
 
 	@Override
-	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		String msgString = msg.toString();
-		if (msgString.startsWith("#warning")) {
-			Warning warning = new Warning("Warning from server!");
+	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
+		if(msg.getClass().equals(Message.class)) {
 			try {
-				client.sendToClient(warning);
-				System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-			} catch (IOException e) {
-				e.printStackTrace();
+				Message msgFromClient=(Message) msg;
+				String contentOfMsg=msgFromClient.getMsg();
+				if(contentOfMsg.equals("#login")) {
+                String []userDetails=(String[])(((Message) msg).getObj());
+				String userName=userDetails[0];
+				String password=userDetails[1];
+				String q="from User where userName='"+userName+"'";
+				Query query=session.createQuery(q);
+				List<User> users=(List<User>) (query.getResultList());
+				if(users.size()==0)
+				{
+					Warning warning = new Warning("there is no such a username");
+					try {
+						client.sendToClient(warning);
+						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+						return;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+				if(!users.get(0).getPassWord().equals(password))
+				{
+					Warning warning = new Warning("wrong password");
+					try {
+						client.sendToClient(warning);
+						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+						return;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+				if(users.get(0).getConnected())
+				{
+					Warning warning = new Warning("user already logged in!");
+					try {
+						client.sendToClient(warning);
+						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+						return;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+				login(users.get(0));
+				Message msgToClient = new Message("successful login",users.get(0));
+				client.sendToClient(msgToClient);
+				return;
+				}
+				if(contentOfMsg.equals("#logout"))
+				{
+					User userToLogout=(User) msgFromClient.getObj();
+					logout(userToLogout);
+					Message msgToClient = new Message("successful logout",null);
+					client.sendToClient(msgToClient);
+				}
+			}
+			catch (Exception ex)
+			{
+				System.out.println(ex.getMessage());
+			}
+
+			}
+        else
+			{
+				String msgString = msg.toString();
+				if (msgString.startsWith("#warning")) {
+					Warning warning = new Warning("Warning from server!");
+					try {
+						client.sendToClient(warning);
+						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
 			}
 		}
-
-	}
 
 }

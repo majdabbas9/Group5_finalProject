@@ -14,6 +14,7 @@ public abstract class User implements  Serializable{
     private String userName;
     private String firstName;
     private String lastName;
+    private Boolean isConnected;
     public User() {
 
     }
@@ -23,6 +24,7 @@ public abstract class User implements  Serializable{
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isConnected=false;
     }
 
 
@@ -65,5 +67,13 @@ public abstract class User implements  Serializable{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Boolean getConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(Boolean connected) {
+        isConnected = connected;
     }
 }

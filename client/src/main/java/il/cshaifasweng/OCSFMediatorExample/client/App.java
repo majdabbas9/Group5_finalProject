@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
+import aidClasses.Color;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,7 @@ public class App extends Application {
     	EventBus.getDefault().register(this);
     	client = SimpleClient.getClient();
     	client.openConnection();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("login"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
