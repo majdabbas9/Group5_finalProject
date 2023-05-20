@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.StudentGrades">
+   <children>
+      <TableView layoutX="58.0" layoutY="60.0" prefHeight="451.0" prefWidth="648.0">
+        <columns>
+          <TableColumn prefWidth="84.00000381469727" style="-fx-background-color: #0A8A0A;" text="Grade No." />
+          <TableColumn prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Subject" />
+            <TableColumn prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Course" />
+            <TableColumn prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Teacher Name" />
+            <TableColumn prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Grade" />
+        </columns>
+      </TableView>
+      <Button fx:id="logOutBtn" layoutX="57.0" layoutY="521.0" mnemonicParsing="false" onAction="#logOut" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Back To Home" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fill="WHITE" layoutX="57.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Grades" wrappingWidth="114.41241455078125">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="logOutBtn1" layoutX="550.0" layoutY="521.0" mnemonicParsing="false" onAction="#logOut" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Get Copy" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="warningtxt" fill="#af0000" layoutX="347.0" layoutY="551.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
