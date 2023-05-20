@@ -11,10 +11,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.ManagerHome">
+<AnchorPane prefHeight="576.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.ManagerHome">
 
     <children>
-        <Pane prefHeight="138.0" prefWidth="600.0" style="-fx-background-color: #003000;">
+        <Pane prefHeight="150.0" prefWidth="778.0" style="-fx-background-color: #003000;">
             <children>
                 <Label layoutX="28.0" layoutY="42.0" text="Manager DashBoard" textFill="WHITE">
                     <font>
@@ -39,7 +39,7 @@
                 <Text fx:id="currentTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-        <GridPane hgap="10.0" layoutX="69.0" layoutY="156.0" prefHeight="170.0" prefWidth="471.0" vgap="10.0">
+        <GridPane hgap="10.0" layoutX="69.0" layoutY="156.0" prefHeight="333.0" prefWidth="650.0" vgap="10.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -78,6 +78,9 @@
                <font>
                   <Font size="18.0" />
                </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
             </Button>
             <Button fx:id="statisticalDataBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#showStatisticalData" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Statistical Data" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
@@ -91,11 +94,11 @@
             </Button>
             </children>
         </GridPane>
-        <Button fx:id="logOutBtn" layoutX="14.0" layoutY="358.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #0A8A0A;" text="Log out" textFill="WHITE">
-            <font>
-                <Font size="13.0" />
-            </font>
-        </Button>
+      <Button fx:id="logOutBtn" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" onAction="#logOut" prefHeight="46.0" prefWidth="90.0" style="-fx-background-color: #0A8A0A;" text="Log out" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
     </children>
 
 </AnchorPane>
