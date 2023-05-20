@@ -38,7 +38,7 @@ public class Subject implements  Serializable{
         this.subjectCourses=new ArrayList<>();
         this.subjectQuestions=new ArrayList<>();
         this.subjectStudents=new ArrayList<>();
-        //this.subjectTeachers=new ArrayList<>();
+        this.subjectTeachers=new ArrayList<>();
     }
     public int getId() {
         return id;
@@ -69,5 +69,21 @@ public class Subject implements  Serializable{
 
     public void setSubjectQuestions(List<Question> subjectQuestions) {
         this.subjectQuestions = subjectQuestions;
+    }
+
+    public List<Student> getSubjectStudents() {
+        return subjectStudents;
+    }
+
+    public void setSubjectStudents(List<Student> subjectStudents) {
+        this.subjectStudents = subjectStudents;
+    }
+
+    public List<Teacher> getSubjectTeachers() {
+        return subjectTeachers;
+    }
+
+    public void setSubjectTeachers(List<Teacher> subjectTeachers) {
+        this.subjectTeachers = subjectTeachers;
     }
 }

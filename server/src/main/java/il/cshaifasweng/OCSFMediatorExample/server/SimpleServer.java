@@ -8,8 +8,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.Generating_Educational;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.Generating_Users;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GenerateAll;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetUsers;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.hibernate.HibernateException;
@@ -63,8 +64,8 @@ public class SimpleServer extends AbstractServer {
 		SessionFactory sessionFactory = getSessionFactory();
 		session = sessionFactory.openSession();
 		session.beginTransaction();
-		Generating_Educational.genareteSubjectCourses(session);  // moving the students to the database
-		Generating_Users.generateUsers(session);
+		GenerateAll.generateEducational(session);  // moving the students to the database
+		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
 		
 	}

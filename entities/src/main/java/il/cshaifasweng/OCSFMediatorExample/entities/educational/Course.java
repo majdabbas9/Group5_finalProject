@@ -63,4 +63,32 @@ public class Course implements  Serializable{
     public void setCourseSubject(Subject courseSubject) {
         this.courseSubject = courseSubject;
     }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public List<Question> getCourseQuestions() {
+        return courseQuestions;
+    }
+
+    public void setCourseQuestions(List<Question> courseQuestions) {
+        this.courseQuestions = courseQuestions;
+    }
+
+    public List<Student> getCourseStudents() {
+        return courseStudents;
+    }
+
+    public void setCourseStudents(List<Student> courseStudents) {
+        this.courseStudents = courseStudents;
+    }
+
+    public List<Teacher> getCourseTeachers() {
+        return courseTeachers;
+    }
+
+    public void setCourseTeachers(List<Teacher> courseTeachers) {
+        this.courseTeachers = courseTeachers;
+    }
 }
