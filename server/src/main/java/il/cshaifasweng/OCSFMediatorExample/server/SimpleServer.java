@@ -78,6 +78,8 @@ public class SimpleServer extends AbstractServer {
 		session.beginTransaction();
 		user.setConnected(false);
 		session.update(user);
+		session.flush();
+		session.clear();
 		session.getTransaction().commit();
 	}
 	public void login(User user)
@@ -85,6 +87,8 @@ public class SimpleServer extends AbstractServer {
 		session.beginTransaction();
 		user.setConnected(true);
 		session.update(user);
+		session.flush();
+		session.clear();
 		session.getTransaction().commit();
 	}
 

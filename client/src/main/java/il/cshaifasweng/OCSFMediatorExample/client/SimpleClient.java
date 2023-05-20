@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,9 +33,13 @@ public class SimpleClient extends AbstractClient {
 					String contentOfMsg=msgFromServer.getMsg();
 					if(contentOfMsg.equals("successful login")) {
 						User LogedInUser=(User) msgFromServer.getObj();
+						GlobalDataSaved.connectedUser=LogedInUser;
 						if(LogedInUser.getClass().equals(Student.class)) {
-							GlobalDataSaved.connectedUser=LogedInUser;
 							App.setRoot("studentHome");
+						}
+						if(LogedInUser.getClass().equals(Teacher.class))
+						{
+							App.setRoot("teacherHome");
 						}
 					}
 					if(contentOfMsg.equals("successful logout")) {

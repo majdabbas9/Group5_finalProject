@@ -1,9 +1,14 @@
 package Teacher;
 
+import aidClasses.GlobalDataSaved;
+import aidClasses.Message;
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class TeacherHome {
 
@@ -56,7 +61,14 @@ public class TeacherHome {
 
     @FXML
     void logOut(ActionEvent event) {
-
+        try {
+            Message msg = new Message("#logout", GlobalDataSaved.connectedUser); // creating a msg to the server demanding the students
+            SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @FXML
