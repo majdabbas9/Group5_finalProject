@@ -2,6 +2,7 @@ package Teacher;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
+import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,7 +56,8 @@ public class TeacherHome {
     }
 
     @FXML
-    void buildExam(ActionEvent event) {
+    void buildExam(ActionEvent event)  throws IOException{
+        App.setRoot("buildExam");
 
     }
 

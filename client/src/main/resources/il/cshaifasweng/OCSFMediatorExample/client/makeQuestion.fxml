@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Teacher.MakeQuestion">
+    <children>
+        <Button fx:id="buttonBack" layoutX="19.0" layoutY="520.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To Build Exam" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Text fill="WHITE" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Question" wrappingWidth="139.21246337890625">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fx:id="warningTxt" fill="#af0000" layoutX="347.0" layoutY="551.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Text>
+      <ListView fx:id="courseList" layoutX="35.0" layoutY="75.0" onMouseClicked="#selectCourse" prefHeight="118.0" prefWidth="186.0" />
+      <ComboBox fx:id="subjectList" layoutX="589.0" layoutY="76.0" onAction="#subjectSelected" prefWidth="150.0" promptText="pick Subject" />
+      <TextField fx:id="theQuestion" alignment="CENTER" layoutX="399.0" layoutY="220.0" prefHeight="26.0" prefWidth="198.0" promptText="the question" />
+      <TextField fx:id="choice3" alignment="CENTER" layoutX="540.0" layoutY="288.0" prefHeight="26.0" prefWidth="198.0" promptText="choice 3" />
+      <TextField fx:id="choice4" alignment="CENTER" layoutX="540.0" layoutY="350.0" prefHeight="26.0" prefWidth="198.0" promptText="choice 4" />
+      <TextField fx:id="choice2" alignment="CENTER" layoutX="290.0" layoutY="350.0" prefHeight="26.0" prefWidth="198.0" promptText="choice 2" />
+      <TextField fx:id="choice1" alignment="CENTER" layoutX="290.0" layoutY="288.0" prefHeight="26.0" prefWidth="198.0" promptText="choice 1" />
+      <RadioButton fx:id="radioChoice2" layoutX="255.0" layoutY="354.0" mnemonicParsing="false">
+         <toggleGroup>
+            <ToggleGroup fx:id="radioGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioChoice1" layoutX="255.0" layoutY="292.0" mnemonicParsing="false" toggleGroup="$radioGroup" />
+      <RadioButton fx:id="radioChoice3" layoutX="507.0" layoutY="292.0" mnemonicParsing="false" toggleGroup="$radioGroup" />
+      <RadioButton fx:id="radioChoice4" layoutX="507.0" layoutY="354.0" mnemonicParsing="false" toggleGroup="$radioGroup" />
+      <Button fx:id="buttonSubmit" layoutX="414.0" layoutY="427.0" mnemonicParsing="false" onAction="#submitQuestion" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="submit" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="questionID" alignment="CENTER" layoutX="314.0" layoutY="75.0" prefHeight="26.0" prefWidth="198.0" promptText="question id" />
+      <TextField fx:id="teacherNotes" alignment="CENTER" layoutX="70.0" layoutY="427.0" prefHeight="46.0" prefWidth="150.0" promptText="notes" />
+      <ListView fx:id="selectedCourseList" layoutX="35.0" layoutY="257.0" prefHeight="118.0" prefWidth="186.0" />
+    </children>
+</AnchorPane>

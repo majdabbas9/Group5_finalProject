@@ -46,6 +46,9 @@ public class SimpleClient extends AbstractClient {
 						GlobalDataSaved.connectedUser=null;
 						App.setRoot("login");
 					}
+					if(contentOfMsg.equals("added the question successfully")) {
+						App.setRoot("buildExam");
+					}
 				}
             catch (Exception ex) {
 				System.out.println(ex.getMessage());

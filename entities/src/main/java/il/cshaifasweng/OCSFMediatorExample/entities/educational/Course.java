@@ -91,4 +91,8 @@ public class Course implements  Serializable{
     public void setCourseTeachers(List<Teacher> courseTeachers) {
         this.courseTeachers = courseTeachers;
     }
+    @Override
+    public String toString() {
+        return this.courseName;
+    }
 }

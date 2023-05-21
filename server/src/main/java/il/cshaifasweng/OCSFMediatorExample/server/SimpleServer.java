@@ -91,6 +91,31 @@ public class SimpleServer extends AbstractServer {
 		session.clear();
 		session.getTransaction().commit();
 	}
+	public void addQuestion(Question question)
+	{
+		session.beginTransaction();
+		session.save(question);
+		session.flush();
+
+		Teacher teacher=question.getTeacherThatCreated();
+		teacher.getQuestionsCreated().add(question);
+		session.update(teacher);
+		session.flush();
+
+		Subject subject=question.getQuestionSubject();
+		subject.getSubjectQuestions().add(question);
+		session.update(subject);
+		session.flush();
+
+		for (Course course:question.getQuestionCourses())
+		{
+			course.getCourseQuestions().add(question);
+			session.update(course);
+			session.flush();
+		}
+		session.clear();
+		session.getTransaction().commit();
+	}
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
@@ -152,6 +177,17 @@ public class SimpleServer extends AbstractServer {
 					logout(userToLogout);
 					Message msgToClient = new Message("successful logout",null);
 					client.sendToClient(msgToClient);
+				}
+				if(contentOfMsg.equals("#addQuestion"))
+				{
+					Question question=(Question)msgFromClient.getObj();
+					addQuestion(question);
+					Message messageToClient = new Message("added the question successfully");
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			catch (Exception ex)
