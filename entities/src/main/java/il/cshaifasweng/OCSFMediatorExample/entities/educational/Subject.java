@@ -86,4 +86,9 @@ public class Subject implements  Serializable{
     public void setSubjectTeachers(List<Teacher> subjectTeachers) {
         this.subjectTeachers = subjectTeachers;
     }
+
+    @Override
+    public String toString() {
+        return this.subjectName;
+    }
 }
