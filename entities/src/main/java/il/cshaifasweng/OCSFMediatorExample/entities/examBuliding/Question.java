@@ -138,4 +138,9 @@ public class Question implements Serializable {
     public void setQuestionExams(List<Exam> questionExams) {
         this.questionExams = questionExams;
     }
+
+    @Override
+    public String toString() {
+        return this.studentNotes;
+    }
 }

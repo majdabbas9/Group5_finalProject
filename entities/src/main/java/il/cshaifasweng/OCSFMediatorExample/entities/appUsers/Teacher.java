@@ -16,16 +16,6 @@ import java.util.List;
 public class Teacher extends User implements Serializable {
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Course.class
-    )
-    @JoinTable(
-            name="teachers_courses",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> teacherCourses;
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             targetEntity = Subject.class
     )
     @JoinTable(
@@ -34,8 +24,19 @@ public class Teacher extends User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private List<Subject> teacherSubjects;
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            targetEntity = Course.class,fetch=FetchType.EAGER
+    )
+    @JoinTable(
+            name="teachers_courses",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> teacherCourses;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherThatCreated")
-    private List<Exam> exams;
+    private List<Exam> examsCreated;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherThatExecuted")
     private List<ComputerizedExamToExecute> executedExams;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherThatCreated")
@@ -44,7 +45,7 @@ public class Teacher extends User implements Serializable {
         super(userID, passWord, userName, firstName, lastName);
         this.teacherCourses=new ArrayList<>();
         this.teacherSubjects=new ArrayList<>();
-        this.exams=new ArrayList<>();
+        this.examsCreated =new ArrayList<>();
         this.executedExams=new ArrayList<>();
         this.questionsCreated=new ArrayList<>();
     }
@@ -68,12 +69,12 @@ public class Teacher extends User implements Serializable {
         this.teacherSubjects = teacherSubjects;
     }
 
-    public List<Exam> getExams() {
-        return exams;
+    public List<Exam> getExamsCreated() {
+        return examsCreated;
     }
 
-    public void setExams(List<Exam> exams) {
-        this.exams = exams;
+    public void setExamsCreated(List<Exam> exams) {
+        this.examsCreated = exams;
     }
 
     public List<ComputerizedExamToExecute> getExecutedExams() {
@@ -91,4 +92,5 @@ public class Teacher extends User implements Serializable {
     public void setQuestionsCreated(List<Question> questionsCreated) {
         this.questionsCreated = questionsCreated;
     }
+
 }

@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.examBuliding;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,8 +29,14 @@ public class Exam implements Serializable{
             targetEntity = Question.class
     )
     private List<Question> examQuestions;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject examSubject;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course examCourse;
 
-    public Exam(Teacher teacherThatCreated, int time, String exam_ID, String teacherNotes, String notes, List<Integer> points) {
+    public Exam(Teacher teacherThatCreated, int time, String exam_ID, String teacherNotes, String notes, List<Integer> points, Subject examSubject, Course examCourse) {
         this.compExamsToExecute =new ArrayList<>();
         setTeacherThatCreated(teacherThatCreated);
         this.time = time;
@@ -37,6 +45,8 @@ public class Exam implements Serializable{
         this.notes = notes;
         this.points = points;
         this.examQuestions=new ArrayList<>();
+        setExamSubject(examSubject);
+        setExamCourse(examCourse);
     }
 
     public Exam() {
@@ -109,5 +119,21 @@ public class Exam implements Serializable{
 
     public void setExamQuestions(List<Question> examQuestions) {
         this.examQuestions = examQuestions;
+    }
+
+    public Subject getExamSubject() {
+        return examSubject;
+    }
+
+    public void setExamSubject(Subject examSubject) {
+        this.examSubject = examSubject;
+    }
+
+    public Course getExamCourse() {
+        return examCourse;
+    }
+
+    public void setExamCourse(Course examCourse) {
+        this.examCourse = examCourse;
     }
 }
