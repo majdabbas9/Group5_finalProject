@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.educational;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 
 import javax.persistence.*;
@@ -34,6 +35,8 @@ public class Course implements  Serializable{
             targetEntity = Teacher.class
     )
     private List<Teacher> courseTeachers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examCourse")
+    private List<Exam> courseExams;
     public Course() {
 
     }
@@ -43,6 +46,7 @@ public class Course implements  Serializable{
         this.courseQuestions=new ArrayList<>();
         this.courseStudents=new ArrayList<>();
         this.courseTeachers=new ArrayList<>();
+        this.courseExams=new ArrayList<>();
     }
 
     public int getId() {
@@ -91,8 +95,18 @@ public class Course implements  Serializable{
     public void setCourseTeachers(List<Teacher> courseTeachers) {
         this.courseTeachers = courseTeachers;
     }
+
+    public List<Exam> getCourseExams() {
+        return courseExams;
+    }
+
+    public void setCourseExams(List<Exam> courseExams) {
+        this.courseExams = courseExams;
+    }
+
     @Override
     public String toString() {
         return this.courseName;
     }
+
 }

@@ -50,9 +50,6 @@ public class MakeQuestion {
     @FXML
     private TextField teacherNotes;
 
-    @FXML
-    private TextField questionID;
-
     @FXML // fx:id="radioChoice1"
     private RadioButton radioChoice1; // Value injected by FXMLLoader
 
@@ -94,6 +91,7 @@ public class MakeQuestion {
         }
         selectedCourses.clear();
         courseList.getItems().clear();
+        selectedCourseList.getItems().clear();
         Subject selectedSubject=subjectList.getSelectionModel().getSelectedItem();
         for(Course course: theTeacher.getTeacherCourses())
         {
@@ -147,25 +145,6 @@ public class MakeQuestion {
             warningTxt.setText("no courses selected");
             return;
         }
-        if(questionID.getText().equals(""))
-        {
-            warningTxt.setText("questionID empty");
-            return;
-        }
-        int number=0;
-            try {
-                number=Integer.valueOf(questionID.getText());
-            }
-            catch (Exception exception)
-            {
-                warningTxt.setText("the Question ID is not a number");
-                return;
-            }
-            if(number>99999)
-            {
-                warningTxt.setText("Illegal QuestionID");
-                return;
-            }
         List<String> choices=new ArrayList<>();
         String correctChoice="";
         choices.add(choice1.getText());choices.add(choice2.getText());choices.add(choice3.getText());
@@ -182,11 +161,34 @@ public class MakeQuestion {
         {
             correctChoice=choice3.getText();
         }
-        if(radioChoice3.isSelected())
+        if(radioChoice4.isSelected())
         {
-            correctChoice=choice3.getText();
+            correctChoice=choice4.getText();
         }
-        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),"0001",choices,correctChoice,subjectList.getSelectionModel().getSelectedItem(),theTeacher);
+        String questionID="";
+        int subjectId=subjectList.getSelectionModel().getSelectedItem().getId()-1;
+        int questionNum=subjectList.getSelectionModel().getSelectedItem().getSubjectQuestions().size();
+        if(subjectId<10)
+        {
+            questionID="0"+subjectId;
+        }
+        else
+        {
+            questionID= String.valueOf(subjectId);
+        }
+        if(questionNum<10)
+        {
+            questionID+="00"+questionNum;
+        }
+        if(questionNum <100 && questionNum>9)
+        {
+            questionID+="0"+questionNum;
+        }
+        if(questionNum>99)
+        {
+            questionID+=questionNum;
+        }
+        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),questionID,choices,correctChoice,subjectList.getSelectionModel().getSelectedItem(),theTeacher);
         question.setQuestionCourses(selectedCourses);
         Message msg = new Message("#addQuestion", question); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
@@ -199,6 +201,7 @@ public class MakeQuestion {
         if(!selectedCourses.contains(courseList.getSelectionModel().getSelectedItem()))
         {
             selectedCourses.add(courseList.getSelectionModel().getSelectedItem());
+            selectedCourseList.getItems().add(courseList.getSelectionModel().getSelectedItem());
         }
 
     }

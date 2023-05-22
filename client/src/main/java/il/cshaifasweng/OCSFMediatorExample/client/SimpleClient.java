@@ -47,6 +47,11 @@ public class SimpleClient extends AbstractClient {
 						App.setRoot("login");
 					}
 					if(contentOfMsg.equals("added the question successfully")) {
+						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
+						App.setRoot("buildExam");
+					}
+					if(contentOfMsg.equals("added the exam successfully")) {
+						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
 						App.setRoot("buildExam");
 					}
 				}

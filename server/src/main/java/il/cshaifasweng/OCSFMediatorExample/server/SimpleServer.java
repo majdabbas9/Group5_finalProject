@@ -73,17 +73,17 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 
 	}
-	public void logout(User user)
-	{
+
+	public void logout(User user) {
 		session.beginTransaction();
 		user.setConnected(false);
 		session.update(user);
 		session.flush();
-		session.clear();
+		//session.clear();
 		session.getTransaction().commit();
 	}
-	public void login(User user)
-	{
+
+	public void login(User user) {
 		session.beginTransaction();
 		user.setConnected(true);
 		session.update(user);
@@ -91,24 +91,23 @@ public class SimpleServer extends AbstractServer {
 		session.clear();
 		session.getTransaction().commit();
 	}
-	public void addQuestion(Question question)
-	{
+
+	public void addQuestion(Question question) {
 		session.beginTransaction();
 		session.save(question);
 		session.flush();
 
-		Teacher teacher=question.getTeacherThatCreated();
+		Teacher teacher = question.getTeacherThatCreated();
 		teacher.getQuestionsCreated().add(question);
 		session.update(teacher);
 		session.flush();
 
-		Subject subject=question.getQuestionSubject();
+		Subject subject = question.getQuestionSubject();
 		subject.getSubjectQuestions().add(question);
 		session.update(subject);
 		session.flush();
 
-		for (Course course:question.getQuestionCourses())
-		{
+		for (Course course : question.getQuestionCourses()) {
 			course.getCourseQuestions().add(question);
 			session.update(course);
 			session.flush();
@@ -117,99 +116,128 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
+	public void addExam(Exam exam) {
+		session.beginTransaction();
+
+		session.save(exam);
+		session.flush();
+
+		Teacher teacher=exam.getTeacherThatCreated();
+		teacher.getExamsCreated().add(exam);
+		session.update(teacher);
+		session.flush();
+
+		Subject subject=exam.getExamSubject();
+		subject.getSubjectExams().add(exam);
+		session.update(subject);
+		session.flush();
+
+		Course course=exam.getExamCourse();
+		course.getCourseExams().add(exam);
+		session.update(course);
+		session.flush();
+
+		session.clear();
+
+		session.getTransaction().commit();
+	}
+
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
-		if(msg.getClass().equals(Message.class)) {
+		if (msg.getClass().equals(Message.class)) {
 			try {
-				Message msgFromClient=(Message) msg;
-				String contentOfMsg=msgFromClient.getMsg();
-				if(contentOfMsg.equals("#login")) {
-                String []userDetails=(String[])(((Message) msg).getObj());
-				String userName=userDetails[0];
-				String password=userDetails[1];
-				String q="from User where userName='"+userName+"'";
-				Query query=session.createQuery(q);
-				List<User> users=(List<User>) (query.getResultList());
-				if(users.size()==0)
-				{
-					Warning warning = new Warning("there is no such a username");
-					try {
-						client.sendToClient(warning);
-						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-						return;
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+				Message msgFromClient = (Message) msg;
+				String contentOfMsg = msgFromClient.getMsg();
+				if (contentOfMsg.equals("#login")) {
+					String[] userDetails = (String[]) (((Message) msg).getObj());
+					String userName = userDetails[0];
+					String password = userDetails[1];
+					String q = "from User where userName='" + userName + "'";
+					Query query = session.createQuery(q);
+					List<User> users = (List<User>) (query.getResultList());
 
-				}
-				if(!users.get(0).getPassWord().equals(password))
-				{
-					Warning warning = new Warning("wrong password");
-					try {
-						client.sendToClient(warning);
-						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-						return;
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					if (users.size() == 0) {
+						Warning warning = new Warning("there is no such a username");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
-				}
-				if(users.get(0).getConnected())
-				{
-					Warning warning = new Warning("user already logged in!");
-					try {
-						client.sendToClient(warning);
-						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-						return;
-					} catch (IOException e) {
-						e.printStackTrace();
 					}
+					if (!users.get(0).getPassWord().equals(password)) {
+						Warning warning = new Warning("wrong password");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
+					}
+					if (users.get(0).getConnected()) {
+						Warning warning = new Warning("user already logged in!");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+					}
+					login(users.get(0));
+					Message msgToClient = new Message("successful login", users.get(0));
+					client.sendToClient(msgToClient);
+					return;
 				}
-				login(users.get(0));
-				Message msgToClient = new Message("successful login",users.get(0));
-				client.sendToClient(msgToClient);
-				return;
-				}
-				if(contentOfMsg.equals("#logout"))
-				{
-					User userToLogout=(User) msgFromClient.getObj();
+				if (contentOfMsg.equals("#logout")) {
+					User userToLogout = (User) msgFromClient.getObj();
 					logout(userToLogout);
-					Message msgToClient = new Message("successful logout",null);
+					Message msgToClient = new Message("successful logout", null);
 					client.sendToClient(msgToClient);
 				}
-				if(contentOfMsg.equals("#addQuestion"))
-				{
-					Question question=(Question)msgFromClient.getObj();
+				if (contentOfMsg.equals("#addQuestion")) {
+					Question question = (Question) msgFromClient.getObj();
 					addQuestion(question);
-					Message messageToClient = new Message("added the question successfully");
+					Message messageToClient = new Message("added the question successfully", question.getTeacherThatCreated());
 					try {
 						client.sendToClient(messageToClient);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-			}
-			catch (Exception ex)
-			{
-				System.out.println(ex.getMessage());
-			}
-
-			}
-        else
-			{
-				String msgString = msg.toString();
-				if (msgString.startsWith("#warning")) {
-					Warning warning = new Warning("Warning from server!");
+				if (contentOfMsg.equals("#addExam")) {
+					Exam exam = (Exam) msgFromClient.getObj();
+					addExam(exam);
+					Message messageToClient = new Message("added the exam successfully", exam.getTeacherThatCreated());
 					try {
-						client.sendToClient(warning);
-						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+						client.sendToClient(messageToClient);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}
 
+				}
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
 			}
+		} else {
+			String msgString = msg.toString();
+			if (msgString.startsWith("#warning")) {
+				Warning warning = new Warning("Warning from server!");
+				try {
+					client.sendToClient(warning);
+					System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 
+
+	}
 }

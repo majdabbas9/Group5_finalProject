@@ -1,8 +1,11 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import aidClasses.Color;
+import aidClasses.GlobalDataSaved;
+import aidClasses.Message;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +52,14 @@ public class App extends Application {
 	public void stop() throws Exception {
 		// TODO Auto-generated method stub
     	EventBus.getDefault().unregister(this);
+        try {
+            Message msg = new Message("#logout", GlobalDataSaved.connectedUser); // creating a msg to the server demanding the students
+            SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
 		super.stop();
 	}
     
@@ -62,6 +74,11 @@ public class App extends Application {
         	alert.show();
     	});
     	
+    }
+    @FXML
+    public void exitApplication(ActionEvent event) {
+        System.out.println("bye");
+        Platform.exit();
     }
 
 	public static void main(String[] args) {
