@@ -1,9 +1,13 @@
 package Teacher;
 
+import aidClasses.Color;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,8 +45,8 @@ public class TeacherHome {
     private Text studentName;
 
     @FXML
-    void ExamsInProgress(ActionEvent event) {
-
+    void ExamsInProgress(ActionEvent event) throws IOException {
+        App.setRoot("teacherExamsInProgress");
     }
 
     @FXML
@@ -57,7 +61,7 @@ public class TeacherHome {
 
     @FXML
     void buildExam(ActionEvent event)  throws IOException{
-        App.setRoot("buildExam");
+       App.setRoot("buildExam");
 
     }
 
@@ -74,8 +78,25 @@ public class TeacherHome {
     }
 
     @FXML
-    void prepareExamsForExecution(ActionEvent event) {
+    void prepareExamsForExecution(ActionEvent event) throws IOException {
+        App.setRoot("prepareExam");
+    }
+    @FXML
+    public void initialize()
+    {
+        if(GlobalDataSaved.connectedUser.getUserName().equals("3"))
+        {
+            try {
+                Teacher teacher=(Teacher) GlobalDataSaved.connectedUser;
+                Subject subject=teacher.getTeacherSubjects().get(0);
+                Course course=teacher.getTeacherCourses().get(0);
+            }
+            catch (Exception exception)
+            {
+                System.out.println(exception.getMessage());
+            }
 
+        }
     }
 
 }

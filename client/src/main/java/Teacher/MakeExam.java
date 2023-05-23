@@ -4,7 +4,7 @@
 
 package Teacher;
 
-import aidClasses.ExamQuestion;
+import aidClasses.aidClassesForTeacher.ExamQuestion;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
@@ -14,17 +14,14 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.ArrayList;

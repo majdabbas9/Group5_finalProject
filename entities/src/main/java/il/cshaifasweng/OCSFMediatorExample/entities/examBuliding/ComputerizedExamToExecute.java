@@ -15,7 +15,10 @@ public class ComputerizedExamToExecute implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String dateOfExam;
+    private int code;
     private int examAverage;
+    private int numOfStudentDoing;
     @ElementCollection
     private List<Integer> histogram;
     @Column(name = "inTime")
@@ -31,7 +34,7 @@ public class ComputerizedExamToExecute implements Serializable {
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatExecuted;
 
-    public ComputerizedExamToExecute(Exam exam, Teacher teacherThatExecuted) {
+    public ComputerizedExamToExecute(String dateOfExam,int code,Exam exam, Teacher teacherThatExecuted) {
         this.examAverage = 0;
         this.histogram = new ArrayList<>();
         this.numberOfStudentDoneInTime = 0;
@@ -39,6 +42,9 @@ public class ComputerizedExamToExecute implements Serializable {
         setExam(exam);
         this.copies =new ArrayList<>();
         setTeacherThatExecuted(teacherThatExecuted);
+        this.code=code;
+        this.dateOfExam=dateOfExam;
+        this.numOfStudentDoing=0;
     }
 
     public ComputerizedExamToExecute() {
@@ -104,5 +110,28 @@ public class ComputerizedExamToExecute implements Serializable {
 
     public void setTeacherThatExecuted(Teacher teacherThatExecuted) {
         this.teacherThatExecuted = teacherThatExecuted;
+    }
+    public String getDateOfExam() {
+        return dateOfExam;
+    }
+
+    public void setDateOfExam(String dateOfExam) {
+        this.dateOfExam = dateOfExam;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getNumOfStudentDoing() {
+        return numOfStudentDoing;
+    }
+
+    public void setNumOfStudentDoing(int numOfStudentDoing) {
+        this.numOfStudentDoing = numOfStudentDoing;
     }
 }

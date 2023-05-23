@@ -4,15 +4,13 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
 import java.util.List;
 
-public class GetUsers
-{
-    public static List<Subject> getTeacherSubjects(Session session,int id)
+public class GetUsers {
+    public static List<Subject> getTeacherSubjects(Session session, int id)
     {
         String queryString = "FROM Teacher  WHERE id = :id";
         Query query = session.createQuery(queryString, Teacher.class);

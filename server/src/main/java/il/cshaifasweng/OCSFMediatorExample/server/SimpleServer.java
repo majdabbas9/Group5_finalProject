@@ -71,8 +71,6 @@ public class SimpleServer extends AbstractServer {
 		GenerateAll.generateEducational(session);  // moving the students to the database
 		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
-
-
 	}
 
 	public void logout(User user) {
@@ -80,16 +78,25 @@ public class SimpleServer extends AbstractServer {
 		user.setConnected(false);
 		session.update(user);
 		session.flush();
-		//session.clear();
+		session.clear();
+		if(user.getUserName().equals("3"))
+		{
+			System.out.println("h");
+		}
 		session.getTransaction().commit();
 	}
 
 	public void login(User user) {
+		if(user.getUserName().equals("3"))
+		{
+			System.out.println("h");
+		}
 		session.beginTransaction();
 		user.setConnected(true);
 		session.update(user);
 		session.flush();
 		session.clear();
+
 		session.getTransaction().commit();
 	}
 
@@ -100,20 +107,20 @@ public class SimpleServer extends AbstractServer {
 
 		Teacher teacher = question.getTeacherThatCreated();
 		teacher.getQuestionsCreated().add(question);
-		session.update(teacher);
+		session.save(teacher);
 		session.flush();
 
 		Subject subject = question.getQuestionSubject();
 		subject.getSubjectQuestions().add(question);
-		session.update(subject);
+		session.save(subject);
 		session.flush();
 
 		for (Course course : question.getQuestionCourses()) {
 			course.getCourseQuestions().add(question);
-			session.update(course);
+			session.save(course);
 			session.flush();
 		}
-		session.clear();
+		//session.clear();
 		session.getTransaction().commit();
 	}
 
@@ -125,20 +132,71 @@ public class SimpleServer extends AbstractServer {
 
 		Teacher teacher=exam.getTeacherThatCreated();
 		teacher.getExamsCreated().add(exam);
-		session.update(teacher);
+		session.save(teacher);
 		session.flush();
 
 		Subject subject=exam.getExamSubject();
 		subject.getSubjectExams().add(exam);
-		session.update(subject);
+		session.save(subject);
 		session.flush();
 
 		Course course=exam.getExamCourse();
 		course.getCourseExams().add(exam);
-		session.update(course);
+		session.save(course);
 		session.flush();
 
+		int subjectId=exam.getExamSubject().getId()-1;
+		int courseId=exam.getExamCourse().getId()-1;
+		int examId=exam.getId()-1;
+		String exam_ID="";
+		if(subjectId<10)
+		{
+			exam_ID+="0"+subjectId;
+		}
+		else
+		{
+			exam_ID+=subjectId;
+		}
+		if(courseId<10)
+		{
+			exam_ID+="0"+courseId;
+		}
+		else
+		{
+			exam_ID+=courseId;
+		}
+		if(examId<10)
+		{
+			exam_ID+="0"+examId;
+		}
+		else
+		{
+			exam_ID+=examId;
+		}
+		exam.setExam_ID(exam_ID);
+		session.update(exam);
+		session.flush();
 		session.clear();
+
+		session.getTransaction().commit();
+	}
+	public void addCompExam(ComputerizedExamToExecute compExam)
+	{
+		session.beginTransaction();
+
+		session.save(compExam);
+		session.flush();
+
+		Teacher teacher=compExam.getTeacherThatExecuted();
+		teacher.getExecutedExams().add(compExam);
+		session.update(teacher);
+		session.flush();
+
+
+		Exam exam=compExam.getExam();
+		exam.getCompExamsToExecute().add(compExam);
+		session.update(exam);
+		session.flush();
 
 		session.getTransaction().commit();
 	}
@@ -153,10 +211,13 @@ public class SimpleServer extends AbstractServer {
 					String[] userDetails = (String[]) (((Message) msg).getObj());
 					String userName = userDetails[0];
 					String password = userDetails[1];
+
 					String q = "from User where userName='" + userName + "'";
+					session.beginTransaction();
 					Query query = session.createQuery(q);
 					List<User> users = (List<User>) (query.getResultList());
-
+					session.flush();
+					session.getTransaction().commit();
 					if (users.size() == 0) {
 						Warning warning = new Warning("there is no such a username");
 						try {
@@ -222,6 +283,18 @@ public class SimpleServer extends AbstractServer {
 					}
 
 				}
+				if (contentOfMsg.equals("#addCompExam")) {
+					ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) msgFromClient.getObj();
+					addCompExam(compExam);
+					Message messageToClient = new Message("added the CompExam successfully", compExam.getTeacherThatExecuted());
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}
