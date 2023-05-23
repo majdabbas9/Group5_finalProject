@@ -45,8 +45,8 @@ public class TeacherHome {
     private Text studentName;
 
     @FXML
-    void ExamsInProgress(ActionEvent event) {
-
+    void ExamsInProgress(ActionEvent event) throws IOException {
+        App.setRoot("teacherExamsInProgress");
     }
 
     @FXML

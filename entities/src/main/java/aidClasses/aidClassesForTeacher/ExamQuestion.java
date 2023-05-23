@@ -1,4 +1,4 @@
-package aidClasses;
+package aidClasses.aidClassesForTeacher;
 
 import javafx.scene.control.TextField;
 

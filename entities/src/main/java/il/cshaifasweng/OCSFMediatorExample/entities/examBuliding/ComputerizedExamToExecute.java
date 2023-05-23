@@ -18,6 +18,7 @@ public class ComputerizedExamToExecute implements Serializable {
     private String dateOfExam;
     private int code;
     private int examAverage;
+    private int numOfStudentDoing;
     @ElementCollection
     private List<Integer> histogram;
     @Column(name = "inTime")
@@ -43,6 +44,7 @@ public class ComputerizedExamToExecute implements Serializable {
         setTeacherThatExecuted(teacherThatExecuted);
         this.code=code;
         this.dateOfExam=dateOfExam;
+        this.numOfStudentDoing=0;
     }
 
     public ComputerizedExamToExecute() {
@@ -123,5 +125,13 @@ public class ComputerizedExamToExecute implements Serializable {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public int getNumOfStudentDoing() {
+        return numOfStudentDoing;
+    }
+
+    public void setNumOfStudentDoing(int numOfStudentDoing) {
+        this.numOfStudentDoing = numOfStudentDoing;
     }
 }

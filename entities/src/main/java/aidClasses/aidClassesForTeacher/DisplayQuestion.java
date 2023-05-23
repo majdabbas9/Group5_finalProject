@@ -1,4 +1,4 @@
-package aidClasses;
+package aidClasses.aidClassesForTeacher;
 
 public class DisplayQuestion {
     private String theQuestion;

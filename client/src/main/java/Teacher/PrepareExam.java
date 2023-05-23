@@ -4,7 +4,7 @@
 
 package Teacher;
 
-import aidClasses.DisplayQuestion;
+import aidClasses.aidClassesForTeacher.DisplayQuestion;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
