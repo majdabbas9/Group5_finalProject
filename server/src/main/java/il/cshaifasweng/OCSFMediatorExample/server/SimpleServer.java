@@ -71,6 +71,8 @@ public class SimpleServer extends AbstractServer {
 		GenerateAll.generateEducational(session);  // moving the students to the database
 		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
+		List<Subject> g=GetUsers.getTeacherSubjects(session,3);
+		List<Course> c=GetUsers.getTeacherCourses(session,3);
 
 	}
 
