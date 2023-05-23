@@ -28,7 +28,4 @@ public class GetUsers
         List<Course> list = query.getResultList();
         return list;
     }
-
-
-
 }
