@@ -33,6 +33,10 @@ public class SimpleClient extends AbstractClient {
 					String contentOfMsg=msgFromServer.getMsg();
 					if(contentOfMsg.equals("successful login")) {
 						User LogedInUser=(User) msgFromServer.getObj();
+						if(LogedInUser.getUserName().equals("3"))
+						{
+							System.out.println("h");
+						}
 						GlobalDataSaved.connectedUser=LogedInUser;
 						if(LogedInUser.getClass().equals(Student.class)) {
 							App.setRoot("studentHome");
@@ -53,6 +57,10 @@ public class SimpleClient extends AbstractClient {
 					if(contentOfMsg.equals("added the exam successfully")) {
 						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
 						App.setRoot("buildExam");
+					}
+					if(contentOfMsg.equals("added the CompExam successfully")) {
+						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
+						App.setRoot("teacherHome");
 					}
 				}
             catch (Exception ex) {

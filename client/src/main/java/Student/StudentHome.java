@@ -3,6 +3,10 @@ package Student;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -60,6 +64,19 @@ public class StudentHome {
     void showStudentGrade(ActionEvent event) {
 
     }
+    @FXML
+    public void initialize() {
+        if (GlobalDataSaved.connectedUser.getUserName().equals("1")) {
+            try {
+                Student student = (Student) GlobalDataSaved.connectedUser;
+                Subject subject = student.getStudentSubjects().get(0);
+                Course course = student.getStudentCourses().get(0);
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
 
+        }
+
+    }
 }
 
