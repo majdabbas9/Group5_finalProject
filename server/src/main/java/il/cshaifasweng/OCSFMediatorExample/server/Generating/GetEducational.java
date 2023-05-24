@@ -58,4 +58,20 @@ public class GetEducational {
         }
         return false;
     }
+    public  static List<Question> getCourseQuestions(Session session,int course_id)
+    {
+        String queryString = "FROM Course_Question  WHERE";
+        queryString+=" ";
+        queryString+="course_id";
+        queryString+=" = ";
+        queryString+=course_id;
+        Query query = session.createQuery(queryString, Course_Question.class);
+        List<Course_Question> subs = query.getResultList();
+        List<Question> questions=new ArrayList<>();
+        for(Course_Question tc:subs)
+        {
+            questions.add(tc.getQuestion());
+        }
+        return questions;
+    }
 }

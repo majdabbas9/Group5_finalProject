@@ -9,10 +9,10 @@ public class Grade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "examCopy_id")
     private Copy examCopy;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
     private Student student;
     private int grade;
@@ -22,8 +22,7 @@ public class Grade implements Serializable {
     private String date;
     private String hour;
 
-    public Grade(Copy examCopy,Student student, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour) {
-        setExamCopy(examCopy);
+    public Grade(Student student, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour) {
         this.student = student;
         this.grade = 0;
         this.isManuel = isManuel;

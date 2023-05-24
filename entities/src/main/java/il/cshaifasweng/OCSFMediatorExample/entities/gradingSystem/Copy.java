@@ -2,18 +2,19 @@ package il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 @Entity
 @Table(name = "copies")
-public class Copy {
+public class Copy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String answers;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "grade_id")
     private Grade grade;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "compExam_ID")
     private ComputerizedExamToExecute compExamToExecute;
 

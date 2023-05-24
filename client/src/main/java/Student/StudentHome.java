@@ -3,6 +3,10 @@ package Student;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -60,6 +64,8 @@ public class StudentHome {
     void showStudentGrade(ActionEvent event) {
 
     }
-
+    @FXML
+    public void initialize() {
+    }
 }
 
