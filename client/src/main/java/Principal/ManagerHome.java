@@ -5,6 +5,7 @@ import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -66,7 +67,6 @@ public class ManagerHome {
     @FXML
     void ExamsNeedTimeApprovment(ActionEvent event) throws IOException {
         App.setRoot("principalExtraTimeApprovment");
-
     }
 
     @FXML
@@ -81,7 +81,6 @@ public class ManagerHome {
         }
         try {
             Thread.sleep(80);
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -101,6 +100,7 @@ public class ManagerHome {
 
     @FXML
     void showExams(ActionEvent event) throws IOException {
+        //TODO:: getallExams() then update the exams list
         App.setRoot("principalExams");
     }
 

@@ -86,7 +86,6 @@ public class principalAddUsers {
     @FXML
     void Add(ActionEvent event) {
         errortxt.setText("");
-
         if (firstnametxt.getText().equals("")) {
             errortxt.setText("Pleas enter First Name");
             return;
@@ -123,17 +122,16 @@ public class principalAddUsers {
             }
         }
 
+        if (PasswordText.getText().equals("")) {
+            errortxt.setText("Please enter Password");
+            return;
+        }
+
         Message msg = new Message("CheckID", IDText.getText());
         try {
             SimpleClient.getClient().sendToServer(msg);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-        if (PasswordText.getText().equals("")) {
-            errortxt.setText("Please enter Password");
-            return;
         }
 
 
