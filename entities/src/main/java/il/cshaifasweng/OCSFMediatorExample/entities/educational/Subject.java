@@ -17,7 +17,7 @@ public class Subject implements  Serializable{
     private int id;
 
     private String subjectName;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "courseSubject")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "courseSubject")
     private List<Course> subjectCourses;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionSubject")
     private List<Question> subjectQuestions;
