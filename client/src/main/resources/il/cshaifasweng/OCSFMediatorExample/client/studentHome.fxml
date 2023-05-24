@@ -39,7 +39,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="nyGradeBtn" layoutX="162.0" layoutY="288.0" mnemonicParsing="false" onAction="#showStudentGrade" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="My Grades" textFill="WHITE">
+      <Button fx:id="myGradeBtn" layoutX="162.0" layoutY="288.0" mnemonicParsing="false" onAction="#showStudentGrade" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="My Grades" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

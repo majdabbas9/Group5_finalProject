@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 
 public class GetEducational {
     public static List<Subject> getAllSubjects(Session session) throws Exception {
@@ -56,5 +57,22 @@ public class GetEducational {
             questions.add(tc.getQuestion());
         }
         return questions;
+    }
+    public static List<Exam> getAllExams(Session session) throws Exception {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Exam> query = builder.createQuery(Exam.class);
+        query.from(Exam.class);
+        List<Exam> data = session.createQuery(query).getResultList();
+        return data;
+    }
+
+
+    public static boolean checkID(Session session, String id) {
+        Query query = session.createQuery("from User where userID=" + id + "");
+        if (query.getResultList().size() == 0) {
+            return true;
+        }
+        return false;
     }
 }
