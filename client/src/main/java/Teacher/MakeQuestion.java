@@ -72,8 +72,9 @@ public class MakeQuestion {
 
     @FXML // fx:id="warningTxt"
     private Text warningTxt; // Value injected by FXMLLoader
-    private Teacher theTeacher;
+    private List<Course> teacherCourses;
     private List<Course> selectedCourses;
+    private List<Subject>teacherSubjects;
 
     @FXML
     void backToBuildExam(ActionEvent event) throws IOException {
@@ -93,7 +94,7 @@ public class MakeQuestion {
         courseList.getItems().clear();
         selectedCourseList.getItems().clear();
         Subject selectedSubject=subjectList.getSelectionModel().getSelectedItem();
-        for(Course course: theTeacher.getTeacherCourses())
+        for(Course course: teacherCourses)
         {
             if(course.getCourseSubject().getSubjectName().equals(selectedSubject.getSubjectName()))
             {
@@ -188,9 +189,14 @@ public class MakeQuestion {
         {
             questionID+=questionNum;
         }
-        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),questionID,choices,correctChoice,subjectList.getSelectionModel().getSelectedItem(),theTeacher);
-        question.setQuestionCourses(selectedCourses);
-        Message msg = new Message("#addQuestion", question); // creating a msg to the server demanding the students
+        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),questionID,choices,correctChoice);
+        //question.setQuestionCourses(selectedCourses);
+        List<Object> dataToServer=new ArrayList<>();
+        dataToServer.add(question);
+        dataToServer.add(selectedCourses);
+        dataToServer.add(subjectList.getSelectionModel().getSelectedItem());
+        dataToServer.add((Teacher)GlobalDataSaved.connectedUser);
+        Message msg = new Message("#addQuestion", dataToServer); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
     }
     @FXML
@@ -208,9 +214,10 @@ public class MakeQuestion {
     @FXML
     public void initialize()
     {
+        teacherSubjects=GlobalDataSaved.teacherSubjects;
+        teacherCourses=GlobalDataSaved.teacherCourses;
         if(subjectList.getItems()!=null) {
-            theTeacher = (Teacher) GlobalDataSaved.connectedUser;
-            subjectList.getItems().setAll(theTeacher.getTeacherSubjects());
+            subjectList.getItems().setAll(GlobalDataSaved.teacherSubjects);
         }
     }
 

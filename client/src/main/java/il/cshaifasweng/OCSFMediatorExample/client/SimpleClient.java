@@ -5,6 +5,8 @@ import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
@@ -12,6 +14,7 @@ import aidClasses.Warning;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.util.List;
 
 public class SimpleClient extends AbstractClient {
 
@@ -33,10 +36,6 @@ public class SimpleClient extends AbstractClient {
 					String contentOfMsg=msgFromServer.getMsg();
 					if(contentOfMsg.equals("successful login")) {
 						User LogedInUser=(User) msgFromServer.getObj();
-						if(LogedInUser.getUserName().equals("3"))
-						{
-							System.out.println("h");
-						}
 						GlobalDataSaved.connectedUser=LogedInUser;
 						if(LogedInUser.getClass().equals(Student.class)) {
 							App.setRoot("studentHome");
@@ -47,20 +46,26 @@ public class SimpleClient extends AbstractClient {
 						}
 					}
 					if(contentOfMsg.equals("successful logout")) {
-						GlobalDataSaved.connectedUser=null;
 						App.setRoot("login");
 					}
 					if(contentOfMsg.equals("added the question successfully")) {
-						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
+						GlobalDataSaved.connectedUser=(User) msgFromServer.getObj();
+						System.out.println("teacher :"+GlobalDataSaved.connectedUser.getFirstName()+"added question");
 						App.setRoot("buildExam");
 					}
 					if(contentOfMsg.equals("added the exam successfully")) {
-						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
 						App.setRoot("buildExam");
 					}
 					if(contentOfMsg.equals("added the CompExam successfully")) {
-						GlobalDataSaved.connectedUser=(Teacher)msgFromServer.getObj();
 						App.setRoot("teacherHome");
+					}
+					if(contentOfMsg.equals("sending teacher subjects")) {
+						GlobalDataSaved.teacherSubjects=(List<Subject>)msgFromServer.getObj();
+						return;
+					}
+					if(contentOfMsg.equals("sending teacher courses")) {
+						GlobalDataSaved.teacherCourses=(List<Course>)msgFromServer.getObj();
+						return;
 					}
 				}
             catch (Exception ex) {
@@ -75,6 +80,10 @@ public class SimpleClient extends AbstractClient {
 				client = new SimpleClient("localhost", 3020);
 			}
 			return client;
+		}
+		protected void closeConnectionWithServer()
+		{
+
 		}
 
 }

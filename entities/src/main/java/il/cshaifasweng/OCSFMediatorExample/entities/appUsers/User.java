@@ -27,7 +27,9 @@ public abstract class User implements  Serializable{
         this.isConnected=false;
     }
 
-
+    public int getId() {
+        return id;
+    }
 
     public String getUserID() {
         return userID;

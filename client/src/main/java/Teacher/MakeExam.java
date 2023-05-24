@@ -9,6 +9,7 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -23,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,23 +75,23 @@ public class MakeExam {
 
     @FXML
     void selectCourse(MouseEvent event) {
-        selectedQuestions.clear();
+       selectedQuestions.clear();
         observableList.clear();
         if(courseQuestions!=null)
         {
             courseQuestions.getItems().clear();
         }
-        if(theTeacher.getQuestionsCreated().size()>0)
-        {
-            Question question=theTeacher.getQuestionsCreated().get(0);
+            List<Question> questions=new ArrayList<>();
             Course course=courseList.getSelectionModel().getSelectedItem();
+            for(Course_Question cq:course.getCourseQuestions())
+            {
+                questions.add(cq.getQuestion());
+            }
             if(course.getCourseQuestions().size()!=0)
             {
-                List<Question> questions=course.getCourseQuestions();
                 courseQuestions.getItems().setAll(questions);
             }
         }
-    }
 
     @FXML
     void subjectSelected(ActionEvent event) {
@@ -97,7 +99,7 @@ public class MakeExam {
         selectedQuestions.clear();
         observableList.clear();
         Subject selectedSubject=subjectList.getSelectionModel().getSelectedItem();
-        for(Course course: theTeacher.getTeacherCourses())
+        for(Course course: GlobalDataSaved.teacherCourses)
         {
             if(course.getCourseSubject().getSubjectName().equals(selectedSubject.getSubjectName()))
             {
@@ -174,9 +176,14 @@ public class MakeExam {
             warningTxt.setText("the exam have number of points above 100!");
             return;
         }
-        Exam exam=new Exam((Teacher) GlobalDataSaved.connectedUser,time,"","","",examPoints,subjectList.getSelectionModel().getSelectedItem(),courseList.getSelectionModel().getSelectedItem());
-        exam.setExamQuestions(selectedQuestions);
-        Message msg = new Message("#addExam", exam); // creating a msg to the server demanding the students
+        Exam exam=new Exam(time,"","","",examPoints);
+        List<Object>objects=new ArrayList<>();
+        objects.add(exam);
+        objects.add(GlobalDataSaved.connectedUser);
+        objects.add(courseList.getSelectionModel().getSelectedItem());
+        objects.add(subjectList.getSelectionModel().getSelectedItem());
+        objects.add(selectedQuestions);
+        Message msg = new Message("#addExam", objects); // creating a msg to the server demanding the students
         try {
             SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
         }
@@ -190,10 +197,7 @@ public class MakeExam {
     @FXML
     public void initialize()
     {
-        if(subjectList.getItems()!=null) {
-            theTeacher = (Teacher) GlobalDataSaved.connectedUser;
-            subjectList.getItems().setAll(theTeacher.getTeacherSubjects());
-        }
+       subjectList.getItems().setAll(GlobalDataSaved.teacherSubjects);
         observableList = FXCollections.observableArrayList();
         selectedQuestions=new ArrayList<>();
         selectedQuestionsID=new ArrayList<>();

@@ -66,17 +66,6 @@ public class StudentHome {
     }
     @FXML
     public void initialize() {
-        if (GlobalDataSaved.connectedUser.getUserName().equals("1")) {
-            try {
-                Student student = (Student) GlobalDataSaved.connectedUser;
-                Subject subject = student.getStudentSubjects().get(0);
-                Course course = student.getStudentCourses().get(0);
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
-            }
-
-        }
-
     }
 }
 

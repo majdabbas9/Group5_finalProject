@@ -89,11 +89,11 @@ public class PrepareExam {
         observableListQuestions.clear();
         int i=0;
         Exam exam=examTable.getSelectionModel().getSelectedItem();
-        List<Question> examQuestion=exam.getExamQuestions();
-        for(Question question:examQuestion)
+        //List<Question> examQuestion=exam.getExamQuestions();
+        /*for(Question question:examQuestion)
         {
             observableListQuestions.add(new DisplayQuestion(question.getStudentNotes(),exam.getPoints().get(i++)));
-        }
+        }*/
         examQuestionTable.setItems(observableListQuestions);
     }
 
@@ -143,10 +143,10 @@ public class PrepareExam {
         dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
         if(wayOfExecution.getSelectionModel().getSelectedItem().equals("computerized"))
         {
-            ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code,examTable.getSelectionModel().getSelectedItem(),theTeacher);
-            Message msg = new Message("#addCompExam", compExam); // creating a msg to the server demanding the students
+           // ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code,examTable.getSelectionModel().getSelectedItem(),theTeacher);
+            //Message msg = new Message("#addCompExam", compExam); // creating a msg to the server demanding the students
             try {
-                SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+               // SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
             }
             catch (Exception ex)
             {
@@ -177,7 +177,7 @@ public class PrepareExam {
     @FXML
     public void initialize()
     {
-        examQuestionTable.setVisible(false);
+       /* examQuestionTable.setVisible(false);
         wordFileButton.setVisible(false);
         wayOfExecution.getItems().add("computerized");
         wayOfExecution.getItems().add("manual");
@@ -222,7 +222,7 @@ public class PrepareExam {
         examTable.setItems(observableList);
         observableListQuestions=FXCollections.observableArrayList();
         theQuestionColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,String>("theQuestion"));
-        pointsColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,Integer>("points"));
+        pointsColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,Integer>("points"));*/
     }
 
 }

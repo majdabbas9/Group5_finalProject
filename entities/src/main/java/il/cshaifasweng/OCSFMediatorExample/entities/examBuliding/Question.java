@@ -1,4 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.examBuliding;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -6,7 +8,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "questions")
@@ -21,49 +25,29 @@ public class Question implements Serializable {
     @ElementCollection
     private List<String> choices;
     private String correctChoice;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
     private Subject questionSubject;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatCreated;
 
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Course.class
-    )
-    @JoinTable(
-            name="questions_courses",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> questionCourses;
+    @OneToMany(mappedBy = "question",fetch = FetchType.EAGER)
+    private Set<Course_Question> questionCourses=new HashSet<>();
 
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Exam.class
-    )
-    @JoinTable(
-            name="questions_exams",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "exam_id")
-    )
-    private List<Exam> questionExams;
+    @OneToMany(mappedBy = "question",fetch = FetchType.EAGER)
+    private Set<Exam_Question> questionExams=new HashSet<>();
 
 
     public Question() {
 
     }
-    public Question(String teacherNotes, String studentNotes, String questionID, List<String> choices, String correctChoice, Subject questionSubject, Teacher teacherThatCreated) {
+    public Question(String teacherNotes, String studentNotes, String questionID, List<String> choices, String correctChoice) {
         this.teacherNotes = teacherNotes;
         this.studentNotes = studentNotes;
         this.questionID = questionID;
         this.choices=choices;
         this.correctChoice = correctChoice;
-        this.setQuestionSubject(questionSubject);
-        this.setTeacherThatCreated(teacherThatCreated);
-        this.questionCourses=new ArrayList<>();
-        this.questionExams=new ArrayList<>();
     }
     public int getId() {
         return id;
@@ -108,13 +92,6 @@ public class Question implements Serializable {
         this.correctChoice = correctChoice;
     }
 
-    public List<Course> getQuestionCourses() {
-        return questionCourses;
-    }
-
-    public void setQuestionCourses(List<Course> questionCourses) {
-        this.questionCourses = questionCourses;
-    }
     public Subject getQuestionSubject() {
         return questionSubject;
     }
@@ -131,12 +108,17 @@ public class Question implements Serializable {
         this.teacherThatCreated = teacherThatCreated;
     }
 
-    public List<Exam> getQuestionExams() {
-        return questionExams;
+
+    public Set<Course_Question> getQuestionCourses() {
+        return questionCourses;
     }
 
-    public void setQuestionExams(List<Exam> questionExams) {
-        this.questionExams = questionExams;
+    public void setQuestionCourses(Set<Course_Question> questionCourses) {
+        this.questionCourses = questionCourses;
+    }
+
+    public Set<Exam_Question> getQuestionExams() {
+        return questionExams;
     }
 
     @Override

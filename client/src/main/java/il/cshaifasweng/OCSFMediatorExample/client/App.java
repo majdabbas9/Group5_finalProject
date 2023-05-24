@@ -55,6 +55,8 @@ public class App extends Application {
         try {
             Message msg = new Message("#logout", GlobalDataSaved.connectedUser); // creating a msg to the server demanding the students
             SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+            Message ms1 = new Message("#close"); // creating a msg to the server demanding the students
+            SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
         }
         catch (IOException ex)
         {

@@ -6,7 +6,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "compExams")
@@ -25,23 +27,20 @@ public class ComputerizedExamToExecute implements Serializable {
     private int numberOfStudentDoneInTime;
     @Column(name = "notInTime")
     private int numberOfStudentNotDoneInTime;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_id")
     private Exam exam;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compExamToExecute")
-    private List<Copy> copies;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "compExamToExecute")
+    private Set<Copy> copies=new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatExecuted;
 
-    public ComputerizedExamToExecute(String dateOfExam,int code,Exam exam, Teacher teacherThatExecuted) {
+    public ComputerizedExamToExecute(String dateOfExam,int code) {
         this.examAverage = 0;
         this.histogram = new ArrayList<>();
         this.numberOfStudentDoneInTime = 0;
         this.numberOfStudentNotDoneInTime = 0;
-        setExam(exam);
-        this.copies =new ArrayList<>();
-        setTeacherThatExecuted(teacherThatExecuted);
         this.code=code;
         this.dateOfExam=dateOfExam;
         this.numOfStudentDoing=0;
@@ -96,11 +95,11 @@ public class ComputerizedExamToExecute implements Serializable {
         this.exam = exam;
     }
 
-    public List<Copy> getCopies() {
+    public Set<Copy> getCopies() {
         return copies;
     }
 
-    public void setCopies(List<Copy> copies) {
+    public void setCopies(Set<Copy> copies) {
         this.copies = copies;
     }
 

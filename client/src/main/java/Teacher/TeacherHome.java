@@ -84,19 +84,6 @@ public class TeacherHome {
     @FXML
     public void initialize()
     {
-        if(GlobalDataSaved.connectedUser.getUserName().equals("3"))
-        {
-            try {
-                Teacher teacher=(Teacher) GlobalDataSaved.connectedUser;
-                Subject subject=teacher.getTeacherSubjects().get(0);
-                Course course=teacher.getTeacherCourses().get(0);
-            }
-            catch (Exception exception)
-            {
-                System.out.println(exception.getMessage());
-            }
-
-        }
     }
 
 }

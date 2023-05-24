@@ -1,4 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.examBuliding;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -6,7 +7,10 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "exams")
 public class Exam implements Serializable{
@@ -14,8 +18,8 @@ public class Exam implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
-    private List<ComputerizedExamToExecute> compExamsToExecute;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Set<ComputerizedExamToExecute> compExamsToExecute=new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatCreated;
     private int time;
@@ -24,29 +28,21 @@ public class Exam implements Serializable{
     private String notes;
     @ElementCollection
     private List<Integer> points;
-    @ManyToMany(mappedBy = "questionExams",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Question.class
-    )
-    private List<Question> examQuestions;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "exam",fetch = FetchType.EAGER)
+    private Set<Exam_Question> examQuestions=new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
     private Subject examSubject;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
     private Course examCourse;
 
-    public Exam(Teacher teacherThatCreated, int time, String exam_ID, String teacherNotes, String notes, List<Integer> points, Subject examSubject, Course examCourse) {
-        this.compExamsToExecute =new ArrayList<>();
-        setTeacherThatCreated(teacherThatCreated);
+    public Exam(int time, String exam_ID, String teacherNotes, String notes, List<Integer> points) {
         this.time = time;
         this.exam_ID = exam_ID;
         this.teacherNotes = teacherNotes;
         this.notes = notes;
         this.points = points;
-        this.examQuestions=new ArrayList<>();
-        setExamSubject(examSubject);
-        setExamCourse(examCourse);
     }
 
     public Exam() {
@@ -57,11 +53,11 @@ public class Exam implements Serializable{
         return id;
     }
 
-    public List<ComputerizedExamToExecute> getCompExamsToExecute() {
+    public Set<ComputerizedExamToExecute> getCompExamsToExecute() {
         return compExamsToExecute;
     }
 
-    public void setCompExamsToExecute(List<ComputerizedExamToExecute> compExamsToExecute) {
+    public void setCompExamsToExecute(Set<ComputerizedExamToExecute> compExamsToExecute) {
         this.compExamsToExecute = compExamsToExecute;
     }
 
@@ -113,11 +109,11 @@ public class Exam implements Serializable{
         this.points = points;
     }
 
-    public List<Question> getExamQuestions() {
+    public Set<Exam_Question> getExamQuestions() {
         return examQuestions;
     }
 
-    public void setExamQuestions(List<Question> examQuestions) {
+    public void setExamQuestions(Set<Exam_Question> examQuestions) {
         this.examQuestions = examQuestions;
     }
 
@@ -136,4 +132,5 @@ public class Exam implements Serializable{
     public void setExamCourse(Course examCourse) {
         this.examCourse = examCourse;
     }
+
 }

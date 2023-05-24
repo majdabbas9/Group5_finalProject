@@ -1,5 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.appUsers;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -9,87 +11,72 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
 public class Teacher extends User implements Serializable {
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Subject.class
-    )
-    @JoinTable(
-            name="teachers_subjects",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id")
-    )
-    private List<Subject> teacherSubjects;
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Course.class,fetch=FetchType.EAGER
-    )
-    @JoinTable(
-            name="teachers_courses",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> teacherCourses;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherThatCreated")
-    private List<Exam> examsCreated;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherThatExecuted")
-    private List<ComputerizedExamToExecute> executedExams;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherThatCreated")
-    private List<Question> questionsCreated;
+    @OneToMany(mappedBy = "teacher",fetch = FetchType.EAGER)
+    Set<Teacher_Subject> teacherSubjects;
+    @OneToMany(mappedBy = "teacher",fetch = FetchType.EAGER)
+    Set<Teacher_Course> teacherCourses;
+
+    @OneToMany( mappedBy = "teacherThatCreated",fetch = FetchType.EAGER)
+    private Set<Exam> examsCreated=new HashSet<>();
+    @OneToMany( mappedBy = "teacherThatExecuted",fetch = FetchType.EAGER)
+    private Set<ComputerizedExamToExecute> executedExams=new HashSet<>();
+    @OneToMany(mappedBy = "teacherThatCreated",fetch = FetchType.EAGER)
+    private Set<Question> questionsCreated;
     public Teacher(String userID, String passWord, String userName, String firstName, String lastName) {
         super(userID, passWord, userName, firstName, lastName);
-        this.teacherCourses=new ArrayList<>();
-        this.teacherSubjects=new ArrayList<>();
-        this.examsCreated =new ArrayList<>();
-        this.executedExams=new ArrayList<>();
-        this.questionsCreated=new ArrayList<>();
+        this.teacherCourses=new HashSet<>();
+        this.teacherSubjects=new HashSet<>();
+        this.questionsCreated=new HashSet<>();
     }
     public Teacher() {
 
     }
 
-    public List<Course> getTeacherCourses() {
+    public Set<Teacher_Course> getTeacherCourses() {
         return teacherCourses;
     }
 
-    public void setTeacherCourses(List<Course> teacherCourses) {
+    public void setTeacherCourses(Set<Teacher_Course> teacherCourses) {
         this.teacherCourses = teacherCourses;
     }
 
-    public List<Subject> getTeacherSubjects() {
+    public Set<Teacher_Subject> getTeacherSubjects() {
         return teacherSubjects;
     }
 
-    public void setTeacherSubjects(List<Subject> teacherSubjects) {
+    public void setTeacherSubjects(Set<Teacher_Subject> teacherSubjects) {
         this.teacherSubjects = teacherSubjects;
     }
 
-    public List<Exam> getExamsCreated() {
+    public Set<Exam> getExamsCreated() {
         return examsCreated;
     }
 
-    public void setExamsCreated(List<Exam> exams) {
-        this.examsCreated = exams;
+    public void setExamsCreated(Set<Exam> examsCreated) {
+        this.examsCreated = examsCreated;
     }
 
-    public List<ComputerizedExamToExecute> getExecutedExams() {
+    public Set<ComputerizedExamToExecute> getExecutedExams() {
         return executedExams;
     }
 
-    public void setExecutedExams(List<ComputerizedExamToExecute> executedExams) {
+    public void setExecutedExams(Set<ComputerizedExamToExecute> executedExams) {
         this.executedExams = executedExams;
     }
 
-    public List<Question> getQuestionsCreated() {
+    public Set<Question> getQuestionsCreated() {
         return questionsCreated;
     }
 
-    public void setQuestionsCreated(List<Question> questionsCreated) {
+    public void setQuestionsCreated(Set<Question> questionsCreated) {
         this.questionsCreated = questionsCreated;
     }
 

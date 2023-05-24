@@ -1,4 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.educational;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Student_Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
@@ -7,7 +11,9 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "courses")
@@ -17,36 +23,27 @@ public class Course implements  Serializable{
     private int id;
     private String courseName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
     private Subject courseSubject;
-    @ManyToMany(mappedBy = "questionCourses",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Question.class
-    )
-    private List<Question> courseQuestions;
-    @ManyToMany(mappedBy = "studentCourses",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Student.class
-    )
-    private List<Student> courseStudents;
-    @ManyToMany(mappedBy = "teacherCourses",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            targetEntity = Teacher.class
-    )
-    private List<Teacher> courseTeachers;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examCourse")
-    private List<Exam> courseExams;
+
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
+    Set<Teacher_Course> courseTeachers=new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "examCourse")
+    private Set<Exam> courseExams=new HashSet<>();
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
+    private Set<Course_Question> courseQuestions=new HashSet<>();
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
+    private Set<Student_Course> courseStudents=new HashSet<>();
+
+
     public Course() {
 
     }
     public Course(String courseName,Subject subject) {
         this.courseName = courseName;
         setCourseSubject(subject);
-        this.courseQuestions=new ArrayList<>();
-        this.courseStudents=new ArrayList<>();
-        this.courseTeachers=new ArrayList<>();
-        this.courseExams=new ArrayList<>();
     }
 
     public int getId() {
@@ -72,36 +69,36 @@ public class Course implements  Serializable{
         this.courseName = courseName;
     }
 
-    public List<Question> getCourseQuestions() {
-        return courseQuestions;
-    }
 
-    public void setCourseQuestions(List<Question> courseQuestions) {
-        this.courseQuestions = courseQuestions;
-    }
-
-    public List<Student> getCourseStudents() {
+    public Set<Student_Course> getCourseStudents() {
         return courseStudents;
     }
 
-    public void setCourseStudents(List<Student> courseStudents) {
+    public void setCourseStudents(Set<Student_Course> courseStudents) {
         this.courseStudents = courseStudents;
     }
 
-    public List<Teacher> getCourseTeachers() {
+    public Set<Teacher_Course> getCourseTeachers() {
         return courseTeachers;
     }
 
-    public void setCourseTeachers(List<Teacher> courseTeachers) {
+    public void setCourseTeachers(Set<Teacher_Course> courseTeachers) {
         this.courseTeachers = courseTeachers;
     }
-
-    public List<Exam> getCourseExams() {
+    public Set<Exam> getCourseExams() {
         return courseExams;
     }
 
-    public void setCourseExams(List<Exam> courseExams) {
+    public void setCourseExams(Set<Exam> courseExams) {
         this.courseExams = courseExams;
+    }
+
+    public Set<Course_Question> getCourseQuestions() {
+        return courseQuestions;
+    }
+
+    public void setCourseQuestions(Set<Course_Question> courseQuestions) {
+        this.courseQuestions = courseQuestions;
     }
 
     @Override
