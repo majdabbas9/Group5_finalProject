@@ -148,11 +148,9 @@ public class principalAddUsers {
 
         if (StudnetOrTeacherBox.getValue().equals("Student")) {
             Student student = new Student(id, password, username, firstname, lastname);
-            student.setStudentCourses(selectedCourses);
-            student.setStudentSubjects(selectedSubjects);
-            student.setStudentCourses(selectedCourses);
-            student.setStudentSubjects(selectedSubjects);
-            Message msg2 = new Message("#add student", student);
+            List<Object> dataToServer=new ArrayList<>();
+            dataToServer.add(student);dataToServer.add(selectedSubjects);dataToServer.add(selectedCourses);
+            Message msg2 = new Message("#add student", dataToServer);
             try {
                 SimpleClient.getClient().sendToServer(msg2);
             } catch (IOException e) {
@@ -160,11 +158,9 @@ public class principalAddUsers {
             }
         } else {
             Teacher teacher = new Teacher(id, password, username, firstname, lastname);
-            teacher.setTeacherCourses(selectedCourses);
-            teacher.setTeacherSubjects(selectedSubjects);
-            teacher.setTeacherSubjects(selectedSubjects);
-            teacher.setTeacherCourses(selectedCourses);
-            Message msg3 = new Message("#add teacher", teacher);
+            List<Object> dataToServer=new ArrayList<>();
+            dataToServer.add(teacher);dataToServer.add(selectedSubjects);dataToServer.add(selectedCourses);
+            Message msg3 = new Message("#add teacher", dataToServer);
             try {
                 SimpleClient.getClient().sendToServer(msg3);
             } catch (IOException e) {

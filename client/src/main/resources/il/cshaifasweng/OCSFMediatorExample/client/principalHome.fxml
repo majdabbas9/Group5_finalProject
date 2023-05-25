@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.ManagerHome">
+<AnchorPane prefHeight="576.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.PrincipalHome">
 
     <children>
         <Pane prefHeight="150.0" prefWidth="778.0" style="-fx-background-color: #003000;">
@@ -47,7 +47,7 @@
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <Button fx:id="examsTimeApproveBtn" mnemonicParsing="false" onAction="#ExamsNeedTimeApprovment" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Exams Need Time &#10;Approvment" textAlignment="CENTER" textFill="WHITE">
@@ -74,31 +74,31 @@
                         <Insets />
                     </GridPane.margin>
                 </Button>
-            <Button fx:id="addUsersBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#addUsers" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Add Users" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="statisticalDataBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#showStatisticalData" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Statistical Data" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="gradesBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Grades" textFill="WHITE" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
+                <Button fx:id="addUsersBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#addUsers" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Add Users" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="statisticalDataBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#showStatisticalData" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Statistical Data" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="gradesBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#showGrades" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Grades" textFill="WHITE" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
             </children>
         </GridPane>
-      <Button fx:id="logOutBtn" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" onAction="#logOut" prefHeight="46.0" prefWidth="90.0" style="-fx-background-color: #0A8A0A;" text="Log out" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+        <Button fx:id="logOutBtn" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" onAction="#logOut" prefHeight="46.0" prefWidth="90.0" style="-fx-background-color: #0A8A0A;" text="Log out" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
     </children>
 
 </AnchorPane>

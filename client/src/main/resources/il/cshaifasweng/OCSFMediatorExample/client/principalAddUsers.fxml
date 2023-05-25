@@ -9,55 +9,55 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.principalAddUsers">
-   <children>
-      <TextField fx:id="firstnametxt" layoutX="65.0" layoutY="70.0" promptText="First Name" />
-      <TextField fx:id="lastnametxt" layoutX="322.0" layoutY="70.0" promptText="Last Name" />
-      <TextField fx:id="usernametxt" layoutX="592.0" layoutY="70.0" promptText="User Name" />
-      <TextField fx:id="IDText" layoutX="65.0" layoutY="117.0" promptText="ID" />
-      <TextField fx:id="PasswordText" layoutX="322.0" layoutY="117.0" promptText="Password" />
-      <ComboBox fx:id="StudnetOrTeacherBox" layoutX="593.0" layoutY="116.0" prefWidth="150.0" visibleRowCount="2" />
-      <ListView fx:id="SubjectsList" layoutX="151.0" layoutY="188.0" onMouseClicked="#selectSubject" prefHeight="148.0" prefWidth="200.0" />
-      <ListView fx:id="CoursesList" layoutX="430.0" layoutY="188.0" onMouseClicked="#selectCourse" prefHeight="148.0" prefWidth="200.0" />
-      <ListView fx:id="selectedSubjectsList" layoutX="151.0" layoutY="378.0" onMouseClicked="#deleteSubject" prefHeight="148.0" prefWidth="200.0" />
-      <ListView fx:id="selectedCoursesList" layoutX="430.0" layoutY="378.0" onMouseClicked="#deleteCourse" prefHeight="148.0" prefWidth="200.0" />
-      <Button fx:id="AddBtn" layoutX="598.0" layoutY="534.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Add" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
-      <Button fx:id="BackBtn" layoutX="14.0" layoutY="534.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Back to Menu" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Text fill="WHITE" layoutX="21.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD USERS" wrappingWidth="149.60000000000014">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="217.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subjects" wrappingWidth="68.103515625">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="499.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text fx:id="errortxt" fill="RED" layoutX="202.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="390.399963378906">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="182.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Subjects">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="463.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Courses">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-   </children>
+    <children>
+        <TextField fx:id="firstnametxt" layoutX="65.0" layoutY="70.0" promptText="First Name" />
+        <TextField fx:id="lastnametxt" layoutX="322.0" layoutY="70.0" promptText="Last Name" />
+        <TextField fx:id="usernametxt" layoutX="592.0" layoutY="70.0" promptText="User Name" />
+        <TextField fx:id="IDText" layoutX="65.0" layoutY="117.0" promptText="ID" />
+        <TextField fx:id="PasswordText" layoutX="322.0" layoutY="117.0" promptText="Password" />
+        <ComboBox fx:id="StudnetOrTeacherBox" layoutX="593.0" layoutY="116.0" prefWidth="150.0" visibleRowCount="2" />
+        <ListView fx:id="SubjectsList" layoutX="151.0" layoutY="188.0" onMouseClicked="#selectSubject" prefHeight="148.0" prefWidth="200.0" />
+        <ListView fx:id="CoursesList" layoutX="430.0" layoutY="188.0" onMouseClicked="#selectCourse" prefHeight="148.0" prefWidth="200.0" />
+        <ListView fx:id="selectedSubjectsList" layoutX="151.0" layoutY="378.0" onMouseClicked="#deleteSubject" prefHeight="148.0" prefWidth="200.0" />
+        <ListView fx:id="selectedCoursesList" layoutX="430.0" layoutY="378.0" onMouseClicked="#deleteCourse" prefHeight="148.0" prefWidth="200.0" />
+        <Button fx:id="AddBtn" layoutX="598.0" layoutY="534.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Add" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font></Button>
+        <Button fx:id="BackBtn" layoutX="14.0" layoutY="534.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Back to Menu" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Text fill="WHITE" layoutX="21.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD USERS" wrappingWidth="149.60000000000014">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="217.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subjects" wrappingWidth="68.103515625">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="499.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Courses">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fx:id="errortxt" fill="RED" layoutX="202.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="390.399963378906">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="182.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Subjects">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="463.0" layoutY="363.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Courses">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+    </children>
 </AnchorPane>

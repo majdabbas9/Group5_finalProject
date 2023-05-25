@@ -8,27 +8,27 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.principalExams">
-   <children>
-      <TableView fx:id="table" layoutX="7.0" layoutY="44.0" onMouseClicked="#selectExam" prefHeight="473.0" prefWidth="764.0">
-        <columns>
-          <TableColumn fx:id="ExamId" prefWidth="372.79997539520264" text="Exam ID" />
-          <TableColumn fx:id="ExamTeacher" minWidth="0.0" prefWidth="392.79998779296875" text="Teacher " />
-        </columns>
-      </TableView>
-      <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams" wrappingWidth="110.13672637939453">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Button fx:id="ShowExamBtn" layoutX="509.0" layoutY="531.0" mnemonicParsing="false" onAction="#ShowExam" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #0A8A0A;" text="Show Exam" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="BackToMenuBtn" layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="40.0" prefWidth="258.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-   </children>
+    <children>
+        <TableView fx:id="table" layoutX="7.0" layoutY="44.0" onMouseClicked="#selectExam" prefHeight="473.0" prefWidth="764.0">
+            <columns>
+                <TableColumn fx:id="ExamId" prefWidth="372.79997539520264" text="Exam ID" />
+                <TableColumn fx:id="ExamTeacher" minWidth="0.0" prefWidth="392.79998779296875" text="Teacher " />
+            </columns>
+        </TableView>
+        <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams" wrappingWidth="110.13672637939453">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Button fx:id="ShowExamBtn" layoutX="509.0" layoutY="531.0" mnemonicParsing="false" onAction="#ShowExam" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #0A8A0A;" text="Show Exam" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="BackToMenuBtn" layoutX="14.0" layoutY="530.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="40.0" prefWidth="258.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

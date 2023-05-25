@@ -5,18 +5,16 @@ import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerHome {
+public class PrincipalHome {
 
     @FXML
     private Button addUsersBtn;
@@ -72,19 +70,13 @@ public class ManagerHome {
     @FXML
     void addUsers(ActionEvent event) throws IOException {
         List<Subject> list = new ArrayList<>();
-        Message msg = new Message("#AllSubjects", list);
+        Message msg = new Message("#AllSubjectsToPrincipal", list);
         try {
             SimpleClient.getClient().sendToServer(msg);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            Thread.sleep(80);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        App.setRoot("principalAddUsers");
     }
 
     @FXML

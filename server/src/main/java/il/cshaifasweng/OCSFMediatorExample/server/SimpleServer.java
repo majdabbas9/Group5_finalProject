@@ -1,10 +1,9 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import aidClasses.GlobalDataSaved;
+import aidClasses.GradesDetails;
 import aidClasses.Message;
-import com.mysql.cj.callback.MysqlCallback;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
@@ -28,7 +27,9 @@ import org.hibernate.service.ServiceRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Set;
+
+import aidClasses.GlobalDataSaved;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.*;
 
@@ -38,126 +39,131 @@ import javax.persistence.Query;
 import javax.xml.crypto.Data;
 
 public class SimpleServer extends AbstractServer {
-    private static Session session;
+	private static Session session;
 
-    public static Session getSession() {
-        return session;
-    }
+	public static Session getSession() {
+		return session;
+	}
 
-    public static void setSession(Session session) {
-        SimpleServer.session = session;
-    }
+	public static void setSession(Session session) {
+		SimpleServer.session = session;
+	}
 
 
-    private static SessionFactory getSessionFactory() throws HibernateException {
+	private static SessionFactory getSessionFactory() throws HibernateException {
 
-        Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(User.class);
-        configuration.addAnnotatedClass(Student.class);
-        configuration.addAnnotatedClass(Teacher.class);
-        configuration.addAnnotatedClass(Principal.class);
-        configuration.addAnnotatedClass(Course.class);
-        configuration.addAnnotatedClass(Subject.class);
-        configuration.addAnnotatedClass(ComputerizedExamToExecute.class);
-        configuration.addAnnotatedClass(Exam.class);
-        configuration.addAnnotatedClass(Question.class);
-        configuration.addAnnotatedClass(Copy.class);
-        configuration.addAnnotatedClass(Grade.class);
+		Configuration configuration = new Configuration();
+		configuration.addAnnotatedClass(User.class);
+		configuration.addAnnotatedClass(Principal.class);
+		configuration.addAnnotatedClass(Student.class);
+		configuration.addAnnotatedClass(Teacher.class);
+		configuration.addAnnotatedClass(Course.class);
+		configuration.addAnnotatedClass(Subject.class);
+		configuration.addAnnotatedClass(ComputerizedExamToExecute.class);
+		configuration.addAnnotatedClass(Exam.class);
+		configuration.addAnnotatedClass(Question.class);
+		configuration.addAnnotatedClass(Copy.class);
+		configuration.addAnnotatedClass(Grade.class);
 		configuration.addAnnotatedClass(Teacher_Subject.class);
 		configuration.addAnnotatedClass(Teacher_Course.class);
 		configuration.addAnnotatedClass(Course_Question.class);
 		configuration.addAnnotatedClass(Exam_Question.class);
 		configuration.addAnnotatedClass(Student_Course.class);
 		configuration.addAnnotatedClass(Student_Subject.class);
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties())
-                .build();
-        return configuration.buildSessionFactory(serviceRegistry);
-    }
+		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+				.applySettings(configuration.getProperties())
+				.build();
+		return configuration.buildSessionFactory(serviceRegistry);
+	}
 
 
-    public SimpleServer(int port) {
-        super(port);
-        SessionFactory sessionFactory = getSessionFactory();
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        GenerateAll.generateEducational(session);  // moving the students to the database
-        //GetUsers.generateUsers(session);
-        session.getTransaction().commit();
+	public SimpleServer(int port) {
+		super(port);
+		SessionFactory sessionFactory = getSessionFactory();
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		GenerateAll.generateEducational(session);  // moving the students to the database
+		//GetUsers.generateUsers(session);
+		session.getTransaction().commit();
+	}
 
-    }
-
-    public void logout(User user) {
-        session.beginTransaction();
-        user.setConnected(false);
-        session.update(user);
-        session.flush();
-        session.clear();
-        if(user.getUserName().equals("3"))
-		{
-			System.out.println("h");
-		}session.getTransaction().commit();
-    }
-
-    public void login(User user) {
-        if(user.getUserName().equals("3"))
-		{
-			System.out.println("h");
-		}session.beginTransaction();
-        user.setConnected(true);
-        session.update(user);
-        session.flush();
-        session.clear();
-        session.getTransaction().commit();
-    }
-
-    public void addQuestion(Question question,List<Course> questionCourses,Subject questionSubject,Teacher theTeacher) {
-		//session.flush();
-        session.beginTransaction();
+	public void logout(User user) {
+		session.beginTransaction();
+		user.setConnected(false);
+		session.update(user);
+		session.flush();
 		session.clear();
-        session.save(question);
-        session.flush();
+		if(user.getUserName().equals("3"))
+		{
+			System.out.println("h");
+		}
+		session.getTransaction().commit();
+	}
 
-        question.setQuestionSubject(questionSubject);
+	public void login(User user) {
+		if(user.getUserName().equals("3"))
+		{
+			System.out.println("h");
+		}
+		session.beginTransaction();
+		user.setConnected(true);
+		session.update(user);
+		session.flush();
+		session.clear();
+
+		session.getTransaction().commit();
+	}
+
+	public static void addQuestion(Question question,List<Course> questionCourses,Subject questionSubject,Teacher theTeacher) {
+		//session.flush();
+		session.beginTransaction();
+		session.clear();
+		session.save(question);
+		session.flush();
+
+		question.setQuestionSubject(questionSubject);
 		session.update(question);
 		session.flush();
 
 		question.setTeacherThatCreated(theTeacher);
 		session.update(question);
 		session.flush();
-        theTeacher.getQuestionsCreated().add(question);
-        session.update(theTeacher);
-        session.flush();
+
+		theTeacher.getQuestionsCreated().add(question);
+		session.update(theTeacher);
+		session.flush();
 
 		Subject subject = question.getQuestionSubject();
 		subject.getSubjectQuestions().add(question);
 		session.update(subject);
 		session.flush();
 
-        Course_Question cq;
+		Course_Question cq;
 		for(Course course:questionCourses)
 		{
 			cq=new Course_Question(course,question);
 			session.save(cq);
 			session.flush();
-            course.getCourseQuestions().add(cq);
+
+			course.getCourseQuestions().add(cq);
 			session.update(course);
 			session.flush();
 
 			question.getQuestionCourses().add(cq);
-            session.update(question);
-            session.flush();}
+			session.update(question);
+			session.flush();
+		}
 
-        //session.clear();
-        session.getTransaction().commit();
-    }
+		//session.clear();
+		session.getTransaction().commit();
+	}
 
-    public void addExam(Exam exam,Teacher teacher,Course course,Subject subject,List<Question> questions) {
+	public static void addExam(Exam exam,Teacher teacher,Course course,Subject subject,List<Question> questions) {
 		/*saving exam*/
-        session.beginTransaction();
+		session.beginTransaction();
 		session.clear();
-        session.save(exam);
-        session.flush();
+		session.save(exam);
+		session.flush();
 		/*end of saving exam*/
 
 		/*updating exam*/
@@ -169,15 +175,16 @@ public class SimpleServer extends AbstractServer {
 		session.update(exam);
 		session.flush();
 
-        exam.setExamCourse(course);
+		exam.setExamCourse(course);
 		session.update(exam);
 		session.flush();
 		/*end of updating exam*/
 
 		/*updating teacher*/
-        teacher.getExamsCreated().add(exam);
-        session.update(teacher);
-        session.flush();/*end of updating teacher*/
+		teacher.getExamsCreated().add(exam);
+		session.update(teacher);
+		session.flush();
+		/*end of updating teacher*/
 
 		/*updating course*/
 		course.getCourseExams().add(exam);
@@ -185,42 +192,20 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 		/*end of updating course*/
 
-        /*updating subject */
-        subject.getSubjectExams().add(exam);
-        session.update(subject);
-        session.flush();/*end of updating subject*/
+		/*updating subject*/
+		subject.getSubjectExams().add(exam);
+		session.update(subject);
+		session.flush();
+		/*end of updating subject*/
 
-        Exam_Question eq;
+		Exam_Question eq;
 		for(Question question:questions)
 		{
-        eq=new Exam_Question(exam,question);
-        session.save(eq);
-        session.flush();
+			eq=new Exam_Question(exam,question);
+			session.save(eq);
+			session.flush();
 
-        session.clear();
-
-        session.getTransaction().commit();
-    }
-
-
-    public void addTeacher(Teacher teacher) {
-        session.beginTransaction();
-
-        session.save(teacher);
-        session.flush();
-
-        session.clear();
-
-        session.getTransaction().commit();
-    }
-
-    public void addStudent(Student student) {
-        session.beginTransaction();
-
-        session.save(student);
-        session.flush();
-
-        question.getQuestionExams().add(eq);
+			question.getQuestionExams().add(eq);
 			session.update(question);
 			session.flush();
 
@@ -263,99 +248,188 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 		session.getTransaction().commit();
 	}
-	public void addCompExam(ComputerizedExamToExecute compExam)
+	public static void addCompExam(ComputerizedExamToExecute compExam,Teacher teacher,Exam exam)
 	{
 		session.beginTransaction();
-
+		session.clear();
 		session.save(compExam);
 		session.flush();
 
-		Teacher teacher=compExam.getTeacherThatExecuted();
+		compExam.setExam(exam);
+		session.update(compExam);
+		session.flush();
+
+		compExam.setTeacherThatExecuted(teacher);
+		session.update(compExam);
+		session.flush();
+
+		 teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
 		session.flush();
 
 
-		Exam exam=compExam.getExam();
 		exam.getCompExamsToExecute().add(compExam);
 		session.update(exam);
 		session.flush();
 
 		session.getTransaction().commit();
 	}
+	public void addTeacher(Teacher teacher,List<Subject> subjects,List<Course> courses) {
+		session.beginTransaction();
+		session.clear();
 
-    @Override
-    protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
-        if (msg.getClass().equals(Message.class)) {
-            try {
-                Message msgFromClient = (Message) msg;
-                String contentOfMsg = msgFromClient.getMsg();
-                if (contentOfMsg.equals("#login")) {
-                    String[] userDetails = (String[]) (((Message) msg).getObj());
-                    String userName = userDetails[0];
-                    String password = userDetails[1];
+		session.save(teacher);
+		session.flush();
 
+		Teacher_Subject ts;
+		Teacher_Course tc;
+		for(Subject subject:subjects)
+		{
+			ts=new Teacher_Subject(teacher,subject);
+			session.save(ts);
+			session.flush();
 
-                    String queryString="FROM User WHERE userName = : userName";
+			teacher.getTeacherSubjects().add(ts);
+			session.update(teacher);
+			session.flush();
+
+			subject.getSubjectTeachers().add(ts);
+			session.update(subject);
+			session.flush();
+		}
+		for(Course course:courses)
+		{
+			tc=new Teacher_Course(teacher,course);
+			session.save(tc);
+			session.flush();
+
+			teacher.getTeacherCourses().add(tc);
+			session.update(teacher);
+			session.flush();
+
+			course.getCourseTeachers().add(tc);
+			session.update(course);
+			session.flush();
+		}
+		session.getTransaction().commit();
+	}
+
+	public void addStudent(Student student,List<Subject> subjects,List<Course> courses) {
+		session.beginTransaction();
+		session.clear();
+
+		session.save(student);
+		session.flush();
+
+		Student_Subject ss;
+		Student_Course sc;
+		for(Subject subject:subjects)
+		{
+			ss=new Student_Subject(student,subject);
+			session.save(ss);
+			session.flush();
+
+			student.getStudentSubjects().add(ss);
+			session.update(student);
+			session.flush();
+
+			subject.getSubjectStudents().add(ss);
+			session.update(subject);
+			session.flush();
+		}
+		for(Course course:courses)
+		{
+			sc=new Student_Course(student,course);
+			session.save(sc);
+			session.flush();
+
+			student.getStudentCourses().add(sc);
+			session.update(student);
+			session.flush();
+
+			course.getCourseStudents().add(sc);
+			session.update(course);
+			session.flush();
+		}
+		session.getTransaction().commit();
+	}
+
+	@Override
+	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
+		if (msg.getClass().equals(Message.class)) {
+			try {
+				Message msgFromClient = (Message) msg;
+				String contentOfMsg = msgFromClient.getMsg();
+				if (contentOfMsg.equals("#login")) {
+					String[] userDetails = (String[]) (((Message) msg).getObj());
+					String userName = userDetails[0];
+					String password = userDetails[1];
+
+					String queryString="FROM User WHERE userName = : userName";
 					Query query = session.createQuery(queryString,User.class);
 					query.setParameter("userName",userName);
-					List<User> users=query.getResultList();if (users.size() == 0) {
-                        Warning warning = new Warning("there is no such a username");
-                        try {
-                            client.sendToClient(warning);
-                            System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                            return;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+					List<User> users=query.getResultList();
+					if (users.size() == 0) {
+						Warning warning = new Warning("there is no such a username");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
-                    }
-                    if (!users.get(0).getPassWord().equals(password)) {
-                        Warning warning = new Warning("wrong password");
-                        try {
-                            client.sendToClient(warning);
-                            System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                            return;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+					}
+					if (!users.get(0).getPassWord().equals(password)) {
+						Warning warning = new Warning("wrong password");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
-                    }
-                    if (users.get(0).getConnected()) {
-                        Warning warning = new Warning("user already logged in!");
-                        try {
-                            client.sendToClient(warning);
-                            System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                            return;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+					}
+					if (users.get(0).getConnected()) {
+						Warning warning = new Warning("user already logged in!");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
-                    }
-                    //login(users.get(0));
-                    Message msgToClient = new Message("successful login", users.get(0));
-                    client.sendToClient(msgToClient);
-                    return;
-                }
-                if (contentOfMsg.equals("#logout")) {
-                    User userToLogout = (User) msgFromClient.getObj();
-                    session.clear();
+					}
+					//login(users.get(0));
+					Message msgToClient = new Message("successful login", users.get(0));
+					client.sendToClient(msgToClient);
+					return;
+				}
+				if (contentOfMsg.equals("#logout")) {
+					User userToLogout = (User) msgFromClient.getObj();
+					session.clear();
 					//logout(userToLogout);
-                    Message msgToClient = new Message("successful logout", null);
-                    client.sendToClient(msgToClient);return;
-                }
-                if (contentOfMsg.equals("#addQuestion")) {List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-                    Question question = (Question) (dataFromClient.get(0));
-                    addQuestion(question,(List<Course>)dataFromClient.get(1),(Subject)dataFromClient.get(2),(Teacher)dataFromClient.get(3));
-                    Message messageToClient = new Message("added the question successfully", (Teacher)dataFromClient.get(3));
-                    try {
-                        client.sendToClient(messageToClient);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                return;}
-                if (contentOfMsg.equals("#addExam")) {
-                    List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+					Message msgToClient = new Message("successful logout", null);
+					client.sendToClient(msgToClient);
+					return;
+				}
+				if (contentOfMsg.equals("#addQuestion")) {
+					List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+					Question question = (Question) (dataFromClient.get(0));
+					addQuestion(question,(List<Course>)dataFromClient.get(1),(Subject)dataFromClient.get(2),(Teacher)dataFromClient.get(3));
+					Message messageToClient = new Message("added the question successfully", (Teacher)dataFromClient.get(3));
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					return;
+				}
+				if (contentOfMsg.equals("#addExam")) {
+					List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
 					addExam((Exam) dataFromClient.get(0),(Teacher) dataFromClient.get(1), (Course) dataFromClient.get(2),(Subject)dataFromClient.get(3),(List<Question>) dataFromClient.get(4));
 					Message messageToClient = new Message("added the exam successfully", (Teacher)dataFromClient.get(1));
 					try {
@@ -366,9 +440,10 @@ public class SimpleServer extends AbstractServer {
 					return;
 				}
 				if (contentOfMsg.equals("#addCompExam")) {
-					ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) msgFromClient.getObj();
-                    addCompExam(compExam);
-                    Message messageToClient = new Message("added the CompExam successfully", compExam.getTeacherThatExecuted());
+					List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+
+					addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(Teacher)dataFromClient.get(1),(Exam) dataFromClient.get(2));
+					Message messageToClient = new Message("added the CompExam successfully", (Teacher)dataFromClient.get(1));
 					try {
 						client.sendToClient(messageToClient);
 					} catch (IOException e) {
@@ -393,95 +468,133 @@ public class SimpleServer extends AbstractServer {
 					int id=(int)msgFromClient.getObj();
 					List<Course> teacherCourses=GetUsers.getTeacherCourses(session,id);
 					Message messageToClient = new Message("sending teacher courses",teacherCourses);
-                    try {
-                        client.sendToClient(messageToClient);
-                    } catch (IOException e) {
-                        e.printStackTrace();}
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					return;
+				}
+				if (contentOfMsg.equals("#show student grades"))
+				{
+					User user = (User) msgFromClient.getObj();
+					String q="from Grade where student='"+ user.getId() +"'";
+					Query query=session.createQuery(q);
+					List<Grade> grades = (List<Grade>) (query.getResultList());
+					Message msgToClient = new Message("student grades",grades);
+					client.sendToClient(msgToClient);
+					return;
+				}
+				if (contentOfMsg.equals("#check exam code"))
+				{
+					Message msgToClient = new Message("check code");
+					client.sendToClient(msgToClient);
+
+					return;
+				}
+				if (contentOfMsg.equals("#check code validation"))
+				{
+					String code = (String) msgFromClient.getObj().toString();
+					String q = "from ComputerizedExamToExecute where code = '"+ code +"'";
+					Query query=session.createQuery(q);
+					List<ComputerizedExamToExecute> compExams=(List<ComputerizedExamToExecute>) (query.getResultList());
+					if (compExams.size() == 0){
+						Warning warning = new Warning("code is not correct");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else {
+						Message msgToClient = new Message("do exam", compExams.get(0));
+						client.sendToClient(msgToClient);
+					}
+
+					return;
+				}
+				if (contentOfMsg.equals("#AllSubjectsToPrincipal")) {
+
+					List<Subject> list = (List<Subject>) msgFromClient.getObj();
+					list.addAll(GetEducational.getAllSubjects(session));
+					Message messageToClient = new Message("All Subjects Given to principal");
+					messageToClient.setObj(list);
+					try {
+						client.sendToClient(messageToClient);
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (contentOfMsg.equals("CheckID")) {
+					String id = (String) msgFromClient.getObj();
+					String answer;
+					boolean check = GetEducational.checkID(session, id);
+					if (check) {
+						GlobalDataSaved.AddFlag = true;
+						answer = "The User was Added to the System";
+					} else {
+						GlobalDataSaved.AddFlag = false;
+						answer = "User Already in the System";
+					}
+					Warning warning = new Warning(answer);
+					try {
+						client.sendToClient(warning);
+						System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+						return;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+
+					Message messageToClient = new Message(answer);
+
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (contentOfMsg.equals("#add teacher")) {
+					List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
+					addTeacher((Teacher) dataFromClient.get(0),(List<Subject>) dataFromClient.get(1),(List<Course>) dataFromClient.get(2));
+					Message messageToClient = new Message("Teacher Added Successfully");
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+				if (contentOfMsg.equals("#add student")) {
+					List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
+					addStudent((Student) dataFromClient.get(0),(List<Subject>) dataFromClient.get(1),(List<Course>) dataFromClient.get(2));
+					Message messageToClient = new Message("Student Added Successfully");
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 				if (contentOfMsg.equals("#close")) {
 					session.close();
 				}
-
-
-
-                if (contentOfMsg.equals("#AllSubjects")) {
-
-                    List<Subject> list = (List<Subject>) msgFromClient.getObj();
-                    list.addAll(GetEducational.getAllSubjects(session));
-                    Message messageToClient = new Message("All Subjects Given");
-                    messageToClient.setObj(list);
-                    try {
-                        client.sendToClient(messageToClient);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (contentOfMsg.equals("CheckID")) {
-                    String id = (String) msgFromClient.getObj();
-                    String answer;
-                    boolean check = GetEducational.checkID(session, id);
-                    if (check) {
-                        GlobalDataSaved.AddFlag = true;
-                        answer = "The User was Added to the System";
-                    } else {
-                        GlobalDataSaved.AddFlag = false;
-                        answer = "User Already in the System";
-                    }
-                    Warning warning = new Warning(answer);
-                    try {
-                        client.sendToClient(warning);
-                        System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                        return;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    Message messageToClient = new Message(answer);
-
-                    try {
-                        client.sendToClient(messageToClient);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (contentOfMsg.equals("#add teacher")) {
-                    Teacher teacher = (Teacher) msgFromClient.getObj();
-                    addTeacher(teacher);
-                    Message messageToClient = new Message("Teacher Added Successfully");
-                    try {
-                        client.sendToClient(messageToClient);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if (contentOfMsg.equals("#add student")) {
-                    Student student = (Student) msgFromClient.getObj();
-                    addStudent(student);
-                    Message messageToClient = new Message("Student Added Successfully");
-                    try {
-                        client.sendToClient(messageToClient);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
-        } else {
-            String msgString = msg.toString();
-            if (msgString.startsWith("#warning")) {
-                Warning warning = new Warning("Warning from server!");
-                try {
-                    client.sendToClient(warning);
-                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+		} else {
+			String msgString = msg.toString();
+			if (msgString.startsWith("#warning")) {
+				Warning warning = new Warning("Warning from server!");
+				try {
+					client.sendToClient(warning);
+					System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
 		}
 

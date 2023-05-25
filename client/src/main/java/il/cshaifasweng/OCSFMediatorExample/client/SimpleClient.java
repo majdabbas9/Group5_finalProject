@@ -2,26 +2,19 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
+import javafx.collections.FXCollections;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import aidClasses.Warning;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
 import java.util.List;
 
 public class SimpleClient extends AbstractClient {
@@ -36,13 +29,6 @@ public class SimpleClient extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		if (msg.getClass().equals(Warning.class)) {
 			Warning warning=(Warning)msg;
-			if (((Warning) msg).getMessage().equals("The User was Added to the System")) {
-				try {
-					App.setRoot("principalHome");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 				EventBus.getDefault().post(new WarningEvent((Warning) msg));
 			}
 			if(msg.getClass().equals(Message.class)) {
@@ -85,13 +71,27 @@ public class SimpleClient extends AbstractClient {
 						GlobalDataSaved.teacherCourses=(List<Course>)msgFromServer.getObj();
 						return;
 					}
-					if (contentOfMsg.equals("All Subjects Given")) {
+					if (contentOfMsg.equals("student grades")) {
+						GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
+						System.out.println("*****/////"+ GlobalDataSaved.gradeList.get(0).getGrade());
+						App.setRoot("studentGrades");
+						return;
+					}
+					if (contentOfMsg.equals("do exam")) {
+						ComputerizedExamToExecute compExams = (ComputerizedExamToExecute)msgFromServer.getObj();
+						GlobalDataSaved.compExam = compExams;
+						App.setRoot("solve_Exam");
+						return;
+					}
+					if (contentOfMsg.equals("All Subjects Given to principal")) {
 						GlobalDataSaved.subjects = FXCollections.observableArrayList();
 						GlobalDataSaved.subjects.addAll((List<Subject>) msgFromServer.getObj());
+						App.setRoot("principalAddUsers");
+						return;
 					}
 					if (contentOfMsg.equals("Teacher Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
-
+						return;
 					}
 					if (contentOfMsg.equals("Student Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
@@ -102,7 +102,7 @@ public class SimpleClient extends AbstractClient {
 			}
 			}
 
-    }
+		}
 
 		public static SimpleClient getClient() {
 			if (client == null) {
