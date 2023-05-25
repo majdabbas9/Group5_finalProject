@@ -9,6 +9,8 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -24,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PrepareExam {
@@ -89,11 +92,11 @@ public class PrepareExam {
         observableListQuestions.clear();
         int i=0;
         Exam exam=examTable.getSelectionModel().getSelectedItem();
-        //List<Question> examQuestion=exam.getExamQuestions();
-        /*for(Question question:examQuestion)
+        List<Exam_Question> examQuestion=new ArrayList<>(exam.getExamQuestions());
+        for(Exam_Question exam_question:examQuestion)
         {
-            observableListQuestions.add(new DisplayQuestion(question.getStudentNotes(),exam.getPoints().get(i++)));
-        }*/
+            observableListQuestions.add(new DisplayQuestion(exam_question.getQuestion().getStudentNotes(),exam.getPoints().get(i++)));
+        }
         examQuestionTable.setItems(observableListQuestions);
     }
 
@@ -143,10 +146,12 @@ public class PrepareExam {
         dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
         if(wayOfExecution.getSelectionModel().getSelectedItem().equals("computerized"))
         {
-           // ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code,examTable.getSelectionModel().getSelectedItem(),theTeacher);
-            //Message msg = new Message("#addCompExam", compExam); // creating a msg to the server demanding the students
+            List<Object> dataToServer=new ArrayList<>();
+           ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code);
+            dataToServer.add(compExam);dataToServer.add(GlobalDataSaved.connectedUser);dataToServer.add(examTable.getSelectionModel().getSelectedItem());
+            Message msg = new Message("#addCompExam", dataToServer); // creating a msg to the server demanding the students
             try {
-               // SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+                SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
             }
             catch (Exception ex)
             {
@@ -177,7 +182,7 @@ public class PrepareExam {
     @FXML
     public void initialize()
     {
-       /* examQuestionTable.setVisible(false);
+       examQuestionTable.setVisible(false);
         wordFileButton.setVisible(false);
         wayOfExecution.getItems().add("computerized");
         wayOfExecution.getItems().add("manual");
@@ -209,20 +214,16 @@ public class PrepareExam {
         ObservableList<Exam> observableList = FXCollections.observableArrayList();
         examIdColumn.setCellValueFactory(new PropertyValueFactory<Exam,String>("exam_ID"));
         examTimeColumn.setCellValueFactory(new PropertyValueFactory<Exam,Integer>("time"));
-        for(Course course:theTeacher.getTeacherCourses())
+        for(Exam exam:GlobalDataSaved.allExamsForTeacher)
         {
-            for(Exam exam:course.getCourseExams())
-            {
-                if(!observableList.contains(exam))
-                {
-                    observableList.add(exam);
-                }
-            }
+            observableList.add(exam);
         }
+
+
         examTable.setItems(observableList);
         observableListQuestions=FXCollections.observableArrayList();
         theQuestionColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,String>("theQuestion"));
-        pointsColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,Integer>("points"));*/
+        pointsColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,Integer>("points"));
     }
 
 }

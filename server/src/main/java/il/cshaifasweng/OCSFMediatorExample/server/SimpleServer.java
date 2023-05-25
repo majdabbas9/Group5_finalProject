@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import aidClasses.GradesDetails;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
@@ -14,6 +13,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GenerateAll;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetUsers;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
@@ -27,7 +27,6 @@ import org.hibernate.service.ServiceRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import aidClasses.GlobalDataSaved;
 
@@ -36,7 +35,6 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.*;
 import aidClasses.Warning;
 
 import javax.persistence.Query;
-import javax.xml.crypto.Data;
 
 public class SimpleServer extends AbstractServer {
 	private static Session session;
@@ -89,28 +87,18 @@ public class SimpleServer extends AbstractServer {
 
 	public void logout(User user) {
 		session.beginTransaction();
+		session.clear();
 		user.setConnected(false);
 		session.update(user);
 		session.flush();
-		session.clear();
-		if(user.getUserName().equals("3"))
-		{
-			System.out.println("h");
-		}
 		session.getTransaction().commit();
 	}
 
 	public void login(User user) {
-		if(user.getUserName().equals("3"))
-		{
-			System.out.println("h");
-		}
 		session.beginTransaction();
 		user.setConnected(true);
 		session.update(user);
 		session.flush();
-		session.clear();
-
 		session.getTransaction().commit();
 	}
 
@@ -410,7 +398,6 @@ public class SimpleServer extends AbstractServer {
 				}
 				if (contentOfMsg.equals("#logout")) {
 					User userToLogout = (User) msgFromClient.getObj();
-					session.clear();
 					//logout(userToLogout);
 					Message msgToClient = new Message("successful logout", null);
 					client.sendToClient(msgToClient);
@@ -444,6 +431,20 @@ public class SimpleServer extends AbstractServer {
 
 					addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(Teacher)dataFromClient.get(1),(Exam) dataFromClient.get(2));
 					Message messageToClient = new Message("added the CompExam successfully", (Teacher)dataFromClient.get(1));
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					return;
+				}
+				if (contentOfMsg.equals("#showAllExamsForTeacher"))
+				{
+					Teacher teacher=(Teacher)msgFromClient.getObj();
+					List<Teacher_Course> teacherCourses=new ArrayList<>();
+					teacherCourses.addAll(teacher.getTeacherCourses());
+    				List<Exam> ExamsToClient= GetExamBuliding.getAllExamsForCourses(session,teacherCourses);
+					Message messageToClient = new Message("sending all exams for teacher",ExamsToClient);
 					try {
 						client.sendToClient(messageToClient);
 					} catch (IOException e) {
