@@ -58,14 +58,6 @@ public class SolveExam {
         // TODO late
 
        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
-
-
-        if (examQuestions == null){
-            System.out.println("null questions list");
-        }
-        else{
-            System.out.println("not null" + GlobalDataSaved.compExam.getExam().getTeacherNotes());
-        }
         List<Object> examQ=Arrays.asList(examQuestions.toArray());
         Question q;
         for(Object exam_question:examQ)

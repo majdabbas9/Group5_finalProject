@@ -20,4 +20,5 @@ public class GlobalDataSaved {
     public static ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
     public static ComputerizedExamToExecute compExam;
+    public static List<Exam> allExamsForTeacher;
 }
