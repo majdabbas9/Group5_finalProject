@@ -1,8 +1,10 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import org.hibernate.Session;
 import org.hibernate.annotations.Where;
 
@@ -32,15 +34,6 @@ public class GetEducational {
         List<Course> data = session.createQuery(query).getResultList();
         return data;
     }
-    public static List<Exam> getAllExams(Session session) throws Exception {
-
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Exam> query = builder.createQuery(Exam.class);
-        query.from(Exam.class);
-        List<Exam> data = session.createQuery(query).getResultList();
-        return data;
-    }
-
 
     public static void getCourse(Session session) {
         Query query = session.createQuery("from Course where courseName='linear algebra 3'");
@@ -84,12 +77,4 @@ public class GetEducational {
         return data;
     }
 
-
-    public static boolean checkID(Session session, String id) {
-        Query query = session.createQuery("from User where userID=" + id + "");
-        if (query.getResultList().size() == 0) {
-            return true;
-        }
-        return false;
-    }
 }
