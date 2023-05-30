@@ -73,15 +73,28 @@ public class SimpleClient extends AbstractClient {
 					}
 					if (contentOfMsg.equals("student grades")) {
 						GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
-						System.out.println("*****/////"+ GlobalDataSaved.gradeList.get(0).getGrade());
 						App.setRoot("studentGrades");
 						return;
 					}
-					if (contentOfMsg.equals("do exam")) {
+					if (contentOfMsg.equals("exam copy")) {
+						List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
+						GlobalDataSaved.compExam = (ComputerizedExamToExecute) dataFromServer.get(0);
+						GlobalDataSaved.studentAnswers = (List<String>) dataFromServer.get(1);
+						return;
+					}
+					if (contentOfMsg.equals("write id to start")) {
 						ComputerizedExamToExecute compExams = (ComputerizedExamToExecute)msgFromServer.getObj();
 						GlobalDataSaved.compExam = compExams;
+						App.setRoot("checkExamCode");
+						return;
+					}
+					if (contentOfMsg.equals("do exam")) {
 						App.setRoot("solve_Exam");
 						return;
+					}
+					if (contentOfMsg.equals("exam done")) {
+						GlobalDataSaved.studentAnswers = (List<String>) msgFromServer.getObj();
+						App.setRoot("studentHome");
 					}
 					if (contentOfMsg.equals("All Subjects Given to principal")) {
 						GlobalDataSaved.subjects = FXCollections.observableArrayList();

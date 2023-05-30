@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import java.util.List;
 
 public class GlobalDataSaved {
+
     public static User connectedUser;
     public static List<Subject> teacherSubjects;
     public static List<Course> teacherCourses;
@@ -20,4 +21,7 @@ public class GlobalDataSaved {
     public static ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
     public static ComputerizedExamToExecute compExam;
+    public static List<String> studentAnswers;
+    public static int changeTextCounter = 0;
+    public static int selectedGradeForExamCopy = 0;
 }

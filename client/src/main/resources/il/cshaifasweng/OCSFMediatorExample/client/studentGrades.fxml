@@ -7,19 +7,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Student.StudentGrades">
    <children>
-       <TableView fx:id="studentGradesTableView" layoutX="58.0" layoutY="60.0" prefHeight="451.0" prefWidth="648.0">
+      <TableView fx:id="studentGradesTableView" layoutX="58.0" layoutY="60.0" prefHeight="451.0" prefWidth="648.0">
         <columns>
-            <TableColumn fx:id="gradeNo" prefWidth="84.00000381469727" style="-fx-background-color: #0A8A0A;" text="Grade No." />
-            <TableColumn fx:id="subject" prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Subject" />
-            <TableColumn fx:id="course" prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Course" />
-            <TableColumn fx:id="teacherName" prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Teacher Name" />
-            <TableColumn fx:id="grade" prefWidth="140.0" style="-fx-background-color: #0A8A0A;" text="Grade" />
+          <TableColumn fx:id="gradeNo" prefWidth="84.00000381469727" text="Grade No." />
+          <TableColumn fx:id="subject" prefWidth="140.0" text="Subject" />
+            <TableColumn fx:id="course" prefWidth="140.0" text="Course" />
+            <TableColumn fx:id="teacherName" prefWidth="140.0" text="Teacher Name" />
+            <TableColumn fx:id="grade" prefWidth="140.0" text="Grade" />
         </columns>
       </TableView>
-       <Button fx:id="backToHome" layoutX="57.0" layoutY="521.0" mnemonicParsing="false" onAction="#backToHome" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Back To Home" textFill="WHITE">
+      <Button fx:id="backToHome" layoutX="57.0" layoutY="521.0" mnemonicParsing="false" onAction="#backToHome" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Back To Home" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -29,7 +28,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-       <Button fx:id="getCopy" layoutX="550.0" layoutY="521.0" mnemonicParsing="false" onAction="#getCopy" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Get Copy" textFill="WHITE">
+      <Button fx:id="getCopy" layoutX="550.0" layoutY="521.0" mnemonicParsing="false" onAction="#getCopy" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Get Copy" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
