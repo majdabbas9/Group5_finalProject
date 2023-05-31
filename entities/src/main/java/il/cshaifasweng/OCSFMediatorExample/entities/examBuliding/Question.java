@@ -22,7 +22,7 @@ public class Question implements Serializable {
     private String teacherNotes;
     private String studentNotes; // this the content of the question
     private String questionID;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> choices;
     private String correctChoice;
     @ManyToOne(fetch = FetchType.EAGER)

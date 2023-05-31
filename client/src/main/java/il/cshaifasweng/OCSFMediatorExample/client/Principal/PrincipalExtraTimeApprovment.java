@@ -1,4 +1,4 @@
-package Principal;
+package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class principalExtraTimeApprovment {
+public class PrincipalExtraTimeApprovment {
 
     @FXML
     private ResourceBundle resources;
