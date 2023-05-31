@@ -54,5 +54,15 @@
                 <TableColumn fx:id="pointsColumn" prefWidth="121.59996032714844" text="points" />
             </columns>
         </TableView>
+      <Text fill="WHITE" layoutX="74.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="exam related to teacher">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="319.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="selected exam questions">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

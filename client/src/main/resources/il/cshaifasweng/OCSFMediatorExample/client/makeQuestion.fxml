@@ -17,7 +17,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Question" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="33.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Question" wrappingWidth="139.21246337890625">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -27,8 +27,8 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-      <ListView fx:id="courseList" layoutX="33.0" layoutY="75.0" onMouseClicked="#selectCourse" prefHeight="118.0" prefWidth="186.0" />
-      <ComboBox fx:id="subjectList" layoutX="587.0" layoutY="75.0" onAction="#subjectSelected" prefWidth="150.0" promptText="pick Subject" />
+      <ListView fx:id="courseList" layoutX="33.0" layoutY="93.0" onMouseClicked="#selectCourse" prefHeight="118.0" prefWidth="186.0" />
+      <ComboBox fx:id="subjectList" layoutX="587.0" layoutY="93.0" onAction="#subjectSelected" prefWidth="150.0" promptText="pick Subject" />
       <TextField fx:id="theQuestion" alignment="CENTER" layoutX="399.0" layoutY="220.0" prefHeight="26.0" prefWidth="198.0" promptText="the question" />
       <TextField fx:id="choice3" alignment="CENTER" layoutX="540.0" layoutY="288.0" prefHeight="26.0" prefWidth="198.0" promptText="choice 3" />
       <TextField fx:id="choice4" alignment="CENTER" layoutX="540.0" layoutY="350.0" prefHeight="26.0" prefWidth="198.0" promptText="choice 4" />
@@ -48,5 +48,15 @@
       </Button>
       <TextField fx:id="teacherNotes" alignment="CENTER" layoutX="70.0" layoutY="427.0" prefHeight="46.0" prefWidth="150.0" promptText="notes" />
       <ListView fx:id="selectedCourseList" layoutX="33.0" layoutY="257.0" prefHeight="118.0" prefWidth="186.0" />
+      <Text fill="WHITE" layoutX="33.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="question courses" wrappingWidth="113.33673477172852">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="33.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="subject courses" wrappingWidth="113.33673477172852">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

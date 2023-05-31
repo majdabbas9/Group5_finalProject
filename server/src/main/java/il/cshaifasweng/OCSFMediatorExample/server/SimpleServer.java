@@ -429,6 +429,22 @@ public class SimpleServer extends AbstractServer {
 				if (contentOfMsg.equals("#addCompExam")) {
 					List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
 
+					String queryString="FROM ComputerizedExamToExecute WHERE code = : code";
+					Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
+					query.setParameter("code",((ComputerizedExamToExecute)dataFromClient.get(0)).getCode());
+					List<ComputerizedExamToExecute> res=query.getResultList();
+					if(res.size()!=0)
+					{
+						Warning warning = new Warning("code already used!");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+
 					addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(Teacher)dataFromClient.get(1),(Exam) dataFromClient.get(2));
 					Message messageToClient = new Message("added the CompExam successfully", (Teacher)dataFromClient.get(1));
 					try {

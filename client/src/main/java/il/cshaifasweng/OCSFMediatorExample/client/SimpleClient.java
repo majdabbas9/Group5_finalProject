@@ -56,16 +56,19 @@ public class SimpleClient extends AbstractClient {
 				}
 				if(contentOfMsg.equals("added the question successfully")) {
 					GlobalDataSaved.connectedUser=(User) msgFromServer.getObj();
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD+"teacher : "+GlobalDataSaved.connectedUser.getFirstName()+" " +GlobalDataSaved.connectedUser.getLastName()+" added question"+Color.ANSI_RESET);
 					App.setRoot("buildExam");
 				}
 				if(contentOfMsg.equals("added the exam successfully")) {
 					GlobalDataSaved.connectedUser=(User) msgFromServer.getObj();
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD+"teacher : "+GlobalDataSaved.connectedUser.getFirstName()+" " +GlobalDataSaved.connectedUser.getLastName()+" added Exam"+Color.ANSI_RESET);
 					App.setRoot("buildExam");
 				}
 				if(contentOfMsg.equals("added the CompExam successfully")) {
 					GlobalDataSaved.connectedUser=(User) msgFromServer.getObj();
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD+"teacher : "+GlobalDataSaved.connectedUser.getFirstName()+" " +GlobalDataSaved.connectedUser.getLastName()+" executed an Exam"+Color.ANSI_RESET);
 					App.setRoot("teacherHome");
 				}
