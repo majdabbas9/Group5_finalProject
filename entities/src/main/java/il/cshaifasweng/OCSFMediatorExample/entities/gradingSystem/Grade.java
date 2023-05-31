@@ -115,4 +115,12 @@ public class Grade implements Serializable {
     public void setHour(String hour) {
         this.hour = hour;
     }
+
+    public boolean isTeacherApprovement() {
+        return teacherApprovement;
+    }
+
+    public void setTeacherApprovement(boolean teacherApprovement) {
+        this.teacherApprovement = teacherApprovement;
+    }
 }

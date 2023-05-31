@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,4 +25,7 @@ public class GlobalDataSaved {
     public static List<String> studentAnswers;
     public static int changeTextCounter = 0;
     public static int selectedGradeForExamCopy = 0;
+    public static Grade currentGrade = new Grade();
+    public static Copy currentCopy = new Copy();
+
 }

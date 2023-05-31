@@ -134,8 +134,16 @@ public class SolveExam {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         // TODO late
+
+        List<Object> objects = new ArrayList<>();
+        objects.add(0,null);
+        objects.add(1,GlobalDataSaved.connectedUser);
+        objects.add(2,GlobalDataSaved.compExam);
+        objects.add(3,0);
+        Message msg = new Message("#create student copy and grade", objects);
+        SimpleClient.getClient().sendToServer(msg);
 
         int examTime = GlobalDataSaved.compExam.getExam().getTime();
         while (examTime > 60) {

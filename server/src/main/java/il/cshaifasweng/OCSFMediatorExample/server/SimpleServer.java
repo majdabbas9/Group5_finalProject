@@ -352,7 +352,35 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
-	private void addGradeAndCopyToStudent(String studentAnswers, Student user, ComputerizedExamToExecute compExam, int grade, boolean onTime) {
+	private void updateGradeAndCopyToStudent(String studentAnswers, Student user, ComputerizedExamToExecute compExam, int examGrade, boolean onTime) {
+		session.beginTransaction();
+
+		Copy copy = GlobalDataSaved.currentCopy;
+		copy.setAnswers(studentAnswers);
+		copy.setCompExamToExecute(compExam);
+		session.update(copy);
+		session.flush();
+
+		Grade grade = GlobalDataSaved.currentGrade;
+		grade.setGrade(examGrade);
+		grade.setDoneOnTime(onTime);
+		grade.setTeacherApprovement(true);
+
+		session.update(grade);
+		session.flush();
+
+		copy.setGrade(grade);
+		grade.setExamCopy(copy);
+		session.update(copy);
+		session.flush();
+
+		session.update(grade);
+		session.flush();
+
+		session.getTransaction().commit();
+	}
+
+	private void createGradeAndCopyToStudent(String studentAnswers, Student user, ComputerizedExamToExecute compExam, int grade) {
 		session.beginTransaction();
 		session.clear();
 
@@ -363,7 +391,7 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		Grade grade1 = new Grade(user,grade,false,compExam.getExam().getTime(),
-				onTime,compExam.getDateOfExam(),compExam.getDateOfExam(), false);
+				false,compExam.getDateOfExam(),compExam.getDateOfExam(), false);
 
 		session.save(grade1);
 		session.flush();
@@ -375,6 +403,8 @@ public class SimpleServer extends AbstractServer {
 		session.update(grade1);
 		session.flush();
 
+		GlobalDataSaved.currentGrade = grade1;
+		GlobalDataSaved.currentCopy = copy;
 		session.getTransaction().commit();
 	}
 
@@ -592,6 +622,15 @@ public class SimpleServer extends AbstractServer {
 						e.printStackTrace();
 					}
 				}
+				if (contentOfMsg.equals("#create student copy and grade")) {
+					List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
+					String studentAnswers = (String) dataFromClient.get(0);
+					Student user = (Student) dataFromClient.get(1);
+					ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) dataFromClient.get(2);
+					int grade = (int) dataFromClient.get(3);
+					//boolean submitOnTime = (boolean) dataFromClient.get(4);
+					createGradeAndCopyToStudent(studentAnswers, user, compExam, grade);
+				}
 				if (contentOfMsg.equals("#update student answers")) {
 					List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
 					String studentAnswers = (String) dataFromClient.get(0);
@@ -599,7 +638,7 @@ public class SimpleServer extends AbstractServer {
 					ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) dataFromClient.get(2);
 					int grade = (int) dataFromClient.get(3);
 					boolean submitOnTime = (boolean) dataFromClient.get(4);
-					addGradeAndCopyToStudent(studentAnswers, user, compExam, grade, submitOnTime);
+					updateGradeAndCopyToStudent(studentAnswers, user, compExam, grade, submitOnTime);
 				}
 				if (contentOfMsg.equals("#time finished")) {
 					Warning warning = new Warning("The Exam Time Ended");
