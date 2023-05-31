@@ -1,4 +1,4 @@
-package Principal;
+package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
 
 
-public class principalAddUsers {
+public class PrincipalAddUsers {
 
     @FXML
     private ResourceBundle resources;

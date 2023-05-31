@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalShowExam">
+   <children>
+      <Text fill="WHITE" layoutX="13.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exam Display">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="exam_id" fill="WHITE" layoutX="15.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exam ID:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="teacher" fill="WHITE" layoutX="286.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="By Teacher:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="subject" fill="WHITE" layoutX="13.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="course" fill="WHITE" layoutX="286.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Course:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TableView fx:id="questions_table" layoutX="15.0" layoutY="242.0" onMouseClicked="#selectquestion" prefHeight="219.0" prefWidth="754.0">
+        <columns>
+          <TableColumn fx:id="the_question" prefWidth="675.1999387741089" text="The Question" />
+          <TableColumn fx:id="points" minWidth="0.0" prefWidth="77.5999755859375" text="Points" />
+        </columns>
+      </TableView>
+      <Text fill="WHITE" layoutX="14.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams' Questions:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="BackToMenuBtn" layoutX="14.0" layoutY="527.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="40.0" prefWidth="258.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="ShowQuestionBtn" layoutX="504.0" layoutY="527.0" mnemonicParsing="false" onAction="#ShowQuestion" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #0A8A0A;" text="Show Question" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="err_txt" fill="RED" layoutX="15.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="754.3999999999999">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Pane layoutX="13.0" layoutY="147.0" prefHeight="70.0" prefWidth="753.0">
+         <children>
+            <Text fx:id="notes" fill="WHITE" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes:" wrappingWidth="753.5999999999999">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
 import aidClasses.Message;
+import com.mysql.cj.xdevapi.Client;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
@@ -17,6 +18,7 @@ import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetUsers;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.AbstractServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.LoggedInClient;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,6 +28,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import aidClasses.GlobalDataSaved;
@@ -35,8 +38,12 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.*;
 import aidClasses.Warning;
 
 import javax.persistence.Query;
+import javax.persistence.spi.LoadState;
 
 public class SimpleServer extends AbstractServer {
+
+	private static ArrayList<LoggedInClient> _LoggedInList = new ArrayList<>();
+
 	private static Session session;
 
 	public static Session getSession() {
@@ -144,6 +151,19 @@ public class SimpleServer extends AbstractServer {
 
 		//session.clear();
 		session.getTransaction().commit();
+
+		int i;
+		for (i = 0 ; i < _LoggedInList.size() && _LoggedInList.get(i).get_class() != 0; i++){}
+		if (i == _LoggedInList.size()){
+			return;
+		} else {
+			try	{
+				List<Question> list = GetEducational.getAllQuestions(session);
+				_LoggedInList.get(i).getClient().sendToClient(new Message("UpdateAllQuestionsToPrincipal",list));
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void addExam(Exam exam,Teacher teacher,Course course,Subject subject,List<Question> questions) {
@@ -447,14 +467,29 @@ public class SimpleServer extends AbstractServer {
 						}
 
 					}
-					//login(users.get(0));
+					login(users.get(0));
+					if(users.get(0).getClass().equals(Principal.class)){
+						_LoggedInList.add(new LoggedInClient(client,0,users.get(0).getUserID()));
+					} else if (users.get(0).getClass().equals(Teacher.class)) {
+						_LoggedInList.add(new LoggedInClient(client,1,users.get(0).getUserID()));
+					} else if (users.get(0).getClass().equals(Student.class)) {
+						_LoggedInList.add(new LoggedInClient(client,2,users.get(0).getUserID()));
+					}
 					Message msgToClient = new Message("successful login", users.get(0));
 					client.sendToClient(msgToClient);
 					return;
 				}
 				if (contentOfMsg.equals("#logout")) {
 					User userToLogout = (User) msgFromClient.getObj();
-					//logout(userToLogout);
+					logout(userToLogout);
+					Iterator<LoggedInClient> iterator = _LoggedInList.iterator();
+					while (iterator.hasNext()) {
+						LoggedInClient _loggedInClient = iterator.next();
+						if (_loggedInClient.getClient() == client) {
+							iterator.remove();
+							break;
+						}
+					}
 					Message msgToClient = new Message("successful logout", null);
 					client.sendToClient(msgToClient);
 					return;
@@ -730,6 +765,45 @@ public class SimpleServer extends AbstractServer {
 					try {
 						client.sendToClient(messageToClient);
 					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (contentOfMsg.equals("AllExamsToPrincipal")) {
+					List<Exam> list = (List<Exam>) msgFromClient.getObj();
+					list = GetEducational.getAllExams(session);
+					Message messageToClient = new Message("AllExamsToPrincipal",list);
+					try {
+						client.sendToClient(messageToClient);
+					}catch (IOException e ){
+						e.printStackTrace();
+					}
+				}if (contentOfMsg.equals("AllQuestionsToPrincipal")) {
+					List<Question> list = (List<Question>) msgFromClient.getObj();
+					list = GetEducational.getAllQuestions(session);
+					Message messageToClient = new Message("AllQuestionsToPrincipal",list);
+					try {
+						client.sendToClient(messageToClient);
+					}catch (IOException e ){
+						e.printStackTrace();
+					}
+				}
+				if (contentOfMsg.equals("UpdateAllQuestionsToPrincipal")) {
+					List<Question> list = (List<Question>) msgFromClient.getObj();
+					list = GetEducational.getAllQuestions(session);
+					Message messageToClient = new Message("UpdateAllQuestionsToPrincipal",list);
+					try {
+						client.sendToClient(messageToClient);
+					}catch (IOException e ){
+						e.printStackTrace();
+					}
+				}
+				if (contentOfMsg.equals("AllGradesToPrincipal")) {
+					List<Grade> list = (List<Grade>) msgFromClient.getObj();
+					list = GetEducational.getAllGrades(session);
+					Message messageToClient = new Message("AllGradesToPrincipal",list);
+					try {
+						client.sendToClient(messageToClient);
+					}catch (IOException e ){
 						e.printStackTrace();
 					}
 				}

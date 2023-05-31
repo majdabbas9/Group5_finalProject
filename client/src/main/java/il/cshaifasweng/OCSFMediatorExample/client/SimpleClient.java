@@ -1,20 +1,25 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-
 import aidClasses.Color;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
+import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
+import javafx.print.Collation;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import org.greenrobot.eventbus.EventBus;
-
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
-
+import javax.xml.crypto.Data;
+import java.io.IOException;
 import java.util.List;
 
 public class SimpleClient extends AbstractClient {
@@ -155,6 +160,29 @@ public class SimpleClient extends AbstractClient {
 				if (contentOfMsg.equals("teacher compExams")) {
 					GlobalDataSaved.teacherCompExamsToApprove = (List<ComputerizedExamToExecute>) msgFromServer.getObj();
 					App.setRoot("examNeedApprovement");
+				}
+				if(contentOfMsg.equals("AllExamsToPrincipal")){
+					GlobalDataSaved.allExamsForPrincipal = (List<Exam>) msgFromServer.getObj();
+					App.setRoot("principalExams");
+					return;
+				}
+				if(contentOfMsg.equals("AllQuestionsToPrincipal")){
+					GlobalDataSaved.allQuestionsForPrincipal = (List<Question>) msgFromServer.getObj();
+					App.setRoot("principalQuestions");
+					return;
+				}
+				if(contentOfMsg.equals("UpdateAllQuestionsToPrincipal")){
+					GlobalDataSaved.allQuestionsForPrincipal = (List<Question>) msgFromServer.getObj();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("principalQuestions.fxml"));
+					Parent root = loader.load();
+					PrincipalQuestions controller = loader.getController();
+					controller.UpdateTable();
+					return;
+				}
+				if(contentOfMsg.equals("AllGradesToPrincipal")){
+					GlobalDataSaved.allGradesForPrincipal = (List<Grade>) msgFromServer.getObj();
+					App.setRoot("principalGrades");
+					return;
 				}
 			}
             catch(Exception ex){

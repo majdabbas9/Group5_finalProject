@@ -7,14 +7,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.principalQuestions">
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions">
     <children>
-        <TableView fx:id="QuestionsTable" layoutX="7.0" layoutY="44.0" onMouseClicked="#selectQuestion" prefHeight="463.0" prefWidth="762.0">
+        <TableView fx:id="table" layoutX="7.0" layoutY="35.0" onMouseClicked="#selectQuestion" prefHeight="480.0" prefWidth="762.0">
             <columns>
-                <TableColumn prefWidth="399.19999980926514" text="Question" />
-                <TableColumn prefWidth="184.79998779296875" text="Teacher" />
-                <TableColumn prefWidth="177.5999755859375" text="Subject" />
+            <TableColumn fx:id="TheQuestion" prefWidth="407.19999980926514" text="The Question" />
+                <TableColumn fx:id="QuestionId" prefWidth="72.0" text="Question ID" />
+            <TableColumn fx:id="QuestionTeacherName" prefWidth="125.60003662109375" text="Teacher Name" />
+                <TableColumn fx:id="QuestionTeacherID" prefWidth="70.4000244140625" text="Teacher ID" />
+                <TableColumn fx:id="SubjectName" prefWidth="92.0" text="Subject" />
             </columns>
         </TableView>
         <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions">
