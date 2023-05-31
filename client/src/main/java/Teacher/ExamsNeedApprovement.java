@@ -60,12 +60,15 @@ public class ExamsNeedApprovement {
     {
         ObservableList<DisplayCompExamForApprove> observableList = FXCollections.observableArrayList();
         dataColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,String>("date"));
+        dataColumn.setStyle("-fx-alignment: CENTER;");
         examIdColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,String>("examId"));
         subjectColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,String>("subjectName"));
+        subjectColumn.setStyle("-fx-alignment: CENTER;");
         for(ComputerizedExamToExecute compExam: GlobalDataSaved.teacherCompExamsToApprove)
         {
-            observableList.add(new DisplayCompExamForApprove(compExam.getDateOfExam(),compExam.getExam().getExam_ID(),
-                    compExam.getExam().getExamSubject().getSubjectName()));
+            DisplayCompExamForApprove dcea=new DisplayCompExamForApprove(compExam.getDateOfExam(),compExam.getExam().getExam_ID(),
+                    compExam.getExam().getExamSubject().getSubjectName());
+            observableList.add(dcea);
         }
         examsTable.setItems(observableList);
     }

@@ -497,6 +497,23 @@ public class SimpleServer extends AbstractServer {
 				if (contentOfMsg.equals("#addQuestion")) {
 					List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
 					Question question = (Question) (dataFromClient.get(0));
+
+					String queryString="FROM Question WHERE studentNotes = : studentNotes";
+					Query query = session.createQuery(queryString,Question.class);
+					query.setParameter("studentNotes",(question.getStudentNotes()));
+					List<Question> res=query.getResultList();
+
+					if(res.size()!=0)
+					{
+						Warning warning = new Warning("the question already existed");
+						try {
+							client.sendToClient(warning);
+							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+							return;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
 					addQuestion(question,(List<Course>)dataFromClient.get(1),(Subject)dataFromClient.get(2),(Teacher)dataFromClient.get(3));
 					Message messageToClient = new Message("added the question successfully", (Teacher)dataFromClient.get(3));
 					try {
@@ -517,6 +534,27 @@ public class SimpleServer extends AbstractServer {
 					}
 					return;
 				}
+				if (contentOfMsg.equals("#showAllCourseQuestion"))
+				{
+					Course course=(Course) msgFromClient.getObj();
+					String queryString="FROM Course_Question WHERE course.id = : courseId";
+					Query query = session.createQuery(queryString,Course_Question.class);
+					query.setParameter("courseId",(course.getId()));
+					List<Course_Question> res=query.getResultList();
+					List<Question> questionsList=new ArrayList<>();
+					for(Course_Question cq:res)
+					{
+						questionsList.add(cq.getQuestion());
+					}
+					try {
+						Message msgToClient=new Message("course questions",questionsList);
+						client.sendToClient(msgToClient);
+						return;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
 				if (contentOfMsg.equals("#addCompExam")) {
 					List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
 

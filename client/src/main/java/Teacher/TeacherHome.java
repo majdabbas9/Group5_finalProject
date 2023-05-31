@@ -46,7 +46,7 @@ public class TeacherHome {
 
     @FXML
     void ExamsInProgress(ActionEvent event) throws IOException {
-
+        App.setRoot("teacherExamsInProgress");
     }
 
     @FXML

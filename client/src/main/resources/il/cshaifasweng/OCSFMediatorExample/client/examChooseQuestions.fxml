@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Teacher.ExamChooseQuestions">
+    <children>
+        <Button fx:id="buttonBack" layoutX="14.0" layoutY="515.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To add exam" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Text fill="WHITE" layoutX="19.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="add questions to exam" wrappingWidth="212.012451171875">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Text>
+        <Button fx:id="buttonSubmit" layoutX="577.0" layoutY="515.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="submit exam" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+      <TableView fx:id="examQuestionTable" layoutX="328.0" layoutY="118.0" onMouseClicked="#removeQuestion" prefHeight="359.0" prefWidth="438.0">
+         <columns>
+            <TableColumn fx:id="examQuestionID" prefWidth="75.0" text="question ID" />
+            <TableColumn fx:id="examQuestionsTheQuestion" prefWidth="233.60003662109375" text="the question" />
+            <TableColumn fx:id="examQuestionPoints" prefWidth="157.5999755859375" text="points" />
+         </columns>
+      </TableView>
+      <Text fx:id="course1" fill="WHITE" layoutX="14.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="course questions" wrappingWidth="139.21246337890625">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="timeLabel" alignment="CENTER" layoutX="606.0" layoutY="69.0" prefHeight="30.0" prefWidth="150.0" promptText="time">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="examQuestionToSelectTable" layoutX="11.0" layoutY="118.0" onMouseClicked="#addQuestion" prefHeight="359.0" prefWidth="284.0">
+         <columns>
+            <TableColumn fx:id="examQuestionIDToSelect" prefWidth="75.0" text="question ID" />
+            <TableColumn fx:id="examQuestionsTheQuestionToSelect" prefWidth="231.99998474121094" text="the question" />
+         </columns>
+      </TableView>
+      <Text fx:id="warning" fill="RED" layoutX="332.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="114.93670654296875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>

@@ -45,12 +45,15 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.connectedUser = LogedInUser;
 					if (LogedInUser.getClass().equals(Student.class)) {
 						App.setRoot("studentHome");
+						return;
 					}
 					if (LogedInUser.getClass().equals(Teacher.class)) {
 						App.setRoot("teacherHome");
+						return;
 					}
 					if (LogedInUser.getClass().equals(Principal.class)) {
 						App.setRoot("principalHome");
+						return;
 					}
 				}
 					if (contentOfMsg.equals("sending teacher subjects")) {
@@ -86,6 +89,7 @@ public class SimpleClient extends AbstractClient {
 						GlobalDataSaved.studentAnswers = (List<String>) msgFromServer.getObj();
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
 						App.setRoot("studentHome");
+						return;
 					}
 					if (contentOfMsg.equals("All Subjects Given to principal")) {
 						GlobalDataSaved.subjects = FXCollections.observableArrayList();
@@ -100,27 +104,37 @@ public class SimpleClient extends AbstractClient {
 					if (contentOfMsg.equals("Student Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
 							App.setRoot("principalHome");
+						return;
 					}
 					if (contentOfMsg.equals("successful logout")) {
 						App.setRoot("login");
+						return;
 					}
-					if (contentOfMsg.equals("added the question successfully")) {
-						GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
-						EventBus.getDefault().post(new MessageEvent((Message) msg));
-						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added question" + Color.ANSI_RESET);
-						App.setRoot("buildExam");
+					if (contentOfMsg.equals("course questions")) {
+						GlobalDataSaved.courseQuestionsForMakeExam = (List<Question>) msgFromServer.getObj();
+						App.setRoot("examChooseQuestions");
+						return;
 					}
+				if (contentOfMsg.equals("added the question successfully")) {
+					GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
+					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added question" + Color.ANSI_RESET);
+					App.setRoot("buildExam");
+					return;
+				}
 					if (contentOfMsg.equals("added the exam successfully")) {
 						GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
 						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added Exam" + Color.ANSI_RESET);
 						App.setRoot("buildExam");
+						return;
 					}
 					if (contentOfMsg.equals("added the CompExam successfully")) {
 						GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
 						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an Exam" + Color.ANSI_RESET);
 						App.setRoot("teacherHome");
+						return;
 					}
 					if (contentOfMsg.equals("sending teacher subjects")) {
 						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();

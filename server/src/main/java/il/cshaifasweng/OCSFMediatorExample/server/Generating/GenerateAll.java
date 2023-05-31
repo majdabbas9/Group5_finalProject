@@ -135,7 +135,7 @@ public class GenerateAll {
         /*end of adding question*/
 
         /*adding exam*/
-        Set<Integer> points=new HashSet<>();
+        List<Integer> points=new ArrayList<>();
         List<Question> questions=new ArrayList<>();
         questions.add(question);
         questions.add(question1);

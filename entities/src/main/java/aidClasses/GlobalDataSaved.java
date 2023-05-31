@@ -40,7 +40,6 @@ public class GlobalDataSaved {
     public static Question PrincipalQuestionToShow = null;
     public static Exam PrincipalExamToShow = null;
 
-
+    public static List<Question> courseQuestionsForMakeExam;
     public static List<ComputerizedExamToExecute> teacherCompExamsToApprove;
-
 }

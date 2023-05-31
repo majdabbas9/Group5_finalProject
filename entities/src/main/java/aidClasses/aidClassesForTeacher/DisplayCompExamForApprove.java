@@ -27,11 +27,11 @@ public class DisplayCompExamForApprove {
         this.examId = examId;
     }
 
-    public String getSubject() {
+    public String getSubjectName() {
         return subjectName;
     }
 
-    public void setSubject(String subjectName) {
+    public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
 }

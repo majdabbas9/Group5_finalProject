@@ -148,6 +148,13 @@ public class MakeQuestion {
         }
         List<String> choices=new ArrayList<>();
         String correctChoice="";
+        if(choice1.getText().equals(choice2.getText()) || choice1.getText().equals(choice3.getText())
+                || choice1.getText().equals(choice4.getText()) || choice2.getText().equals(choice3.getText())
+        || choice2.getText().equals(choice4.getText()) || choice3.getText().equals(choice4.getText()))
+        {
+            warningTxt.setText("answers should be different");
+            return;
+        }
         choices.add(choice1.getText());choices.add(choice2.getText());choices.add(choice3.getText());
         choices.add(choice4.getText());
         if(radioChoice1.isSelected())
