@@ -632,10 +632,8 @@ public class SimpleServer extends AbstractServer {
 					}
 				}
 				if (contentOfMsg.equals("#submitted on the time")) {
-					Warning warning = new Warning("Submitted successfully");
 					try {
-						client.sendToClient(warning);
-						Message msgToClient = new Message("exam done", msgFromClient.getObj());
+						Message msgToClient = new Message("Submitted successfully", msgFromClient.getObj());
 						client.sendToClient(msgToClient);
 						return;
 					} catch (IOException e) {
