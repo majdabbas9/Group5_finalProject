@@ -21,8 +21,10 @@ public class Grade implements Serializable {
     private boolean doneOnTime;
     private String date;
     private String hour;
+    private String teacherNotes;
 
-    public Grade(Student student, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour) {
+    private boolean teacherApprovement;
+    public Grade(Student student, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour,String teacherNotes) {
         this.student = student;
         this.grade = 0;
         this.isManuel = isManuel;
@@ -30,6 +32,18 @@ public class Grade implements Serializable {
         this.doneOnTime = doneOnTime;
         this.date = date;
         this.hour = hour;
+        this.teacherNotes=teacherNotes;
+    }
+
+    public Grade( Student student,int grade, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour, boolean teacherApprovement) {
+        this.student = student;
+        this.grade = grade;
+        this.isManuel = isManuel;
+        this.timeToSolve = timeToSolve;
+        this.doneOnTime = doneOnTime;
+        this.date = date;
+        this.hour = hour;
+        this.teacherApprovement = teacherApprovement;
     }
 
     public Grade() {
@@ -102,5 +116,21 @@ public class Grade implements Serializable {
 
     public void setHour(String hour) {
         this.hour = hour;
+    }
+
+    public boolean isTeacherApprovement() {
+        return teacherApprovement;
+    }
+
+    public void setTeacherApprovement(boolean teacherApprovement) {
+        this.teacherApprovement = teacherApprovement;
+    }
+
+    public String getTeacherNotes() {
+        return teacherNotes;
+    }
+
+    public void setTeacherNotes(String teacherNotes) {
+        this.teacherNotes = teacherNotes;
     }
 }

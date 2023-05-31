@@ -123,38 +123,27 @@ public class GenerateAll {
         List<String> cho=new ArrayList<>();
         cho.add("1");cho.add("2");cho.add("3");cho.add("4");
         Question question=new Question("","2+2","00000",cho,"4");
+        Question question1=new Question("","2+1","00001",cho,"3");
+        Question question2=new Question("","2-1","00002",cho,"1");
         List<Course> courses=new ArrayList<>();
         courses.add(algebra);
         Adding.addQuestion(SimpleServer.getSession(),question,courses,math,t1);
+        Adding.addQuestion(SimpleServer.getSession(),question1,courses,math,t1);
+        Adding.addQuestion(SimpleServer.getSession(),question2,courses,math,t1);
         /*end of adding question*/
 
         /*adding exam*/
         List<Integer> points=new ArrayList<>();
         List<Question> questions=new ArrayList<>();
         questions.add(question);
-        points.add(100);
-        Exam exam=new Exam(10,"","","",points);
+        questions.add(question1);
+        questions.add(question2);
+        points.add(10);
+        points.add(10);
+        points.add(10);
+        Exam exam=new Exam(1,"","","",points);
         Adding.addExam(SimpleServer.getSession(),exam,t1,algebra,math,questions);
-        /*end of adding exam*/
-
-        /*adding comp exam*/
-        ComputerizedExamToExecute compExam=new ComputerizedExamToExecute("24/5/2023 23:19",1234);
-        Adding.addCompExam(SimpleServer.getSession(),compExam,t1,exam);
-        /*end of adding comp exam*/
-
-        /*adding copy*/
-        Copy copy=new Copy("4",compExam);
-        session.save(copy);session.flush();
-        /*end of adding copy*/
-
-        /*adding grade*/
-        Grade grade=new Grade(s1,false,1,true,"24/5/2023","23:26");
-        session.save(grade);session.flush();
-
-        copy.setGrade(grade);session.update(copy);session.flush();
-
-        grade.setExamCopy(copy);session.update(grade);session.flush();
-        /*end of adding grade*/
+        /*end of adding exam*/
 
     }
     public static void generateUsers(Session session)
