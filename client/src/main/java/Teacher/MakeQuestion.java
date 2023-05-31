@@ -204,6 +204,10 @@ public class MakeQuestion {
         if(selectedCourses==null) {
             selectedCourses=new ArrayList<>();
         }
+        if(courseList.getSelectionModel().getSelectedItem().getId()==-1)
+        {
+            return;
+        }
         if(!selectedCourses.contains(courseList.getSelectionModel().getSelectedItem()))
         {
             selectedCourses.add(courseList.getSelectionModel().getSelectedItem());

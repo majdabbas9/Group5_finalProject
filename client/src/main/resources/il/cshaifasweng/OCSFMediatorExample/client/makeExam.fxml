@@ -17,25 +17,25 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="43.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Exam" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="19.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Exam" wrappingWidth="139.21246337890625">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Text fx:id="warningTxt" fill="#af0000" layoutX="544.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="139.21246337890625">
+        <Text fx:id="warningTxt" fill="WHITE" layoutX="61.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="course questions" wrappingWidth="139.21246337890625">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="14.0" />
             </font>
         </Text>
-        <ListView fx:id="courseList" layoutX="270.0" layoutY="76.0" onMouseClicked="#selectCourse" prefHeight="118.0" prefWidth="186.0" />
+        <ListView fx:id="courseList" layoutX="267.0" layoutY="91.0" onMouseClicked="#selectCourse" prefHeight="118.0" prefWidth="186.0" />
         <ComboBox fx:id="subjectList" layoutX="524.0" layoutY="76.0" onAction="#subjectSelected" prefWidth="150.0" promptText="pick Subject" />
-        <Button fx:id="buttonSubmit" layoutX="430.0" layoutY="508.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="submit" textFill="WHITE">
+        <Button fx:id="buttonSubmit" layoutX="430.0" layoutY="520.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="submit" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <ListView fx:id="courseQuestions" layoutX="28.0" layoutY="76.0" onMouseClicked="#questionSelected" prefHeight="118.0" prefWidth="186.0" />
-      <TableView fx:id="examQuestionTable" layoutX="28.0" layoutY="217.0" prefHeight="266.0" prefWidth="430.0">
+        <ListView fx:id="courseQuestions" layoutX="38.0" layoutY="91.0" onMouseClicked="#questionSelected" prefHeight="118.0" prefWidth="186.0" />
+      <TableView fx:id="examQuestionTable" layoutX="38.0" layoutY="238.0" prefHeight="266.0" prefWidth="430.0">
         <columns>
           <TableColumn fx:id="examQuestionID" prefWidth="75.0" text="question ID" />
           <TableColumn fx:id="examQuestionsTheQuestion" prefWidth="249.59996032714844" text="the question" />
@@ -47,5 +47,10 @@
             <Font size="14.0" />
          </font>
       </TextField>
+      <Text fx:id="warningTxt1" fill="WHITE" layoutX="290.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="subject courses" wrappingWidth="139.21246337890625">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

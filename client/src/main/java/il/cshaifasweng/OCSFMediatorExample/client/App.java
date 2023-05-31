@@ -7,12 +7,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -76,6 +79,16 @@ public class App extends Application {
         	alert.show();
     	});
     	
+    }
+    @Subscribe
+    public  void onMessageEvent(MessageEvent event)
+    {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION,
+                    String.format("%s\n%s\n",
+                            event.getMessage().getMsg(),event.getMessage().getTime().toString()));
+            alert.show();
+        });
     }
     @FXML
     public void exitApplication(ActionEvent event) {
