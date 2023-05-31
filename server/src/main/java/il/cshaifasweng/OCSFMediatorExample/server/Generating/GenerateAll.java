@@ -123,8 +123,8 @@ public class GenerateAll {
         List<String> cho=new ArrayList<>();
         cho.add("1");cho.add("2");cho.add("3");cho.add("4");
         Question question=new Question("","2+2","00000",cho,"4");
-        Question question1=new Question("","2+1","00000",cho,"3");
-        Question question2=new Question("","2-1","00000",cho,"1");
+        Question question1=new Question("","2+1","00001",cho,"3");
+        Question question2=new Question("","2-1","00002",cho,"1");
         List<Course> courses=new ArrayList<>();
         courses.add(algebra);
         Adding.addQuestion(SimpleServer.getSession(),question,courses,math,t1);

@@ -355,7 +355,6 @@ public class SimpleServer extends AbstractServer {
 		Grade grade = GlobalDataSaved.currentGrade;
 		grade.setGrade(examGrade);
 		grade.setDoneOnTime(onTime);
-		grade.setTeacherApprovement(true);
 
 		session.update(grade);
 		session.flush();
@@ -569,6 +568,7 @@ public class SimpleServer extends AbstractServer {
 					List<Object> objects = new ArrayList<>();
 					objects.add(0, copy.getCompExamToExecute());
 					objects.add(1, copy.getAnswers());
+					objects.add(2, grades.get(0));
 					Message msgToClient = new Message("exam copy", objects);
 					client.sendToClient(msgToClient);
 					return;
@@ -632,10 +632,8 @@ public class SimpleServer extends AbstractServer {
 					}
 				}
 				if (contentOfMsg.equals("#submitted on the time")) {
-					Warning warning = new Warning("Submitted successfully");
 					try {
-						client.sendToClient(warning);
-						Message msgToClient = new Message("exam done", msgFromClient.getObj());
+						Message msgToClient = new Message("Submitted successfully", msgFromClient.getObj());
 						client.sendToClient(msgToClient);
 						return;
 					} catch (IOException e) {

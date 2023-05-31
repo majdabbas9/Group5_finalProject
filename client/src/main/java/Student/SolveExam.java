@@ -116,7 +116,7 @@ public class SolveExam {
                 grade += points.get(i);
             }
         }
-        System.out.println("the exam grade is : "+ grade+ "/30");
+        System.out.println("the exam grade is : "+ grade+ "/100");
 
         return grade;
     }

@@ -77,7 +77,7 @@ public class StudentGrades {
         objects.add(1, GlobalDataSaved.connectedUser.getId());
         Message msg = new Message("#get exam copy",objects);
         SimpleClient.getClient().sendToServer(msg);
-        App.setRoot("examCopy");
+        App.setRoot("examStudentNotes");
     }
 
     @FXML
