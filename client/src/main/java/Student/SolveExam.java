@@ -136,7 +136,6 @@ public class SolveExam {
     @FXML
     public void initialize() throws IOException {
         // TODO late
-
         List<Object> objects = new ArrayList<>();
         objects.add(0,null);
         objects.add(1,GlobalDataSaved.connectedUser);
@@ -181,6 +180,9 @@ public class SolveExam {
 
     public List<Question> sortedQuestionsList(Set<Exam_Question> list)
     {
+
+       examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+
         List<Object> examQ=Arrays.asList(examQuestions.toArray());
         Question q;
         List<Question> questionList = new ArrayList<>();

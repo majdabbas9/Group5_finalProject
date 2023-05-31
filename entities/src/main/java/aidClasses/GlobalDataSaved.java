@@ -28,4 +28,6 @@ public class GlobalDataSaved {
     public static Grade currentGrade = new Grade();
     public static Copy currentCopy = new Copy();
 
+    public static List<Exam> allExamsForTeacher;
+
 }

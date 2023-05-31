@@ -46,7 +46,7 @@ public class TeacherHome {
 
     @FXML
     void ExamsInProgress(ActionEvent event) throws IOException {
-        App.setRoot("teacherExamsInProgress");
+
     }
 
     @FXML
@@ -79,7 +79,14 @@ public class TeacherHome {
 
     @FXML
     void prepareExamsForExecution(ActionEvent event) throws IOException {
-        App.setRoot("prepareExam");
+        try {
+            Message msg = new Message("#showAllExamsForTeacher",GlobalDataSaved.connectedUser); // creating a msg to the server demanding the students
+            SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
     @FXML
     public void initialize()
