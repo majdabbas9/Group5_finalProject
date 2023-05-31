@@ -467,7 +467,7 @@ public class SimpleServer extends AbstractServer {
 						}
 
 					}
-					login(users.get(0));
+					//login(users.get(0));
 					if(users.get(0).getClass().equals(Principal.class)){
 						_LoggedInList.add(new LoggedInClient(client,0,users.get(0).getUserID()));
 					} else if (users.get(0).getClass().equals(Teacher.class)) {
@@ -481,7 +481,7 @@ public class SimpleServer extends AbstractServer {
 				}
 				if (contentOfMsg.equals("#logout")) {
 					User userToLogout = (User) msgFromClient.getObj();
-					logout(userToLogout);
+					//logout(userToLogout);
 					Iterator<LoggedInClient> iterator = _LoggedInList.iterator();
 					while (iterator.hasNext()) {
 						LoggedInClient _loggedInClient = iterator.next();

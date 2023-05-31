@@ -25,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,9 +94,10 @@ public class PrepareExam {
         int i=0;
         Exam exam=examTable.getSelectionModel().getSelectedItem();
         List<Exam_Question> examQuestion=new ArrayList<>(exam.getExamQuestions());
+        List<Integer> examPoints=new ArrayList<>(exam.getPoints());
         for(Exam_Question exam_question:examQuestion)
         {
-            observableListQuestions.add(new DisplayQuestion(exam_question.getQuestion().getStudentNotes(),exam.getPoints().get(i++)));
+            observableListQuestions.add(new DisplayQuestion(exam_question.getQuestion().getStudentNotes(),examPoints.get(i++)));
         }
         examQuestionTable.setItems(observableListQuestions);
     }

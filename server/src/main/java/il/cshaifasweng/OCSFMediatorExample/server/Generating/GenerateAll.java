@@ -20,7 +20,9 @@ import org.hibernate.Session;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GenerateAll {
 
@@ -133,7 +135,7 @@ public class GenerateAll {
         /*end of adding question*/
 
         /*adding exam*/
-        List<Integer> points=new ArrayList<>();
+        Set<Integer> points=new HashSet<>();
         List<Question> questions=new ArrayList<>();
         questions.add(question);
         questions.add(question1);

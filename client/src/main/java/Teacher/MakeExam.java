@@ -27,6 +27,7 @@ import javafx.scene.text.Text;
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class MakeExam {
@@ -176,7 +177,7 @@ public class MakeExam {
             warningTxt.setText("the exam have number of points above 100!");
             return;
         }
-        Exam exam=new Exam(time,"","","",examPoints);
+        Exam exam=new Exam(time,"","","",new HashSet<>(examPoints));
         List<Object>objects=new ArrayList<>();
         objects.add(exam);
         objects.add(GlobalDataSaved.connectedUser);
