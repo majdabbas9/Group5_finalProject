@@ -70,8 +70,14 @@ public class StudentGrades {
     }
 
     @FXML
-    void getCopy(ActionEvent event) {
-
+    void getCopy(ActionEvent event) throws IOException {
+        GlobalDataSaved.selectedGradeForExamCopy = studentGradesTableView.getSelectionModel().getSelectedIndex();
+        List<Object> objects = new ArrayList<>();
+        objects.add(0, GlobalDataSaved.selectedGradeForExamCopy);
+        objects.add(1, GlobalDataSaved.connectedUser.getId());
+        Message msg = new Message("#get exam copy",objects);
+        SimpleClient.getClient().sendToServer(msg);
+        App.setRoot("examCopy");
     }
 
     @FXML

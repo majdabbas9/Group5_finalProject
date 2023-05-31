@@ -58,10 +58,6 @@ public class StudentHome {
 
     }
 
-    @FXML
-    void showExamsCopy(ActionEvent event) {
-
-    }
 
     @FXML
     void showStudentGrade(ActionEvent event) throws IOException {
