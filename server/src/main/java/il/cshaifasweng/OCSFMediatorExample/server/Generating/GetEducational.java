@@ -1,15 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import org.hibernate.Session;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.From;
 import java.util.ArrayList;
 import java.util.List;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
@@ -23,6 +25,7 @@ public class GetEducational {
         List<Subject> data = session.createQuery(query).getResultList();
         return data;
     }
+
     public static List<Course> getAllCourses(Session session) throws Exception {
 
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -31,16 +34,23 @@ public class GetEducational {
         List<Course> data = session.createQuery(query).getResultList();
         return data;
     }
-    public  static void getCourse(Session session)
-    {
-     Query query=session.createQuery("from Course where courseName='linear algebra 3'");
-     if(query.getResultList().size()==0)
-     {
-         System.out.println("none");
-         return;
-     }
-     List<Course> c=(List<Course>) query.getResultList();
-     System.out.println("\n");
+
+    public static void getCourse(Session session) {
+        Query query = session.createQuery("from Course where courseName='linear algebra 3'");
+        if (query.getResultList().size() == 0) {
+            System.out.println("none");
+            return;
+        }
+        List<Course> c = (List<Course>) query.getResultList();
+        System.out.println("\n");
+    }
+
+    public static boolean checkID(Session session, String id) {
+        Query query = session.createQuery("from User where userID=" + id + "");
+        if (query.getResultList().size() == 0) {
+            return true;
+        }
+        return false;
     }
     public  static List<Question> getCourseQuestions(Session session,int course_id)
     {
@@ -67,12 +77,4 @@ public class GetEducational {
         return data;
     }
 
-
-    public static boolean checkID(Session session, String id) {
-        Query query = session.createQuery("from User where userID=" + id + "");
-        if (query.getResultList().size() == 0) {
-            return true;
-        }
-        return false;
-    }
 }
