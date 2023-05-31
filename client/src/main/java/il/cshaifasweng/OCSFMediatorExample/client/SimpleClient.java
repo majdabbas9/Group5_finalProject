@@ -9,15 +9,12 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExa
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
-import javafx.print.Collation;
 import org.greenrobot.eventbus.EventBus;
 
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
 
-import javax.xml.crypto.Data;
-import java.io.IOException;
 import java.util.List;
 
 public class SimpleClient extends AbstractClient {
@@ -153,7 +150,12 @@ public class SimpleClient extends AbstractClient {
 					if (contentOfMsg.equals("sending all exams for teacher")) {
 						GlobalDataSaved.allExamsForTeacher = (List<Exam>) msgFromServer.getObj();
 						App.setRoot("prepareExam");
+						return;
 					}
+				if (contentOfMsg.equals("teacher compExams")) {
+					GlobalDataSaved.teacherCompExamsToApprove = (List<ComputerizedExamToExecute>) msgFromServer.getObj();
+					App.setRoot("examNeedApprovement");
+				}
 			}
             catch(Exception ex){
 					System.out.println(ex.getMessage());

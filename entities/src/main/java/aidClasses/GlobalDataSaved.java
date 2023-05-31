@@ -30,4 +30,6 @@ public class GlobalDataSaved {
 
     public static List<Exam> allExamsForTeacher;
 
+    public static List<ComputerizedExamToExecute> teacherCompExamsToApprove;
+
 }

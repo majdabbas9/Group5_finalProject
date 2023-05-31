@@ -733,6 +733,19 @@ public class SimpleServer extends AbstractServer {
 						e.printStackTrace();
 					}
 				}
+				if(contentOfMsg.equals("#getTeacherCompExams"))
+				{
+					Teacher teacher=(Teacher) msgFromClient.getObj();
+					String queryString="FROM ComputerizedExamToExecute WHERE teacherThatExecuted.id = "+teacher.getId();
+					Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
+					List<ComputerizedExamToExecute> compExams=(List<ComputerizedExamToExecute>) (query.getResultList());
+					Message messageToClient = new Message("teacher compExams",compExams);
+					try {
+						client.sendToClient(messageToClient);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				if (contentOfMsg.equals("#close")) {
 					session.close();
 				}
