@@ -485,17 +485,29 @@ public class SimpleServer extends AbstractServer {
 						}
 
 					}
-					if (users.get(0).getConnected()) {
-						Warning warning = new Warning("user already logged in!");
-						try {
-							client.sendToClient(warning);
-							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-							return;
-						} catch (IOException e) {
-							e.printStackTrace();
+					for (LoggedInClient _loggedInClient : _LoggedInList) {
+						if (_loggedInClient.get_id().equals(users.get(0).getUserID())) {
+							Warning warning = new Warning("user already logged in!");
+							try {
+								client.sendToClient(warning);
+								System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+								return;
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
-
 					}
+//					if (users.get(0).getConnected()) {
+//						Warning warning = new Warning("user already logged in!");
+//						try {
+//							client.sendToClient(warning);
+//							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+//							return;
+//						} catch (IOException e) {
+//							e.printStackTrace();
+//						}
+//
+//					}
 					//login(users.get(0));
 					if(users.get(0).getClass().equals(Principal.class)){
 						_LoggedInList.add(new LoggedInClient(client,0,users.get(0).getUserID()));
