@@ -22,8 +22,10 @@ public class Question implements Serializable {
     private String teacherNotes;
     private String studentNotes; // this the content of the question
     private String questionID;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> choices;
+    private String choice1;
+    private String choice2;
+    private String choice3;
+    private String choice4;
     private String correctChoice;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
@@ -42,12 +44,12 @@ public class Question implements Serializable {
     public Question() {
 
     }
-    public Question(String teacherNotes, String studentNotes, String questionID, List<String> choices, String correctChoice) {
+    public Question(String teacherNotes, String studentNotes, String questionID,String correctChoice,List<String> choices) {
         this.teacherNotes = teacherNotes;
         this.studentNotes = studentNotes;
         this.questionID = questionID;
-        this.choices=choices;
         this.correctChoice = correctChoice;
+        this.choice1=choices.get(0);this.choice2=choices.get(1);this.choice3=choices.get(2);this.choice4=choices.get(3);
     }
     public int getId() {
         return id;
@@ -77,13 +79,6 @@ public class Question implements Serializable {
     }
 
 
-    public List<String> getChoices() {
-        return choices;
-    }
-
-    public void setChoices(List<String> choices) {
-        this.choices = choices;
-    }
     public String getCorrectChoice() {
         return correctChoice;
     }
@@ -119,6 +114,48 @@ public class Question implements Serializable {
 
     public Set<Exam_Question> getQuestionExams() {
         return questionExams;
+    }
+    public String getChoice1() {
+        return choice1;
+    }
+
+    public void setChoice1(String choice1) {
+        this.choice1 = choice1;
+    }
+
+    public String getChoice2() {
+        return choice2;
+    }
+
+    public void setChoice2(String choice2) {
+        this.choice2 = choice2;
+    }
+
+    public String getChoice3() {
+        return choice3;
+    }
+
+    public void setChoice3(String choice3) {
+        this.choice3 = choice3;
+    }
+
+    public String getChoice4() {
+        return choice4;
+    }
+
+    public void setChoice4(String choice4) {
+        this.choice4 = choice4;
+    }
+
+    public void setQuestionExams(Set<Exam_Question> questionExams) {
+        this.questionExams = questionExams;
+    }
+
+    public List<String> getChoices()
+    {
+        List<String> choices=new ArrayList<>();
+        choices.add(choice1);choices.add(choice2);choices.add(choice3);choices.add(choice4);
+        return  choices;
     }
 
     @Override

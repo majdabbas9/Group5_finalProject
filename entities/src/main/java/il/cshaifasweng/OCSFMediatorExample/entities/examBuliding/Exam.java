@@ -26,8 +26,8 @@ public class Exam implements Serializable{
     private String exam_ID;
     private String teacherNotes;
     private String notes;
-    @ElementCollection
-    private List<Integer> points;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Integer> points=new ArrayList<>();
     @OneToMany(mappedBy = "exam",fetch = FetchType.EAGER)
     private Set<Exam_Question> examQuestions=new HashSet<>();
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,12 +37,11 @@ public class Exam implements Serializable{
     @JoinColumn(name = "course_id")
     private Course examCourse;
 
-    public Exam(int time, String exam_ID, String teacherNotes, String notes, List<Integer> points) {
+    public Exam(int time, String exam_ID, String teacherNotes, String notes) {
         this.time = time;
         this.exam_ID = exam_ID;
         this.teacherNotes = teacherNotes;
         this.notes = notes;
-        this.points = points;
     }
 
     public Exam() {

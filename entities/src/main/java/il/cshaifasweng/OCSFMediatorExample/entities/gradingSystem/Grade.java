@@ -24,6 +24,7 @@ public class Grade implements Serializable {
     private String teacherNotes;
 
     private boolean teacherApprovement;
+
     public Grade(Student student, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour,String teacherNotes) {
         this.student = student;
         this.grade = 0;
@@ -132,5 +133,11 @@ public class Grade implements Serializable {
 
     public void setTeacherNotes(String teacherNotes) {
         this.teacherNotes = teacherNotes;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.date;
     }
 }

@@ -165,13 +165,14 @@ public class ExamChooseQuestions {
             warning.setText("the exam have number of points above 100!");
             return;
         }
-        Exam exam=new Exam(time,"","","",new ArrayList<>(examPoints));
+        Exam exam=new Exam(time,"","","");
         List<Object>objects=new ArrayList<>();
         objects.add(exam);
         objects.add(GlobalDataSaved.connectedUser);
         objects.add(MakeExam.selectedCourse);
         objects.add(MakeExam.selectedSubject);
         objects.add(selectedQuestions);
+        objects.add(examPoints);
         Message msg = new Message("#addExam", objects); // creating a msg to the server demanding the students
         try {
             SimpleClient.getClient().sendToServer(msg); // sending the msg to the server

@@ -36,19 +36,24 @@
                 <Text fx:id="currentTime1" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-          <TableView fx:id="gradesTable" layoutX="14.0" layoutY="182.0" prefHeight="339.0" prefWidth="742.0">
+          <TableView fx:id="gradesTable" layoutX="17.0" layoutY="180.0" onMouseClicked="#updateGrade" prefHeight="339.0" prefWidth="754.0">
               <columns>
-                  <TableColumn fx:id="studentIdColumn" prefWidth="179.20003700256348" text="Student ID" />
-                  <TableColumn fx:id="studentNameColumn" minWidth="7.199951171875" prefWidth="182.39996337890625" text="Student Name" />
-                  <TableColumn fx:id="gradeColumn" prefWidth="82.4000244140625" text="Grade" />
-                  <TableColumn fx:id="notesColumn" prefWidth="139.20004272460938" text="notes" />
-            <TableColumn fx:id="approveColumn" prefWidth="155.99997558593748" text="Approve" />
+                  <TableColumn fx:id="studentIdColumn" prefWidth="155.20003700256348" text="Student ID" />
+                  <TableColumn fx:id="studentNameColumn" minWidth="7.199951171875" prefWidth="130.39996337890625" text="Student Name" />
+                  <TableColumn fx:id="dateColumn" prefWidth="139.20001220703125" text="date" />
+                  <TableColumn fx:id="gradeColumn" prefWidth="71.20004272460938" text="grade" />
+            <TableColumn fx:id="notesColumn" prefWidth="314.4000244140625" text="notes" />
               </columns>
           </TableView>
-        <Button layoutX="14.0" layoutY="542.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
+        <Button layoutX="17.0" layoutY="531.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
             <font>
                 <Font size="15.0" />
             </font>
         </Button>
+      <Text fx:id="warning" fill="RED" layoutX="340.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="108.53668212890625">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

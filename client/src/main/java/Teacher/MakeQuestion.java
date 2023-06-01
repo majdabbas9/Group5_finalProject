@@ -196,13 +196,14 @@ public class MakeQuestion {
         {
             questionID+=questionNum;
         }
-        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),questionID,choices,correctChoice);
+        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),questionID,correctChoice,choices);
         //question.setQuestionCourses(selectedCourses);
         List<Object> dataToServer=new ArrayList<>();
         dataToServer.add(question);
         dataToServer.add(selectedCourses);
         dataToServer.add(subjectList.getSelectionModel().getSelectedItem());
         dataToServer.add((Teacher)GlobalDataSaved.connectedUser);
+        dataToServer.add(choices);
         Message msg = new Message("#addQuestion", dataToServer); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
     }

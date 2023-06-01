@@ -1,21 +1,23 @@
 package aidClasses.aidClassesForTeacher;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+
 public class DisplayCompExamForApprove {
-    private String date;
+    private ComputerizedExamToExecute date;
     private String examId;
     private String subjectName;
 
-    public DisplayCompExamForApprove(String date, String examId,String subjectName) {
+    public DisplayCompExamForApprove(ComputerizedExamToExecute date, String examId,String subjectName) {
         this.date = date;
         this.examId = examId;
         this.subjectName = subjectName;
     }
 
-    public String getDate() {
+    public ComputerizedExamToExecute getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(ComputerizedExamToExecute date) {
         this.date = date;
     }
 

@@ -144,6 +144,14 @@ public class SimpleClient extends AbstractClient {
 						GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
 						return;
 					}
+				if (contentOfMsg.equals("the grade updated")) {
+					List<Object> dataFromServer=(List<Object>)msgFromServer.getObj();
+					Grade grade = (Grade) dataFromServer.get(0);
+					int newGrade=(int)dataFromServer.get(1);
+					Message newMessage=new Message(	grade.getStudent().getFirstName()+" grade in this exam has been updated to "+newGrade);
+					EventBus.getDefault().post(new MessageEvent((Message) newMessage));
+					return;
+				}
 					if (contentOfMsg.equals("student grades")) {
 						GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
 						System.out.println("*****/////" + GlobalDataSaved.gradeList.get(0).getGrade());
@@ -161,6 +169,11 @@ public class SimpleClient extends AbstractClient {
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
 						return;
 					}
+					if(contentOfMsg.equals("sending all compExams for teacher"))
+					{
+						GlobalDataSaved.teacherCompExamsToApprove=(List<ComputerizedExamToExecute>) msgFromServer.getObj();
+						App.setRoot("examNeedApprovement");
+					}
 					if (contentOfMsg.equals("Student Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
@@ -174,6 +187,10 @@ public class SimpleClient extends AbstractClient {
 				if (contentOfMsg.equals("teacher compExams")) {
 					GlobalDataSaved.teacherCompExamsToApprove = (List<ComputerizedExamToExecute>) msgFromServer.getObj();
 					App.setRoot("examNeedApprovement");
+				}
+				if (contentOfMsg.equals("show all grades")) {
+					GlobalDataSaved.compExamGrades = (List<Grade>) msgFromServer.getObj();
+					App.setRoot("approvement");
 				}
 				if(contentOfMsg.equals("AllExamsToPrincipal")){
 					GlobalDataSaved.allExamsForPrincipal = (List<Exam>) msgFromServer.getObj();
