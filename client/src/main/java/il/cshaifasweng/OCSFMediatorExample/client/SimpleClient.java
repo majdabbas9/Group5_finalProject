@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import aidClasses.*;
 import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
+import il.cshaifasweng.OCSFMediatorExample.client.Teacher.BuildExam;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -53,6 +54,8 @@ public class SimpleClient extends AbstractClient {
 				}
 					if (contentOfMsg.equals("sending teacher subjects")) {
 						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
+						if(GlobalDataSaved.forQuestion)App.setRoot("makeQuestion");
+						else App.setRoot("makeExam");
 						return;
 					}
 					if (contentOfMsg.equals("sending teacher courses")) {

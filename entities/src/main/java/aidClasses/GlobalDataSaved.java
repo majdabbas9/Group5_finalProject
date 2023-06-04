@@ -45,4 +45,5 @@ public class GlobalDataSaved {
     public static List<Grade> compExamGrades;
     public static List<Subject> allSubjects;
     public static List<ComputerizedExamToExecute> getTeacherCompExamsNow;
+    public static boolean forQuestion;
 }
