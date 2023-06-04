@@ -8,18 +8,20 @@ import javafx.scene.control.TextField;
 public class DisplayGrade {
    private String studentID;
    private String studentName;
-   private Grade date;
+   private String date;
    private TextField grade;
+   private Grade gradeObject;
 
    private TextField notes;
 
 
-    public DisplayGrade(String studentID, String studentName, Grade date, TextField grade, TextField notes) {
+    public DisplayGrade(String studentID, String studentName, String date, TextField grade, TextField notes,Grade gradeObject) {
         this.studentID = studentID;
         this.studentName = studentName;
         this.date = date;
         this.grade = grade;
         this.notes = notes;
+        this.gradeObject=gradeObject;
     }
 
     public String getStudentID() {
@@ -38,11 +40,11 @@ public class DisplayGrade {
         this.studentName = studentName;
     }
 
-    public Grade getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Grade date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -60,5 +62,13 @@ public class DisplayGrade {
 
     public void setNotes(TextField notes) {
         this.notes = notes;
+    }
+
+    public Grade getGradeObject() {
+        return gradeObject;
+    }
+
+    public void setGradeObject(Grade gradeObject) {
+        this.gradeObject = gradeObject;
     }
 }

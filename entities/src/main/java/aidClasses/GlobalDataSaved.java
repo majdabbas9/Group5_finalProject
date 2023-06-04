@@ -43,4 +43,6 @@ public class GlobalDataSaved {
     public static List<Question> courseQuestionsForMakeExam;
     public static List<ComputerizedExamToExecute> teacherCompExamsToApprove;
     public static List<Grade> compExamGrades;
+    public static List<Subject> allSubjects;
+    public static List<ComputerizedExamToExecute> getTeacherCompExamsNow;
 }

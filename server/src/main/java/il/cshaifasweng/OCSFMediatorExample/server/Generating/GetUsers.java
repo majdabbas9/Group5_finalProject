@@ -46,4 +46,11 @@ public class GetUsers {
         }
         return coursesList;
     }
+    public static Teacher getTeacherById(Session session,int id)
+    {
+        String queryString=" FROM Teacher WHERE id = : id";
+        Query query = session.createQuery(queryString,Teacher.class);
+        query.setParameter("id",id);
+        return (Teacher) (query.getResultList().get(0));
+    }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="573.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Teacher.Approvement">
+<AnchorPane prefHeight="573.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.Approvement">
     <children>
         <Pane prefHeight="162.0" prefWidth="788.0" style="-fx-background-color: #003000;">
             <children>
@@ -43,6 +43,7 @@
                   <TableColumn fx:id="dateColumn" prefWidth="139.20001220703125" text="date" />
                   <TableColumn fx:id="gradeColumn" prefWidth="71.20004272460938" text="grade" />
             <TableColumn fx:id="notesColumn" prefWidth="314.4000244140625" text="notes" />
+            <TableColumn fx:id="gradeObjectColumn" prefWidth="75.0" text="gradeObjectColumn" visible="false" />
               </columns>
           </TableView>
         <Button layoutX="17.0" layoutY="531.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
@@ -50,7 +51,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-      <Text fx:id="warning" fill="RED" layoutX="340.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="108.53668212890625">
+      <Text fx:id="warning" fill="RED" layoutX="340.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="108.53668212890625">
          <font>
             <Font size="14.0" />
          </font>

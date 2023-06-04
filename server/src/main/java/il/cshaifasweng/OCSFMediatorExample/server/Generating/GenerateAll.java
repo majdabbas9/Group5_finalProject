@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Student_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Student_Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
@@ -9,42 +10,87 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
-import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
-import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
-import il.cshaifasweng.OCSFMediatorExample.server.adding.Adding;
 import org.hibernate.Session;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class GenerateAll {
 
     public static void generateEducational(Session session)
     {
-
         /*adding the principal*/
         Principal principal=new Principal("1111","0","0","moustfa","jbraeen");
         session.save(principal);
         session.flush();
         /*end of adding principal*/
+
+        /*adding subjects*/
         Subject math=new Subject("math");
         session.save(math);
         session.flush();
 
+        Subject cs=new Subject("computer science");
+        session.save(cs);
+        session.flush();
+
+        Subject physics=new Subject("physics");
+        session.save(physics);
+        session.flush();
+        /*end of adding subjects*/
+
+
+        /*adding courses*/
+
+        /*math*/
         Course algebra=new Course("algebra",math);
+        Course algebra2=new Course("algebra 2",math);
+        Course discMath=new Course("discrete mathematics",math);
+
         session.save(algebra);
+        session.save(algebra2);
+        session.save(discMath);
         session.flush();
 
         math.getSubjectCourses().add(algebra);
+        math.getSubjectCourses().add(algebra2);
+        math.getSubjectCourses().add(discMath);
         session.update(math);
         session.flush();
+
+        /*end of math*/
+
+        /*cs*/
+        Course csIntro=new Course("introduction to  computer science",cs);
+        Course softWare=new Course("software engineering",cs);
+        Course operatingSystem=new Course("operating system",cs);
+
+        session.save(csIntro);
+        session.save(softWare);
+        session.save(operatingSystem);
+        session.flush();
+
+        cs.getSubjectCourses().add(csIntro);
+        cs.getSubjectCourses().add(softWare);
+        cs.getSubjectCourses().add(operatingSystem);
+        session.update(cs);
+        session.flush();
+        /*end of cs*/
+        /*physics*/
+        Course introPhysics=new Course("Introductory Physics",physics);
+        Course mechanic=new Course("Classical Mechanics",physics);
+        Course electromagnetism=new Course("Electromagnetism",physics);
+
+        session.save(introPhysics);
+        session.save(mechanic);
+        session.save(electromagnetism);
+        session.flush();
+
+        physics.getSubjectCourses().add(introPhysics);
+        physics.getSubjectCourses().add(mechanic);
+        physics.getSubjectCourses().add(electromagnetism);
+        session.update(physics);
+        session.flush();
+        /*end of physics*/
+
+        /*end of adding courses*/
 
         Teacher t1=new Teacher("33333","1","1","mohamed","abbas");
         Teacher t2=new Teacher("33333","3","3","aa","aa");

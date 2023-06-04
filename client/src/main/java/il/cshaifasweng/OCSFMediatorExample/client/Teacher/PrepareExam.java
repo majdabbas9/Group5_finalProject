@@ -2,7 +2,7 @@
  * Sample Skeleton for 'prepareExamForExecution.fxml' Controller Class
  */
 
-package Teacher;
+package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.aidClassesForTeacher.DisplayQuestion;
 import aidClasses.GlobalDataSaved;
@@ -10,12 +10,9 @@ import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,13 +22,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PrepareExam {
 
+    @FXML
+    private Text examQuestionsText;
     @FXML // fx:id="PointsColumn"
     private TableColumn<DisplayQuestion, Integer> PointsColumn; // Value injected by FXMLLoader
 
@@ -89,6 +87,7 @@ public class PrepareExam {
 
     @FXML
     void displayQuestions(MouseEvent event) {
+        examQuestionsText.setVisible(true);
         examQuestionTable.setVisible(true);
         observableListQuestions.clear();
         int i=0;
@@ -103,7 +102,7 @@ public class PrepareExam {
     }
 
     @FXML
-    void submitExam(ActionEvent event) {
+    void submitExam(ActionEvent event) throws IOException {
         warningTxt.setText("");
         if(wayOfExecution.getSelectionModel().getSelectedItem()==null)
         {
@@ -150,7 +149,7 @@ public class PrepareExam {
         {
             List<Object> dataToServer=new ArrayList<>();
            ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code);
-            dataToServer.add(compExam);dataToServer.add(GlobalDataSaved.connectedUser);dataToServer.add(examTable.getSelectionModel().getSelectedItem());
+            dataToServer.add(compExam);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(examTable.getSelectionModel().getSelectedItem().getId());
             Message msg = new Message("#addCompExam", dataToServer); // creating a msg to the server demanding the students
             try {
                 SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
@@ -162,20 +161,12 @@ public class PrepareExam {
         }
         else
         {
-
+            String fileName=examTable.getSelectionModel().getSelectedItem().getExam_ID();
+            fileName+=GlobalDataSaved.connectedUser.getUserID();
+            WordGeneratorFile.createWord(new ArrayList<>(examTable.getSelectionModel().getSelectedItem().getExamQuestions()),examTable.getSelectionModel().getSelectedItem().getPoints()
+            ,examTable.getSelectionModel().getSelectedItem().getExamCourse().getCourseName(),GlobalDataSaved.connectedUser.getFirstName()+" "+
+                            GlobalDataSaved.connectedUser.getLastName(),fileName);
         }
-    }
-    @FXML
-    void wayOfExecutionSelected(ActionEvent event) {
-        if(wayOfExecution.getSelectionModel().getSelectedItem().equals("computerized"))
-        {
-            wordFileButton.setVisible(false);
-        }
-        if(wayOfExecution.getSelectionModel().getSelectedItem().equals("manual"))
-        {
-            wordFileButton.setVisible(true);
-        }
-
     }
     @FXML
     void onSortExam(ActionEvent event) {
@@ -184,8 +175,8 @@ public class PrepareExam {
     @FXML
     public void initialize()
     {
+        examQuestionsText.setVisible(false);
        examQuestionTable.setVisible(false);
-        wordFileButton.setVisible(false);
         wayOfExecution.getItems().add("computerized");
         wayOfExecution.getItems().add("manual");
         theTeacher= (Teacher) GlobalDataSaved.connectedUser;

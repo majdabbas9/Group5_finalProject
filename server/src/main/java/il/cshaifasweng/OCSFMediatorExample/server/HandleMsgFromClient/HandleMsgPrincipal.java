@@ -20,7 +20,7 @@ public class HandleMsgPrincipal {
     public static boolean handlePrincipal(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
         if (contentOfMsg.equals("#add teacher")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
-            SimpleServer.addTeacher((Teacher) dataFromClient.get(0),(List<Subject>) dataFromClient.get(1),(List<Course>) dataFromClient.get(2));
+            SimpleServer.addTeacher((Teacher) dataFromClient.get(0),(List<Integer>) dataFromClient.get(1),(List<Integer>) dataFromClient.get(2));
             Message messageToClient = new Message("Teacher Added Successfully");
             try {
                 client.sendToClient(messageToClient);
@@ -31,7 +31,7 @@ public class HandleMsgPrincipal {
         }
         if (contentOfMsg.equals("#add student")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
-            SimpleServer.addStudent((Student) dataFromClient.get(0),(List<Subject>) dataFromClient.get(1),(List<Course>) dataFromClient.get(2));
+            SimpleServer.addStudent((Student) dataFromClient.get(0),(List<Integer>) dataFromClient.get(1),(List<Integer>) dataFromClient.get(2));
             Message messageToClient = new Message("Student Added Successfully");
             try {
                 client.sendToClient(messageToClient);

@@ -2,15 +2,14 @@
  * Sample Skeleton for 'examChooseQuestions.fxml' Controller Class
  */
 
-package Teacher;
+package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
-import aidClasses.aidClassesForTeacher.DisplayQuestion;
 import aidClasses.aidClassesForTeacher.ExamQuestion;
+import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.collections.FXCollections;
@@ -166,12 +165,18 @@ public class ExamChooseQuestions {
             return;
         }
         Exam exam=new Exam(time,"","","");
+        exam.setExam_ID(QuestionsExamsID.examID(MakeExam.selectedCourse.getCourseName(),MakeExam.selectedSubject.getId(),MakeExam.selectedCourse.getId()));
         List<Object>objects=new ArrayList<>();
         objects.add(exam);
-        objects.add(GlobalDataSaved.connectedUser);
-        objects.add(MakeExam.selectedCourse);
-        objects.add(MakeExam.selectedSubject);
-        objects.add(selectedQuestions);
+        objects.add(GlobalDataSaved.connectedUser.getId());
+        objects.add(MakeExam.selectedCourse.getId());
+        objects.add(MakeExam.selectedSubject.getId());
+        List<Integer> questionsIds=new ArrayList<>();
+        for(Question question:selectedQuestions)
+        {
+            questionsIds.add(question.getId());
+        }
+        objects.add(questionsIds);
         objects.add(examPoints);
         Message msg = new Message("#addExam", objects); // creating a msg to the server demanding the students
         try {
