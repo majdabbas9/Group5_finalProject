@@ -13,6 +13,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetUsers;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
@@ -22,10 +23,11 @@ import org.hibernate.Session;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HandleMsgTeacher {
-    public static boolean handleTeacher(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws IOException {
+    public static boolean handleTeacher(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
         if (contentOfMsg.equals("#addQuestion")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
             Question question = (Question) (dataFromClient.get(0));
@@ -34,6 +36,7 @@ public class HandleMsgTeacher {
             Query query = session.createQuery(queryString,Question.class);
             query.setParameter("studentNotes",(question.getStudentNotes()));
             List<Question> res=query.getResultList();
+            session.clear();
 
             if(res.size()!=0)
             {
@@ -46,8 +49,8 @@ public class HandleMsgTeacher {
                     e.printStackTrace();
                 }
             }
-            SimpleServer.addQuestion(question,(List<Course>)dataFromClient.get(1),(Subject)dataFromClient.get(2),(Teacher)dataFromClient.get(3));
-            Message messageToClient = new Message("added the question successfully", (il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher)dataFromClient.get(3));
+            SimpleServer.addQuestion(question,(List<Integer>)dataFromClient.get(1),(int)dataFromClient.get(2),(int)dataFromClient.get(3));
+            Message messageToClient = new Message("added the question successfully");
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -57,8 +60,8 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#addExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-            SimpleServer.addExam((Exam) dataFromClient.get(0),(Teacher) dataFromClient.get(1), (Course) dataFromClient.get(2),(Subject)dataFromClient.get(3),(List<Question>) dataFromClient.get(4),(List<Integer>)dataFromClient.get(5));
-            Message messageToClient = new Message("added the exam successfully", (il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher)dataFromClient.get(1));
+            SimpleServer.addExam((Exam) dataFromClient.get(0),(int) dataFromClient.get(1), (int) dataFromClient.get(2),(int)dataFromClient.get(3),(List<Integer>) dataFromClient.get(4),(List<Integer>)dataFromClient.get(5));
+            Message messageToClient = new Message("added the exam successfully");
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -68,10 +71,10 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#showAllCourseQuestion"))
         {
-            Course course=(Course) msgFromClient.getObj();
+            int courseId=(int) msgFromClient.getObj();
             String queryString="FROM Course_Question WHERE course.id = : courseId";
             Query query = session.createQuery(queryString, Course_Question.class);
-            query.setParameter("courseId",(course.getId()));
+            query.setParameter("courseId",courseId);
             List<Course_Question> res=query.getResultList();
             List<Question> questionsList=new ArrayList<>();
             for(Course_Question cq:res)
@@ -105,8 +108,8 @@ public class HandleMsgTeacher {
                 }
             }
 
-            SimpleServer.addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher)dataFromClient.get(1),(Exam) dataFromClient.get(2));
-            Message messageToClient = new Message("added the CompExam successfully", (il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher)dataFromClient.get(1));
+            SimpleServer.addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(int)dataFromClient.get(1),(int) dataFromClient.get(2));
+            Message messageToClient = new Message("added the CompExam successfully");
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -116,10 +119,9 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#showAllExamsForTeacher"))
         {
-            il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher teacher=(il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher)msgFromClient.getObj();
+            int teacherId=(int)msgFromClient.getObj();
             List<Teacher_Course> teacherCourses=new ArrayList<>();
-            teacherCourses.addAll(teacher.getTeacherCourses());
-            List<Exam> ExamsToClient= GetExamBuliding.getAllExamsForCourses(session,teacherCourses);
+            List<Exam> ExamsToClient= GetExamBuliding.getAllExamsForCourses(session,teacherId);
             Message messageToClient = new Message("sending all exams for teacher",ExamsToClient);
             try {
                 client.sendToClient(messageToClient);
@@ -189,10 +191,10 @@ public class HandleMsgTeacher {
         if(contentOfMsg.equals("#teacherApproveGrade"))
         {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-            Grade grade=(Grade) dataFromClient.get(0);
+            int gradeId=(int) dataFromClient.get(0);
             int newGrade=(int) dataFromClient.get(1);
             String notes=(String)dataFromClient.get(2);
-            SimpleServer.teacherApproveStudentGrade(grade,newGrade,notes);
+            SimpleServer.teacherApproveStudentGrade(gradeId,newGrade,notes);
             Message messageToClient = new Message("the grade updated",dataFromClient);
             try {
                 client.sendToClient(messageToClient);
@@ -220,6 +222,32 @@ public class HandleMsgTeacher {
             Message messageToClient = new Message("teacher compExams",compExams);
             try {
                 client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if(contentOfMsg.equals("#getTeacherCompExamsNow"))
+        {
+            List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+            Message messageToClient = new Message("teacher compExams now",GetExamBuliding.getAllCompExamsNow(session,
+                    (int)dataFromClient.get(0),(String) dataFromClient.get(1)));
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if(contentOfMsg.equals("#allSubjects"))
+        {
+            List<Subject> list = new ArrayList<>();
+            list.addAll(GetEducational.getAllSubjects(session));
+            Message messageToClient = new Message("all subjects for init",list);
+            messageToClient.setObj(list);
+            try {
+                client.sendToClient(messageToClient);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -12,10 +12,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.GenerateAll;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetUsers;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.*;
 import il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient.HandleMsgPrincipal;
 import il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient.HandleMsgStudent;
 import il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient.HandleMsgTeacher;
@@ -94,46 +91,32 @@ public class SimpleServer extends AbstractServer {
 		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
 	}
-
-	public void logout(User user) {
-		session.beginTransaction();
-		session.clear();
-		user.setConnected(false);
-		session.update(user);
-		session.flush();
-		session.getTransaction().commit();
-	}
-
-	public void login(User user) {
-		session.beginTransaction();
-		user.setConnected(true);
-		session.update(user);
-		session.flush();
-		session.getTransaction().commit();
-	}
-
-	public static void addQuestion(Question question,List<Course> questionCourses,Subject questionSubject,Teacher theTeacher) {
+	public static void addQuestion(Question question,List<Integer> CoursesIds,int subjectId,int teacherId) {
+		List<Course>questionCourses=GetExamBuliding.getCoursesById(session,CoursesIds);
+		Subject questionSubject=GetExamBuliding.getSubjectById(session,subjectId);
+		Teacher theTeacher=GetUsers.getTeacherById(session,teacherId);
 		//session.flush();
 		session.beginTransaction();
 		session.clear();
+		question.setQuestionSubject(questionSubject);
+		question.setTeacherThatCreated(theTeacher);
+
 		session.save(question);
 		session.flush();
-
-		question.setQuestionSubject(questionSubject);
-		session.update(question);
-		session.flush();
-
-		question.setTeacherThatCreated(theTeacher);
-		session.update(question);
-		session.flush();
+//
+//		question.setQuestionSubject(questionSubject);
+//		session.update(question);
+//		//session.flush();
+//
+//		question.setTeacherThatCreated(theTeacher);
+//		session.update(question);
+//		//session.flush();
 
 		theTeacher.getQuestionsCreated().add(question);
 		session.update(theTeacher);
-		session.flush();
 
-		Subject subject = question.getQuestionSubject();
-		subject.getSubjectQuestions().add(question);
-		session.update(subject);
+		questionSubject.getSubjectQuestions().add(question);
+		session.update(questionSubject);
 		session.flush();
 
 		Course_Question cq;
@@ -141,18 +124,16 @@ public class SimpleServer extends AbstractServer {
 		{
 			cq=new Course_Question(course,question);
 			session.save(cq);
-			session.flush();
+			//session.flush();
 
 			course.getCourseQuestions().add(cq);
 			session.update(course);
-			session.flush();
+			//session.flush();
 
 			question.getQuestionCourses().add(cq);
 			session.update(question);
 			session.flush();
 		}
-
-		//session.clear();
 		session.getTransaction().commit();
 
 		int i;
@@ -169,48 +150,58 @@ public class SimpleServer extends AbstractServer {
 		}
 	}
 
-	public static void addExam(Exam exam,Teacher teacher,Course course,Subject subject,List<Question> questions,List<Integer> points) {
+	public static void addExam(Exam exam,int teacherId,int courseId,int subjectId,List<Integer> questionsIds,List<Integer> points) {
+		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
+		Course course=GetExamBuliding.getCourseById(session,courseId);
+		Subject subject=GetExamBuliding.getSubjectById(session,subjectId);
+		List<Question> questions=GetExamBuliding.getQuestionsById(session,questionsIds);
 		/*saving exam*/
 		session.beginTransaction();
 		session.clear();
+		exam.setTeacherThatCreated(teacher);
+		exam.setExamSubject(subject);
+		exam.setPoints(points);
+		exam.setExamCourse(course);
 		session.save(exam);
-		session.flush();
+
+		//session.save(exam);
+		//session.flush();
 		/*end of saving exam*/
 
-		/*updating exam*/
-		exam.setPoints(points);
-		session.update(exam);
-		session.flush();
-
-		exam.setTeacherThatCreated(teacher);
-		session.update(exam);
-		session.flush();
-
-		exam.setExamSubject(subject);
-		session.update(exam);
-		session.flush();
-
-		exam.setExamCourse(course);
-		session.update(exam);
-		session.flush();
-		/*end of updating exam*/
+//		/updating exam/
+//		exam.setPoints(points);
+//		session.update(exam);
+//		//session.flush();
+//
+//		exam.setTeacherThatCreated(teacher);
+//		session.update(exam);
+//		//session.flush();
+//
+//		exam.setExamSubject(subject);
+//		session.update(exam);
+//		//session.flush();
+//
+//		exam.setExamCourse(course);
+//		session.update(exam);
+//		//session.flush();
+//		/end of updating exam/
 
 		/*updating teacher*/
 		teacher.getExamsCreated().add(exam);
 		session.update(teacher);
-		session.flush();
+		//session.flush();
 		/*end of updating teacher*/
 
 		/*updating course*/
 		course.getCourseExams().add(exam);
 		session.update(course);
-		session.flush();
+		//session.flush();
 		/*end of updating course*/
 
 		/*updating subject*/
 		subject.getSubjectExams().add(exam);
 		session.update(subject);
-		session.flush();
+		//session.flush();
 		/*end of updating subject*/
 
 		Exam_Question eq;
@@ -218,53 +209,39 @@ public class SimpleServer extends AbstractServer {
 		{
 			eq=new Exam_Question(exam,question);
 			session.save(eq);
-			session.flush();
+			//session.flush();
 
 			question.getQuestionExams().add(eq);
 			session.update(question);
-			session.flush();
+			//session.flush();
 
 			exam.getExamQuestions().add(eq);
 			session.update(exam);
-			session.flush();
+			//session.flush();
 
 
 		}
-		int subjectId=subject.getId()-1;
-		int courseId=course.getId()-1;
-		int examId=exam.getId()-1;
-		String exam_ID="";
-		if(subjectId<10)
-		{
-			exam_ID+="0"+subjectId;
-		}
-		else
-		{
-			exam_ID+=subjectId;
-		}
-		if(courseId<10)
-		{
-			exam_ID+="0"+courseId;
-		}
-		else
-		{
-			exam_ID+=courseId;
-		}
-		if(examId<10)
-		{
-			exam_ID+="0"+examId;
-		}
-		else
-		{
-			exam_ID+=examId;
-		}
-		exam.setExam_ID(exam_ID);
-		session.update(exam);
-		session.flush();
+		//session.flush();
+		//session.clear();
 		session.getTransaction().commit();
+
+		int i;
+		for (i = 0 ; i < _LoggedInList.size() && _LoggedInList.get(i).get_class() != 0; i++){}
+		if (i == _LoggedInList.size()){
+			return;
+		} else {
+			try	{
+				List<Exam> list = GetEducational.getAllExams(session);
+				_LoggedInList.get(i).getClient().sendToClient(new Message("UpdateAllExamsToPrincipal",list));
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
-	public static void addCompExam(ComputerizedExamToExecute compExam,Teacher teacher,Exam exam)
+	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId)
 	{
+		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
+		Exam exam=GetExamBuliding.getExamById(session,examId);
 		session.beginTransaction();
 		session.clear();
 		session.save(compExam);
@@ -290,7 +267,9 @@ public class SimpleServer extends AbstractServer {
 
 		session.getTransaction().commit();
 	}
-	public static void addTeacher(Teacher teacher,List<Subject> subjects,List<Course> courses) {
+	public static void addTeacher(Teacher teacher,List<Integer> subjectsIds,List<Integer> coursesIds) {
+		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesIds);
+		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsIds);
 		session.beginTransaction();
 		session.clear();
 
@@ -330,7 +309,9 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
-	public static void addStudent(Student student,List<Subject> subjects,List<Course> courses) {
+	public static void addStudent(Student student,List<Integer> subjectsids,List<Integer> coursesids) {
+		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesids);
+		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsids);
 		session.beginTransaction();
 		session.clear();
 
@@ -428,8 +409,9 @@ public class SimpleServer extends AbstractServer {
 		GlobalDataSaved.currentCopy = copy;
 		session.getTransaction().commit();
 	}
-	public static void teacherApproveStudentGrade(Grade grade,int newGrade,String notes)
+	public static void teacherApproveStudentGrade(int gradeId,int newGrade,String notes)
 	{
+		Grade grade= GetGrading.getGradeById(session,gradeId);
 		session.beginTransaction();
 		session.clear();
 
@@ -497,18 +479,6 @@ public class SimpleServer extends AbstractServer {
 							}
 						}
 					}
-//					if (users.get(0).getConnected()) {
-//						Warning warning = new Warning("user already logged in!");
-//						try {
-//							client.sendToClient(warning);
-//							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-//							return;
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//
-//					}
-					//login(users.get(0));
 					if(users.get(0).getClass().equals(Principal.class)){
 						_LoggedInList.add(new LoggedInClient(client,0,users.get(0).getUserID()));
 					} else if (users.get(0).getClass().equals(Teacher.class)) {
@@ -533,6 +503,7 @@ public class SimpleServer extends AbstractServer {
 					}
 					Message msgToClient = new Message("successful logout", null);
 					client.sendToClient(msgToClient);
+					//session.clear();
 					return;
 				}
 				boolean isHandled;

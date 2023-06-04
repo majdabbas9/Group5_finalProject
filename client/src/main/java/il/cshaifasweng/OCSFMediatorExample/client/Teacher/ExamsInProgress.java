@@ -2,7 +2,7 @@
  * Sample Skeleton for 'teacherExamsInProgress.fxml' Controller Class
  */
 
-package Teacher;
+package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.aidClassesForTeacher.ExamQuestion;

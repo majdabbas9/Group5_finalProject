@@ -1,7 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-import aidClasses.Color;
-import aidClasses.GlobalDataSaved;
-import aidClasses.Message;
+import aidClasses.*;
+import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -11,15 +10,11 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
-import javafx.print.Collation;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import org.greenrobot.eventbus.EventBus;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
-import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
-import javax.xml.crypto.Data;
-import java.io.IOException;
+
 import java.util.List;
 
 public class SimpleClient extends AbstractClient {
@@ -99,11 +94,14 @@ public class SimpleClient extends AbstractClient {
 					}
 					if (contentOfMsg.equals("Teacher Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
+						EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
+						App.setRoot("principalHome");
 						return;
 					}
 					if (contentOfMsg.equals("Student Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
-							App.setRoot("principalHome");
+						EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
+						App.setRoot("principalHome");
 						return;
 					}
 					if (contentOfMsg.equals("successful logout")) {
@@ -116,21 +114,18 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 				if (contentOfMsg.equals("added the question successfully")) {
-					GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
 					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added question" + Color.ANSI_RESET);
-					App.setRoot("buildExam");
+					App.setRoot("makeQuestion");
 					return;
 				}
 					if (contentOfMsg.equals("added the exam successfully")) {
-						GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
 						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added Exam" + Color.ANSI_RESET);
-						App.setRoot("buildExam");
+						App.setRoot("makeExam");
 						return;
 					}
 					if (contentOfMsg.equals("added the CompExam successfully")) {
-						GlobalDataSaved.connectedUser = (User) msgFromServer.getObj();
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
 						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an Exam" + Color.ANSI_RESET);
 						App.setRoot("teacherHome");
@@ -146,9 +141,8 @@ public class SimpleClient extends AbstractClient {
 					}
 				if (contentOfMsg.equals("the grade updated")) {
 					List<Object> dataFromServer=(List<Object>)msgFromServer.getObj();
-					Grade grade = (Grade) dataFromServer.get(0);
 					int newGrade=(int)dataFromServer.get(1);
-					Message newMessage=new Message(	grade.getStudent().getFirstName()+" grade in this exam has been updated to "+newGrade);
+					Message newMessage=new Message(	" grade in this exam has been updated to "+newGrade);
 					EventBus.getDefault().post(new MessageEvent((Message) newMessage));
 					return;
 				}
@@ -213,6 +207,11 @@ public class SimpleClient extends AbstractClient {
 				if(contentOfMsg.equals("AllGradesToPrincipal")){
 					GlobalDataSaved.allGradesForPrincipal = (List<Grade>) msgFromServer.getObj();
 					App.setRoot("principalGrades");
+					return;
+				}
+				if(contentOfMsg.equals("teacher compExams now")){
+					GlobalDataSaved.getTeacherCompExamsNow=(List<ComputerizedExamToExecute>) msgFromServer.getObj() ;
+					App.setRoot("teacherExamsInProgress");
 					return;
 				}
 			}

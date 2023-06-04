@@ -2,10 +2,11 @@
  * Sample Skeleton for 'makeQuestion.fxml' Controller Class
  */
 
-package Teacher;
+package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
+import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
@@ -17,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +104,7 @@ public class MakeQuestion {
     }
 
     @FXML
-    void submitQuestion(ActionEvent event) throws IOException {
+    void submitQuestion(ActionEvent event) throws IOException, InterruptedException {
         warningTxt.setText("");
         if(theQuestion.getText().equals(""))
         {
@@ -173,37 +173,24 @@ public class MakeQuestion {
         {
             correctChoice=choice4.getText();
         }
-        String questionID="";
-        int subjectId=subjectList.getSelectionModel().getSelectedItem().getId()-1;
-        int questionNum=subjectList.getSelectionModel().getSelectedItem().getSubjectQuestions().size();
-        if(subjectId<10)
+        if(!QuestionsExamsID.isInit)
         {
-            questionID="0"+subjectId;
+           QuestionsExamsID.init();
         }
-        else
-        {
-            questionID= String.valueOf(subjectId);
-        }
-        if(questionNum<10)
-        {
-            questionID+="00"+questionNum;
-        }
-        if(questionNum <100 && questionNum>9)
-        {
-            questionID+="0"+questionNum;
-        }
-        if(questionNum>99)
-        {
-            questionID+=questionNum;
-        }
-        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),questionID,correctChoice,choices);
+        Question question=new Question(teacherNotes.getText(),theQuestion.getText(),correctChoice,choices);
+        question.setQuestionID(QuestionsExamsID.questionID(subjectList.getSelectionModel().getSelectedItem().getSubjectName(),
+                subjectList.getSelectionModel().getSelectedItem().getId()));
         //question.setQuestionCourses(selectedCourses);
         List<Object> dataToServer=new ArrayList<>();
         dataToServer.add(question);
-        dataToServer.add(selectedCourses);
-        dataToServer.add(subjectList.getSelectionModel().getSelectedItem());
-        dataToServer.add((Teacher)GlobalDataSaved.connectedUser);
-        dataToServer.add(choices);
+        List<Integer> coursesIds=new ArrayList<>();
+        for(Course course:selectedCourses)
+        {
+            coursesIds.add(course.getId());
+        }
+        dataToServer.add(coursesIds);
+        dataToServer.add(subjectList.getSelectionModel().getSelectedItem().getId());
+        dataToServer.add(GlobalDataSaved.connectedUser.getId());
         Message msg = new Message("#addQuestion", dataToServer); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
     }
@@ -212,7 +199,7 @@ public class MakeQuestion {
         if(selectedCourses==null) {
             selectedCourses=new ArrayList<>();
         }
-        if(courseList.getSelectionModel().getSelectedItem().getId()==-1)
+        if(courseList.getSelectionModel().getSelectedItem()==null)
         {
             return;
         }
@@ -226,13 +213,13 @@ public class MakeQuestion {
     @FXML
     public void initialize()
     {
+        if(QuestionsExamsID.isInit==false)QuestionsExamsID.init();
         teacherSubjects=GlobalDataSaved.teacherSubjects;
         teacherCourses=GlobalDataSaved.teacherCourses;
         if(subjectList.getItems()!=null) {
             subjectList.getItems().setAll(GlobalDataSaved.teacherSubjects);
         }
     }
-
 
 
 }

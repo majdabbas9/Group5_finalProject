@@ -34,8 +34,11 @@ public class Question implements Serializable {
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatCreated;
 
+   // @OneToMany(mappedBy = "question"/*,fetch = FetchType.EAGER*/)
+   // private Set<Course_Question> questionCourses=new HashSet<>();
     @OneToMany(mappedBy = "question",fetch = FetchType.EAGER)
     private Set<Course_Question> questionCourses=new HashSet<>();
+
 
     @OneToMany(mappedBy = "question",fetch = FetchType.EAGER)
     private Set<Exam_Question> questionExams=new HashSet<>();
@@ -44,10 +47,9 @@ public class Question implements Serializable {
     public Question() {
 
     }
-    public Question(String teacherNotes, String studentNotes, String questionID,String correctChoice,List<String> choices) {
+    public Question(String teacherNotes, String studentNotes,String correctChoice,List<String> choices) {
         this.teacherNotes = teacherNotes;
         this.studentNotes = studentNotes;
-        this.questionID = questionID;
         this.correctChoice = correctChoice;
         this.choice1=choices.get(0);this.choice2=choices.get(1);this.choice3=choices.get(2);this.choice4=choices.get(3);
     }
@@ -157,9 +159,23 @@ public class Question implements Serializable {
         choices.add(choice1);choices.add(choice2);choices.add(choice3);choices.add(choice4);
         return  choices;
     }
-
     @Override
     public String toString() {
         return this.studentNotes;
     }
+
+    public String questionsString()
+    {
+        String res="";
+        res+="a) "+choice1+"          "+"b) "+choice2+"          ";
+        res+="c) "+choice3+"          "+"d) "+choice4+"\n";
+        return res;
+    }
+    public String getQuestionTitle(int points,int numberOfQuestion)
+    {
+        String res=numberOfQuestion+" ) ";
+        res+=studentNotes+" "+"("+" "+points+" points )"+"\n";
+        return res;
+    }
+
 }

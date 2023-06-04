@@ -1,10 +1,8 @@
-package Student;
+package il.cshaifasweng.OCSFMediatorExample.client.Student;
 
 
 import aidClasses.GlobalDataSaved;
-import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
-import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.event.ActionEvent;

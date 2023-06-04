@@ -2,7 +2,7 @@
  * Sample Skeleton for 'makeExam.fxml' Controller Class
  */
 
-package Teacher;
+package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
@@ -54,7 +54,7 @@ public class MakeExam {
         selectedCourse=coursesTable.getSelectionModel().getSelectedItem();
         selectedSubject=subjectList.getSelectionModel().getSelectedItem();
         try {
-            Message msg = new Message("#showAllCourseQuestion", coursesTable.getSelectionModel().getSelectedItem()); // creating a msg to the server demanding the students
+            Message msg = new Message("#showAllCourseQuestion", coursesTable.getSelectionModel().getSelectedItem().getId()); // creating a msg to the server demanding the students
             SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
         }
         catch (IOException ex)
