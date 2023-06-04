@@ -116,10 +116,10 @@ public class GetExamBuliding {
         m1=Integer.valueOf(date1.substring(14));m2=Integer.valueOf(date2.substring(14));
        if(year1>year2)return 0;
        if(year2>year1)return 1;
-       if(month1>month1)return 0;
-       if(month1>month1)return 1;
+       if(month1>month2)return 0;
+       if(month2>month1)return 1;
        if(day1>day2)return 0;
-       if(day1>day2)return 1;
+       if(day2>day1)return 1;
        if(h1>h2)return 0;
        if(h2>h1)return 1;
        if(m1>m2)return 0;
