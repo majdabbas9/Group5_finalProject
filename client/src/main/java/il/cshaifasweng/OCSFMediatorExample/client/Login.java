@@ -38,6 +38,7 @@ public class Login {
         if(password.getText().equals(""))
         {
             warning.setText("password missing !!");
+            return;
         }
 
         String [] user={userName.getText(),password.getText()};

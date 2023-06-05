@@ -45,13 +45,13 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button fx:id="loginBtn" layoutX="149.0" layoutY="379.0" mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="280.0" style="-fx-background-color: #003000;" text="Log in" textFill="WHITE">
+            <Button fx:id="loginBtn" layoutX="149.0" layoutY="393.0" mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="280.0" style="-fx-background-color: #003000;" text="Log in" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
             <PasswordField fx:id="password" layoutX="149.0" layoutY="299.0" prefHeight="26.0" prefWidth="281.0" />
-            <Text fx:id="warning" layoutX="189.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fx:id="warning" fill="RED" layoutX="193.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.0" />
          </children>
       </AnchorPane>
    </center>

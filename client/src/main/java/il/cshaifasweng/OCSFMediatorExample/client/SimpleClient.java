@@ -44,7 +44,7 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 					if (LogedInUser.getClass().equals(Teacher.class)) {
-						App.setRoot("teacherHome");
+						App.setContentTeacher("teacherHome");
 						return;
 					}
 					if (LogedInUser.getClass().equals(Principal.class)) {
@@ -108,7 +108,7 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 					if (contentOfMsg.equals("successful logout")) {
-						App.setRoot("login");
+						App.backLogin("login");
 						return;
 					}
 					if (contentOfMsg.equals("course questions")) {

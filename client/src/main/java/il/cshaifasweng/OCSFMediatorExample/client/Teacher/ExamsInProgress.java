@@ -92,7 +92,7 @@ public class ExamsInProgress {
         examIdColumn.setCellValueFactory(new PropertyValueFactory<ComputerizedExamToExecute,Integer>("code"));
         examFinishTimeColumn.setCellValueFactory(new PropertyValueFactory<ComputerizedExamToExecute,String>("dateOfExam"));
         numberOfStudentDoingColumn.setCellValueFactory(new PropertyValueFactory<ComputerizedExamToExecute,Integer>("numOfStudentDoing"));
-        for(ComputerizedExamToExecute compExam : theTeacher.getExecutedExams())
+        for(ComputerizedExamToExecute compExam : GlobalDataSaved.getTeacherCompExamsNow)
         {
             compExamObservableList.add(compExam);
         }

@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.PrepareExam">
+<AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.PrepareExam">
     <children>
-        <Button fx:id="buttonBack" layoutX="19.0" layoutY="520.0" mnemonicParsing="false" onAction="#backToTeacherHome" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="back to taecher home" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="18.0" layoutY="577.0" mnemonicParsing="false" onAction="#backToTeacherHome" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="back to taecher home" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
@@ -27,30 +27,30 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <ComboBox fx:id="wayOfExecution" layoutX="598.0" layoutY="97.0" prefWidth="150.0" promptText="pick way of exection" />
-        <TextField fx:id="codeLablel" alignment="CENTER" layoutX="34.0" layoutY="405.0" prefHeight="30.0" prefWidth="174.0" promptText="code">
+        <ComboBox fx:id="wayOfExecution" layoutX="662.0" layoutY="96.0" prefWidth="150.0" promptText="pick way of exection" />
+        <TextField fx:id="codeLablel" alignment="CENTER" layoutX="636.0" layoutY="325.0" prefHeight="30.0" prefWidth="174.0" promptText="code">
             <font>
                 <Font size="14.0" />
             </font>
         </TextField>
-        <TableView fx:id="examTable" layoutX="31.0" layoutY="138.0" onMouseClicked="#displayQuestions" onSort="#onSortExam" prefHeight="214.0" prefWidth="242.0">
+        <TableView fx:id="examTable" layoutX="22.0" layoutY="138.0" onMouseClicked="#displayQuestions" onSort="#onSortExam" prefHeight="421.0" prefWidth="242.0">
             <columns>
                 <TableColumn fx:id="examIdColumn" prefWidth="120.800048828125" text="examID" />
                 <TableColumn fx:id="examTimeColumn" prefWidth="121.59996032714844" text="time" />
             </columns>
         </TableView>
-        <DatePicker fx:id="date" layoutX="574.0" layoutY="199.0" />
-        <ComboBox fx:id="hourList" layoutX="575.0" layoutY="265.0" prefHeight="26.0" prefWidth="78.0" promptText="hour" />
-        <ComboBox fx:id="minuteList" layoutX="662.0" layoutY="265.0" prefHeight="26.0" prefWidth="86.0" promptText="minute" />
-        <Button layoutX="544.0" layoutY="520.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="execute exam" textFill="WHITE">
+        <DatePicker fx:id="date" layoutX="636.0" layoutY="195.0" />
+        <ComboBox fx:id="hourList" layoutX="636.0" layoutY="264.0" prefHeight="26.0" prefWidth="78.0" promptText="hour" />
+        <ComboBox fx:id="minuteList" layoutX="724.0" layoutY="264.0" prefHeight="26.0" prefWidth="86.0" promptText="minute" />
+        <Button layoutX="614.0" layoutY="577.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="execute exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <TableView fx:id="examQuestionTable" layoutX="286.0" layoutY="138.0" prefHeight="214.0" prefWidth="242.0">
+        <TableView fx:id="examQuestionTable" layoutX="279.0" layoutY="138.0" prefHeight="422.0" prefWidth="318.0">
             <columns>
-                <TableColumn fx:id="theQuestionColumn" prefWidth="120.800048828125" text="the Question" />
-                <TableColumn fx:id="pointsColumn" prefWidth="121.59996032714844" text="points" />
+                <TableColumn fx:id="theQuestionColumn" prefWidth="214.4000244140625" text="the Question" />
+                <TableColumn fx:id="pointsColumn" prefWidth="104.0" text="points" />
             </columns>
         </TableView>
       <Text fill="WHITE" layoutX="74.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="exam related to teacher">
@@ -58,7 +58,7 @@
             <Font name="Arial Bold" size="14.0" />
          </font>
       </Text>
-      <Text fx:id="examQuestionsText" fill="WHITE" layoutX="319.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="selected exam questions">
+      <Text fx:id="examQuestionsText" fill="WHITE" layoutX="355.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="selected exam questions">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>

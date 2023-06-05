@@ -43,15 +43,19 @@ public class BuildExam {
     @FXML
     void makeExam(ActionEvent event)throws IOException {
         GlobalDataSaved.forQuestion=false;
-        Message msg1 = new Message("#teacherCouses", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        GlobalDataSaved.teacherCourses.clear();
+        GlobalDataSaved.teacherSubjects.clear();
+        Message msg1 = new Message("#teacherCouses", GlobalDataSaved.connectedUser.getId(),GlobalDataSaved.teacherCourses); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server;
-        Message msg = new Message("#teacherSubjects", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        Message msg = new Message("#teacherSubjects", GlobalDataSaved.connectedUser.getId(),GlobalDataSaved.teacherSubjects); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
     }
 
     @FXML
     void makeQuestion(ActionEvent event) throws IOException {
         GlobalDataSaved.forQuestion=true;
+        GlobalDataSaved.teacherCourses.clear();
+        GlobalDataSaved.teacherSubjects.clear();
         Message msg1 = new Message("#teacherCouses", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server;
         Message msg = new Message("#teacherSubjects", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
