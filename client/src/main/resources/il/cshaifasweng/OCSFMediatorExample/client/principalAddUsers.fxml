@@ -59,5 +59,10 @@
                 <Font size="18.0" />
             </font>
         </Text>
+      <Button layoutX="307.0" layoutY="534.0" mnemonicParsing="false" onAction="#Clear" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Clear" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

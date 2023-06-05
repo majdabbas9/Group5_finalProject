@@ -2,6 +2,8 @@ package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
@@ -94,6 +96,22 @@ public class GetEducational {
         CriteriaQuery<Grade> query = builder.createQuery(Grade.class);
         query.from(Grade.class);
         List<Grade> data = session.createQuery(query).getResultList();
+        return data;
+    }
+    public static List<Student> getAllStudents(Session session) throws Exception {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Student> query = builder.createQuery(Student.class);
+        query.from(Student.class);
+        List<Student> data = session.createQuery(query).getResultList();
+        return data;
+    }
+    public static List<Teacher> getAllTeachers(Session session) throws Exception {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Teacher> query = builder.createQuery(Teacher.class);
+        query.from(Teacher.class);
+        List<Teacher> data = session.createQuery(query).getResultList();
         return data;
     }
 }

@@ -1,6 +1,8 @@
 package aidClasses;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -43,6 +45,20 @@ public class GlobalDataSaved {
     public static List<Question> courseQuestionsForMakeExam;
     public static List<ComputerizedExamToExecute> teacherCompExamsToApprove;
     public static List<Grade> compExamGrades;
+    public static boolean ThePrincipalInQuestions = false;
+    public static boolean ThePrincipalInExams = false;
+    public static boolean ThePrincipalInGrades = false;
+    public static boolean ThePrincipalInExtraTime = false;
+    public static List<Course> allCoursesForPrincipal = new ArrayList<>();
+    public static List<Student> allStudentsForPrincipal = new ArrayList<>();
+    public static List<Teacher> allTeachersForPrincipal = new ArrayList<>();
+    public static ObservableList<Exam> allStatisticalDataExamsForPrincipal = FXCollections.observableArrayList();
+    public static String CurrentStatisticalCatagory;
+
+    public static Teacher StatisticalTeacherForPrincipal = null;
+    public static Course StatisticalCourseForPrincipal = null;
+    public static Student StatisticalStudentForPrincipal = null;
+
     public static List<Subject> allSubjects;
     public static List<ComputerizedExamToExecute> getTeacherCompExamsNow;
     public static boolean forQuestion;

@@ -79,5 +79,9 @@ public class Teacher extends User implements Serializable {
     public void setQuestionsCreated(Set<Question> questionsCreated) {
         this.questionsCreated = questionsCreated;
     }
+    @Override
+    public String toString() {
+        return this.getFirstName() + " " +  this.getLastName();
+    }
 
 }

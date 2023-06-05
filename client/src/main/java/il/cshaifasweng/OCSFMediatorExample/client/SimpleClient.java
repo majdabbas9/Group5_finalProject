@@ -194,6 +194,13 @@ public class SimpleClient extends AbstractClient {
 					App.setRoot("principalExams");
 					return;
 				}
+				if(contentOfMsg.equals("UpdateAllExamsToPrincipal")){
+					GlobalDataSaved.allExamsForPrincipal = (List<Exam>) msgFromServer.getObj();
+					if (GlobalDataSaved.ThePrincipalInExams) {
+						App.setRoot("principalExams");
+					}
+					return;
+				}
 				if(contentOfMsg.equals("AllQuestionsToPrincipal")){
 					GlobalDataSaved.allQuestionsForPrincipal = (List<Question>) msgFromServer.getObj();
 					App.setRoot("principalQuestions");
@@ -201,10 +208,9 @@ public class SimpleClient extends AbstractClient {
 				}
 				if(contentOfMsg.equals("UpdateAllQuestionsToPrincipal")){
 					GlobalDataSaved.allQuestionsForPrincipal = (List<Question>) msgFromServer.getObj();
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("principalQuestions.fxml"));
-					Parent root = loader.load();
-					PrincipalQuestions controller = loader.getController();
-					controller.UpdateTable();
+					if (GlobalDataSaved.ThePrincipalInQuestions) {
+						App.setRoot("principalQuestions");
+					}
 					return;
 				}
 				if(contentOfMsg.equals("AllGradesToPrincipal")){
@@ -217,12 +223,32 @@ public class SimpleClient extends AbstractClient {
 					App.setRoot("teacherExamsInProgress");
 					return;
 				}
-			}
+				if(contentOfMsg.equals("UpdateAllGradesToPrincipal")){
+					GlobalDataSaved.allGradesForPrincipal = (List<Grade>) msgFromServer.getObj();
+					if (GlobalDataSaved.ThePrincipalInGrades) {
+						App.setRoot("principalGrades");
+					}
+					return;
+				}
+				if(contentOfMsg.equals("StatisticalDataForPrincipal")){
+					List<Object> list = (List<Object>) msgFromServer.getObj();
+					GlobalDataSaved.allCoursesForPrincipal = (List<Course>) list.get(2);
+					GlobalDataSaved.allExamsForPrincipal = (List<Exam>) list.get(0);
+					GlobalDataSaved.allTeachersForPrincipal = (List<Teacher>) list.get(3);
+					GlobalDataSaved.allStudentsForPrincipal =(List<Student>) list.get(1);
+
+					App.setRoot("principalStatisticalData");
+				}
+				if (contentOfMsg.equals("GetGradesForStatisticalData")) {
+					GlobalDataSaved.allGradesForPrincipal = (List<Grade>) msgFromServer.getObj();
+					App.setRoot("principalStatisticalReport");
+				}
+
+				}
             catch(Exception ex){
 					System.out.println(ex.getMessage());
 				}
 			}
-
 
 	}
 
