@@ -19,8 +19,8 @@ import java.util.List;
 public class GlobalDataSaved {
 
     public static User connectedUser;
-    public static List<Subject> teacherSubjects;
-    public static List<Course> teacherCourses;
+    public static List<Subject> teacherSubjects=new ArrayList<>();
+    public static List<Course> teacherCourses=new ArrayList<>();
     public static List<Grade> gradeList;
     public static boolean AddFlag = true;
     public static ObservableList<Subject> subjects = FXCollections.observableArrayList();

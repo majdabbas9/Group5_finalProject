@@ -21,6 +21,7 @@ public class Question implements Serializable {
 
     private String teacherNotes;
     private String studentNotes; // this the content of the question
+    private String studentNotesToShow; //is this the notes for the student
     private String questionID;
     private String choice1;
     private String choice2;
@@ -178,4 +179,11 @@ public class Question implements Serializable {
         return res;
     }
 
+    public String getStudentNotesToShow() {
+        return studentNotesToShow;
+    }
+
+    public void setStudentNotesToShow(String studentNotesToShow) {
+        this.studentNotesToShow = studentNotesToShow;
+    }
 }

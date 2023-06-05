@@ -17,7 +17,7 @@ public class Exam implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "exam")
     private Set<ComputerizedExamToExecute> compExamsToExecute=new HashSet<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
