@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import aidClasses.GlobalDataSaved;
 
@@ -53,8 +54,6 @@ public class SimpleServer extends AbstractServer {
 	public static void setSession(Session session) {
 		SimpleServer.session = session;
 	}
-
-
 	private static SessionFactory getSessionFactory() throws HibernateException {
 
 		Configuration configuration = new Configuration();

@@ -74,8 +74,7 @@ public class PrincipalShowQuestion {
     @FXML
     void BackToTable(ActionEvent event) throws IOException{
         if (GlobalDataSaved.PrincipalExamToShow ==null){
-            List<Question> list = new ArrayList<>();
-            Message msg = new Message("AllQuestionsToPrincipal", list);
+            Message msg = new Message("AllQuestionsToPrincipal");
             try {
                 SimpleClient.getClient().sendToServer(msg);
             } catch (IOException e) {
@@ -102,34 +101,34 @@ public class PrincipalShowQuestion {
 
         if (Firsttxt.getText().equals(
                 questionTosShow.getCorrectChoice())) {
-            Firsttxt.setFill(Color.rgb(0,255,0));
+            Firsttxt.setFill(Color.GREEN);
             FirstChoice.setSelected(true);
         } else {
-            Firsttxt.setFill(Color.rgb(255,0,0));
+            Firsttxt.setFill(Color.RED);
         }
 
         if (Secondtxt.getText().equals(
                 questionTosShow.getCorrectChoice())) {
-            Secondtxt.setFill(Color.rgb(0,255,0));
+            Secondtxt.setFill(Color.GREEN);
             SecondChoice.setSelected(true);
         } else {
-            Secondtxt.setFill(Color.rgb(255,0,0));
+            Secondtxt.setFill(Color.RED);
         }
 
         if (Thirdtxt.getText().equals(
                 questionTosShow.getCorrectChoice())) {
-            Thirdtxt.setFill(Color.rgb(0,255,0));
+            Thirdtxt.setFill(Color.GREEN);
             ThirdChoice.setSelected(true);
         } else {
-            Thirdtxt.setFill(Color.rgb(255,0,0));
+            Thirdtxt.setFill(Color.RED);
         }
 
         if (Fourthtxt.getText().equals(
                 questionTosShow.getCorrectChoice())) {
-            Fourthtxt.setFill(Color.rgb(0,255,0));
+            Fourthtxt.setFill(Color.GREEN);
             FourthChoice.setSelected(true);
         } else {
-            Fourthtxt.setFill(Color.rgb(255,0,0));
+            Fourthtxt.setFill(Color.RED);
         }
 
         FirstChoice.setDisable(true);

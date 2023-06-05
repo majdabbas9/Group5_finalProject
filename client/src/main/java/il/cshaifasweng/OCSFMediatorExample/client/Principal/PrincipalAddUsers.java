@@ -1,10 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
@@ -18,7 +16,6 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -30,15 +27,6 @@ import javafx.scene.input.MouseEvent;
 public class PrincipalAddUsers {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button AddBtn;
-
-    @FXML
     private ListView<Course> CoursesList;
 
     @FXML
@@ -46,8 +34,6 @@ public class PrincipalAddUsers {
 
     @FXML
     private TextField PasswordText;
-    @FXML
-    private Button BackBtn;
     @FXML
     private ComboBox<String> StudnetOrTeacherBox;
     @FXML
@@ -74,8 +60,8 @@ public class PrincipalAddUsers {
     @FXML
     void initialize() throws IOException {
         SubjectsList.setItems(GlobalDataSaved.subjects);
-        StudnetOrTeacherBox.setValue("Student");
         StudnetOrTeacherBox.setItems(Roles);
+        StudnetOrTeacherBox.setValue("Student");
     }
 
     @FXML
@@ -245,4 +231,17 @@ public class PrincipalAddUsers {
         }
     }
 
+    @FXML
+    void Clear(ActionEvent event) {
+        firstnametxt.setText("");
+        lastnametxt.setText("");
+        PasswordText.setText("");
+        IDText.setText("");
+        usernametxt.setText("");
+        selectedCourses = new ArrayList<>();
+        selectedSubjects = new ArrayList<>();
+        CoursesList.getItems().clear();
+        selectedSubjectsList.getItems().clear();
+        selectedCoursesList.getItems().clear();
+    }
 }

@@ -7,7 +7,10 @@ import java.util.ResourceBundle;
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +35,7 @@ public class PrincipalGrades {
     private Button BackToMenuBtn;
 
     @FXML
-    private TableColumn<Grade, String> CourseId;
+    private TableColumn<Grade, Integer> CourseId;
 
     @FXML
     private TableColumn<Grade, String> CourseName;
@@ -53,7 +56,7 @@ public class PrincipalGrades {
     private TableColumn<Grade, String> StudentName;
 
     @FXML
-    private TableColumn<Grade, String> SubjectId;
+    private TableColumn<Grade, Integer> SubjectId;
 
     @FXML
     private TableColumn<Grade, String> SubjectName;
@@ -68,11 +71,17 @@ public class PrincipalGrades {
 
     @FXML
     void BackToMenu(ActionEvent event) throws IOException {
+        //updating the global variable that the pricnipal are no longer in Grades section
+        GlobalDataSaved.ThePrincipalInGrades = false;
+
         App.setRoot("principalHome");
     }
 
     @FXML
     void ShowCopy(ActionEvent event) {
+        //updating the global variable that the pricnipal are no longer in Grades section
+        GlobalDataSaved.ThePrincipalInGrades = false;
+
         if (gradeToShow.getExamCopy() == null){
             NoCopyText.setText("No Copy Exists To This Exam");
             return;
@@ -91,6 +100,9 @@ public class PrincipalGrades {
 
     @FXML
     void initialize() {
+        //updating the global variable that the pricnipal in Grades section
+        GlobalDataSaved.ThePrincipalInGrades = true;
+
         TheGrade.setCellValueFactory(new PropertyValueFactory<Grade, Integer>("grade"));
 
         StudentName.setCellValueFactory(cellData -> {
@@ -108,10 +120,39 @@ public class PrincipalGrades {
             return new SimpleStringProperty(studentId);
         });
 
-        //TODO:: Add ExamID ti know the exam of the grade so we can know which course and subject and which
-        // questions this grade about, and add all of that to the table
+        SubjectName.setCellValueFactory(cellData -> {
+            Grade grade = cellData.getValue();
+            Subject subject = grade.getExamCopy().getCompExamToExecute().getExam().getExamSubject();
+            String subjectName = subject.getSubjectName();
+            return new SimpleStringProperty(subjectName);
+        });
 
+        SubjectId.setCellValueFactory(cellData -> {
+            Grade grade = cellData.getValue();
+            Subject subject = grade.getExamCopy().getCompExamToExecute().getExam().getExamSubject();
+            int subjectId = subject.getId();
+            return new SimpleIntegerProperty(subjectId).asObject();
+        });
 
+        CourseName.setCellValueFactory(cellData -> {
+            Grade grade = cellData.getValue();
+            Course course = grade.getExamCopy().getCompExamToExecute().getExam().getExamCourse();
+            String courseName = course.getCourseName();
+            return new SimpleStringProperty(courseName);
+        });
+
+        CourseId.setCellValueFactory(cellData -> {
+            Grade grade = cellData.getValue();
+            Course course = grade.getExamCopy().getCompExamToExecute().getExam().getExamCourse();
+            int courseId = course.getId();
+            return new SimpleIntegerProperty(courseId).asObject();
+        });
+
+        ExamId.setCellValueFactory(cellData -> {
+            Grade grade = cellData.getValue();
+            String examId = grade.getExamCopy().getCompExamToExecute().getExam().getExam_ID();
+            return new SimpleStringProperty(examId);
+        });
 
         gradeTable.setItems(list);
     }

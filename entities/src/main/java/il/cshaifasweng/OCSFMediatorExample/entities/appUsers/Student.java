@@ -52,4 +52,8 @@ public class Student extends User implements  Serializable{
     public void setStudentSubjects(Set<Student_Subject> studentSubjects) {
         this.studentSubjects = studentSubjects;
     }
+    @Override
+    public String toString() {
+        return this.getFirstName() + " " + this.getLastName();
+    }
 }
