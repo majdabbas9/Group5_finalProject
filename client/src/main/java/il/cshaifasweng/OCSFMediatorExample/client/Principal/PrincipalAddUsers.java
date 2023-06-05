@@ -1,4 +1,4 @@
-package Principal;
+package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 import javafx.scene.input.MouseEvent;
 
 
-public class principalAddUsers {
+public class PrincipalAddUsers {
 
     @FXML
     private ResourceBundle resources;
@@ -145,11 +145,16 @@ public class principalAddUsers {
         String lastname = lastnametxt.getText();
         String password = PasswordText.getText();
         String id = IDText.getText();
+        /*added by majd to solve the slow problem*/
+        List<Integer> coursesIds=new ArrayList<>(),subjectIds=new ArrayList<>();
+        for(Course course:selectedCourses)coursesIds.add(course.getId());
+        for(Subject subject:selectedSubjects)subjectIds.add(subject.getId());
+        /*end of added by majd*/
 
         if (StudnetOrTeacherBox.getValue().equals("Student")) {
             Student student = new Student(id, password, username, firstname, lastname);
             List<Object> dataToServer=new ArrayList<>();
-            dataToServer.add(student);dataToServer.add(selectedSubjects);dataToServer.add(selectedCourses);
+            dataToServer.add(student);dataToServer.add(subjectIds);dataToServer.add(coursesIds);
             Message msg2 = new Message("#add student", dataToServer);
             try {
                 SimpleClient.getClient().sendToServer(msg2);
@@ -159,7 +164,7 @@ public class principalAddUsers {
         } else {
             Teacher teacher = new Teacher(id, password, username, firstname, lastname);
             List<Object> dataToServer=new ArrayList<>();
-            dataToServer.add(teacher);dataToServer.add(selectedSubjects);dataToServer.add(selectedCourses);
+            dataToServer.add(teacher);dataToServer.add(subjectIds);dataToServer.add(coursesIds);
             Message msg3 = new Message("#add teacher", dataToServer);
             try {
                 SimpleClient.getClient().sendToServer(msg3);

@@ -1,10 +1,12 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import org.hibernate.Session;
 import org.hibernate.annotations.Where;
 
@@ -77,4 +79,21 @@ public class GetEducational {
         return data;
     }
 
+    public static List<Question> getAllQuestions(Session session) throws Exception {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Question> query = builder.createQuery(Question.class);
+        query.from(Question.class);
+        List<Question> data = session.createQuery(query).getResultList();
+        return data;
+    }
+
+    public static List<Grade> getAllGrades(Session session) throws Exception {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Grade> query = builder.createQuery(Grade.class);
+        query.from(Grade.class);
+        List<Grade> data = session.createQuery(query).getResultList();
+        return data;
+    }
 }

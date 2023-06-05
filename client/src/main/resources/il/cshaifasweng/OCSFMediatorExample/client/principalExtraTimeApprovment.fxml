@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.principalExtraTimeApprovment">
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalExtraTimeApprovment">
    <children>
       <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra Time Approvement">
          <font>

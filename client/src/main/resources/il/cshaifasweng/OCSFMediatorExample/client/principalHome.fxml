@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.PrincipalHome">
+<AnchorPane prefHeight="576.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalHome">
 
     <children>
         <Pane prefHeight="150.0" prefWidth="778.0" style="-fx-background-color: #003000;">
@@ -26,17 +26,17 @@
                         <Font size="13.0" />
                     </font>
                 </Label>
-                <Text fx:id="studentName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="manager name">
+                <Text fx:id="PrincipalName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="manager name">
                     <font>
                         <Font size="13.0" />
                     </font>
                 </Text>
-                <Text fx:id="currentDate" fill="WHITE" layoutX="464.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current date">
+                <Text fx:id="TheDate" fill="WHITE" layoutX="464.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current date">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Text>
-                <Text fx:id="currentTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
+                <Text fx:id="TheTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
         <GridPane hgap="10.0" layoutX="69.0" layoutY="156.0" prefHeight="333.0" prefWidth="650.0" vgap="10.0">

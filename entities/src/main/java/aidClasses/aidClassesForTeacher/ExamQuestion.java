@@ -1,15 +1,16 @@
 package aidClasses.aidClassesForTeacher;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.scene.control.TextField;
 
 public class ExamQuestion {
     private String questionID;
-    private String studentNotes;
+    private Question question;
     private TextField points;
 
-    public ExamQuestion(String questionID, String studentNotes, TextField points) {
+    public ExamQuestion(String questionID, Question question, TextField points) {
         this.questionID = questionID;
-        this.studentNotes = studentNotes;
+        this.question = question;
         this.points = points;
     }
 
@@ -21,12 +22,12 @@ public class ExamQuestion {
         this.questionID = questionID;
     }
 
-    public String getStudentNotes() {
-        return studentNotes;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setStudentNotes(String studentNotes) {
-        this.studentNotes = studentNotes;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public TextField getPoints() {

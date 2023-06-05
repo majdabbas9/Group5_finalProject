@@ -2,10 +2,11 @@
  * Sample Skeleton for 'teacherExamsInProgress.fxml' Controller Class
  */
 
-package Teacher;
+package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.aidClassesForTeacher.ExamQuestion;
+import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import javafx.collections.FXCollections;
@@ -18,6 +19,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class ExamsInProgress {
 
@@ -55,8 +58,8 @@ public class ExamsInProgress {
 
     }
     @FXML
-    void backToBuildExam(ActionEvent event) {
-
+    void backToBuildExam(ActionEvent event) throws IOException {
+        App.setRoot("teacherHome");
     }
     @FXML
     void initialize()

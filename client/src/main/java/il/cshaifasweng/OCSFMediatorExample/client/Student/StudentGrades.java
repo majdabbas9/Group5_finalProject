@@ -1,4 +1,4 @@
-package Student;
+package il.cshaifasweng.OCSFMediatorExample.client.Student;
 
 
 import aidClasses.GlobalDataSaved;

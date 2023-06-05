@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Principal.principalStatisticalData"
+            fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalStatisticalData"
             prefHeight="576.0" prefWidth="778.0">
 
 </AnchorPane>

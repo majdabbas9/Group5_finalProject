@@ -133,4 +133,9 @@ public class ComputerizedExamToExecute implements Serializable {
     public void setNumOfStudentDoing(int numOfStudentDoing) {
         this.numOfStudentDoing = numOfStudentDoing;
     }
+
+    @Override
+    public String toString() {
+        return this.dateOfExam;
+    }
 }

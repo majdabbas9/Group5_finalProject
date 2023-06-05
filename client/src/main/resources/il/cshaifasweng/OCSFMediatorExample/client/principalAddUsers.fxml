@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Principal.principalAddUsers">
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalAddUsers">
     <children>
         <TextField fx:id="firstnametxt" layoutX="65.0" layoutY="70.0" promptText="First Name" />
         <TextField fx:id="lastnametxt" layoutX="322.0" layoutY="70.0" promptText="Last Name" />

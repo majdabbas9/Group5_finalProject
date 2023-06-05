@@ -1,4 +1,4 @@
-package Student;
+package il.cshaifasweng.OCSFMediatorExample.client.Student;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
@@ -104,7 +104,7 @@ public class SolveExam {
 
     private int calculateStudentExamGrade() {
         Exam exam = GlobalDataSaved.compExam.getExam();
-        List<Integer> points = exam.getPoints();
+        List<Integer> points = new ArrayList<>(exam.getPoints());
 
         examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
         List<Question> questionList = sortedQuestionsList(examQuestions);

@@ -28,7 +28,7 @@ public class Course implements  Serializable{
     private Subject courseSubject;
 
     @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
-    Set<Teacher_Course> courseTeachers=new HashSet<>();
+    private Set<Teacher_Course> courseTeachers=new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "examCourse")
     private Set<Exam> courseExams=new HashSet<>();
