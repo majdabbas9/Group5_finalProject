@@ -17,6 +17,8 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -69,7 +71,7 @@ public class SolveExam {
             answers.set(questionCounter,selected.getText());
         }
         questionCounter++;
-        question();
+        question(); 
     }
     @FXML
     void goToPreviousQuestion(ActionEvent event) {
@@ -238,6 +240,17 @@ public class SolveExam {
             }
         },1000,1000);
     }
+    public  void addTime(int time) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        Date d = df.parse(hour+":"+minute+":"+second);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(Calendar.MINUTE, time);
+        String newDate = df.format(cal.getTime());
+        hour=Integer.valueOf(newDate.substring(0,2));
+        minute=Integer.valueOf(newDate.substring(3,5));
+        second=Integer.valueOf(newDate.substring(6,7));
+    }
 
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
@@ -296,8 +309,6 @@ public class SolveExam {
 
 
     }
-
-
 }
 
 class sortById implements Comparator<Question> {

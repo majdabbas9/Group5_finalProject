@@ -39,17 +39,12 @@ public class ExamsInProgress {
     @FXML // fx:id="examIdColumn"
     private TableColumn<ComputerizedExamToExecute, Integer> examIdColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="hourList"
-    private ComboBox<String> hourList; // Value injected by FXMLLoader
-
-    @FXML // fx:id="minuteList"
-    private ComboBox<String> minuteList; // Value injected by FXMLLoader
 
     @FXML // fx:id="numberOfStudentDoingColumn"
     private TableColumn<ComputerizedExamToExecute, Integer> numberOfStudentDoingColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="warningTxt"
-    private Text warningTxt; // Value injected by FXMLLoader
+    @FXML
+    private Text warning;
     private Teacher theTeacher;
     private ObservableList<ComputerizedExamToExecute> compExamObservableList;
 
@@ -64,29 +59,6 @@ public class ExamsInProgress {
     @FXML
     void initialize()
     {
-        hourList.getItems().clear();
-        minuteList.getItems().clear();
-        for(int i=0;i<=59;i++)
-        {
-            if(i<=24)
-            {
-                if(i<10)
-                {
-                    hourList.getItems().add("0"+String.valueOf(i));
-                    minuteList.getItems().add("0"+String.valueOf(i));
-                }
-                else
-                {
-                    hourList.getItems().add(String.valueOf(i));
-                    minuteList.getItems().add(String.valueOf(i));
-                }
-            }
-            else
-            {
-                minuteList.getItems().add(String.valueOf(i));
-            }
-
-        }
         theTeacher=(Teacher) GlobalDataSaved.connectedUser;
         compExamObservableList = FXCollections.observableArrayList();
         examIdColumn.setCellValueFactory(new PropertyValueFactory<ComputerizedExamToExecute,Integer>("code"));

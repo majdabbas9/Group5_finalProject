@@ -17,16 +17,18 @@ public class QuestionsExamsID {
     public static void init()
     {
         isInit=true;
-        subjectListNames.add("math");coursesListNames.add("algebra");coursesListNames.add("algebra 2");
-        coursesListNames.add("discrete mathematics");
+        subjectListNames.add("math");
+        coursesListNames.add("algebra");coursesListNames.add("algebra 2");coursesListNames.add("discrete mathematics");
 
-        subjectListNames.add("computer science");coursesListNames.add("introduction to  computer science");
-        coursesListNames.add("software engineering");coursesListNames.add("operating system");
+        subjectListNames.add("computer science");
+        coursesListNames.add("introduction to  computer science");coursesListNames.add("software engineering");coursesListNames.add("operating system");
 
-        subjectListNames.add("physics");coursesListNames.add("Introductory Physics");coursesListNames.add("Classical Mechanics");
-        coursesListNames.add("Electromagnetism");
 
-        for(int i=1;i<=11;i++)
+        subjectListNames.add("physics");
+        coursesListNames.add("Introductory Physics");coursesListNames.add("Classical Mechanics");coursesListNames.add("Electromagnetism");
+
+
+        for(int i=1;i<=9;i++)
         {
             if(i<=3)
             {
@@ -90,7 +92,6 @@ public class QuestionsExamsID {
         }
         int examNum=QuestionsExamsID.numOfExamsOfCourses.get(place);
         QuestionsExamsID.numOfExamsOfCourses.set(place,1+examNum);
-
         if(subjectId<10)
         {
             exam_ID+="0"+subjectId;

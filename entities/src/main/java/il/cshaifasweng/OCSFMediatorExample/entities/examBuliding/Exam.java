@@ -44,6 +44,15 @@ public class Exam implements Serializable{
         this.notes = notes;
     }
 
+    public Exam(Exam exam,String str) {
+        this.id = exam.id;
+        this.time = exam.time;
+        this.exam_ID = exam.exam_ID;
+        this.teacherNotes = exam.teacherNotes;
+        this.notes = exam.notes;
+        this.points =new ArrayList<>(exam.points);
+    }
+
     public Exam() {
 
     }

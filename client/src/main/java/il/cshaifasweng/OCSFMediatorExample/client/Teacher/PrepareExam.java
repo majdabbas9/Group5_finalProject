@@ -184,7 +184,7 @@ public class PrepareExam {
         minuteList.getItems().clear();
         for(int i=0;i<=59;i++)
         {
-            if(i<=24)
+            if(i<=23)
             {
                 if(i<10)
                 {
@@ -211,8 +211,6 @@ public class PrepareExam {
         {
             observableList.add(exam);
         }
-
-
         examTable.setItems(observableList);
         observableListQuestions=FXCollections.observableArrayList();
         theQuestionColumn.setCellValueFactory(new PropertyValueFactory<DisplayQuestion,String>("theQuestion"));

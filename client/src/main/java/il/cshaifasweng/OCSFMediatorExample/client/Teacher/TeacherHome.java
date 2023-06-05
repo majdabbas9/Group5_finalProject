@@ -105,6 +105,16 @@ public class TeacherHome {
             System.out.println(ex.getMessage());
         }
     }
+
+    @FXML
+    void showAllExams(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showAllQuestions(ActionEvent event) {
+
+    }
     @FXML
     public void initialize()
     {

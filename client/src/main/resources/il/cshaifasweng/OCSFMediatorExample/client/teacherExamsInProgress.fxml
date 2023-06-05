@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -20,12 +20,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Text fx:id="warningTxt" fill="#af0000" layoutX="544.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="139.21246337890625">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-        </Text>
-        <TableView fx:id="compExamsTable" layoutX="19.0" layoutY="92.0" prefHeight="471.0" prefWidth="557.0">
+        <TableView fx:id="compExamsTable" layoutX="161.0" layoutY="57.0" prefHeight="435.0" prefWidth="558.0">
             <columns>
                 <TableColumn fx:id="examIdColumn" prefWidth="83.20001220703125" text="exam code" />
                 <TableColumn fx:id="examFinishTimeColumn" prefWidth="291.19993591308594" text="exam finish time" />
@@ -37,12 +32,11 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Text fill="WHITE" layoutX="631.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new finish time" wrappingWidth="204.81243896484375">
+      <TextField alignment="CENTER" layoutX="357.0" layoutY="522.0" prefHeight="26.0" prefWidth="186.0" promptText="add time in minutes">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font size="14.0" />
          </font>
-      </Text>
-      <ComboBox fx:id="hourList" layoutX="631.0" layoutY="148.0" prefHeight="26.0" prefWidth="68.0" promptText="hour" />
-      <ComboBox fx:id="minuteList" layoutX="705.0" layoutY="148.0" prefHeight="26.0" prefWidth="82.0" promptText="minute" />
+      </TextField>
+      <Text fx:id="warning" fill="RED" layoutX="402.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.199951171875" />
     </children>
 </AnchorPane>

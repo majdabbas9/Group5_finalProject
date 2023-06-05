@@ -25,6 +25,10 @@ public class Exam_Question implements Serializable {
         this.question = question;
     }
 
+    public Exam_Question(Question question,String str) {
+        this.question = question;
+    }
+
     public Exam_Question() {
 
     }

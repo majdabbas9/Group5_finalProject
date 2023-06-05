@@ -80,7 +80,7 @@ public class HandleMsgTeacher {
             List<Question> questionsList=new ArrayList<>();
             for(Course_Question cq:res)
             {
-                questionsList.add(cq.getQuestion());
+                questionsList.add(new Question(cq.getQuestion(),"getAllRelevantData"));
             }
             try {
                 Message msgToClient=new Message("course questions",questionsList);

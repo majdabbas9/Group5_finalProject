@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
@@ -21,10 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class GetExamBuliding {
     public static  int counter=0;
@@ -47,7 +45,14 @@ public class GetExamBuliding {
             List<Exam> courseExamResult = query.getResultList();
             for(Exam exam : courseExamResult)
             {
-                allExams.add(exam);
+                Exam exam1=new Exam(exam,"all needed");
+                Set<Exam_Question> examQuestions=exam.getExamQuestions();
+                for(Exam_Question exam_question:examQuestions)
+                {
+                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion(),"all needed"),"all needed");
+                    exam1.getExamQuestions().add(eq);
+                }
+                allExams.add(exam1);
             }
         }
         return  allExams;

@@ -173,7 +173,6 @@ public class ExamChooseQuestions {
         }
         Exam exam=new Exam(time,QuestionsExamsID.examID(MakeExam.selectedCourse.getCourseName(),MakeExam.selectedSubject.getId(),
                 MakeExam.selectedCourse.getId()),teacherNotes.getText(),studentNotes.getText());
-        exam.setExam_ID(QuestionsExamsID.examID(MakeExam.selectedCourse.getCourseName(),MakeExam.selectedSubject.getId(),MakeExam.selectedCourse.getId()));
         List<Object>objects=new ArrayList<>();
         objects.add(exam);
         objects.add(GlobalDataSaved.connectedUser.getId());

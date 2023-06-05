@@ -39,12 +39,12 @@
             <Font size="18.0" />
         </font>
     </Button>
-      <Button fx:id="examsInProgressBtn" layoutX="218.0" layoutY="364.0" mnemonicParsing="false" onAction="#ExamsInProgress" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Exams In&#10;Progress" textFill="WHITE">
+      <Button fx:id="examsInProgressBtn" layoutX="218.0" layoutY="341.0" mnemonicParsing="false" onAction="#ExamsInProgress" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Exams In&#10;Progress" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="examsApproveBtn" layoutX="473.0" layoutY="364.0" mnemonicParsing="false" onAction="#ExamsNeedApprovment" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Exams Need&#10;Approvment" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="examsApproveBtn" layoutX="462.0" layoutY="341.0" mnemonicParsing="false" onAction="#ExamsNeedApprovment" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Exams Need&#10;Approvment" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -58,6 +58,16 @@
           <font>
               <Font size="18.0" />
           </font>
+      </Button>
+      <Button fx:id="buildExamBtn1" layoutX="218.0" layoutY="461.0" mnemonicParsing="false" onAction="#showAllQuestions" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="question data base" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="buildExamBtn11" layoutX="462.0" layoutY="461.0" mnemonicParsing="false" onAction="#showAllExams" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="exams data base" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
       </Button>
 </children>
 </AnchorPane>

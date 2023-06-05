@@ -39,6 +39,12 @@ public class Subject implements  Serializable{
         this.subjectName = subjectName;
         this.subjectTeachers=new HashSet<>();
     }
+
+    public Subject(Subject subject,String str) {
+        this.id = subject.id;
+        this.subjectName = subject.subjectName;
+    }
+
     public int getId() {
         return id;
     }

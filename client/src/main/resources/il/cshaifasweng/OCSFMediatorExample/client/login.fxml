@@ -51,7 +51,7 @@
                </font>
             </Button>
             <PasswordField fx:id="password" layoutX="149.0" layoutY="299.0" prefHeight="26.0" prefWidth="281.0" />
-            <Text fx:id="warning" fill="RED" layoutX="193.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.0" />
+            <Text fx:id="warning" fill="RED" layoutX="182.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.0" />
          </children>
       </AnchorPane>
    </center>
