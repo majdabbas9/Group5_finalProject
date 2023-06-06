@@ -241,7 +241,12 @@ public class SolveExam {
 
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-        Message msg = new Message("#time finished", answers);
+        List<Object> dataToServer = new ArrayList<>();
+        dataToServer.add(answers);
+        dataToServer.add(GlobalDataSaved.compExam);
+        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime());
+        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime()+1);
+        Message msg = new Message("#time finished", dataToServer);
         SimpleClient.getClient().sendToServer(msg);
         if(questionChoices.getSelectedToggle() != null){
             RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();
