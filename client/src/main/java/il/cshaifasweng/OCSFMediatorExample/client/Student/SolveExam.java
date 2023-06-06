@@ -97,7 +97,12 @@ public class SolveExam {
 
         System.out.println(hour+":" +minute +":"+ second);
         if (hour != 0 || minute != 0 || second != 0) {
-            Message msg = new Message("#submitted on the time", answers);
+            List<Object> dataToServer = new ArrayList<>();
+            dataToServer.add(answers);
+            dataToServer.add(GlobalDataSaved.compExam);
+            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime()+1);
+            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime());
+            Message msg = new Message("#submitted on the time", dataToServer);
             SimpleClient.getClient().sendToServer(msg);
         }
         sendStudentAnswersToServer(true, calculateStudentExamGrade());
