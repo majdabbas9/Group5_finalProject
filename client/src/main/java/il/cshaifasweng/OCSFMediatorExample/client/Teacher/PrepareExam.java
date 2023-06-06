@@ -148,7 +148,7 @@ public class PrepareExam {
         if(wayOfExecution.getSelectionModel().getSelectedItem().equals("computerized"))
         {
             List<Object> dataToServer=new ArrayList<>();
-           ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code);
+               ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code);
             dataToServer.add(compExam);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(examTable.getSelectionModel().getSelectedItem().getId());
             Message msg = new Message("#addCompExam", dataToServer); // creating a msg to the server demanding the students
             try {

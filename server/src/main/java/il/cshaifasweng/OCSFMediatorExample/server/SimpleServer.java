@@ -9,6 +9,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
@@ -75,6 +76,7 @@ public class SimpleServer extends AbstractServer {
 		configuration.addAnnotatedClass(Exam_Question.class);
 		configuration.addAnnotatedClass(Student_Course.class);
 		configuration.addAnnotatedClass(Student_Subject.class);
+		configuration.addAnnotatedClass(ExamToExecute.class);
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
 				.build();
@@ -239,9 +241,6 @@ public class SimpleServer extends AbstractServer {
 	}
 
 	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId) {
-		counter++;
-		if(counter==2)
-			System.out.println("h");
 
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Exam exam=GetExamBuliding.getExamById(session,examId);

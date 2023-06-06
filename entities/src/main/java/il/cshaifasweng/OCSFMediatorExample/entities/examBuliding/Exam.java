@@ -18,7 +18,7 @@ public class Exam implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "exam")
-    private Set<ComputerizedExamToExecute> compExamsToExecute=new HashSet<>();
+    private Set<ExamToExecute> compExamsToExecute=new HashSet<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatCreated;
@@ -61,11 +61,11 @@ public class Exam implements Serializable{
         return id;
     }
 
-    public Set<ComputerizedExamToExecute> getCompExamsToExecute() {
+    public Set<ExamToExecute> getCompExamsToExecute() {
         return compExamsToExecute;
     }
 
-    public void setCompExamsToExecute(Set<ComputerizedExamToExecute> compExamsToExecute) {
+    public void setCompExamsToExecute(Set<ExamToExecute> compExamsToExecute) {
         this.compExamsToExecute = compExamsToExecute;
     }
 

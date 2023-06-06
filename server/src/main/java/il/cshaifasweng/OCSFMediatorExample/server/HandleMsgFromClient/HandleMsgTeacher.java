@@ -10,6 +10,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
@@ -92,11 +93,10 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#addCompExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-
-            String queryString="FROM ComputerizedExamToExecute WHERE code = : code";
-            Query query = session.createQuery(queryString, ComputerizedExamToExecute.class);
-            query.setParameter("code",((ComputerizedExamToExecute)dataFromClient.get(0)).getCode());
-            List<ComputerizedExamToExecute> res=query.getResultList();
+            String queryString="FROM ExamToExecute WHERE code = : code";
+            Query query = session.createQuery(queryString, ExamToExecute.class);
+            query.setParameter("code",((ExamToExecute)dataFromClient.get(0)).getCode());
+            List<ExamToExecute> res=query.getResultList();
             if(res.size()!=0)
             {
                 Warning warning = new Warning("code already used!");
