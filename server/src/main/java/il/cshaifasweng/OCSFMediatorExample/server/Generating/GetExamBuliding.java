@@ -52,6 +52,7 @@ public class GetExamBuliding {
                     Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion(),"all needed"),"all needed");
                     exam1.getExamQuestions().add(eq);
                 }
+                exam1.setExamCourse(new Course(exam.getExamCourse(),"hi"));
                 allExams.add(exam1);
             }
         }

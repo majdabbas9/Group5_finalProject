@@ -13,6 +13,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -166,6 +167,17 @@ public class PrepareExam {
             WordGeneratorFile.createWord(new ArrayList<>(examTable.getSelectionModel().getSelectedItem().getExamQuestions()),examTable.getSelectionModel().getSelectedItem().getPoints()
             ,examTable.getSelectionModel().getSelectedItem().getExamCourse().getCourseName(),GlobalDataSaved.connectedUser.getFirstName()+" "+
                             GlobalDataSaved.connectedUser.getLastName(),fileName);
+            ManualExamToExecute manualExamToExecute=new ManualExamToExecute(dateOfExam,code,fileName);
+            List<Object> dataToServer=new ArrayList<>();
+            dataToServer.add(manualExamToExecute);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(examTable.getSelectionModel().getSelectedItem().getId());
+            Message msg = new Message("#addManualExam", dataToServer); // creating a msg to the server demanding the students
+            try {
+                SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+            }
+            catch (Exception ex)
+            {
+                System.out.println(ex.getMessage());
+            }
         }
     }
     @FXML
