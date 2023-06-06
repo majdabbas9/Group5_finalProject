@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 public class HandleMsgTeacher {
+
     public static boolean handleTeacher(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
         if (contentOfMsg.equals("#addQuestion")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
@@ -79,7 +80,7 @@ public class HandleMsgTeacher {
             List<Question> questionsList=new ArrayList<>();
             for(Course_Question cq:res)
             {
-                questionsList.add(cq.getQuestion());
+                questionsList.add(new Question(cq.getQuestion(),"getAllRelevantData"));
             }
             try {
                 Message msgToClient=new Message("course questions",questionsList);
@@ -145,7 +146,7 @@ public class HandleMsgTeacher {
         if(contentOfMsg.equals("#teacherSubjects"))
         {
             int id=(int)msgFromClient.getObj();
-            List<Subject> teacherSubjects= GetUsers.getTeacherSubjects(session,id);
+            List<Subject> teacherSubjects=GetUsers.getTeacherSubjects(session,id);
             Message messageToClient = new Message("sending teacher subjects",teacherSubjects);
             try {
                 client.sendToClient(messageToClient);

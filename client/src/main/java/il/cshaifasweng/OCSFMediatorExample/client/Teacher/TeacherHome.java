@@ -56,7 +56,8 @@ public class TeacherHome {
         String month=now.substring(5,7);
         String day=now.substring(8,10);
         String hourMinute=now.substring(11,16);
-        String date=day+"/"+month+"/"+year+" "+hourMinute;
+        String date="";
+        date+=year+"-"+month+"-"+day+" "+hourMinute;
         List<Object> dataToSever=new ArrayList<>();
         dataToSever.add(GlobalDataSaved.connectedUser.getId());
         dataToSever.add(date);
@@ -97,6 +98,16 @@ public class TeacherHome {
         {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @FXML
+    void showAllExams(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showAllQuestions(ActionEvent event) {
+
     }
     @FXML
     public void initialize()

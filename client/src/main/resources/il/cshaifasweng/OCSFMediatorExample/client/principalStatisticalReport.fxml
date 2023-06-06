@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalStatisticalReport">
+   <children>
+      <Button layoutX="320.0" layoutY="522.0" mnemonicParsing="false" onAction="#BackToMenu" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="InfoTxt" fill="WHITE" layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams Statistical Data About ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TableView fx:id="_Table" layoutX="3.0" layoutY="66.0" prefHeight="430.0" prefWidth="770.0">
+        <columns>
+            <TableColumn fx:id="_ExamID" prefWidth="51.200011253356934" text="ExamID" />
+            <TableColumn fx:id="_TeacherName" prefWidth="105.60004043579102" text="TeacherName" />
+            <TableColumn fx:id="_Subject" prefWidth="58.39996337890625" text="Subject" />
+            <TableColumn fx:id="_Course" prefWidth="59.99998474121094" text="Course" />
+            <TableColumn fx:id="_Average" prefWidth="56.0" text="Average" />
+            <TableColumn fx:id="_Median" minWidth="4.800048828125" prefWidth="56.79998779296875" text="Median" />
+            <TableColumn fx:id="_Histogram" prefWidth="421.5999755859375" text="Histogram">
+               <columns>
+                  <TableColumn fx:id="zero_nine" prefWidth="29.60003662109375" text="0-9" />
+                  <TableColumn fx:id="tens" prefWidth="44.79997253417969" text="10-19" />
+                  <TableColumn fx:id="twenties" prefWidth="48.0" text="20-29" />
+                  <TableColumn fx:id="Thirties" prefWidth="44.0" text="30-39" />
+                  <TableColumn fx:id="Forties" prefWidth="48.79998779296875" text="40-49" />
+                  <TableColumn fx:id="Fifties" prefWidth="46.4000244140625" text="50-59" />
+                  <TableColumn fx:id="Sixties" prefWidth="44.0" text="60-69" />
+                  <TableColumn fx:id="Seventies" prefWidth="45.5999755859375" text="70-79" />
+                <TableColumn fx:id="Eighties" prefWidth="45.60009765625" text="80-89" />
+                <TableColumn fx:id="Nineties" prefWidth="52.0" text="90-100" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="_Grade" prefWidth="75.0" text="Grade" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

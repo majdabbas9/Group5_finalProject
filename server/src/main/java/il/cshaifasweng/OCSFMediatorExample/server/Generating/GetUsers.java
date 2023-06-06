@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
@@ -26,9 +27,9 @@ public class GetUsers {
         List<Subject> subjectList=new ArrayList<>();
         for(Teacher_Subject ts:subs)
         {
-            subjectList.add(ts.getSubject());
+            subjectList.add(new Subject(ts.getSubject(),"getting only subject id and name"));
         }
-        return subjectList;
+       return  subjectList;
     }
     public static List<Course> getTeacherCourses(Session session, int id)
     {
@@ -42,7 +43,9 @@ public class GetUsers {
         List<Course> coursesList=new ArrayList<>();
         for(Teacher_Course tc:subs)
         {
-            coursesList.add(tc.getCourse());
+            Course course1=new Course(tc.getCourse(),"get needed");
+            course1.setCourseSubject(new Subject(tc.getCourse().getCourseSubject(),"all needed"));
+            coursesList.add(course1);
         }
         return coursesList;
     }

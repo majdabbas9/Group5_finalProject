@@ -9,16 +9,16 @@
 
 <AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalExams">
     <children>
-        <TableView fx:id="table" layoutX="7.0" layoutY="44.0" onMouseClicked="#selectExam" prefHeight="473.0" prefWidth="764.0">
+        <TableView fx:id="table" layoutX="7.0" layoutY="44.0" onMouseClicked="#selectExam" prefHeight="372.0" prefWidth="764.0">
             <columns>
                 <TableColumn fx:id="ExamId" prefWidth="104.00000286102295" text="Exam ID" />
-                <TableColumn fx:id="ExamTeacherID" minWidth="0.0" prefWidth="110.39996337890625" text="Teacher ID" />
             <TableColumn fx:id="ExamTeacherFN" prefWidth="112.80003356933594" text="Teacher First Name" />
             <TableColumn fx:id="ExamTeacherLN" prefWidth="112.0" text="Teacher Last Name" />
+                <TableColumn fx:id="ExamTeacherID" minWidth="0.0" prefWidth="110.39996337890625" text="Teacher ID" />
             <TableColumn fx:id="SubjectName" prefWidth="92.0" text="Subject" />
             <TableColumn fx:id="SubjectID" prefWidth="64.0" text="Subject ID" />
             <TableColumn fx:id="CourseName" prefWidth="97.60003662109375" text="Course" />
-            <TableColumn fx:id="CourseID" prefWidth="68.00006103515625" text="Course ID" />
+            <TableColumn fx:id="CourseID" prefWidth="62.4000244140625" text="Course ID" />
             </columns>
         </TableView>
         <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams" wrappingWidth="110.13672637939453">
@@ -36,5 +36,27 @@
                 <Font size="18.0" />
             </font>
         </Button>
+      <TableView fx:id="ShownExamTable" layoutX="7.0" layoutY="458.0" onMouseClicked="#selectExam" prefHeight="61.0" prefWidth="764.0">
+         <columns>
+            <TableColumn fx:id="ExamShownId" prefWidth="104.00000286102295" text="Exam ID" />
+            <TableColumn fx:id="ExamShownTeacherFN" prefWidth="112.80003356933594" text="Teacher First Name" />
+            <TableColumn fx:id="ExamShownTeacherLN" prefWidth="112.0" text="Teacher Last Name" />
+            <TableColumn fx:id="ExamShownTeacherID" minWidth="0.0" prefWidth="110.39996337890625" text="Teacher ID" />
+            <TableColumn fx:id="ExamShownSubjectName" prefWidth="92.0" text="Subject" />
+            <TableColumn fx:id="ExamShownSubjectID" prefWidth="64.0" text="Subject ID" />
+            <TableColumn fx:id="ExamShownCourseName" prefWidth="97.60003662109375" text="Course" />
+            <TableColumn fx:id="ExamShownCourseID" prefWidth="63.199951171875" text="Course ID" />
+         </columns>
+      </TableView>
+      <Text fill="WHITE" layoutX="14.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selceted Exam">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="ErrTxt" fill="RED" layoutX="311.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

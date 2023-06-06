@@ -83,8 +83,7 @@ public class PrincipalHome {
 
     @FXML
     void addUsers(ActionEvent event) throws IOException {
-        List<Subject> list = new ArrayList<>();
-        Message msg = new Message("#AllSubjectsToPrincipal", list);
+        Message msg = new Message("#AllSubjectsToPrincipal");
         try {
             SimpleClient.getClient().sendToServer(msg);
 
@@ -106,8 +105,7 @@ public class PrincipalHome {
 
     @FXML
     void showExams(ActionEvent event) throws IOException {
-        List<Exam> list = new ArrayList<>();
-        Message msg = new Message("AllExamsToPrincipal", list);
+        Message msg = new Message("AllExamsToPrincipal");
         try {
             SimpleClient.getClient().sendToServer(msg);
         } catch (IOException e) {
@@ -119,8 +117,7 @@ public class PrincipalHome {
     void showGrades(ActionEvent event) throws IOException {
         // to reset the exam to show
         GlobalDataSaved.PrincipalExamToShow = null;
-        List<Grade> list = new ArrayList<>();
-        Message msg = new Message("AllGradesToPrincipal", list);
+        Message msg = new Message("AllGradesToPrincipal");
         try {
             SimpleClient.getClient().sendToServer(msg);
         } catch (IOException e) {
@@ -132,8 +129,7 @@ public class PrincipalHome {
     void showQuestions(ActionEvent event) {
         //to know that we are in questions section
         GlobalDataSaved.PrincipalQuestionToShow = null;
-        List<Question> list = new ArrayList<>();
-        Message msg = new Message("AllQuestionsToPrincipal", list);
+        Message msg = new Message("AllQuestionsToPrincipal");
         try {
             SimpleClient.getClient().sendToServer(msg);
         } catch (IOException e) {
@@ -142,8 +138,13 @@ public class PrincipalHome {
     }
 
     @FXML
-    void showStatisticalData(ActionEvent event) throws IOException {
-        App.setRoot("principalStatisticalData");
+    void showStatisticalData(ActionEvent event) {
+        try {
+            Message message = new Message("StatisticalDataForPrincipal");
+            SimpleClient.getClient().sendToServer(message);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 }

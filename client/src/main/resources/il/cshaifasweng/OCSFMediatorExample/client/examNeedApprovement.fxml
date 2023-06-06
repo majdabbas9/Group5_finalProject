@@ -9,9 +9,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.ExamsNeedApprovement">
+<AnchorPane prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.ExamsNeedApprovement">
     <children>
-        <Pane prefHeight="162.0" prefWidth="788.0" style="-fx-background-color: #003000;">
+        <Pane prefHeight="162.0" prefWidth="850.0" style="-fx-background-color: #003000;">
             <children>
                 <Label layoutX="28.0" layoutY="42.0" text="Teacher DashBoard" textFill="WHITE">
                     <font>
@@ -36,21 +36,21 @@
                 <Text fx:id="currentTime1" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-        <Button fx:id="backButton" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#backClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
+        <Button fx:id="backButton" layoutX="19.0" layoutY="587.0" mnemonicParsing="false" onAction="#backClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="backButton1" layoutX="627.0" layoutY="528.0" mnemonicParsing="false" onAction="#nextClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="Next" textFill="WHITE">
+        <Button fx:id="backButton1" layoutX="671.0" layoutY="587.0" mnemonicParsing="false" onAction="#nextClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="Next" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-          <TableView fx:id="examsTable" layoutX="92.0" layoutY="167.0" prefHeight="354.0" prefWidth="590.0">
+          <TableView fx:id="examsTable" layoutX="106.0" layoutY="184.0" prefHeight="372.0" prefWidth="638.0">
               <columns>
                   <TableColumn fx:id="examIdColumn" prefWidth="184.0" text="ExamID" />
                   <TableColumn fx:id="subjectColumn" minWidth="7.199951171875" prefWidth="198.4000244140625" text="Subject" />
-                  <TableColumn fx:id="dataColumn" prefWidth="205.60003662109375" text="Date " />
+                  <TableColumn fx:id="dataColumn" prefWidth="254.39999999999998" text="Date " />
               </columns>
           </TableView>
     </children>

@@ -21,6 +21,7 @@ public class Question implements Serializable {
 
     private String teacherNotes;
     private String studentNotes; // this the content of the question
+    private String studentNotesToShow; //is this the notes for the student
     private String questionID;
     private String choice1;
     private String choice2;
@@ -53,6 +54,20 @@ public class Question implements Serializable {
         this.correctChoice = correctChoice;
         this.choice1=choices.get(0);this.choice2=choices.get(1);this.choice3=choices.get(2);this.choice4=choices.get(3);
     }
+
+    public Question(Question question,String str) {
+        this.id = question.id;
+        this.teacherNotes = question.teacherNotes;
+        this.studentNotes = question.studentNotes;
+        this.studentNotesToShow =question.studentNotesToShow;
+        this.questionID = question.questionID;
+        this.choice1 = question.choice1;
+        this.choice2 = question.choice2;
+        this.choice3 = question.choice3;
+        this.choice4 = question.choice4;
+        this.correctChoice = question.correctChoice;
+    }
+
     public int getId() {
         return id;
     }
@@ -178,4 +193,11 @@ public class Question implements Serializable {
         return res;
     }
 
+    public String getStudentNotesToShow() {
+        return studentNotesToShow;
+    }
+
+    public void setStudentNotesToShow(String studentNotesToShow) {
+        this.studentNotesToShow = studentNotesToShow;
+    }
 }

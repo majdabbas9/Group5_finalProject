@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalStatisticalData"
-            prefHeight="576.0" prefWidth="778.0">
-
+<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalStatisticalData">
+   <children>
+      <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistical Data:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="24.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Catagory:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="13.0" layoutY="523.0" mnemonicParsing="false" onAction="#BackToMenu" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="_ComboBox" layoutX="194.0" layoutY="51.0" onAction="#SelectCatagory" prefWidth="150.0" />
+      <TableView fx:id="ExamsTable" layoutX="389.0" layoutY="112.0" onMouseClicked="#SelectExam" prefHeight="190.0" prefWidth="376.0">
+        <columns>
+          <TableColumn fx:id="ExamsId" prefWidth="75.0" text="Exam ID" />
+          <TableColumn fx:id="ExamsSubject" prefWidth="75.0" text="Subject" />
+            <TableColumn fx:id="ExamsCourse" prefWidth="75.0" text="Course" />
+            <TableColumn fx:id="ExamsTeacher" prefWidth="142.39990234375" text="Teacher Name" />
+        </columns>
+      </TableView>
+      <Text fx:id="SelectItem" fill="WHITE" layoutX="81.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Course:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="389.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Exams:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TableView fx:id="SelectedExamsTable" layoutX="389.0" layoutY="330.0" onMouseClicked="#UnselectExam" prefHeight="178.0" prefWidth="376.0">
+        <columns>
+          <TableColumn fx:id="SelectedExamsId" prefWidth="75.0" text="Exam ID" />
+          <TableColumn fx:id="SelectedExamsSubject" prefWidth="75.0" text="Subject" />
+            <TableColumn fx:id="SelectedExamsCourse" prefWidth="75.0" text="Course" />
+            <TableColumn fx:id="SelectedExamsTeacher" prefWidth="144.0" text="Teacher Name" />
+        </columns>
+      </TableView>
+      <Text fill="WHITE" layoutX="389.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Exams:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="628.0" layoutY="523.0" mnemonicParsing="false" onAction="#Show" prefHeight="40.0" prefWidth="137.0" style="-fx-background-color: #0A8A0A;" text="Show" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="ErrTxt" fill="RED" layoutX="308.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Select Exams!">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ListView fx:id="_StudentsListView" layoutX="81.0" layoutY="111.0" onMouseClicked="#SelectStudent" prefHeight="397.0" prefWidth="200.0" />
+      <ListView fx:id="_CoursesListView" layoutX="81.0" layoutY="111.0" onMouseClicked="#SelectCourse" prefHeight="397.0" prefWidth="200.0" />
+      <ListView fx:id="_TeachersListView" layoutX="81.0" layoutY="111.0" onMouseClicked="#SelectTeacher" prefHeight="397.0" prefWidth="200.0" />
+   </children>
 </AnchorPane>

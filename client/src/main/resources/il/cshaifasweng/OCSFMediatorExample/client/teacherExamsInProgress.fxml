@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.ExamsInProgress">
+<AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.ExamsInProgress">
     <children>
-        <Button fx:id="buttonBack" layoutX="19.0" layoutY="520.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To Build Exam" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="14.0" layoutY="574.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To Build Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
@@ -20,29 +20,23 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Text fx:id="warningTxt" fill="#af0000" layoutX="544.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="139.21246337890625">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-        </Text>
-        <TableView fx:id="compExamsTable" layoutX="19.0" layoutY="92.0" prefHeight="391.0" prefWidth="470.0">
+        <TableView fx:id="compExamsTable" layoutX="161.0" layoutY="57.0" prefHeight="435.0" prefWidth="558.0">
             <columns>
                 <TableColumn fx:id="examIdColumn" prefWidth="83.20001220703125" text="exam code" />
-                <TableColumn fx:id="examFinishTimeColumn" prefWidth="193.59996032714844" text="exam finish time" />
-            <TableColumn fx:id="numberOfStudentDoingColumn" prefWidth="192.0" text="number of student doing" />
+                <TableColumn fx:id="examFinishTimeColumn" prefWidth="291.19993591308594" text="exam finish time" />
+            <TableColumn fx:id="numberOfStudentDoingColumn" prefWidth="180.00006103515625" text="number of student doing" />
             </columns>
         </TableView>
-      <Button fx:id="addTimeButton" layoutX="551.0" layoutY="515.0" mnemonicParsing="false" onAction="#addTimeForTheExam" prefHeight="46.0" prefWidth="212.0" style="-fx-background-color: #0A8A0A;" text="add time for the exam" textFill="WHITE">
+      <Button fx:id="addTimeButton" layoutX="614.0" layoutY="574.0" mnemonicParsing="false" onAction="#addTimeForTheExam" prefHeight="46.0" prefWidth="212.0" style="-fx-background-color: #0A8A0A;" text="add time for the exam" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Text fill="WHITE" layoutX="538.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new finish time" wrappingWidth="204.81243896484375">
+      <TextField alignment="CENTER" layoutX="357.0" layoutY="522.0" prefHeight="26.0" prefWidth="186.0" promptText="add time in minutes">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font size="14.0" />
          </font>
-      </Text>
-      <ComboBox fx:id="hourList" layoutX="538.0" layoutY="148.0" prefHeight="26.0" prefWidth="68.0" promptText="hour" />
-      <ComboBox fx:id="minuteList" layoutX="614.0" layoutY="148.0" prefHeight="26.0" prefWidth="82.0" promptText="minute" />
+      </TextField>
+      <Text fx:id="warning" fill="RED" layoutX="402.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.199951171875" />
     </children>
 </AnchorPane>

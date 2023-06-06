@@ -9,9 +9,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="573.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.Approvement">
+<AnchorPane prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.Approvement">
     <children>
-        <Pane prefHeight="162.0" prefWidth="788.0" style="-fx-background-color: #003000;">
+        <Pane prefHeight="162.0" prefWidth="850.0" style="-fx-background-color: #003000;">
             <children>
                 <Label layoutX="28.0" layoutY="42.0" text="Teacher DashBoard" textFill="WHITE">
                     <font>
@@ -36,17 +36,17 @@
                 <Text fx:id="currentTime1" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-          <TableView fx:id="gradesTable" layoutX="17.0" layoutY="180.0" onMouseClicked="#updateGrade" prefHeight="339.0" prefWidth="754.0">
+          <TableView fx:id="gradesTable" layoutX="27.0" layoutY="182.0" onMouseClicked="#updateGrade" prefHeight="394.0" prefWidth="790.0">
               <columns>
                   <TableColumn fx:id="studentIdColumn" prefWidth="155.20003700256348" text="Student ID" />
                   <TableColumn fx:id="studentNameColumn" minWidth="7.199951171875" prefWidth="130.39996337890625" text="Student Name" />
-                  <TableColumn fx:id="dateColumn" prefWidth="139.20001220703125" text="date" />
-                  <TableColumn fx:id="gradeColumn" prefWidth="71.20004272460938" text="grade" />
-            <TableColumn fx:id="notesColumn" prefWidth="314.4000244140625" text="notes" />
+                  <TableColumn fx:id="dateColumn" prefWidth="171.20001220703125" text="date" />
+                  <TableColumn fx:id="gradeColumn" prefWidth="68.79995727539062" text="grade" />
+            <TableColumn fx:id="notesColumn" prefWidth="287.2000732421875" text="notes" />
             <TableColumn fx:id="gradeObjectColumn" prefWidth="75.0" text="gradeObjectColumn" visible="false" />
               </columns>
           </TableView>
-        <Button layoutX="17.0" layoutY="531.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
+        <Button layoutX="14.0" layoutY="589.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
             <font>
                 <Font size="15.0" />
             </font>

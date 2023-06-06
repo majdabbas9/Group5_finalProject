@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
@@ -21,12 +22,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class GetExamBuliding {
+    public static  int counter=0;
 
     @Transactional
     public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
@@ -46,7 +45,14 @@ public class GetExamBuliding {
             List<Exam> courseExamResult = query.getResultList();
             for(Exam exam : courseExamResult)
             {
-                allExams.add(exam);
+                Exam exam1=new Exam(exam,"all needed");
+                Set<Exam_Question> examQuestions=exam.getExamQuestions();
+                for(Exam_Question exam_question:examQuestions)
+                {
+                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion(),"all needed"),"all needed");
+                    exam1.getExamQuestions().add(eq);
+                }
+                allExams.add(exam1);
             }
         }
         return  allExams;
@@ -81,20 +87,23 @@ public class GetExamBuliding {
         return  (List<Teacher_Course>)query.getResultList();
     }
     public static List<ComputerizedExamToExecute> getAllCompExamsNow(Session session, int teacherId, String date) throws ParseException {
+        counter++;
+        if(counter==2)
+            System.out.println("hi");
         String queryString=" FROM ComputerizedExamToExecute WHERE teacherThatExecuted.id = : id";
         Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
         query.setParameter("id",teacherId);
-        List<ComputerizedExamToExecute> list=new ArrayList<>();
-
-        for(ComputerizedExamToExecute compExam:(List<ComputerizedExamToExecute>)(query.getResultList()))
+        List<ComputerizedExamToExecute> list=(List<ComputerizedExamToExecute>)(query.getResultList());
+        List<ComputerizedExamToExecute> list1=new ArrayList<>();
+        for(ComputerizedExamToExecute compExam:list)
         {
             String endDate=toNewDate(compExam.getDateOfExam(),compExam.getExam().getTime());
-            if(compare2Dates(date,compExam.getDateOfExam())<=0 && compare2Dates(date,endDate)==1)
+            if(compareDates(date,compExam.getDateOfExam(),endDate))
             {
-                list.add(compExam);
+               list1.add(compExam);
             }
         }
-        return list;
+        return list1;
     }
     public static String toNewDate(String date,int time) throws ParseException {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -106,9 +115,8 @@ public class GetExamBuliding {
         return newDate;
     }
 
-    public static int compare2Dates(String date1,String date2)
-    {
-        int year1,month1,day1,h1,m1,year2,month2,day2,h2,m2;
+    public static Boolean compareDates(String date1,String date2,String date3) throws ParseException {
+        /*int year1,month1,day1,h1,m1,year2,month2,day2,h2,m2;
         day1=Integer.valueOf(date1.substring(0,2));day2=Integer.valueOf(date2.substring(8,10));
         month1=Integer.valueOf(date1.substring(3,5));month2=Integer.valueOf(date2.substring(5,7));
         year1=Integer.valueOf(date1.substring(6,10));year2=Integer.valueOf(date2.substring(0,4));
@@ -124,7 +132,14 @@ public class GetExamBuliding {
        if(h2>h1)return 1;
        if(m1>m2)return 0;
        if(m2>m1)return 1;
-       return -1;
+       return -1;*/
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date d1 = sdFormat.parse(date1);
+        Date d2 = sdFormat.parse(date2);
+        Date d3=sdFormat.parse(date3);
+        if(d1.compareTo(d2)<0)return false; // if d1 occur before d2 return false
+        if(d3.compareTo(d1)>0)return true;  // if d3 occur after d1 return true
+        return false;
     }
     public static Exam getExamById(Session session,int id)
     {

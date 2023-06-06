@@ -2,22 +2,17 @@ package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
+import aidClasses.ExamQuestionDetails;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,14 +20,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-import javax.security.auth.callback.Callback;
-
 public class PrincipalShowExam {
-
     @FXML
     private ResourceBundle resources;
 
@@ -58,25 +49,26 @@ public class PrincipalShowExam {
     private Text notes;
 
     @FXML
-    private TableColumn<Exam, Integer> points;
+    private TableColumn<ExamQuestionDetails, Integer> points;
 
     @FXML
-    private TableView<Exam_Question> questions_table;
+    private TableView<ExamQuestionDetails> questions_table;
 
     @FXML
     private Text subject;
 
     @FXML
     private Text teacher;
+    private ObservableList<Exam_Question> exam_to_show =
+            FXCollections.observableArrayList(GlobalDataSaved.PrincipalExamToShow.getExamQuestions());
 
     @FXML
-    private TableColumn<Exam_Question, String> the_question;
+    private TableColumn<ExamQuestionDetails, String> the_question;
 
     private Question question_to_show = GlobalDataSaved.PrincipalQuestionToShow;
     @FXML
     void BackToMenu(ActionEvent event){
-        List<Exam> list = new ArrayList<>();
-        Message msg = new Message("AllExamsToPrincipal", list);
+        Message msg = new Message("AllExamsToPrincipal");
         try {
             SimpleClient.getClient().sendToServer(msg);
         } catch (IOException e) {
@@ -98,7 +90,12 @@ public class PrincipalShowExam {
     @FXML
     void selectquestion(MouseEvent event) {
         if (questions_table.getSelectionModel().getSelectedItem() != null){
-            question_to_show = questions_table.getSelectionModel().getSelectedItem().getQuestion();
+            for (Exam_Question examQuestion : exam_to_show ){
+                if (examQuestion.getQuestion().getStudentNotes().equals(
+                        questions_table.getSelectionModel().getSelectedItem().get_The_Question())){
+                    question_to_show = examQuestion.getQuestion();
+                }
+            }
         }
     }
 
@@ -113,19 +110,24 @@ public class PrincipalShowExam {
         course.setText("Course: " + GlobalDataSaved.PrincipalExamToShow.getExamCourse());
         notes.setText("Notes: " + GlobalDataSaved.PrincipalExamToShow.getTeacherNotes());
 
-
-        ObservableList<Exam_Question> exam_to_show =
-                FXCollections.observableArrayList(GlobalDataSaved.PrincipalExamToShow.getExamQuestions());
-
+        ObservableList<ExamQuestionDetails> list = FXCollections.observableArrayList();
+        for (int i = 0 ; i < exam_to_show.size() ; ++i){
+            list.add(new ExamQuestionDetails(exam_to_show.get(i).getQuestion().getStudentNotes(),
+                    GlobalDataSaved.PrincipalExamToShow.getPoints().get(i)));
+        }
         the_question.setCellValueFactory(cellData -> {
-            Exam_Question examQuestion = cellData.getValue();
-            String question = examQuestion.getQuestion().getStudentNotes();
+            ExamQuestionDetails examQuestion = cellData.getValue();
+            String question = examQuestion.get_The_Question();
             return new SimpleStringProperty(question);
         });
 
-        //TODO:: Add points attribute to Exam_Questions in order to display also the points in the table.
+        points.setCellValueFactory(cellData -> {
+            ExamQuestionDetails examQuestion = cellData.getValue();
+            Integer points = examQuestion.get_Points();
+            return new SimpleIntegerProperty(points).asObject();
+        });
 
-        questions_table.setItems(exam_to_show);
+        questions_table.setItems(list);
     }
 
 }

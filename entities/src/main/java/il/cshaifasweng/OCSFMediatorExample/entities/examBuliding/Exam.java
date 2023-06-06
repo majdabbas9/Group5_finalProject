@@ -17,7 +17,7 @@ public class Exam implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "exam")
     private Set<ComputerizedExamToExecute> compExamsToExecute=new HashSet<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
@@ -42,6 +42,15 @@ public class Exam implements Serializable{
         this.exam_ID = exam_ID;
         this.teacherNotes = teacherNotes;
         this.notes = notes;
+    }
+
+    public Exam(Exam exam,String str) {
+        this.id = exam.id;
+        this.time = exam.time;
+        this.exam_ID = exam.exam_ID;
+        this.teacherNotes = exam.teacherNotes;
+        this.notes = exam.notes;
+        this.points =new ArrayList<>(exam.points);
     }
 
     public Exam() {

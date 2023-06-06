@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import aidClasses.GlobalDataSaved;
 
@@ -41,6 +42,7 @@ import javax.persistence.Query;
 import javax.persistence.spi.LoadState;
 
 public class SimpleServer extends AbstractServer {
+	public static int counter;
 
 	private static ArrayList<LoggedInClient> _LoggedInList = new ArrayList<>();
 
@@ -53,8 +55,6 @@ public class SimpleServer extends AbstractServer {
 	public static void setSession(Session session) {
 		SimpleServer.session = session;
 	}
-
-
 	private static SessionFactory getSessionFactory() throws HibernateException {
 
 		Configuration configuration = new Configuration();
@@ -91,6 +91,7 @@ public class SimpleServer extends AbstractServer {
 		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
 	}
+
 	public static void addQuestion(Question question,List<Integer> CoursesIds,int subjectId,int teacherId) {
 		List<Course>questionCourses=GetExamBuliding.getCoursesById(session,CoursesIds);
 		Subject questionSubject=GetExamBuliding.getSubjectById(session,subjectId);
@@ -120,8 +121,7 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		Course_Question cq;
-		for(Course course:questionCourses)
-		{
+		for(Course course:questionCourses) {
 			cq=new Course_Question(course,question);
 			session.save(cq);
 			//session.flush();
@@ -141,7 +141,7 @@ public class SimpleServer extends AbstractServer {
 		if (i == _LoggedInList.size()){
 			return;
 		} else {
-			try	{
+			try {
 				List<Question> list = GetEducational.getAllQuestions(session);
 				_LoggedInList.get(i).getClient().sendToClient(new Message("UpdateAllQuestionsToPrincipal",list));
 			}catch (Exception e){
@@ -205,8 +205,7 @@ public class SimpleServer extends AbstractServer {
 		/*end of updating subject*/
 
 		Exam_Question eq;
-		for(Question question:questions)
-		{
+		for(Question question:questions) {
 			eq=new Exam_Question(exam,question);
 			session.save(eq);
 			//session.flush();
@@ -230,7 +229,7 @@ public class SimpleServer extends AbstractServer {
 		if (i == _LoggedInList.size()){
 			return;
 		} else {
-			try	{
+			try {
 				List<Exam> list = GetEducational.getAllExams(session);
 				_LoggedInList.get(i).getClient().sendToClient(new Message("UpdateAllExamsToPrincipal",list));
 			}catch (Exception e){
@@ -238,8 +237,12 @@ public class SimpleServer extends AbstractServer {
 			}
 		}
 	}
-	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId)
-	{
+
+	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId) {
+		counter++;
+		if(counter==2)
+			System.out.println("h");
+
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Exam exam=GetExamBuliding.getExamById(session,examId);
 		session.beginTransaction();
@@ -255,7 +258,7 @@ public class SimpleServer extends AbstractServer {
 		session.update(compExam);
 		session.flush();
 
-		 teacher=compExam.getTeacherThatExecuted();
+		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
 		session.flush();
@@ -267,6 +270,7 @@ public class SimpleServer extends AbstractServer {
 
 		session.getTransaction().commit();
 	}
+
 	public static void addTeacher(Teacher teacher,List<Integer> subjectsIds,List<Integer> coursesIds) {
 		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesIds);
 		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsIds);
@@ -278,8 +282,7 @@ public class SimpleServer extends AbstractServer {
 
 		Teacher_Subject ts;
 		Teacher_Course tc;
-		for(Subject subject:subjects)
-		{
+		for(Subject subject:subjects) {
 			ts=new Teacher_Subject(teacher,subject);
 			session.save(ts);
 			session.flush();
@@ -292,8 +295,7 @@ public class SimpleServer extends AbstractServer {
 			session.update(subject);
 			session.flush();
 		}
-		for(Course course:courses)
-		{
+		for(Course course:courses) {
 			tc=new Teacher_Course(teacher,course);
 			session.save(tc);
 			session.flush();
@@ -320,8 +322,7 @@ public class SimpleServer extends AbstractServer {
 
 		Student_Subject ss;
 		Student_Course sc;
-		for(Subject subject:subjects)
-		{
+		for(Subject subject:subjects) {
 			ss=new Student_Subject(student,subject);
 			session.save(ss);
 			session.flush();
@@ -334,8 +335,7 @@ public class SimpleServer extends AbstractServer {
 			session.update(subject);
 			session.flush();
 		}
-		for(Course course:courses)
-		{
+		for(Course course:courses) {
 			sc=new Student_Course(student,course);
 			session.save(sc);
 			session.flush();
@@ -409,8 +409,8 @@ public class SimpleServer extends AbstractServer {
 		GlobalDataSaved.currentCopy = copy;
 		session.getTransaction().commit();
 	}
-	public static void teacherApproveStudentGrade(int gradeId,int newGrade,String notes)
-	{
+
+	public static void teacherApproveStudentGrade(int gradeId,int newGrade,String notes) {
 		Grade grade= GetGrading.getGradeById(session,gradeId);
 		session.beginTransaction();
 		session.clear();

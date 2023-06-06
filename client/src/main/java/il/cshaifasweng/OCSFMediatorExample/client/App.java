@@ -43,13 +43,19 @@ public class App extends Application {
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
+    public static void setContentTeacher(String pageName) throws IOException {
+        scene.setRoot(loadFXML(pageName));
+        scene.getWindow().setWidth(870);scene.getWindow().setHeight(670);
+    }
+    public static void backLogin(String pageName) throws IOException {
+        scene.getWindow().setWidth(800);scene.getWindow().setHeight(600);
+        scene.setRoot(loadFXML(pageName));
+    }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-    
-    
 
     @Override
 	public void stop() throws Exception {
@@ -65,7 +71,7 @@ public class App extends Application {
         }
 		super.stop();
 	}
-    
+
     @Subscribe
     public void onWarningEvent(WarningEvent event) {
     	Platform.runLater(() -> {
@@ -76,7 +82,7 @@ public class App extends Application {
         	);
         	alert.show();
     	});
-    	
+
     }
     @Subscribe
     public  void onMessageEvent(MessageEvent event)

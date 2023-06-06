@@ -72,6 +72,8 @@ public class MakeQuestion {
 
     @FXML // fx:id="warningTxt"
     private Text warningTxt; // Value injected by FXMLLoader
+    @FXML
+    private TextField studentNotes;
     private List<Course> teacherCourses;
     private List<Course> selectedCourses;
     private List<Subject>teacherSubjects;
@@ -180,6 +182,7 @@ public class MakeQuestion {
         Question question=new Question(teacherNotes.getText(),theQuestion.getText(),correctChoice,choices);
         question.setQuestionID(QuestionsExamsID.questionID(subjectList.getSelectionModel().getSelectedItem().getSubjectName(),
                 subjectList.getSelectionModel().getSelectedItem().getId()));
+        question.setStudentNotesToShow(studentNotes.getText());
         //question.setQuestionCourses(selectedCourses);
         List<Object> dataToServer=new ArrayList<>();
         dataToServer.add(question);
