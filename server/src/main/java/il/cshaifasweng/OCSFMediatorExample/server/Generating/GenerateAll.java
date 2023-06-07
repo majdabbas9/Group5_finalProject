@@ -165,6 +165,18 @@ public class GenerateAll {
         session.save(sc1);
         session.flush();
 
+        Student s2=new Student("555","5","5","mohamad","abbas");
+        session.save(s2);
+        session.flush();
+
+        Student_Subject ss2=new Student_Subject(s2,math);
+        session.save(ss2);
+        session.flush();
+
+        Student_Course sc2=new Student_Course(s2,algebra);
+        session.save(sc2);
+        session.flush();
+
         /*end of student add */
 
     }

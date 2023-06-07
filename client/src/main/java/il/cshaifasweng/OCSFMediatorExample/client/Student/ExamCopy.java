@@ -111,19 +111,14 @@ public class ExamCopy {
         secondChoice.setText(choicesList.get(1));
         thirdChoice.setText(choicesList.get(2));
         fourthChoice.setText(choicesList.get(3));
-        switch (GlobalDataSaved.studentAnswers.get(questionCounter)) {
-            case "1":
-                firstChoice.setSelected(true);
-                break;
-            case "2":
-                secondChoice.setSelected(true);
-                break;
-            case "3":
-                thirdChoice.setSelected(true);
-                break;
-            case "4":
-                fourthChoice.setSelected(true);
-                break;
+        if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(firstChoice.getText())) {
+            firstChoice.setSelected(true);
+        } else if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(secondChoice.getText())) {
+            secondChoice.setSelected(true);
+        } else if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(thirdChoice.getText())) {
+            thirdChoice.setSelected(true);
+        } else if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(fourthChoice.getText())) {
+            fourthChoice.setSelected(true);
         }
         Question q;
         q = questionList.get(questionCounter);

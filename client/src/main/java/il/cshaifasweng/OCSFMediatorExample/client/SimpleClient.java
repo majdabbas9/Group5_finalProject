@@ -18,6 +18,8 @@ import org.greenrobot.eventbus.EventBus;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SimpleClient extends AbstractClient {
@@ -70,9 +72,16 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 					if (contentOfMsg.equals("exam copy")) {
-						List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
-						GlobalDataSaved.examToExecute = (ExamToExecute) dataFromServer.get(0);
-						GlobalDataSaved.studentAnswers = (List<String>) dataFromServer.get(1);
+						//List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
+						System.out.println("&&&&&&&&&&&&&& exam copy client &&&&&&&&&&&&&&&&&&&");
+						Grade grade = (Grade) msgFromServer.getObj();
+						GlobalDataSaved.currentGrade = grade;
+						GlobalDataSaved.examToExecute = (ExamToExecute) grade.getExamCopy().getCompExamToExecute();
+						String answers = grade.getExamCopy().getAnswers();
+						List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+						GlobalDataSaved.studentAnswers = answersList;
+						System.out.println("+++++++++++++++++++" + GlobalDataSaved.currentGrade.getGrade());
+						App.setRoot("examStudentNotes");
 						return;
 					}
 					if (contentOfMsg.equals("write id to start")) {
@@ -91,12 +100,22 @@ public class SimpleClient extends AbstractClient {
 						App.setRoot("solveExamManual");
 						return;
 					}
-					if (contentOfMsg.equals("Submitted successfully")) {
-						GlobalDataSaved.studentAnswers = (List<String>) msgFromServer.getObj();
-						EventBus.getDefault().post(new MessageEvent((Message) msg));
+					if (contentOfMsg.equals("exam done")) {
+						String answers = (String) msgFromServer.getObj();
+						List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+						GlobalDataSaved.studentAnswers = answersList;
+						//EventBus.getDefault().post(new MessageEvent((Message) msg));
 						App.setRoot("studentHome");
 						return;
 					}
+//					if (contentOfMsg.equals("exam done")) {
+//						String answers = (String) msgFromServer.getObj();
+//						List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+//						GlobalDataSaved.studentAnswers = answersList;
+//						EventBus.getDefault().post(new MessageEvent((Message) msg));
+//						App.setRoot("studentHome");
+//						return;
+//					}
 					if (contentOfMsg.equals("All Subjects Given to principal")) {
 						GlobalDataSaved.subjects = FXCollections.observableArrayList();
 						GlobalDataSaved.subjects.addAll((List<Subject>) msgFromServer.getObj());
@@ -154,6 +173,10 @@ public class SimpleClient extends AbstractClient {
 					App.setRoot("teacherHome");
 					return;
 				}
+					if (contentOfMsg.equals("sending teacher subjects")) {
+						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
+						return;
+					}
 					if (contentOfMsg.equals("sending teacher courses")) {
 						GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
 						return;

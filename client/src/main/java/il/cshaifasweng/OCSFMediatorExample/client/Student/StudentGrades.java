@@ -81,12 +81,9 @@ public class StudentGrades {
             return;
         }
         GlobalDataSaved.selectedGradeForExamCopy = studentGradesTableView.getSelectionModel().getSelectedIndex();
-        List<Object> objects = new ArrayList<>();
-        objects.add(0, GlobalDataSaved.selectedGradeForExamCopy);
-        objects.add(1, GlobalDataSaved.connectedUser.getId());
-        Message msg = new Message("#get exam copy",objects);
+        GradesDetails details = studentGradesTableView.getSelectionModel().getSelectedItem();
+        Message msg = new Message("#get exam copy", details.getGradeObject());
         SimpleClient.getClient().sendToServer(msg);
-        App.setRoot("examStudentNotes");
     }
 
     @FXML
@@ -120,14 +117,15 @@ public class StudentGrades {
     {
         List<GradesDetails> gradesDetails = new ArrayList<>();
         String gradeSubject,gradeCourse,teacherFirstNameExecuted,teacherLastNameExecuted;
-       int count = 0;
+        int idOnGradeList ,count = 0;
         for (Grade g : grades){
+            idOnGradeList = g.getId();
             count++;
             gradeSubject=g.getExamCopy().getCompExamToExecute().getExam().getExamSubject().getSubjectName();
             gradeCourse=g.getExamCopy().getCompExamToExecute().getExam().getExamCourse().getCourseName();
             teacherFirstNameExecuted=g.getExamCopy().getCompExamToExecute().getTeacherThatExecuted().getFirstName();
             teacherLastNameExecuted=g.getExamCopy().getCompExamToExecute().getTeacherThatExecuted().getLastName();
-            gradesDetails.add(new GradesDetails(count,gradeSubject,gradeCourse,teacherFirstNameExecuted+" "+teacherLastNameExecuted,g.getGrade(),g));
+            gradesDetails.add(new GradesDetails(count,gradeSubject,gradeCourse,teacherFirstNameExecuted+" "+teacherLastNameExecuted,g.getGrade(), g));
         }
         return gradesDetails;
     }

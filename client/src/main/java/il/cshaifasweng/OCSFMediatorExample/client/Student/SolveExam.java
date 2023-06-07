@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -34,7 +35,7 @@ public class SolveExam {
     @FXML
     private Button submitBtn;
     @FXML
-    private Text questionContent;
+    private TextArea questionContent;
 
     @FXML
     private Text questionNo;
@@ -96,15 +97,15 @@ public class SolveExam {
 
 
         System.out.println(hour+":" +minute +":"+ second);
-        if (hour != 0 || minute != 0 || second != 0) {
-            List<Object> dataToServer = new ArrayList<>();
-            dataToServer.add(answers);
-            dataToServer.add(GlobalDataSaved.examToExecute);
-            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime()+1);
-            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime());
-            Message msg = new Message("#submitted on the time", dataToServer);
-            SimpleClient.getClient().sendToServer(msg);
-        }
+//        if (hour != 0 || minute != 0 || second != 0) {
+//            List<Object> dataToServer = new ArrayList<>();
+//            dataToServer.add(answers);
+//            dataToServer.add(GlobalDataSaved.examToExecute);
+//            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime()+1);
+//            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime());
+//            Message msg = new Message("#submitted on the time", dataToServer);
+//            SimpleClient.getClient().sendToServer(msg);
+//        }
         sendStudentAnswersToServer(true, calculateStudentExamGrade());
 
     }
@@ -248,17 +249,6 @@ public class SolveExam {
             }
         },1000,1000);
     }
-    public static void addTime(int time) throws ParseException {
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-        Date d = df.parse(hour+":"+minute+":"+second);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        cal.add(Calendar.MINUTE, time);
-        String newDate = df.format(cal.getTime());
-        hour=Integer.valueOf(newDate.substring(0,2));
-        minute=Integer.valueOf(newDate.substring(3,5));
-        second=Integer.valueOf(newDate.substring(6,7));
-    }
 
     public static void addExtraTime(int time){
         while (time >= 60){
@@ -274,13 +264,13 @@ public class SolveExam {
     }
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-        List<Object> dataToServer = new ArrayList<>();
-        dataToServer.add(answers);
-        dataToServer.add(GlobalDataSaved.examToExecute);
-        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime());
-        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime()+1);
-        Message msg = new Message("#time finished", dataToServer);
-        SimpleClient.getClient().sendToServer(msg);
+//        List<Object> dataToServer = new ArrayList<>();
+//        dataToServer.add(answers);
+//        dataToServer.add(GlobalDataSaved.examToExecute);
+//        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime());
+//        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime()+1);
+//        Message msg = new Message("#time finished", dataToServer);
+//        SimpleClient.getClient().sendToServer(msg);
         if(questionChoices.getSelectedToggle() != null){
             RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();
             answers.set(questionCounter,selected.getText());
@@ -295,18 +285,8 @@ public class SolveExam {
         thirdChoice.setFocusTraversable(false);
         fourthChoice.setFocusTraversable(false);
 
-        if (answers.get(questionCounter) != null) {
-            if (answers.get(questionCounter).equals(firstChoice.getText())) {
-                firstChoice.setSelected(true);
-            } else if (answers.get(questionCounter).equals(secondChoice.getText())) {
-                secondChoice.setSelected(true);
-            } else if (answers.get(questionCounter).equals(thirdChoice.getText())) {
-                thirdChoice.setSelected(true);
-            } else if (answers.get(questionCounter).equals(fourthChoice.getText())) {
-                fourthChoice.setSelected(true);
-            }
-        } else if (answers.get(questionCounter) == null && questionCounter > 0 && questionChoices.getSelectedToggle() != null) {
-            questionChoices.getSelectedToggle().setSelected(false);
+        for (int i=0; i<answers.size(); i++) {
+            System.out.println("**** the saved answer is: "+ answers.get(i));
         }
 
         if (questionCounter == 0){
@@ -325,7 +305,12 @@ public class SolveExam {
             submitBtn.setDisable(false);
         }
         choicesList = question.getChoices();
-        questionContent.setText(question.getStudentNotes());
+        if (!question.getStudentNotesToShow().equals("")){
+            questionContent.setText(question.getStudentNotes() + "\nNotes: "+ question.getStudentNotesToShow());
+        }
+        else {
+            questionContent.setText(question.getStudentNotes());
+        }
         questionNo.setText("Question "+ (questionCounter+1) + ":");
         firstChoice.setText(choicesList.get(0));
         secondChoice.setText(choicesList.get(1));
@@ -333,6 +318,24 @@ public class SolveExam {
         fourthChoice.setText(choicesList.get(3));
 
 
+        if (answers.get(questionCounter) != null) {
+            System.out.println("answer not null" +"\n"+ answers.get(questionCounter));
+            if (answers.get(questionCounter).equals(firstChoice.getText())) {
+                firstChoice.setSelected(true);
+                System.out.println("choice 1");
+            } else if (answers.get(questionCounter).equals(secondChoice.getText())) {
+                secondChoice.setSelected(true);
+                System.out.println("choice 2");
+            } else if (answers.get(questionCounter).equals(thirdChoice.getText())) {
+                thirdChoice.setSelected(true);
+                System.out.println("choice 3");
+            } else if (answers.get(questionCounter).equals(fourthChoice.getText())) {
+                fourthChoice.setSelected(true);
+                System.out.println("choice 4");
+            }
+        } else if (answers.get(questionCounter) == null && questionCounter > 0 && questionChoices.getSelectedToggle() != null) {
+            questionChoices.getSelectedToggle().setSelected(false);
+        }
     }
 }
 

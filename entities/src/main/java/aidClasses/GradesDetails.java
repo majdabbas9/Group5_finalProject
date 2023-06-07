@@ -11,7 +11,7 @@ public class GradesDetails {
     private int grade;
     private Grade gradeObject;
 
-    public GradesDetails(int id, String subjectName, String courseName, String teacherName, int grade,Grade gradeObject) {
+    public GradesDetails(int id, String subjectName, String courseName, String teacherName, int grade, Grade gradeObject) {
         this.id = id;
         this.subjectName = subjectName;
         this.courseName = courseName;
@@ -22,7 +22,6 @@ public class GradesDetails {
 
     public GradesDetails() {
     }
-
     public int getId() {
         return id;
     }
