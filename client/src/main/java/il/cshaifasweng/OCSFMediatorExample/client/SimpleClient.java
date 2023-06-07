@@ -56,8 +56,8 @@ public class SimpleClient extends AbstractClient {
 				}
 					if (contentOfMsg.equals("sending teacher subjects")) {
 						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
-						if(GlobalDataSaved.forQuestion)App.setRoot("makeQuestion");
-						else App.setRoot("makeExam");
+						if(GlobalDataSaved.forQuestion==0)App.setRoot("makeQuestion");
+						if(GlobalDataSaved.forQuestion==1) App.setRoot("makeExam");
 						return;
 					}
 					if (contentOfMsg.equals("sending teacher courses")) {
@@ -148,10 +148,6 @@ public class SimpleClient extends AbstractClient {
 					App.setRoot("teacherHome");
 					return;
 				}
-					if (contentOfMsg.equals("sending teacher subjects")) {
-						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
-						return;
-					}
 					if (contentOfMsg.equals("sending teacher courses")) {
 						GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
 						return;
@@ -273,6 +269,10 @@ public class SimpleClient extends AbstractClient {
 				if(contentOfMsg.equals("AddTimeToStudent")) {
 					SolveExam.addExtraTime((int) msgFromServer.getObj());
 					EventBus.getDefault().post(new MessageEvent(new Message("Added Extra Time")));
+				}
+				if(contentOfMsg.equals("all questions")) {
+					GlobalDataSaved.allQuestionsForTeacher=(List<Question>) msgFromServer.getObj();
+					App.setRoot("allQuestions");
 				}
 
 

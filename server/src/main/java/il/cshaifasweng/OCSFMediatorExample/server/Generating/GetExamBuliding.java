@@ -50,7 +50,7 @@ public class GetExamBuliding {
                 Set<Exam_Question> examQuestions=exam.getExamQuestions();
                 for(Exam_Question exam_question:examQuestions)
                 {
-                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion(),"all needed"),"all needed");
+                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()));
                     exam1.getExamQuestions().add(eq);
                 }
                 exam1.setExamCourse(new Course(exam.getExamCourse(),"hit"));
@@ -194,6 +194,23 @@ public class GetExamBuliding {
         Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",id);
         return  (ExamToExecute) (query.getResultList().get(0));
+    }
+    public static List<Question> getAllQuestionsForTeacher(Session session)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Question> query = builder.createQuery(Question.class);
+        query.from(Question.class);
+        List<Question> data = session.createQuery(query).getResultList();
+        List<Question> questions=new ArrayList<>();
+        for(Question question:data)
+        {
+            Question q=new Question(question);
+            q.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
+            Subject subject=new Subject(question.getQuestionSubject());
+            q.setQuestionSubject(new Subject(question.getQuestionSubject()));
+            questions.add(q);
+        }
+        return questions;
     }
 
 }
