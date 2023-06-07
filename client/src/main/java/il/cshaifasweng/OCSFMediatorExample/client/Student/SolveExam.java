@@ -99,9 +99,9 @@ public class SolveExam {
         if (hour != 0 || minute != 0 || second != 0) {
             List<Object> dataToServer = new ArrayList<>();
             dataToServer.add(answers);
-            dataToServer.add(GlobalDataSaved.compExam);
-            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime()+1);
-            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime());
+            dataToServer.add(GlobalDataSaved.examToExecute);
+            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime()+1);
+            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime());
             Message msg = new Message("#submitted on the time", dataToServer);
             SimpleClient.getClient().sendToServer(msg);
         }
@@ -110,10 +110,10 @@ public class SolveExam {
     }
 
     private int calculateStudentExamGrade() {
-        Exam exam = GlobalDataSaved.compExam.getExam();
+        Exam exam = GlobalDataSaved.examToExecute.getExam();
         List<Integer> points = new ArrayList<>(exam.getPoints());
 
-        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         List<Question> questionList = sortedQuestionsList(examQuestions);
         Question q;
         int grade = 0;
@@ -133,7 +133,7 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,answerSt);
         objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.compExam);
+        objects.add(2,GlobalDataSaved.examToExecute);
         objects.add(3,grade);
         objects.add(4, onTime);
         Message msg = new Message("#update student answers", objects);
@@ -146,14 +146,14 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,null);
         objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.compExam);
+        objects.add(2,GlobalDataSaved.examToExecute);
         objects.add(3,-1);
         Message msg = new Message("#create student copy and grade", objects);
         SimpleClient.getClient().sendToServer(msg);
 
-        int examTime = GlobalDataSaved.compExam.getExam().getTime();
-        if (GlobalDataSaved.compExam.getIsExtraNeeded() == 2){
-            examTime += GlobalDataSaved.compExam.getExtraTime();
+        int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
+        if (GlobalDataSaved.examToExecute.getIsExtraNeeded() == 2){
+            examTime += GlobalDataSaved.examToExecute.getExtraTime();
         }
         while (examTime > 60) {
             hour++;
@@ -170,7 +170,7 @@ public class SolveExam {
         examTimer.setText(ddHour+":"+ddMinute+":"+ddSecond);
         examCountDownTimer();
 
-        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         questionList =sortedQuestionsList(examQuestions);
 
         for (int i=0; i<questionList.size(); i++) {
@@ -191,7 +191,7 @@ public class SolveExam {
     public List<Question> sortedQuestionsList(Set<Exam_Question> list)
     {
 
-       examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+       examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
 
         List<Object> examQ=Arrays.asList(examQuestions.toArray());
         Question q;
@@ -276,9 +276,9 @@ public class SolveExam {
         System.out.println("the end ..... no more time ....");
         List<Object> dataToServer = new ArrayList<>();
         dataToServer.add(answers);
-        dataToServer.add(GlobalDataSaved.compExam);
-        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime());
-        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime()+1);
+        dataToServer.add(GlobalDataSaved.examToExecute);
+        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime());
+        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime()+1);
         Message msg = new Message("#time finished", dataToServer);
         SimpleClient.getClient().sendToServer(msg);
         if(questionChoices.getSelectedToggle() != null){
