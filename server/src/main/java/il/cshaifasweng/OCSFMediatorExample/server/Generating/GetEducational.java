@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import org.hibernate.Session;
@@ -27,6 +28,12 @@ public class GetEducational {
         CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
         query.from(Subject.class);
         List<Subject> data = session.createQuery(query).getResultList();
+        return data;
+    }
+
+    public static List<ExamToExecute> getAllRequests(Session session) throws Exception {
+        Query query = session.createQuery("from ExamToExecute where isExtraNeeded='"+1+"'");
+        List<ExamToExecute> data =(List<ExamToExecute>) query.getResultList();
         return data;
     }
 

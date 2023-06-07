@@ -16,7 +16,11 @@ import org.hibernate.Session;
 
 import javax.persistence.Query;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HandleMsgStudent {
@@ -44,6 +48,52 @@ public class HandleMsgStudent {
             List<ExamToExecute> examToExecute=(List<ExamToExecute>) (query.getResultList());
             if (examToExecute.size() == 0){
                 Warning warning = new Warning("code is not correct");
+                try {
+                    client.sendToClient(warning);
+                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            String examDate[];
+            String date, time;
+            examDate = compExams.get(0).getDateOfExam().split(" ");
+            date = examDate[0];
+            time = examDate[1];
+            int examTime = compExams.get(0).getExam().getTime();
+            int examHour=0, examMinutes=0;
+            while (examTime > 60) {
+                examHour++;
+                examTime -= 60;
+            }
+            examMinutes = examTime;
+            String now = LocalDateTime.now().toString();
+            String year=now.substring(0,4);
+            String month=now.substring(5,7);
+            String day=now.substring(8,10);
+            String hour=now.substring(11,13);
+            String minutes = now.substring(14,16);
+            String dateElements[] = date.split("-");
+            String timeElements[] = time.split(":");
+            int t1 = Integer.parseInt(timeElements[0]);
+            int t2 = Integer.parseInt(timeElements[1]);
+            int ExtraTime = compExams.get(0).getExtraTime();
+            if (compExams.get(0).getIsExtraNeeded() == 2){
+                while (ExtraTime >= 60){
+                    examHour++;
+                    ExtraTime -= 60;
+                }
+            }else {
+                ExtraTime = 0;
+            }
+            if (dateElements[0].equals(year) && dateElements[1].equals(month) && dateElements[2].equals(day)
+                    && t1 + examHour >= Integer.parseInt(hour) && t2 + examMinutes + ExtraTime >= Integer.parseInt(minutes)
+                    && t1 <= Integer.parseInt(hour) && t2 <= Integer.parseInt(minutes)){
+
+            }
+            else {
+                Warning warning = new Warning("You Can't Do This Exam");
                 try {
                     client.sendToClient(warning);
                     System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
@@ -97,8 +147,12 @@ public class HandleMsgStudent {
         }
         if (contentOfMsg.equals("#submitted on the time")) {
             try {
-                Message msgToClient = new Message("Submitted successfully", msgFromClient.getObj());
+                List<Object> objects = (List<Object>) msgFromClient.getObj();
+                System.out.println("$$$$$$$$$$$$$ " + ((ComputerizedExamToExecute) objects.get(1)).getNumberOfStudentDoneInTime());
+                SimpleServer.updateStudentsNumber((ComputerizedExamToExecute) objects.get(1), (int) objects.get(2), (int) objects.get(3));
+                Message msgToClient = new Message("Submitted successfully", objects.get(0));
                 client.sendToClient(msgToClient);
+                System.out.println("%%%%%%%%%%%%%%% " + ((ComputerizedExamToExecute) objects.get(1)).getNumberOfStudentDoneInTime());
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -123,6 +177,8 @@ public class HandleMsgStudent {
             SimpleServer.updateGradeAndCopyToStudent(studentAnswers, user, compExam, grade, submitOnTime);
         }
         if (contentOfMsg.equals("#time finished")) {
+            List<Object> objects = (List<Object>) msgFromClient.getObj();
+            SimpleServer.updateStudentsNumber((ComputerizedExamToExecute) objects.get(1), (Integer) objects.get(2), (Integer) objects.get(3));
             Warning warning = new Warning("The Exam Time Ended");
             try {
                 client.sendToClient(warning);
@@ -176,4 +232,5 @@ public class HandleMsgStudent {
         }
         return false;
     }
+
 }

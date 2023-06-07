@@ -88,16 +88,16 @@ public class GetExamBuliding {
         query.setParameter("id",teacherId);
         return  (List<Teacher_Course>)query.getResultList();
     }
-    public static List<ComputerizedExamToExecute> getAllCompExamsNow(Session session, int teacherId, String date) throws ParseException {
+    public static List<ExamToExecute> getAllExamsToExecute(Session session, int teacherId, String date) throws ParseException {
         counter++;
         if(counter==2)
             System.out.println("hi");
-        String queryString=" FROM ComputerizedExamToExecute WHERE teacherThatExecuted.id = : id";
-        Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
+        String queryString=" FROM ExamToExecute WHERE teacherThatExecuted.id = : id";
+        Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",teacherId);
-        List<ComputerizedExamToExecute> list=(List<ComputerizedExamToExecute>)(query.getResultList());
-        List<ComputerizedExamToExecute> list1=new ArrayList<>();
-        for(ComputerizedExamToExecute compExam:list)
+        List<ExamToExecute> list=(List<ExamToExecute>)(query.getResultList());
+        List<ExamToExecute> list1=new ArrayList<>();
+        for(ExamToExecute compExam:list)
         {
             String endDate=toNewDate(compExam.getDateOfExam(),compExam.getExam().getTime());
             if(compareDates(date,compExam.getDateOfExam(),endDate))

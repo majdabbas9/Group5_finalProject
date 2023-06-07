@@ -78,7 +78,12 @@ public class PrincipalHome {
 
     @FXML
     void ExamsNeedTimeApprovment(ActionEvent event) throws IOException {
-        App.setRoot("principalExtraTimeApprovment");
+        try {
+            Message msg = new Message("ExtraTime");
+            SimpleClient.getClient().sendToServer(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

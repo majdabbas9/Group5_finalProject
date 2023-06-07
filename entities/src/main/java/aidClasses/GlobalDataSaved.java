@@ -61,7 +61,8 @@ public class GlobalDataSaved {
     public static Student StatisticalStudentForPrincipal = null;
 
     public static List<Subject> allSubjects;
-    public static List<ComputerizedExamToExecute> getTeacherCompExamsNow;
+    public static List<ExamToExecute> getTeacherExamsToExecutes;
     public static boolean forQuestion;
     public static boolean isManualToApprove;
+    public static List<ExamToExecute> allExamsToExecuteForPrincipal = new ArrayList<>();
 }

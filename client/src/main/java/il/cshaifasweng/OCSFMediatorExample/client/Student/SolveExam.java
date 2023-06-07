@@ -57,7 +57,7 @@ public class SolveExam {
     public List<String> choicesList;
     private int questionCounter = 0;
 
-    private int hour=0, minute=0, second=0;
+    public static int hour=0, minute=0, second=0;
     private String ddHour, ddMinute, ddSecond;
 
     private DecimalFormat decimalFormat = new DecimalFormat("00");
@@ -97,7 +97,12 @@ public class SolveExam {
 
         System.out.println(hour+":" +minute +":"+ second);
         if (hour != 0 || minute != 0 || second != 0) {
-            Message msg = new Message("#submitted on the time", answers);
+            List<Object> dataToServer = new ArrayList<>();
+            dataToServer.add(answers);
+            dataToServer.add(GlobalDataSaved.compExam);
+            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime()+1);
+            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime());
+            Message msg = new Message("#submitted on the time", dataToServer);
             SimpleClient.getClient().sendToServer(msg);
         }
         sendStudentAnswersToServer(true, calculateStudentExamGrade());
@@ -105,10 +110,10 @@ public class SolveExam {
     }
 
     private int calculateStudentExamGrade() {
-        Exam exam = GlobalDataSaved.examToExecute.getExam();
+        Exam exam = GlobalDataSaved.compExam.getExam();
         List<Integer> points = new ArrayList<>(exam.getPoints());
 
-        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
         List<Question> questionList = sortedQuestionsList(examQuestions);
         Question q;
         int grade = 0;
@@ -118,7 +123,7 @@ public class SolveExam {
                 grade += points.get(i);
             }
         }
-        System.out.println("the exam grade is : "+ grade+ "/30");
+        System.out.println("the exam grade is : "+ grade+ "/100");
 
         return grade;
     }
@@ -128,7 +133,7 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,answerSt);
         objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.examToExecute);
+        objects.add(2,GlobalDataSaved.compExam);
         objects.add(3,grade);
         objects.add(4, onTime);
         Message msg = new Message("#update student answers", objects);
@@ -141,12 +146,15 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,null);
         objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.examToExecute);
-        objects.add(3,0);
+        objects.add(2,GlobalDataSaved.compExam);
+        objects.add(3,-1);
         Message msg = new Message("#create student copy and grade", objects);
         SimpleClient.getClient().sendToServer(msg);
 
-        int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
+        int examTime = GlobalDataSaved.compExam.getExam().getTime();
+        if (GlobalDataSaved.compExam.getIsExtraNeeded() == 2){
+            examTime += GlobalDataSaved.compExam.getExtraTime();
+        }
         while (examTime > 60) {
             hour++;
             examTime -= 60;
@@ -162,7 +170,7 @@ public class SolveExam {
         examTimer.setText(ddHour+":"+ddMinute+":"+ddSecond);
         examCountDownTimer();
 
-        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
         questionList =sortedQuestionsList(examQuestions);
 
         for (int i=0; i<questionList.size(); i++) {
@@ -183,7 +191,7 @@ public class SolveExam {
     public List<Question> sortedQuestionsList(Set<Exam_Question> list)
     {
 
-       examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
+       examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
 
         List<Object> examQ=Arrays.asList(examQuestions.toArray());
         Question q;
@@ -240,7 +248,7 @@ public class SolveExam {
             }
         },1000,1000);
     }
-    public  void addTime(int time) throws ParseException {
+    public static void addTime(int time) throws ParseException {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         Date d = df.parse(hour+":"+minute+":"+second);
         Calendar cal = Calendar.getInstance();
@@ -252,9 +260,26 @@ public class SolveExam {
         second=Integer.valueOf(newDate.substring(6,7));
     }
 
+    public static void addExtraTime(int time){
+        while (time >= 60){
+            hour++;
+            time -= 60;
+        }
+        if (minute + time >= 60) {
+            hour ++;
+            minute += minute + time - 60;
+        }else {
+            minute += time;
+        }
+    }
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-        Message msg = new Message("#time finished", answers);
+        List<Object> dataToServer = new ArrayList<>();
+        dataToServer.add(answers);
+        dataToServer.add(GlobalDataSaved.compExam);
+        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime());
+        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime()+1);
+        Message msg = new Message("#time finished", dataToServer);
         SimpleClient.getClient().sendToServer(msg);
         if(questionChoices.getSelectedToggle() != null){
             RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();
