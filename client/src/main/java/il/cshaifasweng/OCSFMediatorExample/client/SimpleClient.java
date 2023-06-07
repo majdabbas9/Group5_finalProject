@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.EventBus;
 import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SimpleClient extends AbstractClient {
@@ -70,9 +71,15 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 					if (contentOfMsg.equals("exam copy")) {
-						List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
-						GlobalDataSaved.compExam = (ComputerizedExamToExecute) dataFromServer.get(0);
-						GlobalDataSaved.studentAnswers = (List<String>) dataFromServer.get(1);
+						//List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
+						System.out.println("&&&&&&&&&&&&&& exam copy client &&&&&&&&&&&&&&&&&&&");
+						GlobalDataSaved.currentGrade = (Grade) msgFromServer.getObj();
+						GlobalDataSaved.compExam = (ComputerizedExamToExecute) GlobalDataSaved.currentGrade.getExamCopy().getCompExamToExecute();
+						String[] answers = GlobalDataSaved.currentGrade.getExamCopy().getAnswers().split(",");
+						List<String> list = Arrays.asList(answers);
+						GlobalDataSaved.studentAnswers = list;
+						System.out.println("+++++++++++++++++++" + GlobalDataSaved.currentGrade.getGrade());
+						App.setRoot("examStudentNotes");
 						return;
 					}
 					if (contentOfMsg.equals("write id to start")) {
