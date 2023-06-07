@@ -269,10 +269,10 @@ public class HandleMsgTeacher {
             return true;
         }
         if(contentOfMsg.equals("AddExtraTime")) {
-            ComputerizedExamToExecute computerizedExamToExecute =
-                    (ComputerizedExamToExecute) ((List<Object>) msgFromClient.getObj()).get(0);
+            int id = (int) ((List<Object>) msgFromClient.getObj()).get(0);
             int ExtraTime = (int) ((List<Object>) msgFromClient.getObj()).get(1);
-            SimpleServer.AddExtraTime(computerizedExamToExecute, ExtraTime);
+            ExamToExecute exam=GetExamBuliding.getExamToExeById(session,id);
+            SimpleServer.AddExtraTime(exam, ExtraTime);
             try {
                 Message message = new Message("AddExtraTime");
                 client.sendToClient(message);

@@ -47,6 +47,19 @@ public class ExamToExecute implements Serializable{
         isExtraNeeded = 0;
         extraTime = 0;
     }
+    public ExamToExecute(ExamToExecute ex)
+    {
+        this.id=ex.id;
+        this.examAverage = ex.examAverage;
+        this.histogram = new ArrayList<>(ex.histogram);
+        this.numberOfStudentDoneInTime = ex.numberOfStudentDoneInTime;
+        this.numberOfStudentNotDoneInTime = ex.numberOfStudentNotDoneInTime;
+        this.code=ex.code;
+        this.dateOfExam=ex.dateOfExam;
+        this.numOfStudentDoing=ex.numOfStudentDoing;
+        isExtraNeeded = ex.isExtraNeeded;
+        extraTime = ex.extraTime;
+    }
 
     public ExamToExecute() {
 

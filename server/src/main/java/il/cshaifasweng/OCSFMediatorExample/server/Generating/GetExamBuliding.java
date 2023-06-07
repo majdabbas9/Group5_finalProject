@@ -102,7 +102,9 @@ public class GetExamBuliding {
             String endDate=toNewDate(compExam.getDateOfExam(),compExam.getExam().getTime());
             if(compareDates(date,compExam.getDateOfExam(),endDate))
             {
-               list1.add(compExam);
+                ExamToExecute exam=new ExamToExecute(compExam);
+                exam.setExam(new Exam(compExam.getExam(),"all needed"));
+                list1.add(exam);
             }
         }
         return list1;
@@ -185,6 +187,13 @@ public class GetExamBuliding {
             subjects.add((Subject) (query.getResultList().get(0)));
         }
         return subjects;
+    }
+    public static ExamToExecute getExamToExeById(Session session,int id)
+    {
+        String queryString=" FROM ExamToExecute WHERE id = : id";
+        Query query = session.createQuery(queryString,ExamToExecute.class);
+        query.setParameter("id",id);
+        return  (ExamToExecute) (query.getResultList().get(0));
     }
 
 }
