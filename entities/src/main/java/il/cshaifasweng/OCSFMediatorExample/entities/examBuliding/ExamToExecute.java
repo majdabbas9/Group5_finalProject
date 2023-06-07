@@ -34,6 +34,8 @@ public class ExamToExecute implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacherThatExecuted;
+    private int isExtraNeeded; // 0-> unrequested, 1-> requested, 2-> approved
+    private int extraTime;
     public ExamToExecute(String dateOfExam,int code) {
         this.examAverage = 0;
         this.histogram = new ArrayList<>();
@@ -42,10 +44,28 @@ public class ExamToExecute implements Serializable{
         this.code=code;
         this.dateOfExam=dateOfExam;
         this.numOfStudentDoing=0;
+        isExtraNeeded = 0;
+        extraTime = 0;
     }
 
     public ExamToExecute() {
 
+    }
+
+    public void setIsExtraNeeded(int isExtraNeeded) {
+        this.isExtraNeeded = isExtraNeeded;
+    }
+
+    public void setExtraTime(int extraTime) {
+        this.extraTime = extraTime;
+    }
+
+    public int getExtraTime() {
+        return extraTime;
+    }
+
+    public int getIsExtraNeeded() {
+        return isExtraNeeded;
     }
 
     public int getId() {

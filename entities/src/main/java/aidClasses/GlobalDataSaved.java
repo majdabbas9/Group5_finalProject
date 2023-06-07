@@ -8,6 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
@@ -60,6 +61,7 @@ public class GlobalDataSaved {
     public static Student StatisticalStudentForPrincipal = null;
 
     public static List<Subject> allSubjects;
-    public static List<ComputerizedExamToExecute> getTeacherCompExamsNow;
+    public static List<ExamToExecute> getTeacherExamsToExecutes;
     public static boolean forQuestion;
+    public static List<ExamToExecute> allExamsToExecuteForPrincipal = new ArrayList<>();
 }

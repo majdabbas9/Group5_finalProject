@@ -255,7 +255,7 @@ public class HandleMsgTeacher {
         if(contentOfMsg.equals("#getTeacherCompExamsNow"))
         {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-            Message messageToClient = new Message("teacher compExams now",GetExamBuliding.getAllCompExamsNow(session,
+            Message messageToClient = new Message("teacher compExams now",GetExamBuliding.getAllExamsToExecute(session,
                     (int)dataFromClient.get(0),(String) dataFromClient.get(1)));
             try {
                 client.sendToClient(messageToClient);
@@ -278,6 +278,19 @@ public class HandleMsgTeacher {
             }
             return true;
         }
+        if(contentOfMsg.equals("AddExtraTime")) {
+            ComputerizedExamToExecute computerizedExamToExecute =
+                    (ComputerizedExamToExecute) ((List<Object>) msgFromClient.getObj()).get(0);
+            int ExtraTime = (int) ((List<Object>) msgFromClient.getObj()).get(1);
+            SimpleServer.AddExtraTime(computerizedExamToExecute, ExtraTime);
+            try {
+                Message message = new Message("AddExtraTime");
+                client.sendToClient(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return false;
     }
 }

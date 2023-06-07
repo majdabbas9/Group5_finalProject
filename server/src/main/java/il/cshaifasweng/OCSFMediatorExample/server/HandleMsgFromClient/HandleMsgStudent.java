@@ -76,8 +76,17 @@ public class HandleMsgStudent {
             String timeElements[] = time.split(":");
             int t1 = Integer.parseInt(timeElements[0]);
             int t2 = Integer.parseInt(timeElements[1]);
+            int ExtraTime = compExams.get(0).getExtraTime();
+            if (compExams.get(0).getIsExtraNeeded() == 2){
+                while (ExtraTime >= 60){
+                    examHour++;
+                    ExtraTime -= 60;
+                }
+            }else {
+                ExtraTime = 0;
+            }
             if (dateElements[0].equals(year) && dateElements[1].equals(month) && dateElements[2].equals(day)
-                    && t1 + examHour >= Integer.parseInt(hour) && t2 + examMinutes >= Integer.parseInt(minutes)
+                    && t1 + examHour >= Integer.parseInt(hour) && t2 + examMinutes + ExtraTime >= Integer.parseInt(minutes)
                     && t1 <= Integer.parseInt(hour) && t2 <= Integer.parseInt(minutes)){
 
             }

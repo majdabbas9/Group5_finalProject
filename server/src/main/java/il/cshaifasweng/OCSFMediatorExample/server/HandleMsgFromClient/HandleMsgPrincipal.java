@@ -7,11 +7,13 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
+import il.cshaifasweng.OCSFMediatorExample.server.ocsf.LoggedInClient;
 import org.hibernate.Session;
 
 import java.io.IOException;
@@ -141,6 +143,69 @@ public class HandleMsgPrincipal {
                 e.printStackTrace();
             }
         }
+        if (contentOfMsg.equals("ExtraTime")) {
+            try {
+                Message message = new Message("ExtraTime", GetEducational.getAllRequests(session));
+                client.sendToClient(message);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        if (contentOfMsg.equals("Do Not Add Extra Time")) {
+            session.beginTransaction();
+            session.clear();
+            ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
+            examToExecute.setExtraTime(0);
+            examToExecute.setIsExtraNeeded(0);
+            session.update(examToExecute);
+            session.flush();
+            session.getTransaction().commit();
+            try {
+                Message message = new Message("Do Not Add Extra Time",GetEducational.getAllRequests(session));
+                client.sendToClient(message);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        if (contentOfMsg.equals("Add Extra Time")) {
+            session.beginTransaction();
+            session.clear();
+            ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
+            examToExecute.setIsExtraNeeded(2);
+            session.update(examToExecute);
+            session.flush();
+            session.getTransaction().commit();
+
+            List<ConnectionToClient> list = new ArrayList<>();
+            for (Grade grade : GetEducational.getAllGrades(session)){
+                if (grade.getExamCopy().getCompExamToExecute().getExam().getExam_ID().equals(
+                        examToExecute.getExam().getExam_ID()) && grade.getGrade() == -1){
+                    for (LoggedInClient loggedInClient : SimpleServer._LoggedInList){
+                        if (loggedInClient.get_id().equals(grade.getStudent().getUserID())){
+                            list.add(loggedInClient.getClient());
+                        }
+                    }
+                }
+            }
+
+            try {
+                Message message = new Message("AddTimeToStudent",examToExecute.getExtraTime());
+                for (ConnectionToClient connectionToClient : list){
+                    connectionToClient.sendToClient(message);
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+            try {
+                Message message = new Message("Do Not Add Extra Time",GetEducational.getAllRequests(session));
+                client.sendToClient(message);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+
             return false;
     }
 }
