@@ -27,7 +27,7 @@ public class GetUsers {
         List<Subject> subjectList=new ArrayList<>();
         for(Teacher_Subject ts:subs)
         {
-            subjectList.add(new Subject(ts.getSubject(),"getting only subject id and name"));
+            subjectList.add(new Subject(ts.getSubject()));
         }
        return  subjectList;
     }
@@ -44,7 +44,7 @@ public class GetUsers {
         for(Teacher_Course tc:subs)
         {
             Course course1=new Course(tc.getCourse(),"get needed");
-            course1.setCourseSubject(new Subject(tc.getCourse().getCourseSubject(),"all needed"));
+            course1.setCourseSubject(new Subject(tc.getCourse().getCourseSubject()));
             coursesList.add(course1);
         }
         return coursesList;

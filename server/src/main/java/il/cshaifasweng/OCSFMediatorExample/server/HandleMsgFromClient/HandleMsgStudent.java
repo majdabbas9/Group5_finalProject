@@ -4,7 +4,9 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
@@ -23,37 +25,28 @@ import java.util.List;
 
 public class HandleMsgStudent {
     public static boolean handleStudent(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
-        System.out.println("@@@@@@ hello world @@@@@@");
         if (contentOfMsg.equals("#get exam copy")) {
-            System.out.println("@@@@@@ hi @@@@@@");
-            List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
+            List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();;
             int gradeId = (int) dataFromClient.get(0);
-            String q = "from Grade where id='"+gradeId+"'";
-            Query query = session.createQuery(q);
-            List<Grade> grades = (List<Grade>) query.getResultList();
-            System.out.println("@@@@@@@@@" + grades.size());
-//            int gradeId = (int)dataFromClient.get(0);
-//            //int studentId = (int) dataFromClient.get(1);
-//            String q = "from Grade where id='"+gradeId+"'";
-//            Query query=session.createQuery(q);
-//            List<Grade> grades = (List<Grade>) (query.getResultList());
-//            System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + grades.size() + "\n"+ "!!!!!!!!!!!!!" + grades.get(0).getGrade());
-            //Copy copy = grades.get(0).getExamCopy();
-            //List<Object> objects = new ArrayList<>();
-            //objects.add(0, copy.getCompExamToExecute());
-            //objects.add(1, copy.getAnswers());
-            //objects.add(2, grades.get(0));
-            Message msgToClient = new Message("exam copy", grades.get(0));
+            int studentId = (int) dataFromClient.get(1);
+            String q = "from Grade where student.id='"+studentId+"'";
+            Query query=session.createQuery(q);
+            List<Grade> grades = (List<Grade>) (query.getResultList());
+            Copy copy = grades.get(gradeId).getExamCopy();
+            List<Object> objects = new ArrayList<>();
+            objects.add(0, copy.getCompExamToExecute());
+            objects.add(1, copy.getAnswers());
+            Message msgToClient = new Message("exam copy", objects);
             client.sendToClient(msgToClient);
             return true;
         }
         if (contentOfMsg.equals("#check code validation"))
         {
             String code = (String) msgFromClient.getObj().toString();
-            String q = "from ComputerizedExamToExecute where code = '"+ code +"'";
+            String q = "from ExamToExecute where code = '"+ code +"'";
             Query query=session.createQuery(q);
-            List<ComputerizedExamToExecute> compExams=(List<ComputerizedExamToExecute>) (query.getResultList());
-            if (compExams.size() == 0){
+            List<ExamToExecute> examToExecute=(List<ExamToExecute>) (query.getResultList());
+            if (examToExecute.size() == 0){
                 Warning warning = new Warning("code is not correct");
                 try {
                     client.sendToClient(warning);
@@ -65,10 +58,10 @@ public class HandleMsgStudent {
             }
             String examDate[];
             String date, time;
-            examDate = compExams.get(0).getDateOfExam().split(" ");
+            examDate = examToExecute.get(0).getDateOfExam().split(" ");
             date = examDate[0];
             time = examDate[1];
-            int examTime = compExams.get(0).getExam().getTime();
+            int examTime = examToExecute.get(0).getExam().getTime();
             int examHour=0, examMinutes=0;
             while (examTime > 60) {
                 examHour++;
@@ -85,8 +78,8 @@ public class HandleMsgStudent {
             String timeElements[] = time.split(":");
             int t1 = Integer.parseInt(timeElements[0]);
             int t2 = Integer.parseInt(timeElements[1]);
-            int ExtraTime = compExams.get(0).getExtraTime();
-            if (compExams.get(0).getIsExtraNeeded() == 2){
+            int ExtraTime = examToExecute.get(0).getExtraTime();
+            if (examToExecute.get(0).getIsExtraNeeded() == 2){
                 while (ExtraTime >= 60){
                     examHour++;
                     ExtraTime -= 60;
@@ -110,7 +103,7 @@ public class HandleMsgStudent {
                 }
             }
             /////checking if the student solved this exam before
-//            String q1 = "from Grade where examCopy.id = '"+compExams.get(0).getId()+"'";
+//            String q1 = "from Grade where examCopy.id = '"+examToExecute.get(0).getId()+"'";
 //            Query query1 = session.createQuery(q1);
 //            List<Grade> grades = query1.getResultList();
 //            if (grades.size() != 0) {
@@ -149,6 +142,21 @@ public class HandleMsgStudent {
                         e.printStackTrace();
                     }
                 }
+            if (grades.size() != 0) {
+                Warning warning = new Warning("You Already Did This Exam");
+                try {
+                    client.sendToClient(warning);
+                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            ////
+
+            else {
+                Message msgToClient = new Message("write id to start", examToExecute.get(0));
+                client.sendToClient(msgToClient);
             }
             if (!userId.equals(connectUserId)) {
                     Warning warning = new Warning("Your ID is not correct");
@@ -163,6 +171,7 @@ public class HandleMsgStudent {
             else {
                 Message msgToClient = new Message("do exam");
                 client.sendToClient(msgToClient);
+                return true ;
             }
         }
         if (contentOfMsg.equals("#submitted on the time")) {
@@ -210,35 +219,15 @@ public class HandleMsgStudent {
                 e.printStackTrace();
             }
         }
-
-        if (contentOfMsg.equals("CheckID")) {
-            String id = (String) msgFromClient.getObj();
-            String answer;
-            boolean check = GetEducational.checkID(session, id);
-            if (check) {
-                GlobalDataSaved.AddFlag = true;
-                answer = "The User was Added to the System";
-            } else {
-                GlobalDataSaved.AddFlag = false;
-                answer = "User Already in the System";
-            }
-            Warning warning = new Warning(answer);
-            try {
-                client.sendToClient(warning);
-                System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            Message messageToClient = new Message(answer);
-
-            try {
-                client.sendToClient(messageToClient);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (contentOfMsg.equals("#show student grades"))
+        {
+            User user = (User) msgFromClient.getObj();
+            String q="from Grade where student='"+ user.getId() +"' and teacherApprovement='"+ 1 +"'";
+            Query query=session.createQuery(q);
+            List<Grade> grades = (List<Grade>) (query.getResultList());
+            Message msgToClient = new Message("student grades",grades);
+            client.sendToClient(msgToClient);
+            return true;
         }
         return false;
     }

@@ -78,7 +78,7 @@ public class HandleMsgTeacher {
             List<Question> questionsList=new ArrayList<>();
             for(Course_Question cq:res)
             {
-                questionsList.add(new Question(cq.getQuestion(),"getAllRelevantData"));
+                questionsList.add(new Question(cq.getQuestion()));
             }
             try {
                 Message msgToClient=new Message("course questions",questionsList);
@@ -155,11 +155,22 @@ public class HandleMsgTeacher {
             }
             return true;
         }
-        if (contentOfMsg.equals("#showAllCompExamsForTeahcerToApprove"))
+        if (contentOfMsg.equals("#showAllExamsForTeahcerToApprove"))
         {
             int teacherId=(int)msgFromClient.getObj();
-            List<ComputerizedExamToExecute> compExams= GetExamBuliding.getAllCompExams(session,teacherId);
-            Message messageToClient = new Message("sending all compExams for teacher",compExams);
+            List<ExamToExecute> exams= GetExamBuliding.getAllExamsForTeacher(session,teacherId);
+            Message messageToClient = new Message("sending all compExams for teacher",exams);
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (contentOfMsg.equals("#getAllExamsForTeacher"))
+        {
+            List<Question> questions= GetExamBuliding.getAllQuestionsForTeacher(session);
+            Message messageToClient = new Message("sending all compExams for teacher");
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -228,16 +239,6 @@ public class HandleMsgTeacher {
             }
             return true;
         }
-        if (contentOfMsg.equals("#show student grades"))
-        {
-            User user = (User) msgFromClient.getObj();
-            String q="from Grade where student='"+ user.getId() +"' and teacherApprovement='"+ 1 +"'";
-            Query query=session.createQuery(q);
-            List<Grade> grades = (List<Grade>) (query.getResultList());
-            Message msgToClient = new Message("student grades",grades);
-            client.sendToClient(msgToClient);
-            return true;
-        }
         if(contentOfMsg.equals("#getTeacherCompExams"))
         {
             Teacher teacher=(Teacher) msgFromClient.getObj();
@@ -279,12 +280,20 @@ public class HandleMsgTeacher {
             return true;
         }
         if(contentOfMsg.equals("AddExtraTime")) {
-            ComputerizedExamToExecute computerizedExamToExecute =
-                    (ComputerizedExamToExecute) ((List<Object>) msgFromClient.getObj()).get(0);
+            int id = (int) ((List<Object>) msgFromClient.getObj()).get(0);
             int ExtraTime = (int) ((List<Object>) msgFromClient.getObj()).get(1);
-            SimpleServer.AddExtraTime(computerizedExamToExecute, ExtraTime);
+            ExamToExecute exam=GetExamBuliding.getExamToExeById(session,id);
+            SimpleServer.AddExtraTime(exam, ExtraTime);
             try {
                 Message message = new Message("AddExtraTime");
+                client.sendToClient(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(contentOfMsg.equals("#allQuestions")) {
+            try {
+                Message message = new Message("all questions",GetExamBuliding.getAllQuestionsForTeacher(session));
                 client.sendToClient(message);
             } catch (IOException e) {
                 e.printStackTrace();

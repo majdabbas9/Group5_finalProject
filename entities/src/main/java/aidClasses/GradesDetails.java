@@ -1,5 +1,7 @@
 package aidClasses;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
+
 public class GradesDetails {
 
     private int idOnGradeTable;
@@ -8,14 +10,16 @@ public class GradesDetails {
     private String courseName;
     private String teacherName;
     private int grade;
+    private Grade gradeObject;
 
-    public GradesDetails(int idOnGradeTable, int id, String subjectName, String courseName, String teacherName, int grade) {
+    public GradesDetails(int idOnGradeTable, int id, String subjectName, String courseName, String teacherName, int grade, Grade gradeObject) {
         this.idOnGradeTable = idOnGradeTable;
         this.id = id;
         this.subjectName = subjectName;
         this.courseName = courseName;
         this.teacherName = teacherName;
         this.grade = grade;
+        this.gradeObject=gradeObject;
     }
 
     public GradesDetails() {
@@ -67,5 +71,13 @@ public class GradesDetails {
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    public Grade getGradeObject() {
+        return gradeObject;
+    }
+
+    public void setGradeObject(Grade gradeObject) {
+        this.gradeObject = gradeObject;
     }
 }

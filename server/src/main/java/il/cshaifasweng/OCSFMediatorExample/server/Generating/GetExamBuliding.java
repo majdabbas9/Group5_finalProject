@@ -50,34 +50,34 @@ public class GetExamBuliding {
                 Set<Exam_Question> examQuestions=exam.getExamQuestions();
                 for(Exam_Question exam_question:examQuestions)
                 {
-                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion(),"all needed"),"all needed");
+                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()));
                     exam1.getExamQuestions().add(eq);
                 }
-                exam1.setExamCourse(new Course(exam.getExamCourse(),"hi"));
+                exam1.setExamCourse(new Course(exam.getExamCourse(),"hit"));
                 allExams.add(exam1);
             }
         }
         return  allExams;
     }
     @Transactional
-    public static List<ComputerizedExamToExecute> getAllCompExams(Session session, int teacherId)
+    public static List<ExamToExecute> getAllExamsForTeacher(Session session, int teacherId)
     {
-        String queryString=" FROM ComputerizedExamToExecute WHERE teacherThatExecuted.id = : id";
-        Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
+        String queryString=" FROM ExamToExecute WHERE teacherThatExecuted.id = : id";
+        Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",teacherId);
-        List<ComputerizedExamToExecute> list=new ArrayList<>();
-        boolean addCompExam=false;
-        for(ComputerizedExamToExecute compExam:(List<ComputerizedExamToExecute>)(query.getResultList()))
+        List<ExamToExecute> list=new ArrayList<>();
+        boolean addExam=false;
+        for(ExamToExecute compExam:(List<ExamToExecute>)(query.getResultList()))
         {
-            addCompExam=false;
+            addExam=false;
             for(Copy copy:compExam.getCopies())
             {
                 if(!copy.getGrade().isTeacherApprovement())
                 {
-                    addCompExam=true;
+                    addExam=true;
                 }
             }
-            if(addCompExam)list.add(compExam);
+            if(addExam)list.add(compExam);
         }
         return list;
     }
@@ -102,7 +102,9 @@ public class GetExamBuliding {
             String endDate=toNewDate(compExam.getDateOfExam(),compExam.getExam().getTime());
             if(compareDates(date,compExam.getDateOfExam(),endDate))
             {
-               list1.add(compExam);
+                ExamToExecute exam=new ExamToExecute(compExam);
+                exam.setExam(new Exam(compExam.getExam(),"all needed"));
+                list1.add(exam);
             }
         }
         return list1;
@@ -118,23 +120,6 @@ public class GetExamBuliding {
     }
 
     public static Boolean compareDates(String date1,String date2,String date3) throws ParseException {
-        /*int year1,month1,day1,h1,m1,year2,month2,day2,h2,m2;
-        day1=Integer.valueOf(date1.substring(0,2));day2=Integer.valueOf(date2.substring(8,10));
-        month1=Integer.valueOf(date1.substring(3,5));month2=Integer.valueOf(date2.substring(5,7));
-        year1=Integer.valueOf(date1.substring(6,10));year2=Integer.valueOf(date2.substring(0,4));
-        h1=Integer.valueOf(date1.substring(11,13));h2=Integer.valueOf(date2.substring(11,13));
-        m1=Integer.valueOf(date1.substring(14));m2=Integer.valueOf(date2.substring(14));
-       if(year1>year2)return 0;
-       if(year2>year1)return 1;
-       if(month1>month2)return 0;
-       if(month2>month1)return 1;
-       if(day1>day2)return 0;
-       if(day2>day1)return 1;
-       if(h1>h2)return 0;
-       if(h2>h1)return 1;
-       if(m1>m2)return 0;
-       if(m2>m1)return 1;
-       return -1;*/
         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date d1 = sdFormat.parse(date1);
         Date d2 = sdFormat.parse(date2);
@@ -202,6 +187,30 @@ public class GetExamBuliding {
             subjects.add((Subject) (query.getResultList().get(0)));
         }
         return subjects;
+    }
+    public static ExamToExecute getExamToExeById(Session session,int id)
+    {
+        String queryString=" FROM ExamToExecute WHERE id = : id";
+        Query query = session.createQuery(queryString,ExamToExecute.class);
+        query.setParameter("id",id);
+        return  (ExamToExecute) (query.getResultList().get(0));
+    }
+    public static List<Question> getAllQuestionsForTeacher(Session session)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Question> query = builder.createQuery(Question.class);
+        query.from(Question.class);
+        List<Question> data = session.createQuery(query).getResultList();
+        List<Question> questions=new ArrayList<>();
+        for(Question question:data)
+        {
+            Question q=new Question(question);
+            q.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
+            Subject subject=new Subject(question.getQuestionSubject());
+            q.setQuestionSubject(new Subject(question.getQuestionSubject()));
+            questions.add(q);
+        }
+        return questions;
     }
 
 }

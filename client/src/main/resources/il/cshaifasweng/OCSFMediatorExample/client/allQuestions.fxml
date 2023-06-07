@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.AllQuestions">
+    <children>
+        <TableView fx:id="table" layoutX="43.0" layoutY="66.0" onMouseClicked="#selectQuestion" prefHeight="445.0" prefWidth="762.0">
+            <columns>
+                <TableColumn fx:id="TheQuestion" prefWidth="407.19999980926514" text="The Question" />
+                <TableColumn fx:id="QuestionId" prefWidth="72.0" text="Question ID" />
+                <TableColumn fx:id="QuestionTeacherName" prefWidth="125.60003662109375" text="Teacher Name" />
+                <TableColumn fx:id="QuestionTeacherID" prefWidth="70.4000244140625" text="Teacher ID" />
+                <TableColumn fx:id="SubjectName" prefWidth="81.5999755859375" text="Subject" />
+            </columns>
+        </TableView>
+        <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+        <Button fx:id="BackToMenuBtn" layoutX="14.0" layoutY="582.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="40.0" prefWidth="258.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="ShowQuestionBtn" layoutX="564.0" layoutY="582.0" mnemonicParsing="false" onAction="#ShowQuestion" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #0A8A0A;" text="Show Question" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Text fx:id="warning" fill="RED" layoutX="335.0" layoutY="567.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="159.20001220703125">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>

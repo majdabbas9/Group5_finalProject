@@ -1,23 +1,26 @@
 package aidClasses.aidClassesForTeacher;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 
 public class DisplayCompExamForApprove {
-    private ComputerizedExamToExecute date;
+    private ExamToExecute date;
     private String examId;
     private String subjectName;
+    private String isManual;
 
-    public DisplayCompExamForApprove(ComputerizedExamToExecute date, String examId,String subjectName) {
+    public DisplayCompExamForApprove(ExamToExecute date, String examId, String subjectName) {
         this.date = date;
         this.examId = examId;
         this.subjectName = subjectName;
+        this.isManual="true";
     }
 
-    public ComputerizedExamToExecute getDate() {
+    public ExamToExecute getDate() {
         return date;
     }
 
-    public void setDate(ComputerizedExamToExecute date) {
+    public void setDate(ExamToExecute date) {
         this.date = date;
     }
 
@@ -36,4 +39,17 @@ public class DisplayCompExamForApprove {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
+
+    public boolean isManual() {
+        return isManual.equals("true");
+    }
+
+    public void setManual(boolean manual) {
+        isManual =String.valueOf(manual);
+    }
+    public String getIsManual()
+    {
+        return this.isManual;
+    }
+
 }

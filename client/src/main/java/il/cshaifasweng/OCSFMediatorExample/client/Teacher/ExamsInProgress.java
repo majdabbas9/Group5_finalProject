@@ -74,7 +74,7 @@ public class ExamsInProgress {
         }
         try {
             List<Object> list = new ArrayList<>();
-            list.add(compExamsTable.getSelectionModel().getSelectedItem());
+            list.add(compExamsTable.getSelectionModel().getSelectedItem().getId());
             list.add(Integer.parseInt(ExtraTimeTxt.getText()));
             Message message = new Message("AddExtraTime", list);
             SimpleClient.getClient().sendToServer(message);

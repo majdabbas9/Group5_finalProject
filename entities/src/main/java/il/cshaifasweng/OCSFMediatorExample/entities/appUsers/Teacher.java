@@ -40,6 +40,10 @@ public class Teacher extends User implements Serializable {
     public Teacher() {
 
     }
+    public Teacher(Teacher teacher)
+    {
+        super(teacher);
+    }
 
     public Set<Teacher_Course> getTeacherCourses() {
         return teacherCourses;

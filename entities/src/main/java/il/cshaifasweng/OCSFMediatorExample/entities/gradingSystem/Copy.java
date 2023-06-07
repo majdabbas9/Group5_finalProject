@@ -16,7 +16,7 @@ public class Copy implements Serializable {
     @JoinColumn(name = "grade_id")
     private Grade grade;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "compExam_ID")
+    @JoinColumn(name = "exam_toExecuteId")
     private ExamToExecute compExamToExecute;
 
     public Copy(){}
