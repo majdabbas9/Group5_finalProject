@@ -60,7 +60,7 @@ public class ExamCopy {
     public List<Question> questionList;
     @FXML
     public void initialize() throws IOException {
-        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         questionList = sortedQuestionsList(examQuestions);
         question();
     }

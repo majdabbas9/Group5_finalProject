@@ -9,6 +9,7 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -164,9 +165,6 @@ public class PrepareExam {
         {
             String fileName=examTable.getSelectionModel().getSelectedItem().getExam_ID();
             fileName+=GlobalDataSaved.connectedUser.getUserID();
-            WordGeneratorFile.createWord(new ArrayList<>(examTable.getSelectionModel().getSelectedItem().getExamQuestions()),examTable.getSelectionModel().getSelectedItem().getPoints()
-            ,examTable.getSelectionModel().getSelectedItem().getExamCourse().getCourseName(),GlobalDataSaved.connectedUser.getFirstName()+" "+
-                            GlobalDataSaved.connectedUser.getLastName(),fileName);
             ManualExamToExecute manualExamToExecute=new ManualExamToExecute(dateOfExam,code,fileName);
             List<Object> dataToServer=new ArrayList<>();
             dataToServer.add(manualExamToExecute);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(examTable.getSelectionModel().getSelectedItem().getId());
@@ -178,6 +176,9 @@ public class PrepareExam {
             {
                 System.out.println(ex.getMessage());
             }
+            WordGeneratorFile.createWord(new ArrayList<>(examTable.getSelectionModel().getSelectedItem().getExamQuestions()),examTable.getSelectionModel().getSelectedItem().getPoints()
+            ,examTable.getSelectionModel().getSelectedItem().getExamCourse().getCourseName(),GlobalDataSaved.connectedUser.getFirstName()+" "+
+                            GlobalDataSaved.connectedUser.getLastName(),fileName);
         }
     }
     @FXML

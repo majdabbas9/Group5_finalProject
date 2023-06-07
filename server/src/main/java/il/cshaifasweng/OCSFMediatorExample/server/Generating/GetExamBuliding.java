@@ -7,6 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import org.apache.commons.lang3.time.DateUtils;
@@ -52,31 +53,31 @@ public class GetExamBuliding {
                     Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion(),"all needed"),"all needed");
                     exam1.getExamQuestions().add(eq);
                 }
-                exam1.setExamCourse(new Course(exam.getExamCourse(),"hi"));
+                exam1.setExamCourse(new Course(exam.getExamCourse(),"hit"));
                 allExams.add(exam1);
             }
         }
         return  allExams;
     }
     @Transactional
-    public static List<ComputerizedExamToExecute> getAllCompExams(Session session, int teacherId)
+    public static List<ExamToExecute> getAllExamsForTeacher(Session session, int teacherId)
     {
-        String queryString=" FROM ComputerizedExamToExecute WHERE teacherThatExecuted.id = : id";
-        Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
+        String queryString=" FROM ExamToExecute WHERE teacherThatExecuted.id = : id";
+        Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",teacherId);
-        List<ComputerizedExamToExecute> list=new ArrayList<>();
-        boolean addCompExam=false;
-        for(ComputerizedExamToExecute compExam:(List<ComputerizedExamToExecute>)(query.getResultList()))
+        List<ExamToExecute> list=new ArrayList<>();
+        boolean addExam=false;
+        for(ExamToExecute compExam:(List<ExamToExecute>)(query.getResultList()))
         {
-            addCompExam=false;
+            addExam=false;
             for(Copy copy:compExam.getCopies())
             {
                 if(!copy.getGrade().isTeacherApprovement())
                 {
-                    addCompExam=true;
+                    addExam=true;
                 }
             }
-            if(addCompExam)list.add(compExam);
+            if(addExam)list.add(compExam);
         }
         return list;
     }
@@ -117,23 +118,6 @@ public class GetExamBuliding {
     }
 
     public static Boolean compareDates(String date1,String date2,String date3) throws ParseException {
-        /*int year1,month1,day1,h1,m1,year2,month2,day2,h2,m2;
-        day1=Integer.valueOf(date1.substring(0,2));day2=Integer.valueOf(date2.substring(8,10));
-        month1=Integer.valueOf(date1.substring(3,5));month2=Integer.valueOf(date2.substring(5,7));
-        year1=Integer.valueOf(date1.substring(6,10));year2=Integer.valueOf(date2.substring(0,4));
-        h1=Integer.valueOf(date1.substring(11,13));h2=Integer.valueOf(date2.substring(11,13));
-        m1=Integer.valueOf(date1.substring(14));m2=Integer.valueOf(date2.substring(14));
-       if(year1>year2)return 0;
-       if(year2>year1)return 1;
-       if(month1>month2)return 0;
-       if(month2>month1)return 1;
-       if(day1>day2)return 0;
-       if(day2>day1)return 1;
-       if(h1>h2)return 0;
-       if(h2>h1)return 1;
-       if(m1>m2)return 0;
-       if(m2>m1)return 1;
-       return -1;*/
         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date d1 = sdFormat.parse(date1);
         Date d2 = sdFormat.parse(date2);

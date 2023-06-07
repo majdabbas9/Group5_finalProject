@@ -105,10 +105,10 @@ public class SolveExam {
     }
 
     private int calculateStudentExamGrade() {
-        Exam exam = GlobalDataSaved.compExam.getExam();
+        Exam exam = GlobalDataSaved.examToExecute.getExam();
         List<Integer> points = new ArrayList<>(exam.getPoints());
 
-        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         List<Question> questionList = sortedQuestionsList(examQuestions);
         Question q;
         int grade = 0;
@@ -128,7 +128,7 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,answerSt);
         objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.compExam);
+        objects.add(2,GlobalDataSaved.examToExecute);
         objects.add(3,grade);
         objects.add(4, onTime);
         Message msg = new Message("#update student answers", objects);
@@ -141,12 +141,12 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,null);
         objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.compExam);
+        objects.add(2,GlobalDataSaved.examToExecute);
         objects.add(3,0);
         Message msg = new Message("#create student copy and grade", objects);
         SimpleClient.getClient().sendToServer(msg);
 
-        int examTime = GlobalDataSaved.compExam.getExam().getTime();
+        int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
         while (examTime > 60) {
             hour++;
             examTime -= 60;
@@ -162,7 +162,7 @@ public class SolveExam {
         examTimer.setText(ddHour+":"+ddMinute+":"+ddSecond);
         examCountDownTimer();
 
-        examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         questionList =sortedQuestionsList(examQuestions);
 
         for (int i=0; i<questionList.size(); i++) {
@@ -183,7 +183,7 @@ public class SolveExam {
     public List<Question> sortedQuestionsList(Set<Exam_Question> list)
     {
 
-       examQuestions = GlobalDataSaved.compExam.getExam().getExamQuestions();
+       examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
 
         List<Object> examQ=Arrays.asList(examQuestions.toArray());
         Question q;

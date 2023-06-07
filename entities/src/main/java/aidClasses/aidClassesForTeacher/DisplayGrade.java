@@ -13,6 +13,7 @@ public class DisplayGrade {
    private Grade gradeObject;
 
    private TextField notes;
+   private Button word;
 
 
     public DisplayGrade(String studentID, String studentName, String date, TextField grade, TextField notes,Grade gradeObject) {
@@ -22,6 +23,16 @@ public class DisplayGrade {
         this.grade = grade;
         this.notes = notes;
         this.gradeObject=gradeObject;
+    }
+
+    public DisplayGrade(String studentID, String studentName, String date, TextField grade, Grade gradeObject, TextField notes, Button word) {
+        this.studentID = studentID;
+        this.studentName = studentName;
+        this.date = date;
+        this.grade = grade;
+        this.gradeObject = gradeObject;
+        this.notes = notes;
+        this.word = word;
     }
 
     public String getStudentID() {
@@ -70,5 +81,13 @@ public class DisplayGrade {
 
     public void setGradeObject(Grade gradeObject) {
         this.gradeObject = gradeObject;
+    }
+
+    public Button getWord() {
+        return word;
+    }
+
+    public void setWord(Button word) {
+        this.word = word;
     }
 }

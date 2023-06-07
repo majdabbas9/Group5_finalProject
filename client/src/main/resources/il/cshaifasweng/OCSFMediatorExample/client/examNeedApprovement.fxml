@@ -46,11 +46,12 @@
                 <Font size="18.0" />
             </font>
         </Button>
-          <TableView fx:id="examsTable" layoutX="106.0" layoutY="184.0" prefHeight="372.0" prefWidth="638.0">
+          <TableView fx:id="examsTable" layoutX="19.0" layoutY="183.0" prefHeight="372.0" prefWidth="797.0">
               <columns>
                   <TableColumn fx:id="examIdColumn" prefWidth="184.0" text="ExamID" />
                   <TableColumn fx:id="subjectColumn" minWidth="7.199951171875" prefWidth="198.4000244140625" text="Subject" />
                   <TableColumn fx:id="dataColumn" prefWidth="254.39999999999998" text="Date " />
+            <TableColumn fx:id="manualColumn" prefWidth="159.20003662109377" text="isManual" />
               </columns>
           </TableView>
     </children>
