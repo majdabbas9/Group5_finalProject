@@ -92,7 +92,7 @@ public class GenerateAll {
 
         /*end of adding courses*/
 
-        Teacher t1=new Teacher("33333","1","1","mohamed","abbas");
+        Teacher t1=new Teacher("21212","1","1","mohamed","abbas");
         Teacher t2=new Teacher("33333","3","3","aa","aa");
 
         session.save(t1);

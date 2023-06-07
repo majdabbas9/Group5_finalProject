@@ -2,11 +2,13 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import aidClasses.*;
 import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
+import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExam;
 import il.cshaifasweng.OCSFMediatorExample.client.Teacher.BuildExam;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
@@ -225,7 +227,7 @@ public class SimpleClient extends AbstractClient {
 					return;
 				}
 				if(contentOfMsg.equals("teacher compExams now")){
-					GlobalDataSaved.getTeacherCompExamsNow=(List<ComputerizedExamToExecute>) msgFromServer.getObj() ;
+					GlobalDataSaved.getTeacherExamsToExecutes=(List<ExamToExecute>) msgFromServer.getObj() ;
 					App.setRoot("teacherExamsInProgress");
 					return;
 				}
@@ -249,6 +251,23 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.allGradesForPrincipal = (List<Grade>) msgFromServer.getObj();
 					App.setRoot("principalStatisticalReport");
 				}
+				if(contentOfMsg.equals("AddExtraTime")) {
+					EventBus.getDefault().post(new MessageEvent((Message)msg));
+					App.setRoot("teacherExamsInProgress");
+				}
+				if(contentOfMsg.equals("ExtraTime")) {
+					GlobalDataSaved.allExamsToExecuteForPrincipal = (List<ExamToExecute>) msgFromServer.getObj();
+					App.setRoot("principalExtraTimeApprovment");
+				}
+				if(contentOfMsg.equals("Do Not Add Extra Time")) {
+					GlobalDataSaved.allExamsToExecuteForPrincipal = (List<ExamToExecute>) msgFromServer.getObj();
+					App.setRoot("principalExtraTimeApprovment");
+				}
+				if(contentOfMsg.equals("AddTimeToStudent")) {
+					SolveExam.addExtraTime((int) msgFromServer.getObj());
+					EventBus.getDefault().post(new MessageEvent(new Message("Added Extra Time")));
+				}
+
 
 				}
             catch(Exception ex){

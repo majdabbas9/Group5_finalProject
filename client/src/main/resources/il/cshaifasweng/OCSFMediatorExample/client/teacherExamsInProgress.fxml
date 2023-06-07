@@ -32,11 +32,16 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField alignment="CENTER" layoutX="357.0" layoutY="522.0" prefHeight="26.0" prefWidth="186.0" promptText="add time in minutes">
+      <TextField fx:id="ExtraTimeTxt" alignment="CENTER" layoutX="347.0" layoutY="507.0" prefHeight="26.0" prefWidth="186.0" promptText="add time in minutes">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
       <Text fx:id="warning" fill="RED" layoutX="402.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.199951171875" />
+      <Text fx:id="ErrTxt" fill="RED" layoutX="392.0" layoutY="567.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="95.73667907714844">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

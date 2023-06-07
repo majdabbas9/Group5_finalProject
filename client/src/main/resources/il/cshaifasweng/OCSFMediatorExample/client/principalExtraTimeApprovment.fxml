@@ -7,7 +7,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="576.0" prefWidth="778.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalExtraTimeApprovment">
    <children>
       <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra Time Approvement">
@@ -17,11 +16,12 @@
       </Text>
       <TableView fx:id="RequestsTable" layoutX="7.0" layoutY="44.0" onMouseClicked="#selectRequest" prefHeight="427.0" prefWidth="762.0">
         <columns>
-          <TableColumn prefWidth="163.20007610321045" text="Exam" />
-          <TableColumn prefWidth="191.99998474121094" text="Teacher" />
-            <TableColumn prefWidth="148.79998779296875" text="Subject" />
-            <TableColumn prefWidth="136.79998779296875" text="Course" />
-            <TableColumn prefWidth="128.0" text="Extra Time (min)" />
+          <TableColumn fx:id="_ExamID" prefWidth="124.7999906539917" text="Exam" />
+          <TableColumn fx:id="_Teacher" prefWidth="156.7999725341797" text="Teacher" />
+            <TableColumn fx:id="_Subject" prefWidth="131.20001220703125" text="Subject" />
+            <TableColumn fx:id="_Course" prefWidth="128.79998779296875" text="Course" />
+            <TableColumn fx:id="_OriginalTime" prefWidth="116.00006103515625" text="Original Time (min)" />
+            <TableColumn fx:id="_ExtraTime" prefWidth="101.60009765625" text="Extra Time (min)" />
         </columns>
       </TableView>
       <Button fx:id="BackToMenuBtn" layoutX="14.0" layoutY="526.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="40.0" prefWidth="214.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">

@@ -57,7 +57,7 @@ public class SolveExam {
     public List<String> choicesList;
     private int questionCounter = 0;
 
-    private int hour=0, minute=0, second=0;
+    public static int hour=0, minute=0, second=0;
     private String ddHour, ddMinute, ddSecond;
 
     private DecimalFormat decimalFormat = new DecimalFormat("00");
@@ -147,11 +147,14 @@ public class SolveExam {
         objects.add(0,null);
         objects.add(1,GlobalDataSaved.connectedUser);
         objects.add(2,GlobalDataSaved.compExam);
-        objects.add(3,0);
+        objects.add(3,-1);
         Message msg = new Message("#create student copy and grade", objects);
         SimpleClient.getClient().sendToServer(msg);
 
         int examTime = GlobalDataSaved.compExam.getExam().getTime();
+        if (GlobalDataSaved.compExam.getIsExtraNeeded() == 2){
+            examTime += GlobalDataSaved.compExam.getExtraTime();
+        }
         while (examTime > 60) {
             hour++;
             examTime -= 60;
@@ -245,7 +248,7 @@ public class SolveExam {
             }
         },1000,1000);
     }
-    public  void addTime(int time) throws ParseException {
+    public static void addTime(int time) throws ParseException {
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         Date d = df.parse(hour+":"+minute+":"+second);
         Calendar cal = Calendar.getInstance();
@@ -257,6 +260,18 @@ public class SolveExam {
         second=Integer.valueOf(newDate.substring(6,7));
     }
 
+    public static void addExtraTime(int time){
+        while (time >= 60){
+            hour++;
+            time -= 60;
+        }
+        if (minute + time >= 60) {
+            hour ++;
+            minute += minute + time - 60;
+        }else {
+            minute += time;
+        }
+    }
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
         List<Object> dataToServer = new ArrayList<>();
