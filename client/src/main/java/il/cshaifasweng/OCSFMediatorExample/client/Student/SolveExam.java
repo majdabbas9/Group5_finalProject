@@ -97,7 +97,12 @@ public class SolveExam {
 
         System.out.println(hour+":" +minute +":"+ second);
         if (hour != 0 || minute != 0 || second != 0) {
-            Message msg = new Message("#submitted on the time", answers);
+            List<Object> dataToServer = new ArrayList<>();
+            dataToServer.add(answers);
+            dataToServer.add(GlobalDataSaved.compExam);
+            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime()+1);
+            dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime());
+            Message msg = new Message("#submitted on the time", dataToServer);
             SimpleClient.getClient().sendToServer(msg);
         }
         sendStudentAnswersToServer(true, calculateStudentExamGrade());
@@ -118,7 +123,7 @@ public class SolveExam {
                 grade += points.get(i);
             }
         }
-        System.out.println("the exam grade is : "+ grade+ "/30");
+        System.out.println("the exam grade is : "+ grade+ "/100");
 
         return grade;
     }
@@ -254,7 +259,12 @@ public class SolveExam {
 
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-        Message msg = new Message("#time finished", answers);
+        List<Object> dataToServer = new ArrayList<>();
+        dataToServer.add(answers);
+        dataToServer.add(GlobalDataSaved.compExam);
+        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentDoneInTime());
+        dataToServer.add(GlobalDataSaved.compExam.getNumberOfStudentNotDoneInTime()+1);
+        Message msg = new Message("#time finished", dataToServer);
         SimpleClient.getClient().sendToServer(msg);
         if(questionChoices.getSelectedToggle() != null){
             RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();

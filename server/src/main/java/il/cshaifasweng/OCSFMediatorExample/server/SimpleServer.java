@@ -455,6 +455,19 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
+	public static void updateStudentsNumber(ComputerizedExamToExecute compExam, int studentNumOnTime, int studentNumNotOnTime) {
+		session.beginTransaction();
+		session.clear();
+		compExam.setNumberOfStudentDoneInTime(studentNumOnTime);
+		session.update(compExam);
+		//session.flush();
+		compExam.setNumberOfStudentNotDoneInTime(studentNumNotOnTime);
+		session.update(compExam);
+		session.flush();
+
+		session.getTransaction().commit();
+	}
+
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
 		if (msg.getClass().equals(Message.class)) {
