@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ public class Copy implements Serializable {
     private Grade grade;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "compExam_ID")
-    private ComputerizedExamToExecute compExamToExecute;
+    private ExamToExecute compExamToExecute;
 
     public Copy(){}
 
@@ -45,11 +46,11 @@ public class Copy implements Serializable {
         this.grade = grade;
     }
 
-    public ComputerizedExamToExecute getCompExamToExecute() {
+    public ExamToExecute getCompExamToExecute() {
         return compExamToExecute;
     }
 
-    public void setCompExamToExecute(ComputerizedExamToExecute compExamToExecute) {
+    public void setCompExamToExecute(ExamToExecute compExamToExecute) {
         this.compExamToExecute = compExamToExecute;
     }
 }

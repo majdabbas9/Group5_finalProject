@@ -8,9 +8,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
@@ -92,11 +90,10 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#addCompExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-
-            String queryString="FROM ComputerizedExamToExecute WHERE code = : code";
-            Query query = session.createQuery(queryString, ComputerizedExamToExecute.class);
-            query.setParameter("code",((ComputerizedExamToExecute)dataFromClient.get(0)).getCode());
-            List<ComputerizedExamToExecute> res=query.getResultList();
+            String queryString="FROM ExamToExecute WHERE code = : code";
+            Query query = session.createQuery(queryString, ExamToExecute.class);
+            query.setParameter("code",((ExamToExecute)dataFromClient.get(0)).getCode());
+            List<ExamToExecute> res=query.getResultList();
             if(res.size()!=0)
             {
                 Warning warning = new Warning("code already used!");
@@ -111,6 +108,33 @@ public class HandleMsgTeacher {
 
             SimpleServer.addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(int)dataFromClient.get(1),(int) dataFromClient.get(2));
             Message messageToClient = new Message("added the CompExam successfully");
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (contentOfMsg.equals("#addManualExam")) {
+            List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+            String queryString="FROM ExamToExecute WHERE code = : code";
+            Query query = session.createQuery(queryString, ExamToExecute.class);
+            query.setParameter("code",((ExamToExecute)dataFromClient.get(0)).getCode());
+            List<ExamToExecute> res=query.getResultList();
+            if(res.size()!=0)
+            {
+                Warning warning = new Warning("code already used!");
+                try {
+                    client.sendToClient(warning);
+                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            SimpleServer.addManualExam((ManualExamToExecute) dataFromClient.get(0),(int)dataFromClient.get(1),(int) dataFromClient.get(2));
+            Message messageToClient = new Message("added the manualExam successfully");
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {

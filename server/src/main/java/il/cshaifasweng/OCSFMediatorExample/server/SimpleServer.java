@@ -7,9 +7,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.*;
@@ -75,6 +73,8 @@ public class SimpleServer extends AbstractServer {
 		configuration.addAnnotatedClass(Exam_Question.class);
 		configuration.addAnnotatedClass(Student_Course.class);
 		configuration.addAnnotatedClass(Student_Subject.class);
+		configuration.addAnnotatedClass(ExamToExecute.class);
+		configuration.addAnnotatedClass(ManualExamToExecute.class);
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
 				.build();
@@ -239,9 +239,6 @@ public class SimpleServer extends AbstractServer {
 	}
 
 	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId) {
-		counter++;
-		if(counter==2)
-			System.out.println("h");
 
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Exam exam=GetExamBuliding.getExamById(session,examId);
@@ -270,7 +267,35 @@ public class SimpleServer extends AbstractServer {
 
 		session.getTransaction().commit();
 	}
+	public static void addManualExam(ManualExamToExecute compExam, int teacherId, int examId) {
 
+		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
+		Exam exam=GetExamBuliding.getExamById(session,examId);
+		session.beginTransaction();
+		session.clear();
+		session.save(compExam);
+		session.flush();
+
+		compExam.setExam(exam);
+		session.update(compExam);
+		session.flush();
+
+		compExam.setTeacherThatExecuted(teacher);
+		session.update(compExam);
+		session.flush();
+
+		teacher=compExam.getTeacherThatExecuted();
+		teacher.getExecutedExams().add(compExam);
+		session.update(teacher);
+		session.flush();
+
+
+		exam.getCompExamsToExecute().add(compExam);
+		session.update(exam);
+		session.flush();
+
+		session.getTransaction().commit();
+	}
 	public static void addTeacher(Teacher teacher,List<Integer> subjectsIds,List<Integer> coursesIds) {
 		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesIds);
 		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsIds);

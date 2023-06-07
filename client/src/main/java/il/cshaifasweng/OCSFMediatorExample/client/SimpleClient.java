@@ -127,13 +127,19 @@ public class SimpleClient extends AbstractClient {
 						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added Exam" + Color.ANSI_RESET);
 						App.setRoot("makeExam");
 						return;
-					}
+					}//
 					if (contentOfMsg.equals("added the CompExam successfully")) {
 						EventBus.getDefault().post(new MessageEvent((Message) msg));
-						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an Exam" + Color.ANSI_RESET);
+						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an comp Exam" + Color.ANSI_RESET);
 						App.setRoot("teacherHome");
 						return;
 					}
+				if (contentOfMsg.equals("added the manualExam successfully")) {
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
+					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an manual Exam" + Color.ANSI_RESET);
+					App.setRoot("teacherHome");
+					return;
+				}
 					if (contentOfMsg.equals("sending teacher subjects")) {
 						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
 						return;

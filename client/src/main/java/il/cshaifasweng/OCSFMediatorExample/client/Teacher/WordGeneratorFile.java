@@ -1,27 +1,27 @@
 package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import java.awt.*;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ooxml.POIXMLDocument;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.*;
 
 import javax.swing.filechooser.FileSystemView;
 import javax.xml.parsers.DocumentBuilder;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,7 +59,6 @@ public class WordGeneratorFile {
             XWPFRun tmpRun2=tmpPar2.createRun();
             tmpRun2.setText(questions.get(i).getQuestion().questionsString());
             tmpRun2.setFontSize(16);
-
             i++;
         }
         XWPFParagraph end = doc.createParagraph();
@@ -80,14 +79,92 @@ public class WordGeneratorFile {
         FileOutputStream out =new FileOutputStream(new File(folder+file));
         doc.write(out);doc.close();out.close();
     }
+    public  static void   createWordTest(List<String> strings) throws IOException {
+        if (!Paths.get(examsPath).toFile().exists()) Files.createDirectories(Paths.get(examsPath));
+        XWPFDocument doc=new XWPFDocument();
 
-    public static void main(String[] args) throws ParseException {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date d = df.parse("2023-10-25 23:30");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        cal.add(Calendar.MINUTE, 60);
-        String newDate = df.format(cal.getTime());
-        System.out.println(newDate);
+        XWPFParagraph title = doc.createParagraph();
+        title.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun titleRun = title.createRun();
+        titleRun.setText("hi");
+        titleRun.setColor("009933");
+        titleRun.setBold(true);
+        titleRun.setFontFamily("Courier");
+        titleRun.setFontSize(20);
+
+        int i=0,size=strings.size();
+        while (i<size)
+        {
+            XWPFParagraph tmpPar=doc.createParagraph();
+            XWPFRun tmpRun=tmpPar.createRun();
+            tmpRun.setText(strings.get(i));
+            tmpRun.setFontSize(18);
+            i++;
+        }
+        XWPFParagraph end = doc.createParagraph();
+        end.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun endRun = end.createRun();
+        endRun.setText("Good Luck!");
+        endRun.setColor("009933");
+        endRun.setBold(true);
+        endRun.setFontFamily("Courier");
+        endRun.setFontSize(20);
+
+        String folder=examsPath;String file="temp"+".docx";
+        File f=new File(folder);
+        if(!f.exists())
+        {
+            f.mkdirs();
+        }
+        FileOutputStream out =new FileOutputStream(new File(folder+file));
+        doc.write(out);doc.close();out.close();
     }
-}
+
+    public static void main(String[] args) throws ParseException, IOException {
+        List<String> strings=new ArrayList<>();
+        strings.add("hi");strings.add("hhh");
+        createWordTest(strings);
+        copyFileUsingApacheCommonsIO(examsPath+"temp.docx","temp225758");
+        openWord("temp");
+    }
+    public static void copyFileUsingApacheCommonsIO(String path1,String path2) throws IOException {
+        try {
+            if (!Paths.get(examsPath).toFile().exists()) Files.createDirectories(Paths.get(examsPath));
+            // Create a new document for the destination file
+            XWPFDocument destinationDoc = new XWPFDocument();
+
+            String folder=examsPath;String file=path2+".docx";
+            File f=new File(folder);
+            if(!f.exists())
+            {
+                f.mkdirs();
+            }
+            FileOutputStream out =new FileOutputStream(new File(folder+file));
+            // Open the source file
+            FileInputStream sourceFile = new FileInputStream(path1);
+            XWPFDocument sourceDoc = new XWPFDocument(sourceFile);
+
+
+            // Copy the content from the source document to the destination document
+            destinationDoc.getDocument().getBody().set(sourceDoc.getDocument().getBody().copy());
+            // Save the destination document to a file
+
+            destinationDoc.write(out);destinationDoc.close();out.close();
+            System.out.println("Word file copied successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void openWord(String path)
+    {
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            File f = new File(examsPath+path+".docx");
+            desktop.open(f);  // opens application (MSWord) associated with .doc file
+        }
+        catch(Exception ex) {
+            // WordDocument.this is to refer to outer class's instance from inner class
+        }
+    }
+    }
+

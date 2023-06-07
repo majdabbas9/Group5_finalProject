@@ -6,6 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Teacher extends User implements Serializable {
     @OneToMany( mappedBy = "teacherThatCreated",fetch = FetchType.EAGER)
     private Set<Exam> examsCreated=new HashSet<>();
     @OneToMany( mappedBy = "teacherThatExecuted",fetch = FetchType.EAGER)
-    private Set<ComputerizedExamToExecute> executedExams=new HashSet<>();
+    private Set<ExamToExecute> executedExams=new HashSet<>();
     @OneToMany(mappedBy = "teacherThatCreated",fetch = FetchType.EAGER)
     private Set<Question> questionsCreated;
     public Teacher(String userID, String passWord, String userName, String firstName, String lastName) {
@@ -64,11 +65,11 @@ public class Teacher extends User implements Serializable {
         this.examsCreated = examsCreated;
     }
 
-    public Set<ComputerizedExamToExecute> getExecutedExams() {
+    public Set<ExamToExecute> getExecutedExams() {
         return executedExams;
     }
 
-    public void setExecutedExams(Set<ComputerizedExamToExecute> executedExams) {
+    public void setExecutedExams(Set<ExamToExecute> executedExams) {
         this.executedExams = executedExams;
     }
 
