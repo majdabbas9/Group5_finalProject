@@ -113,18 +113,18 @@ public class PrincipalAddUsers {
             return;
         }
 
-        Message msg = new Message("CheckID", IDText.getText());
-        try {
-            SimpleClient.getClient().sendToServer(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        if (!GlobalDataSaved.AddFlag) {
-            errortxt.setText("User already in the system");
-            return;
-        }
+//        Message msg = new Message("CheckID", IDText.getText());
+//        try {
+//            SimpleClient.getClient().sendToServer(msg);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        if (!GlobalDataSaved.AddFlag) {
+//            errortxt.setText("User already in the system");
+//            return;
+//        }
 
         String username = usernametxt.getText();
         String firstname = firstnametxt.getText();

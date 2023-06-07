@@ -267,7 +267,7 @@ public class SolveExam {
         }
         if (minute + time >= 60) {
             hour ++;
-            minute += minute + time - 60;
+            minute = minute + time - 60;
         }else {
             minute += time;
         }

@@ -103,6 +103,12 @@ public class SimpleClient extends AbstractClient {
 						App.setRoot("principalAddUsers");
 						return;
 					}
+					if (contentOfMsg.equals("User Already in the System")){
+						GlobalDataSaved.AddFlag = false;
+						EventBus.getDefault().post(new WarningEvent(new Warning(contentOfMsg)));
+						App.setRoot("principalHome");
+						return;
+					}
 					if (contentOfMsg.equals("Teacher Added Successfully")) {
 						GlobalDataSaved.AddFlag = true;
 						EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
@@ -176,21 +182,12 @@ public class SimpleClient extends AbstractClient {
 						else App.setRoot("solveExamManual");
 						return;
 					}
-					if (contentOfMsg.equals("Teacher Added Successfully")) {
-						GlobalDataSaved.AddFlag = true;
-						EventBus.getDefault().post(new MessageEvent((Message) msg));
-						return;
-					}
 					if(contentOfMsg.equals("sending all compExams for teacher"))
 					{
 						GlobalDataSaved.teacherExamsToApprove=(List<ExamToExecute>) msgFromServer.getObj();
 						App.setRoot("examNeedApprovement");
 					}
-					if (contentOfMsg.equals("Student Added Successfully")) {
-						GlobalDataSaved.AddFlag = true;
-						EventBus.getDefault().post(new MessageEvent((Message) msg));
-						return;
-					}//sending all exams for teacher
+					//sending all exams for teacher
 					if (contentOfMsg.equals("sending all exams for teacher")) {
 						GlobalDataSaved.allExamsForTeacher = (List<Exam>) msgFromServer.getObj();
 						App.setRoot("prepareExam");

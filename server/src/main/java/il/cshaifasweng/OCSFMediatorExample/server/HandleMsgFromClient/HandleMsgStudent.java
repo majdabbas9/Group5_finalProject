@@ -200,36 +200,6 @@ public class HandleMsgStudent {
             client.sendToClient(msgToClient);
             return true;
         }
-
-        if (contentOfMsg.equals("CheckID")) {
-            String id = (String) msgFromClient.getObj();
-            String answer;
-            boolean check = GetEducational.checkID(session, id);
-            if (check) {
-                GlobalDataSaved.AddFlag = true;
-                answer = "The User was Added to the System";
-            } else {
-                GlobalDataSaved.AddFlag = false;
-                answer = "User Already in the System";
-            }
-            Warning warning = new Warning(answer);
-            try {
-                client.sendToClient(warning);
-                System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            Message messageToClient = new Message(answer);
-
-            try {
-                client.sendToClient(messageToClient);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         return false;
     }
 

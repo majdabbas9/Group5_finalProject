@@ -245,20 +245,20 @@ public class SimpleServer extends AbstractServer {
 		session.beginTransaction();
 		session.clear();
 		session.save(compExam);
-		session.flush();
+		//session.flush();
 
 		compExam.setExam(exam);
 		session.update(compExam);
-		session.flush();
+		//session.flush();
 
 		compExam.setTeacherThatExecuted(teacher);
 		session.update(compExam);
-		session.flush();
+		//session.flush();
 
 		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
-		session.flush();
+		//session.flush();
 
 
 		exam.getCompExamsToExecute().add(compExam);
@@ -282,7 +282,7 @@ public class SimpleServer extends AbstractServer {
 
 		compExam.setTeacherThatExecuted(teacher);
 		session.update(compExam);
-		session.flush();
+		//session.flush();
 
 		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
@@ -533,7 +533,6 @@ public class SimpleServer extends AbstractServer {
 				}
 				if (contentOfMsg.equals("#logout")) {
 					User userToLogout = (User) msgFromClient.getObj();
-					//logout(userToLogout);
 					Iterator<LoggedInClient> iterator = _LoggedInList.iterator();
 					while (iterator.hasNext()) {
 						LoggedInClient _loggedInClient = iterator.next();
@@ -557,10 +556,7 @@ public class SimpleServer extends AbstractServer {
 
 				isHandled= HandleMsgStudent.handleStudent(session,msgFromClient,contentOfMsg,client);
 				if(isHandled)return;
-
-				if (contentOfMsg.equals("#close")) {
-					session.close();
-				}
+				
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
 			}

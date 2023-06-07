@@ -59,10 +59,9 @@ public class App extends Application {
 
     @Override
 	public void stop() throws Exception {
-		// TODO Auto-generated method stub
-    	EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
         try {
-            Message ms1 = new Message("#close"); // creating a msg to the server demanding the students
+            Message ms1 = new Message("#logout"); // creating a msg to the server demanding the students
             SimpleClient.getClient().sendToServer(ms1); // sending the msg to the server
         }
         catch (IOException ex)
@@ -70,6 +69,8 @@ public class App extends Application {
             System.out.println(ex.getMessage());
         }
 		super.stop();
+        Platform.exit();
+        System.exit(0);
 	}
 
     @Subscribe
