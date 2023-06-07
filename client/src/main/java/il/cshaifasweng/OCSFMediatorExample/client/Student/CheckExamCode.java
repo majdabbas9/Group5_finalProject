@@ -25,8 +25,8 @@ public class CheckExamCode {
     @FXML
     private Button backToHome;
 
-    private String examCode;
-    private String userID;
+    private static String examCode;
+    private static String userID;
     @FXML
     public void initialize() {
         GlobalDataSaved.changeTextCounter++;
@@ -42,12 +42,16 @@ public class CheckExamCode {
     @FXML
     void checkValidation(ActionEvent event) throws IOException {
         Message msg;
+        if (studentCode.equals("") || studentCode.getText() == null){
+            return;
+        }
         if (GlobalDataSaved.changeTextCounter % 2 == 0){
             userID = studentCode.getText();
             List<Object> objects = new ArrayList<>();
             objects.add(0,userID);
             objects.add(1,GlobalDataSaved.connectedUser.getUserID());
             objects.add(2,examCode);
+            System.out.println("the user id is: "+ examCode);
             msg = new Message("#check id", objects);
         }
         else {

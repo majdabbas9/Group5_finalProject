@@ -404,14 +404,26 @@ public class SimpleServer extends AbstractServer {
 
 		compExam.getCopies().add(copy);
 		session.update(compExam);
+
+		if (onTime) {
+			compExam.setNumberOfStudentDoneInTime(compExam.getNumberOfStudentDoneInTime()+1);
+			session.update(compExam);
+		}
+		else {
+			compExam.setNumberOfStudentNotDoneInTime(compExam.getNumberOfStudentNotDoneInTime()+1);
+			session.update(compExam);
+		}
 		session.flush();
 
 		session.getTransaction().commit();
 	}
 
-	public static void createGradeAndCopyToStudent(String studentAnswers, Student user, ComputerizedExamToExecute compExam, int grade) {
+	public static void createGradeAndCopyToStudent(String studentAnswers, Student user, ComputerizedExamToExecute compExam, int grade, int studentsDoingNumber) {
 		session.beginTransaction();
 		session.clear();
+
+		compExam.setNumOfStudentDoing(studentsDoingNumber);
+		session.update(compExam);
 
 		Copy copy = new Copy();
 		copy.setAnswers(studentAnswers);

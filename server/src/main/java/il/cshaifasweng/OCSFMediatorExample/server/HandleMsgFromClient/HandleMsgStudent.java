@@ -26,17 +26,8 @@ import java.util.List;
 public class HandleMsgStudent {
     public static boolean handleStudent(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
         if (contentOfMsg.equals("#get exam copy")) {
-            List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();;
-            int gradeId = (int) dataFromClient.get(0);
-            int studentId = (int) dataFromClient.get(1);
-            String q = "from Grade where student.id='"+studentId+"'";
-            Query query=session.createQuery(q);
-            List<Grade> grades = (List<Grade>) (query.getResultList());
-            Copy copy = grades.get(gradeId).getExamCopy();
-            List<Object> objects = new ArrayList<>();
-            objects.add(0, copy.getCompExamToExecute());
-            objects.add(1, copy.getAnswers());
-            Message msgToClient = new Message("exam copy", objects);
+            Grade grade = (Grade) msgFromClient.getObj();;
+            Message msgToClient = new Message("exam copy", grade);
             client.sendToClient(msgToClient);
             return true;
         }
@@ -118,7 +109,7 @@ public class HandleMsgStudent {
 //            }
             ////
 
-            Message msgToClient = new Message("write id to start", compExams.get(0));
+            Message msgToClient = new Message("write id to start", examToExecute.get(0));
             client.sendToClient(msgToClient);
 
             return true;
@@ -132,6 +123,7 @@ public class HandleMsgStudent {
             Query query1 = session.createQuery(q1);
             List<Grade> grades = query1.getResultList();
             for (Grade grade : grades) {
+                System.out.println("the user id is: "+ examCode);
                 if (grade.getExamCopy().getCompExamToExecute().getCode() == Integer.parseInt(examCode)) {
                     Warning warning = new Warning("You Already Did This Exam");
                     try {
@@ -142,21 +134,6 @@ public class HandleMsgStudent {
                         e.printStackTrace();
                     }
                 }
-            if (grades.size() != 0) {
-                Warning warning = new Warning("You Already Did This Exam");
-                try {
-                    client.sendToClient(warning);
-                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                    return true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            ////
-
-            else {
-                Message msgToClient = new Message("write id to start", examToExecute.get(0));
-                client.sendToClient(msgToClient);
             }
             if (!userId.equals(connectUserId)) {
                     Warning warning = new Warning("Your ID is not correct");
@@ -174,19 +151,19 @@ public class HandleMsgStudent {
                 return true ;
             }
         }
-        if (contentOfMsg.equals("#submitted on the time")) {
-            try {
-                List<Object> objects = (List<Object>) msgFromClient.getObj();
-                System.out.println("$$$$$$$$$$$$$ " + ((ComputerizedExamToExecute) objects.get(1)).getNumberOfStudentDoneInTime());
-                SimpleServer.updateStudentsNumber((ComputerizedExamToExecute) objects.get(1), (int) objects.get(2), (int) objects.get(3));
-                Message msgToClient = new Message("Submitted successfully", objects.get(0));
-                client.sendToClient(msgToClient);
-                System.out.println("%%%%%%%%%%%%%%% " + ((ComputerizedExamToExecute) objects.get(1)).getNumberOfStudentDoneInTime());
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (contentOfMsg.equals("#submitted on the time")) {
+//            try {
+//                List<Object> objects = (List<Object>) msgFromClient.getObj();
+//                System.out.println("$$$$$$$$$$$$$ " + ((ComputerizedExamToExecute) objects.get(1)).getNumberOfStudentDoneInTime());
+//                SimpleServer.updateStudentsNumber((ComputerizedExamToExecute) objects.get(1), (int) objects.get(2), (int) objects.get(3));
+//                Message msgToClient = new Message("Submitted successfully", objects.get(0));
+//                client.sendToClient(msgToClient);
+//                System.out.println("%%%%%%%%%%%%%%% " + ((ComputerizedExamToExecute) objects.get(1)).getNumberOfStudentDoneInTime());
+//                return true;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         if (contentOfMsg.equals("#create student copy and grade")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
             String studentAnswers = (String) dataFromClient.get(0);
@@ -194,7 +171,7 @@ public class HandleMsgStudent {
             ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) dataFromClient.get(2);
             int grade = (int) dataFromClient.get(3);
             //boolean submitOnTime = (boolean) dataFromClient.get(4);
-            SimpleServer.createGradeAndCopyToStudent(studentAnswers, user, compExam, grade);
+            SimpleServer.createGradeAndCopyToStudent(studentAnswers, user, compExam, grade, compExam.getNumOfStudentDoing()+1);
         }
         if (contentOfMsg.equals("#update student answers")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
@@ -204,21 +181,38 @@ public class HandleMsgStudent {
             int grade = (int) dataFromClient.get(3);
             boolean submitOnTime = (boolean) dataFromClient.get(4);
             SimpleServer.updateGradeAndCopyToStudent(studentAnswers, user, compExam, grade, submitOnTime);
-        }
-        if (contentOfMsg.equals("#time finished")) {
-            List<Object> objects = (List<Object>) msgFromClient.getObj();
-            SimpleServer.updateStudentsNumber((ComputerizedExamToExecute) objects.get(1), (Integer) objects.get(2), (Integer) objects.get(3));
-            Warning warning = new Warning("The Exam Time Ended");
-            try {
-                client.sendToClient(warning);
-                System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                Message msgToClient = new Message("exam done", msgFromClient.getObj());
+            if (submitOnTime) {
+                Message msgToClient = new Message("exam done", studentAnswers);
                 client.sendToClient(msgToClient);
                 return true;
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            else {
+                Warning warning = new Warning("The Exam Time Ended");
+                try {
+                    client.sendToClient(warning);
+                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+                    Message msgToClient = new Message("exam done", studentAnswers);
+                    client.sendToClient(msgToClient);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+//        if (contentOfMsg.equals("#time finished")) {
+//            List<Object> objects = (List<Object>) msgFromClient.getObj();
+//            SimpleServer.updateStudentsNumber((ComputerizedExamToExecute) objects.get(1), (Integer) objects.get(2), (Integer) objects.get(3));
+//            Warning warning = new Warning("The Exam Time Ended");
+//            try {
+//                client.sendToClient(warning);
+//                System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+//                Message msgToClient = new Message("exam done", msgFromClient.getObj());
+//                client.sendToClient(msgToClient);
+//                return true;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         if (contentOfMsg.equals("#show student grades"))
         {
             User user = (User) msgFromClient.getObj();

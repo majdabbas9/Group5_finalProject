@@ -81,11 +81,8 @@ public class StudentGrades {
             return;
         }
         GlobalDataSaved.selectedGradeForExamCopy = studentGradesTableView.getSelectionModel().getSelectedIndex();
-        List<Object> objects = new ArrayList<>();
         GradesDetails details = studentGradesTableView.getSelectionModel().getSelectedItem();
-        objects.add(0, details.getIdOnGradeTable());
-        objects.add(1, GlobalDataSaved.connectedUser.getId());
-        Message msg = new Message("#get exam copy", objects);
+        Message msg = new Message("#get exam copy", details.getGradeObject());
         SimpleClient.getClient().sendToServer(msg);
     }
 
@@ -128,7 +125,7 @@ public class StudentGrades {
             gradeCourse=g.getExamCopy().getCompExamToExecute().getExam().getExamCourse().getCourseName();
             teacherFirstNameExecuted=g.getExamCopy().getCompExamToExecute().getTeacherThatExecuted().getFirstName();
             teacherLastNameExecuted=g.getExamCopy().getCompExamToExecute().getTeacherThatExecuted().getLastName();
-            gradesDetails.add(new GradesDetails(idOnGradeList,count,gradeSubject,gradeCourse,teacherFirstNameExecuted+" "+teacherLastNameExecuted,g.getGrade()));
+            gradesDetails.add(new GradesDetails(count,gradeSubject,gradeCourse,teacherFirstNameExecuted+" "+teacherLastNameExecuted,g.getGrade(), g));
         }
         return gradesDetails;
     }
