@@ -58,10 +58,10 @@ public class HandleMsgStudent {
             }
             String examDate[];
             String date, time;
-            examDate = compExams.get(0).getDateOfExam().split(" ");
+            examDate = examToExecute.get(0).getDateOfExam().split(" ");
             date = examDate[0];
             time = examDate[1];
-            int examTime = compExams.get(0).getExam().getTime();
+            int examTime = examToExecute.get(0).getExam().getTime();
             int examHour=0, examMinutes=0;
             while (examTime > 60) {
                 examHour++;
@@ -78,8 +78,8 @@ public class HandleMsgStudent {
             String timeElements[] = time.split(":");
             int t1 = Integer.parseInt(timeElements[0]);
             int t2 = Integer.parseInt(timeElements[1]);
-            int ExtraTime = compExams.get(0).getExtraTime();
-            if (compExams.get(0).getIsExtraNeeded() == 2){
+            int ExtraTime = examToExecute.get(0).getExtraTime();
+            if (examToExecute.get(0).getIsExtraNeeded() == 2){
                 while (ExtraTime >= 60){
                     examHour++;
                     ExtraTime -= 60;
