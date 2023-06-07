@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
+import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
@@ -24,25 +25,51 @@ public class HandleMsgPrincipal {
     public static boolean handlePrincipal(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
         if (contentOfMsg.equals("#add teacher")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
-            SimpleServer.addTeacher((Teacher) dataFromClient.get(0),(List<Integer>) dataFromClient.get(1),(List<Integer>) dataFromClient.get(2));
-            Message messageToClient = new Message("Teacher Added Successfully");
-            try {
-                client.sendToClient(messageToClient);
-            } catch (IOException e) {
-                e.printStackTrace();
+            String id = ((Teacher) dataFromClient.get(0)).getUserID();
+            boolean check = GetEducational.checkID(session, id);
+            if (!check) {
+                GlobalDataSaved.AddFlag = false;
+                Warning warning = new Warning("User Already in the System");
+                try {
+                    client.sendToClient(warning);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                SimpleServer.addTeacher((Teacher) dataFromClient.get(0), (List<Integer>) dataFromClient.get(1), (List<Integer>) dataFromClient.get(2));
+                Message messageToClient = new Message("Teacher Added Successfully");
+                try {
+                    client.sendToClient(messageToClient);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
             }
-            return true;
         }
         if (contentOfMsg.equals("#add student")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
-            SimpleServer.addStudent((Student) dataFromClient.get(0),(List<Integer>) dataFromClient.get(1),(List<Integer>) dataFromClient.get(2));
-            Message messageToClient = new Message("Student Added Successfully");
-            try {
-                client.sendToClient(messageToClient);
-            } catch (IOException e) {
-                e.printStackTrace();
+            String id = ((Student) dataFromClient.get(0)).getUserID();
+            boolean check = GetEducational.checkID(session, id);
+            if (!check) {
+                GlobalDataSaved.AddFlag = false;
+                Warning warning = new Warning("User Already in the System");
+                try {
+                    client.sendToClient(warning);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                SimpleServer.addStudent((Student) dataFromClient.get(0), (List<Integer>) dataFromClient.get(1), (List<Integer>) dataFromClient.get(2));
+                Message messageToClient = new Message("Student Added Successfully");
+                try {
+                    client.sendToClient(messageToClient);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
             }
-            return true;
         }
         if (contentOfMsg.equals("AllExamsToPrincipal")) {
             List<Exam> list = GetEducational.getAllExams(session);
