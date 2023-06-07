@@ -71,18 +71,24 @@ public class SimpleClient extends AbstractClient {
 					}
 					if (contentOfMsg.equals("exam copy")) {
 						List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
-						GlobalDataSaved.compExam = (ComputerizedExamToExecute) dataFromServer.get(0);
+						GlobalDataSaved.examToExecute = (ExamToExecute) dataFromServer.get(0);
 						GlobalDataSaved.studentAnswers = (List<String>) dataFromServer.get(1);
 						return;
 					}
 					if (contentOfMsg.equals("write id to start")) {
-						ComputerizedExamToExecute compExams = (ComputerizedExamToExecute) msgFromServer.getObj();
-						GlobalDataSaved.compExam = compExams;
+						ExamToExecute examToExecute = (ExamToExecute) msgFromServer.getObj();
+						GlobalDataSaved.examToExecute = examToExecute;
 						App.setRoot("checkExamCode");
 						return;
 					}
 					if (contentOfMsg.equals("do exam")) {
-						App.setRoot("solve_Exam");
+						if(GlobalDataSaved.examToExecute.getClass().equals(ComputerizedExamToExecute.class))
+						{
+							App.setRoot("solve_Exam");
+							return;
+						}
+
+						App.setRoot("solveExamManual");
 						return;
 					}
 					if (contentOfMsg.equals("Submitted successfully")) {
@@ -164,9 +170,10 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 					if (contentOfMsg.equals("do exam")) {
-						ComputerizedExamToExecute compExams = (ComputerizedExamToExecute) msgFromServer.getObj();
-						GlobalDataSaved.compExam = compExams;
-						App.setRoot("solve_Exam");
+						ExamToExecute examToExecute = (ExamToExecute) msgFromServer.getObj();
+						GlobalDataSaved.examToExecute = examToExecute;
+						if(examToExecute.getClass().equals(ComputerizedExamToExecute.class))App.setRoot("solve_Exam");
+						else App.setRoot("solveExamManual");
 						return;
 					}
 					if (contentOfMsg.equals("Teacher Added Successfully")) {
@@ -176,7 +183,7 @@ public class SimpleClient extends AbstractClient {
 					}
 					if(contentOfMsg.equals("sending all compExams for teacher"))
 					{
-						GlobalDataSaved.teacherCompExamsToApprove=(List<ComputerizedExamToExecute>) msgFromServer.getObj();
+						GlobalDataSaved.teacherExamsToApprove=(List<ExamToExecute>) msgFromServer.getObj();
 						App.setRoot("examNeedApprovement");
 					}
 					if (contentOfMsg.equals("Student Added Successfully")) {
@@ -190,7 +197,7 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 				if (contentOfMsg.equals("teacher compExams")) {
-					GlobalDataSaved.teacherCompExamsToApprove = (List<ComputerizedExamToExecute>) msgFromServer.getObj();
+					GlobalDataSaved.teacherExamsToApprove = (List<ExamToExecute>) msgFromServer.getObj();
 					App.setRoot("examNeedApprovement");
 				}
 				if (contentOfMsg.equals("show all grades")) {

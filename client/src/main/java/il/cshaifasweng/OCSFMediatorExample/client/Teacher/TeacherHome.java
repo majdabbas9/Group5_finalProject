@@ -67,7 +67,7 @@ public class TeacherHome {
 
     @FXML
     void ExamsNeedApprovment(ActionEvent event) throws IOException {
-        Message msg1 = new Message("#showAllCompExamsForTeahcerToApprove", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        Message msg1 = new Message("#showAllExamsForTeahcerToApprove", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
     }
     @FXML

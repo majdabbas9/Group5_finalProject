@@ -6,11 +6,14 @@ import aidClasses.GradesDetails;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -71,6 +74,12 @@ public class StudentGrades {
 
     @FXML
     void getCopy(ActionEvent event) throws IOException {
+        ExamToExecute examToExecute=studentGradesTableView.getSelectionModel().getSelectedItem().getGradeObject().getExamCopy().getCompExamToExecute();
+        if(examToExecute.getClass().equals(ManualExamToExecute.class))
+        {
+            WordGeneratorFile.openWord(WordGeneratorFile.examsPath+((ManualExamToExecute)examToExecute).getFileName());
+            return;
+        }
         GlobalDataSaved.selectedGradeForExamCopy = studentGradesTableView.getSelectionModel().getSelectedIndex();
         List<Object> objects = new ArrayList<>();
         objects.add(0, GlobalDataSaved.selectedGradeForExamCopy);
@@ -118,7 +127,7 @@ public class StudentGrades {
             gradeCourse=g.getExamCopy().getCompExamToExecute().getExam().getExamCourse().getCourseName();
             teacherFirstNameExecuted=g.getExamCopy().getCompExamToExecute().getTeacherThatExecuted().getFirstName();
             teacherLastNameExecuted=g.getExamCopy().getCompExamToExecute().getTeacherThatExecuted().getLastName();
-            gradesDetails.add(new GradesDetails(count,gradeSubject,gradeCourse,teacherFirstNameExecuted+" "+teacherLastNameExecuted,g.getGrade()));
+            gradesDetails.add(new GradesDetails(count,gradeSubject,gradeCourse,teacherFirstNameExecuted+" "+teacherLastNameExecuted,g.getGrade(),g));
         }
         return gradesDetails;
     }

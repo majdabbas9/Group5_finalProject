@@ -10,6 +10,7 @@ import aidClasses.aidClassesForTeacher.DisplayCompExamForApprove;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,7 +51,8 @@ public class ExamsNeedApprovement {
 
     @FXML // fx:id="subjectColumn"
     private TableColumn<DisplayCompExamForApprove, String> subjectColumn; // Value injected by FXMLLoader
-
+    @FXML
+    private TableColumn<DisplayCompExamForApprove, String> manualColumn;
     @FXML
     void backClick(ActionEvent event) throws IOException {
         App.setRoot("teacherHome");
@@ -59,6 +61,8 @@ public class ExamsNeedApprovement {
     @FXML
     void nextClick(ActionEvent event) throws IOException {
         if(examsTable.getSelectionModel().getSelectedItem()==null)return;
+        if(examsTable.getSelectionModel().getSelectedItem().isManual())GlobalDataSaved.isManualToApprove=true;
+        else GlobalDataSaved.isManualToApprove=false;
         Message msg1 = new Message("#showAllCompExamGrades",examsTable.getSelectionModel().getSelectedItem().getDate().getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
     }
@@ -69,12 +73,16 @@ public class ExamsNeedApprovement {
         dataColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,ComputerizedExamToExecute>("date"));
         dataColumn.setStyle("-fx-alignment: CENTER;");
         examIdColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,String>("examId"));
+        examIdColumn.setStyle("-fx-alignment: CENTER;");
         subjectColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,String>("subjectName"));
         subjectColumn.setStyle("-fx-alignment: CENTER;");
-        for(ComputerizedExamToExecute compExam: GlobalDataSaved.teacherCompExamsToApprove)
+        manualColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,String>("isManual"));
+        manualColumn.setStyle("-fx-alignment: CENTER;");
+        for(ExamToExecute exam: GlobalDataSaved.teacherExamsToApprove)
         {
-            DisplayCompExamForApprove dcea=new DisplayCompExamForApprove(compExam,compExam.getExam().getExam_ID(),
-                    compExam.getExam().getExamSubject().getSubjectName());
+            DisplayCompExamForApprove dcea=new DisplayCompExamForApprove(exam,exam.getExam().getExam_ID(),
+                    exam.getExam().getExamSubject().getSubjectName());
+            if(exam.getClass().equals(ComputerizedExamToExecute.class))dcea.setManual(false);
             observableList.add(dcea);
         }
         examsTable.setItems(observableList);

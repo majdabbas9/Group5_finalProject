@@ -28,7 +28,7 @@ public class GlobalDataSaved {
     public static boolean AddFlag = true;
     public static ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
-    public static ComputerizedExamToExecute compExam;
+    public static ExamToExecute examToExecute;
     public static List<String> studentAnswers;
     public static int changeTextCounter = 0;
     public static int selectedGradeForExamCopy = 0;
@@ -44,7 +44,7 @@ public class GlobalDataSaved {
     public static Exam PrincipalExamToShow = null;
 
     public static List<Question> courseQuestionsForMakeExam;
-    public static List<ComputerizedExamToExecute> teacherCompExamsToApprove;
+    public static List<ExamToExecute> teacherExamsToApprove;
     public static List<Grade> compExamGrades;
     public static boolean ThePrincipalInQuestions = false;
     public static boolean ThePrincipalInExams = false;
@@ -63,5 +63,6 @@ public class GlobalDataSaved {
     public static List<Subject> allSubjects;
     public static List<ExamToExecute> getTeacherExamsToExecutes;
     public static boolean forQuestion;
+    public static boolean isManualToApprove;
     public static List<ExamToExecute> allExamsToExecuteForPrincipal = new ArrayList<>();
 }

@@ -4,7 +4,9 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
@@ -41,10 +43,10 @@ public class HandleMsgStudent {
         if (contentOfMsg.equals("#check code validation"))
         {
             String code = (String) msgFromClient.getObj().toString();
-            String q = "from ComputerizedExamToExecute where code = '"+ code +"'";
+            String q = "from ExamToExecute where code = '"+ code +"'";
             Query query=session.createQuery(q);
-            List<ComputerizedExamToExecute> compExams=(List<ComputerizedExamToExecute>) (query.getResultList());
-            if (compExams.size() == 0){
+            List<ExamToExecute> examToExecute=(List<ExamToExecute>) (query.getResultList());
+            if (examToExecute.size() == 0){
                 Warning warning = new Warning("code is not correct");
                 try {
                     client.sendToClient(warning);
@@ -101,7 +103,7 @@ public class HandleMsgStudent {
                 }
             }
             /////checking if the student solved this exam before
-            String q1 = "from Grade where examCopy.id = '"+compExams.get(0).getId()+"'";
+            String q1 = "from Grade where examCopy.id = '"+examToExecute.get(0).getId()+"'";
             Query query1 = session.createQuery(q1);
             List<Grade> grades = query1.getResultList();
             if (grades.size() != 0) {
@@ -117,7 +119,7 @@ public class HandleMsgStudent {
             ////
 
             else {
-                Message msgToClient = new Message("write id to start", compExams.get(0));
+                Message msgToClient = new Message("write id to start", examToExecute.get(0));
                 client.sendToClient(msgToClient);
             }
 
@@ -140,6 +142,7 @@ public class HandleMsgStudent {
             else {
                 Message msgToClient = new Message("do exam");
                 client.sendToClient(msgToClient);
+                return true ;
             }
         }
         if (contentOfMsg.equals("#submitted on the time")) {
@@ -186,6 +189,16 @@ public class HandleMsgStudent {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        if (contentOfMsg.equals("#show student grades"))
+        {
+            User user = (User) msgFromClient.getObj();
+            String q="from Grade where student='"+ user.getId() +"' and teacherApprovement='"+ 1 +"'";
+            Query query=session.createQuery(q);
+            List<Grade> grades = (List<Grade>) (query.getResultList());
+            Message msgToClient = new Message("student grades",grades);
+            client.sendToClient(msgToClient);
+            return true;
         }
 
         if (contentOfMsg.equals("CheckID")) {

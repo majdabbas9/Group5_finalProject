@@ -155,11 +155,11 @@ public class HandleMsgTeacher {
             }
             return true;
         }
-        if (contentOfMsg.equals("#showAllCompExamsForTeahcerToApprove"))
+        if (contentOfMsg.equals("#showAllExamsForTeahcerToApprove"))
         {
             int teacherId=(int)msgFromClient.getObj();
-            List<ComputerizedExamToExecute> compExams= GetExamBuliding.getAllCompExams(session,teacherId);
-            Message messageToClient = new Message("sending all compExams for teacher",compExams);
+            List<ExamToExecute> exams= GetExamBuliding.getAllExamsForTeacher(session,teacherId);
+            Message messageToClient = new Message("sending all compExams for teacher",exams);
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -226,16 +226,6 @@ public class HandleMsgTeacher {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return true;
-        }
-        if (contentOfMsg.equals("#show student grades"))
-        {
-            User user = (User) msgFromClient.getObj();
-            String q="from Grade where student='"+ user.getId() +"' and teacherApprovement='"+ 1 +"'";
-            Query query=session.createQuery(q);
-            List<Grade> grades = (List<Grade>) (query.getResultList());
-            Message msgToClient = new Message("student grades",grades);
-            client.sendToClient(msgToClient);
             return true;
         }
         if(contentOfMsg.equals("#getTeacherCompExams"))

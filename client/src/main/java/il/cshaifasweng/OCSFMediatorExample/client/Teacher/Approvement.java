@@ -57,19 +57,19 @@ public class Approvement {
 
     @FXML // fx:id="studentIdColumn"
     private TableColumn<DisplayGrade, String> studentIdColumn; // Value injected by FXMLLoader
-    @FXML // fx:id="approveColumn"
-    private TableColumn<DisplayGrade, Button> approveColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="studentName"
     private Text studentName; // Value injected by FXMLLoader
 
     @FXML // fx:id="warning"
     private Text warning; // Value injected by FXMLLoader
+    @FXML
+    private TableColumn<DisplayGrade, Button> wordColumn;
 
     private ObservableList<DisplayGrade> observableList= FXCollections.observableArrayList();
     @FXML
     void backToMenu(ActionEvent event) throws IOException {
-        Message msg1 = new Message("#showAllCompExamsForTeahcerToApprove", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        Message msg1 = new Message("#showAllExamsForTeahcerToApprove", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
     }
 
@@ -116,6 +116,7 @@ public class Approvement {
         gradeColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, TextField>("grade"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, TextField>("notes"));
         gradeObjectColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Grade>("gradeObject"));
+       wordColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Button>("gradeObject"));
 
         for(Grade grade: GlobalDataSaved.compExamGrades)
         {
@@ -125,8 +126,12 @@ public class Approvement {
 
             TextField textFieldNotes=new TextField();textFieldNotes.setPromptText("add notes");
             textFieldNotes.setStyle("-fx-alignment: CENTER;");
+            if(!GlobalDataSaved.isManualToApprove)
+            {
+                observableList.add(new DisplayGrade(student.getUserID(),student.getFirstName(),grade.getDate(),textFieldGrade,textFieldNotes,grade));
+                wordColumn.setVisible(false);
+            }
 
-            observableList.add(new DisplayGrade(student.getUserID(),student.getFirstName(),grade.getDate(),textFieldGrade,textFieldNotes,grade));
         }
         gradesTable.setItems(observableList);
     }
