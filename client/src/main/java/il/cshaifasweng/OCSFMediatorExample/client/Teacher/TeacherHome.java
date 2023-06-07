@@ -106,8 +106,16 @@ public class TeacherHome {
     }
 
     @FXML
-    void showAllQuestions(ActionEvent event) {
-
+    void showAllQuestions(ActionEvent event) throws IOException {
+        GlobalDataSaved.forQuestion=2;
+        GlobalDataSaved.teacherCourses.clear();
+        GlobalDataSaved.teacherSubjects.clear();
+        Message msg1 = new Message("#teacherCouses", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server;
+        Message msg = new Message("#teacherSubjects", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+        Message msg3 = new Message("#allQuestions"); // creating a msg to the server demanding the students
+        SimpleClient.getClient().sendToServer(msg3); // sending the msg to the server
     }
     @FXML
     public void initialize()

@@ -55,7 +55,7 @@ public class Question implements Serializable {
         this.choice1=choices.get(0);this.choice2=choices.get(1);this.choice3=choices.get(2);this.choice4=choices.get(3);
     }
 
-    public Question(Question question,String str) {
+    public Question(Question question) {
         this.id = question.id;
         this.teacherNotes = question.teacherNotes;
         this.studentNotes = question.studentNotes;

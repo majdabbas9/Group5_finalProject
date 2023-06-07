@@ -62,7 +62,8 @@ public class GlobalDataSaved {
 
     public static List<Subject> allSubjects;
     public static List<ExamToExecute> getTeacherExamsToExecutes;
-    public static boolean forQuestion;
+    public static int forQuestion=0;
     public static boolean isManualToApprove;
     public static List<ExamToExecute> allExamsToExecuteForPrincipal = new ArrayList<>();
+    public static List<Question> allQuestionsForTeacher;
 }

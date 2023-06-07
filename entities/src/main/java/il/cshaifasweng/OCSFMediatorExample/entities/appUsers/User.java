@@ -27,6 +27,15 @@ public abstract class User implements  Serializable{
         this.isConnected=false;
     }
 
+    public User(User user) {
+        this.userID = user.userID;
+        this.passWord = user.passWord;
+        this.userName = user.userName;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.isConnected=false;
+    }
+
     public int getId() {
         return id;
     }

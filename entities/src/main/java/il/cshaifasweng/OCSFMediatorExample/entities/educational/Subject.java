@@ -40,7 +40,7 @@ public class Subject implements  Serializable{
         this.subjectTeachers=new HashSet<>();
     }
 
-    public Subject(Subject subject,String str) {
+    public Subject(Subject subject) {
         this.id = subject.id;
         this.subjectName = subject.subjectName;
     }

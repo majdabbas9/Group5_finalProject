@@ -42,7 +42,7 @@ public class BuildExam {
 
     @FXML
     void makeExam(ActionEvent event)throws IOException {
-        GlobalDataSaved.forQuestion=false;
+        GlobalDataSaved.forQuestion=1;
         GlobalDataSaved.teacherCourses.clear();
         GlobalDataSaved.teacherSubjects.clear();
         Message msg1 = new Message("#teacherCouses", GlobalDataSaved.connectedUser.getId(),GlobalDataSaved.teacherCourses); // creating a msg to the server demanding the students
@@ -53,7 +53,7 @@ public class BuildExam {
 
     @FXML
     void makeQuestion(ActionEvent event) throws IOException {
-        GlobalDataSaved.forQuestion=true;
+        GlobalDataSaved.forQuestion=0;
         GlobalDataSaved.teacherCourses.clear();
         GlobalDataSaved.teacherSubjects.clear();
         Message msg1 = new Message("#teacherCouses", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students

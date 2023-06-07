@@ -78,7 +78,7 @@ public class HandleMsgTeacher {
             List<Question> questionsList=new ArrayList<>();
             for(Course_Question cq:res)
             {
-                questionsList.add(new Question(cq.getQuestion(),"getAllRelevantData"));
+                questionsList.add(new Question(cq.getQuestion()));
             }
             try {
                 Message msgToClient=new Message("course questions",questionsList);
@@ -160,6 +160,17 @@ public class HandleMsgTeacher {
             int teacherId=(int)msgFromClient.getObj();
             List<ExamToExecute> exams= GetExamBuliding.getAllExamsForTeacher(session,teacherId);
             Message messageToClient = new Message("sending all compExams for teacher",exams);
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (contentOfMsg.equals("#getAllExamsForTeacher"))
+        {
+            List<Question> questions= GetExamBuliding.getAllQuestionsForTeacher(session);
+            Message messageToClient = new Message("sending all compExams for teacher");
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -275,6 +286,14 @@ public class HandleMsgTeacher {
             SimpleServer.AddExtraTime(exam, ExtraTime);
             try {
                 Message message = new Message("AddExtraTime");
+                client.sendToClient(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(contentOfMsg.equals("#allQuestions")) {
+            try {
+                Message message = new Message("all questions",GetExamBuliding.getAllQuestionsForTeacher(session));
                 client.sendToClient(message);
             } catch (IOException e) {
                 e.printStackTrace();
