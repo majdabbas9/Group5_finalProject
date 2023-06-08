@@ -4,19 +4,27 @@ import aidClasses.Color;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalHome;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +55,7 @@ public class TeacherHome {
     private Button preparExamsBtn;
 
     @FXML
-    private Text studentName;
+    private Text teacherName;
 
     @FXML
     void ExamsInProgress(ActionEvent event) throws IOException {
@@ -120,6 +128,7 @@ public class TeacherHome {
     @FXML
     public void initialize()
     {
+        PrincipalHome.dataOnHome(teacherName,currentDate,currentTime);
     }
 
 }

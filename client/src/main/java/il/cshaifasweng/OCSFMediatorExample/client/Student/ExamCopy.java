@@ -23,7 +23,10 @@ public class ExamCopy {
 
     @FXML
     private RadioButton firstChoice;
-
+    @FXML
+    private RadioButton secondChoice;
+    @FXML
+    private RadioButton thirdChoice;
     @FXML
     private RadioButton fourthChoice;
 
@@ -48,20 +51,16 @@ public class ExamCopy {
     @FXML
     private Text correctAnswer;
 
-    @FXML
-    private RadioButton secondChoice;
-
-    @FXML
-    private RadioButton thirdChoice;
-
     public Set<Exam_Question> examQuestions = new HashSet<>();
     private int questionCounter = 0;
     public List<String> choicesList;
     public List<Question> questionList;
+    public List<String> studentAnswers;
     @FXML
     public void initialize() throws IOException {
         examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         questionList = sortedQuestionsList(examQuestions);
+        studentAnswers = GlobalDataSaved.studentAnswers;
         question();
     }
 
@@ -93,6 +92,12 @@ public class ExamCopy {
         thirdChoice.setDisable(true);
         fourthChoice.setDisable(true);
 
+        firstChoice.setSelected(false);
+        secondChoice.setSelected(false);
+        thirdChoice.setSelected(false);
+        fourthChoice.setSelected(false);
+
+
         if (questionCounter == 0){
             prevQuestion.setDisable(true);
             nextQuestion.setDisable(false);
@@ -111,14 +116,9 @@ public class ExamCopy {
         secondChoice.setText(choicesList.get(1));
         thirdChoice.setText(choicesList.get(2));
         fourthChoice.setText(choicesList.get(3));
-        if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(firstChoice.getText())) {
-            firstChoice.setSelected(true);
-        } else if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(secondChoice.getText())) {
-            secondChoice.setSelected(true);
-        } else if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(thirdChoice.getText())) {
-            thirdChoice.setSelected(true);
-        } else if (GlobalDataSaved.studentAnswers.get(questionCounter).equals(fourthChoice.getText())) {
-            fourthChoice.setSelected(true);
+
+        if (studentAnswers.get(questionCounter) != null) {
+            setButtonSelectedBefore(studentAnswers,questionCounter,firstChoice,secondChoice,thirdChoice,fourthChoice);
         }
         Question q;
         q = questionList.get(questionCounter);
@@ -132,7 +132,19 @@ public class ExamCopy {
         }
         correctAnswer.setText(q.getCorrectChoice());
 
+    }
 
+    public static void setButtonSelectedBefore(List<String> studentAnswers, int questionCounter, RadioButton firstChoice,
+                                               RadioButton secondChoice, RadioButton thirdChoice, RadioButton fourthChoice) {
+        if (studentAnswers.get(questionCounter).equals(firstChoice.getText())) {
+            firstChoice.setSelected(true);
+        } else if (studentAnswers.get(questionCounter).equals(secondChoice.getText())) {
+            secondChoice.setSelected(true);
+        } else if (studentAnswers.get(questionCounter).equals(thirdChoice.getText())) {
+            thirdChoice.setSelected(true);
+        } else if (studentAnswers.get(questionCounter).equals(fourthChoice.getText())) {
+            fourthChoice.setSelected(true);
+        }
     }
     @FXML
     void backToGradesTable(ActionEvent event) throws IOException {

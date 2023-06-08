@@ -13,7 +13,10 @@
             <Font size="34.0" />
          </font>
       </Text>
-      <TextArea fx:id="teacherNotes" editable="false" layoutX="47.0" layoutY="100.0" prefHeight="331.0" prefWidth="683.0" />
+      <TextArea fx:id="teacherNotes" editable="false" layoutX="47.0" layoutY="100.0" prefHeight="331.0" prefWidth="683.0">
+         <font>
+            <Font size="28.0" />
+         </font></TextArea>
       <Button fx:id="backToGradesTable" layoutX="47.0" layoutY="516.0" mnemonicParsing="false" onAction="#backToGradesTable" prefHeight="46.0" prefWidth="173.0" style="-fx-background-color: #0A8A0A;" text="Back To Grades" textFill="WHITE">
          <font>
             <Font size="18.0" />

@@ -105,10 +105,15 @@ public class StudentGrades {
             observableList.add(g);
         }
         gradeNo.setCellValueFactory(new PropertyValueFactory<GradesDetails,Integer>("id"));
+        gradeNo.setStyle("-fx-alignment: CENTER;");
         subject.setCellValueFactory(new PropertyValueFactory<GradesDetails,String>("subjectName"));
+        subject.setStyle("-fx-alignment: CENTER;");
         course.setCellValueFactory(new PropertyValueFactory<GradesDetails,String>("courseName"));
+        course.setStyle("-fx-alignment: CENTER;");
         teacherName.setCellValueFactory(new PropertyValueFactory<GradesDetails, String>("teacherName"));
+        teacherName.setStyle("-fx-alignment: CENTER;");
         grade.setCellValueFactory(new PropertyValueFactory<GradesDetails,Integer>("grade"));
+        grade.setStyle("-fx-alignment: CENTER;");
 
         studentGradesTableView.setItems(observableList);
     }
@@ -117,9 +122,8 @@ public class StudentGrades {
     {
         List<GradesDetails> gradesDetails = new ArrayList<>();
         String gradeSubject,gradeCourse,teacherFirstNameExecuted,teacherLastNameExecuted;
-        int idOnGradeList ,count = 0;
+        int count = 0;
         for (Grade g : grades){
-            idOnGradeList = g.getId();
             count++;
             gradeSubject=g.getExamCopy().getCompExamToExecute().getExam().getExamSubject().getSubjectName();
             gradeCourse=g.getExamCopy().getCompExamToExecute().getExam().getExamCourse().getCourseName();
