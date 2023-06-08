@@ -7,11 +7,13 @@ import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
@@ -50,7 +52,8 @@ public class SolveExam {
     private RadioButton thirdChoice;
     @FXML
     private RadioButton fourthChoice;
-
+    @FXML
+    private HBox questionsNumbersButtons;
 
     public Set<Exam_Question> examQuestions = new HashSet<>();
     public List<Question> questionList;
@@ -67,21 +70,24 @@ public class SolveExam {
 
     @FXML
     void goToNextQuestion(ActionEvent event) {
-        if(questionChoices.getSelectedToggle() != null){
-            RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();
-            answers.set(questionCounter,selected.getText());
-        }
+        checkCurrentQuestion();
         questionCounter++;
         question(); 
     }
     @FXML
     void goToPreviousQuestion(ActionEvent event) {
+        checkCurrentQuestion();
+        questionCounter--;
+        question();
+    }
+    void checkCurrentQuestion() {
         if(questionChoices.getSelectedToggle() != null){
             RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();
             answers.set(questionCounter,selected.getText());
+            Button button = (Button) questionsNumbersButtons.getChildren().get(questionCounter);
+            button.setStyle("-fx-background-color: #0A8A0A");
+            button.setTextFill(Paint.valueOf("#ffffff"));
         }
-        questionCounter--;
-        question();
     }
 
     @FXML
@@ -97,15 +103,6 @@ public class SolveExam {
 
 
         System.out.println(hour+":" +minute +":"+ second);
-//        if (hour != 0 || minute != 0 || second != 0) {
-//            List<Object> dataToServer = new ArrayList<>();
-//            dataToServer.add(answers);
-//            dataToServer.add(GlobalDataSaved.examToExecute);
-//            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime()+1);
-//            dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime());
-//            Message msg = new Message("#submitted on the time", dataToServer);
-//            SimpleClient.getClient().sendToServer(msg);
-//        }
         sendStudentAnswersToServer(true, calculateStudentExamGrade());
 
     }
@@ -163,7 +160,6 @@ public class SolveExam {
         minute = examTime;
         if (hour == 0 && minute < 10) {
             examTimer.setFill(Paint.valueOf("#ff0000"));
-            //examTimer.setStyle("-fx-text-fill: red;");
         }
         ddHour = decimalFormat.format(hour);
         ddMinute = decimalFormat.format(minute);
@@ -177,6 +173,19 @@ public class SolveExam {
         for (int i=0; i<questionList.size(); i++) {
             answers.add(i,null);
         }
+        questionsNumbersButtons.setSpacing(5);
+        for (int i=0; i<questionList.size(); i++){
+            Button button = new Button(String.valueOf(i+1));
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    checkCurrentQuestion();
+                    questionCounter = Integer.parseInt(button.getText()) - 1;
+                    question();
+                }
+            });
+            questionsNumbersButtons.getChildren().add(button);
+        }
         question();
 
 
@@ -185,7 +194,6 @@ public class SolveExam {
 
     void question() {
         Question q = questionList.get(questionCounter);
-        //answers.add(questionCounter,null);
         getCurrentQuestion(q);
     }
 
@@ -285,10 +293,6 @@ public class SolveExam {
         thirdChoice.setFocusTraversable(false);
         fourthChoice.setFocusTraversable(false);
 
-        for (int i=0; i<answers.size(); i++) {
-            System.out.println("**** the saved answer is: "+ answers.get(i));
-        }
-
         if (questionCounter == 0){
             prevQuestion.setDisable(true);
             nextQuestion.setDisable(false);
@@ -319,21 +323,8 @@ public class SolveExam {
 
 
         if (answers.get(questionCounter) != null) {
-            System.out.println("answer not null" +"\n"+ answers.get(questionCounter));
-            if (answers.get(questionCounter).equals(firstChoice.getText())) {
-                firstChoice.setSelected(true);
-                System.out.println("choice 1");
-            } else if (answers.get(questionCounter).equals(secondChoice.getText())) {
-                secondChoice.setSelected(true);
-                System.out.println("choice 2");
-            } else if (answers.get(questionCounter).equals(thirdChoice.getText())) {
-                thirdChoice.setSelected(true);
-                System.out.println("choice 3");
-            } else if (answers.get(questionCounter).equals(fourthChoice.getText())) {
-                fourthChoice.setSelected(true);
-                System.out.println("choice 4");
-            }
-        } else if (answers.get(questionCounter) == null && questionCounter > 0 && questionChoices.getSelectedToggle() != null) {
+            ExamCopy.setButtonSelectedBefore(answers,questionCounter,firstChoice,secondChoice,thirdChoice,fourthChoice);
+        } else if (answers.get(questionCounter) == null && questionChoices.getSelectedToggle() != null) {
             questionChoices.getSelectedToggle().setSelected(false);
         }
     }

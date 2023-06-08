@@ -56,131 +56,124 @@ public class SimpleClient extends AbstractClient {
 						return;
 					}
 				}
-					if (contentOfMsg.equals("sending teacher subjects")) {
-						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
-						if(GlobalDataSaved.forQuestion==0)App.setRoot("makeQuestion");
-						if(GlobalDataSaved.forQuestion==1) App.setRoot("makeExam");
+				if (contentOfMsg.equals("sending teacher subjects")) {
+					GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
+					if(GlobalDataSaved.forQuestion==0)App.setRoot("makeQuestion");
+					if(GlobalDataSaved.forQuestion==1) App.setRoot("makeExam");
+					return;
+				}
+				if (contentOfMsg.equals("sending teacher courses")) {
+					GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
+					return;
+				}
+				if (contentOfMsg.equals("student grades")) {
+					GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
+					App.setRoot("studentGrades");
+					return;
+				}
+				if (contentOfMsg.equals("exam copy")) {
+					Grade grade = (Grade) msgFromServer.getObj();
+					GlobalDataSaved.currentGrade = grade;
+					GlobalDataSaved.examToExecute = (ExamToExecute) grade.getExamCopy().getCompExamToExecute();
+					String answers = grade.getExamCopy().getAnswers();
+					List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+					GlobalDataSaved.studentAnswers = answersList;
+					App.setRoot("examStudentNotes");
+					return;
+				}
+				if (contentOfMsg.equals("write id to start")) {
+					ExamToExecute examToExecute = (ExamToExecute) msgFromServer.getObj();
+					GlobalDataSaved.examToExecute = examToExecute;
+					App.setRoot("checkExamCode");
+					return;
+				}
+				if (contentOfMsg.equals("do exam")) {
+					if(GlobalDataSaved.examToExecute.getClass().equals(ComputerizedExamToExecute.class))
+					{
+						App.setRoot("solve_Exam");
 						return;
 					}
-					if (contentOfMsg.equals("sending teacher courses")) {
-						GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
-						return;
-					}
-					if (contentOfMsg.equals("student grades")) {
-						GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
-						App.setRoot("studentGrades");
-						return;
-					}
-					if (contentOfMsg.equals("exam copy")) {
-						//List<Object> dataFromServer = (List<Object>) msgFromServer.getObj();
-						System.out.println("&&&&&&&&&&&&&& exam copy client &&&&&&&&&&&&&&&&&&&");
-						Grade grade = (Grade) msgFromServer.getObj();
-						GlobalDataSaved.currentGrade = grade;
-						GlobalDataSaved.examToExecute = (ExamToExecute) grade.getExamCopy().getCompExamToExecute();
-						String answers = grade.getExamCopy().getAnswers();
-						List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
-						GlobalDataSaved.studentAnswers = answersList;
-						System.out.println("+++++++++++++++++++" + GlobalDataSaved.currentGrade.getGrade());
-						App.setRoot("examStudentNotes");
-						return;
-					}
-					if (contentOfMsg.equals("write id to start")) {
-						ExamToExecute examToExecute = (ExamToExecute) msgFromServer.getObj();
-						GlobalDataSaved.examToExecute = examToExecute;
-						App.setRoot("checkExamCode");
-						return;
-					}
-					if (contentOfMsg.equals("do exam")) {
-						if(GlobalDataSaved.examToExecute.getClass().equals(ComputerizedExamToExecute.class))
-						{
-							App.setRoot("solve_Exam");
-							return;
-						}
 
-						App.setRoot("solveExamManual");
-						return;
-					}
-					if (contentOfMsg.equals("exam done")) {
-						String answers = (String) msgFromServer.getObj();
-						List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
-						GlobalDataSaved.studentAnswers = answersList;
-						//EventBus.getDefault().post(new MessageEvent((Message) msg));
-						App.setRoot("studentHome");
-						return;
-					}
-//					if (contentOfMsg.equals("exam done")) {
-//						String answers = (String) msgFromServer.getObj();
-//						List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
-//						GlobalDataSaved.studentAnswers = answersList;
-//						EventBus.getDefault().post(new MessageEvent((Message) msg));
-//						App.setRoot("studentHome");
-//						return;
-//					}
-					if (contentOfMsg.equals("All Subjects Given to principal")) {
-						GlobalDataSaved.subjects = FXCollections.observableArrayList();
-						GlobalDataSaved.subjects.addAll((List<Subject>) msgFromServer.getObj());
-						App.setRoot("principalAddUsers");
-						return;
-					}
-					if (contentOfMsg.equals("User Already in the System")){
-						GlobalDataSaved.AddFlag = false;
-						EventBus.getDefault().post(new WarningEvent(new Warning(contentOfMsg)));
-						App.setRoot("principalHome");
-						return;
-					}
-					if (contentOfMsg.equals("Teacher Added Successfully")) {
-						GlobalDataSaved.AddFlag = true;
-						EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
-						App.setRoot("principalHome");
-						return;
-					}
-					if (contentOfMsg.equals("Student Added Successfully")) {
-						GlobalDataSaved.AddFlag = true;
-						EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
-						App.setRoot("principalHome");
-						return;
-					}
-					if (contentOfMsg.equals("successful logout")) {
-						App.backLogin("login");
-						return;
-					}
-					if (contentOfMsg.equals("course questions")) {
-						GlobalDataSaved.courseQuestionsForMakeExam = (List<Question>) msgFromServer.getObj();
-						App.setRoot("examChooseQuestions");
-						return;
-					}
+					App.setRoot("solveExamManual");
+					return;
+				}
+				if (contentOfMsg.equals("exam done on time")) {
+					examFinished(msgFromServer);
+					Message newMessage=new Message("Submitted Successfully");
+					EventBus.getDefault().post(new MessageEvent(newMessage));
+					App.setRoot("studentHome");
+					return;
+				}
+				if (contentOfMsg.equals("exam finished time")) {
+					examFinished(msgFromServer);
+					App.setRoot("studentHome");
+					return;
+				}
+				if (contentOfMsg.equals("All Subjects Given to principal")) {
+					GlobalDataSaved.subjects = FXCollections.observableArrayList();
+					GlobalDataSaved.subjects.addAll((List<Subject>) msgFromServer.getObj());
+					App.setRoot("principalAddUsers");
+					return;
+				}
+				if (contentOfMsg.equals("User Already in the System")){
+					GlobalDataSaved.AddFlag = false;
+					EventBus.getDefault().post(new WarningEvent(new Warning(contentOfMsg)));
+					App.setRoot("principalHome");
+					return;
+				}
+				if (contentOfMsg.equals("Teacher Added Successfully")) {
+					GlobalDataSaved.AddFlag = true;
+					EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
+					App.setRoot("principalHome");
+					return;
+				}
+				if (contentOfMsg.equals("Student Added Successfully")) {
+					GlobalDataSaved.AddFlag = true;
+					EventBus.getDefault().post(new MessageEvent((Message) msgFromServer));
+					App.setRoot("principalHome");
+					return;
+				}
+				if (contentOfMsg.equals("successful logout")) {
+					App.backLogin("login");
+					return;
+				}
+				if (contentOfMsg.equals("course questions")) {
+					GlobalDataSaved.courseQuestionsForMakeExam = (List<Question>) msgFromServer.getObj();
+					App.setRoot("examChooseQuestions");
+					return;
+				}
 				if (contentOfMsg.equals("added the question successfully")) {
 					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added question" + Color.ANSI_RESET);
 					App.setRoot("makeQuestion");
 					return;
 				}
-					if (contentOfMsg.equals("added the exam successfully")) {
-						EventBus.getDefault().post(new MessageEvent((Message) msg));
-						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added Exam" + Color.ANSI_RESET);
-						App.setRoot("makeExam");
-						return;
-					}//
-					if (contentOfMsg.equals("added the CompExam successfully")) {
-						EventBus.getDefault().post(new MessageEvent((Message) msg));
-						System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an comp Exam" + Color.ANSI_RESET);
-						App.setRoot("teacherHome");
-						return;
-					}
+				if (contentOfMsg.equals("added the exam successfully")) {
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
+					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added Exam" + Color.ANSI_RESET);
+					App.setRoot("makeExam");
+					return;
+				}
+				if (contentOfMsg.equals("added the CompExam successfully")) {
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
+					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an comp Exam" + Color.ANSI_RESET);
+					App.setRoot("teacherHome");
+					return;
+				}
 				if (contentOfMsg.equals("added the manualExam successfully")) {
 					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " executed an manual Exam" + Color.ANSI_RESET);
 					App.setRoot("teacherHome");
 					return;
 				}
-					if (contentOfMsg.equals("sending teacher subjects")) {
-						GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
-						return;
-					}
-					if (contentOfMsg.equals("sending teacher courses")) {
-						GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
-						return;
-					}
+				if (contentOfMsg.equals("sending teacher subjects")) {
+					GlobalDataSaved.teacherSubjects = (List<Subject>) msgFromServer.getObj();
+					return;
+				}
+				if (contentOfMsg.equals("sending teacher courses")) {
+					GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
+					return;
+				}
 				if (contentOfMsg.equals("the grade updated")) {
 					List<Object> dataFromServer=(List<Object>)msgFromServer.getObj();
 					int newGrade=(int)dataFromServer.get(1);
@@ -188,30 +181,29 @@ public class SimpleClient extends AbstractClient {
 					EventBus.getDefault().post(new MessageEvent((Message) newMessage));
 					return;
 				}
-					if (contentOfMsg.equals("student grades")) {
-						GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
-						System.out.println("*****/////" + GlobalDataSaved.gradeList.get(0).getGrade());
-						App.setRoot("studentGrades");
-						return;
-					}
-					if (contentOfMsg.equals("do exam")) {
-						ExamToExecute examToExecute = (ExamToExecute) msgFromServer.getObj();
-						GlobalDataSaved.examToExecute = examToExecute;
-						if(examToExecute.getClass().equals(ComputerizedExamToExecute.class))App.setRoot("solve_Exam");
-						else App.setRoot("solveExamManual");
-						return;
-					}
-					if(contentOfMsg.equals("sending all compExams for teacher"))
-					{
-						GlobalDataSaved.teacherExamsToApprove=(List<ExamToExecute>) msgFromServer.getObj();
-						App.setRoot("examNeedApprovement");
-					}
-					//sending all exams for teacher
-					if (contentOfMsg.equals("sending all exams for teacher")) {
-						GlobalDataSaved.allExamsForTeacher = (List<Exam>) msgFromServer.getObj();
-						App.setRoot("prepareExam");
-						return;
-					}
+				if (contentOfMsg.equals("student grades")) {
+					GlobalDataSaved.gradeList = (List<Grade>) msgFromServer.getObj();
+					App.setRoot("studentGrades");
+					return;
+				}
+				if (contentOfMsg.equals("do exam")) {
+					ExamToExecute examToExecute = (ExamToExecute) msgFromServer.getObj();
+					GlobalDataSaved.examToExecute = examToExecute;
+					if(examToExecute.getClass().equals(ComputerizedExamToExecute.class))App.setRoot("solve_Exam");
+					else App.setRoot("solveExamManual");
+					return;
+				}
+				if(contentOfMsg.equals("sending all compExams for teacher"))
+				{
+					GlobalDataSaved.teacherExamsToApprove=(List<ExamToExecute>) msgFromServer.getObj();
+					App.setRoot("examNeedApprovement");
+				}
+				//sending all exams for teacher
+				if (contentOfMsg.equals("sending all exams for teacher")) {
+					GlobalDataSaved.allExamsForTeacher = (List<Exam>) msgFromServer.getObj();
+					App.setRoot("prepareExam");
+					return;
+				}
 				if (contentOfMsg.equals("teacher compExams")) {
 					GlobalDataSaved.teacherExamsToApprove = (List<ExamToExecute>) msgFromServer.getObj();
 					App.setRoot("examNeedApprovement");
@@ -302,6 +294,12 @@ public class SimpleClient extends AbstractClient {
 				}
 			}
 
+	}
+
+	void examFinished(Message msgFromServer) {
+		String answers = (String) msgFromServer.getObj();
+		List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+		GlobalDataSaved.studentAnswers = answersList;
 	}
 
 	public static SimpleClient getClient() {

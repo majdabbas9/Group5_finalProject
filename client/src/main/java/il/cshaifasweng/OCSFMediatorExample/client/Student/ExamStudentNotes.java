@@ -27,7 +27,6 @@ public class ExamStudentNotes {
     @FXML
     public void initialize() throws IOException {
         grade = GlobalDataSaved.currentGrade;
-        System.out.println("##############" + grade.getGrade());
         if (grade.getTeacherNotes() == null) {
             teacherNotes.setText("There Is No Notes");
         }

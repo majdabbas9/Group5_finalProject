@@ -43,6 +43,12 @@
             <version>3.11</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.greenrobot</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>3.2.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 	<build>

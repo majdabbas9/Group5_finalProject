@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.Student;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalHome;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -66,17 +67,7 @@ public class StudentHome {
     }
     @FXML
     public void initialize() {
-        studentName.setText(GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName());
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-        Calendar obj = Calendar.getInstance();
-        String str = formatter.format(obj.getTime());
-        currentDate.setText(str);
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss");
-            currentTime.setText(LocalDateTime.now().format(format));
-        }), new KeyFrame(Duration.seconds(1)));
-        clock.setCycleCount(Animation.INDEFINITE);
-        clock.play();
+        PrincipalHome.dataOnHome(studentName,currentDate,currentTime);
     }
 }
 

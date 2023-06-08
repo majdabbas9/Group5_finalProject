@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.Warning;
+import antlr.debug.MessageEvent;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -12,6 +13,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
+import org.greenrobot.eventbus.EventBus;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
@@ -182,7 +184,7 @@ public class HandleMsgStudent {
             boolean submitOnTime = (boolean) dataFromClient.get(4);
             SimpleServer.updateGradeAndCopyToStudent(studentAnswers, user, compExam, grade, submitOnTime);
             if (submitOnTime) {
-                Message msgToClient = new Message("exam done", studentAnswers);
+                Message msgToClient = new Message("exam done on time", studentAnswers);
                 client.sendToClient(msgToClient);
                 return true;
             }
@@ -191,7 +193,7 @@ public class HandleMsgStudent {
                 try {
                     client.sendToClient(warning);
                     System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                    Message msgToClient = new Message("exam done", studentAnswers);
+                    Message msgToClient = new Message("exam finished time", studentAnswers);
                     client.sendToClient(msgToClient);
                     return true;
                 } catch (IOException e) {

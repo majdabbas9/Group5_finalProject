@@ -21,7 +21,7 @@
                     <Font size="13.0" />
                 </font>
             </Label>
-            <Text fx:id="studentName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
+            <Text fx:id="teacherName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
                 <font>
                     <Font size="13.0" />
                 </font>

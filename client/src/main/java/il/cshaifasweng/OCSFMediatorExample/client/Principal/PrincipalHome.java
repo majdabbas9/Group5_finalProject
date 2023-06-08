@@ -60,17 +60,21 @@ public class PrincipalHome {
 
     @FXML
     void initialize() throws IOException {
-        PrincipalName.setText(GlobalDataSaved.connectedUser.getFirstName() +
+        dataOnHome(PrincipalName,TheDate,TheTime);
+    }
+
+    public static void dataOnHome(Text name, Text date, Text time){
+        name.setText(GlobalDataSaved.connectedUser.getFirstName() +
                 " " + GlobalDataSaved.connectedUser.getLastName());
         DatePicker datePicker = new DatePicker();
         datePicker.setValue(LocalDate.now());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = datePicker.getValue().format(formatter);
-        TheDate.setText(formattedDate);
+        date.setText(formattedDate);
 
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss");
-            TheTime.setText(LocalDateTime.now().format(format));
+            time.setText(LocalDateTime.now().format(format));
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
