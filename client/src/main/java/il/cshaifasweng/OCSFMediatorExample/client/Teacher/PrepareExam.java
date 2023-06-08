@@ -164,7 +164,7 @@ public class PrepareExam {
         else
         {
             String fileName=examTable.getSelectionModel().getSelectedItem().getExam_ID();
-            fileName+=GlobalDataSaved.connectedUser.getUserID();
+            fileName+=GlobalDataSaved.connectedUser.getUserID()+code;
             ManualExamToExecute manualExamToExecute=new ManualExamToExecute(dateOfExam,code,fileName);
             List<Object> dataToServer=new ArrayList<>();
             dataToServer.add(manualExamToExecute);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(examTable.getSelectionModel().getSelectedItem().getId());
