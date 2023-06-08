@@ -124,7 +124,7 @@ public class WordGeneratorFile {
         List<String> strings=new ArrayList<>();
         strings.add("hi");strings.add("hhh");
         createWordTest(strings);
-        copyFileUsingApacheCommonsIO(examsPath+"temp.docx","temp225758");
+        copyFileUsingApacheCommonsIO("temp","temp225758");
         openWord("temp");
     }
     public static void copyFileUsingApacheCommonsIO(String path1,String path2) throws IOException {
@@ -141,7 +141,7 @@ public class WordGeneratorFile {
             }
             FileOutputStream out =new FileOutputStream(new File(folder+file));
             // Open the source file
-            FileInputStream sourceFile = new FileInputStream(path1);
+            FileInputStream sourceFile = new FileInputStream(examsPath+path1+".docx");
             XWPFDocument sourceDoc = new XWPFDocument(sourceFile);
 
 

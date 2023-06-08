@@ -4,6 +4,7 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,8 +40,8 @@ public class SolveExamManual {
 
     @FXML
     void getWordFile(ActionEvent event) throws IOException {
-        WordGeneratorFile.openWord(GlobalDataSaved.examToExecute.getExam().getExam_ID()+
-                GlobalDataSaved.examToExecute.getExam().getTeacherThatCreated().getUserID()+GlobalDataSaved.connectedUser.getId());
+        WordGeneratorFile.openWord(((ManualExamToExecute)(GlobalDataSaved.examToExecute)).getFileName()+
+        GlobalDataSaved.connectedUser.getId());
         examCountDownTimer();
     }
     private void sendStudentManualAnswerToServer(boolean onTime , int grade) throws IOException {
@@ -121,12 +122,10 @@ public class SolveExamManual {
         ddMinute = decimalFormat.format(minute);
         ddSecond = decimalFormat.format(second);
         examTimer.setText(ddHour+":"+ddMinute+":"+ddSecond);
-        String source="",dist="";
-        String sourceFileName=GlobalDataSaved.examToExecute.getExam().getExam_ID()+
-                GlobalDataSaved.examToExecute.getExam().getTeacherThatCreated().getUserID();
-        source=WordGeneratorFile.examsPath+sourceFileName+".docx";
-        dist=sourceFileName+GlobalDataSaved.connectedUser.getId();
-        WordGeneratorFile.copyFileUsingApacheCommonsIO(source,dist);
+        String distFileName="";
+        String sourceFileName=((ManualExamToExecute)GlobalDataSaved.examToExecute).getFileName();
+        distFileName=sourceFileName+GlobalDataSaved.connectedUser.getId();
+        WordGeneratorFile.copyFileUsingApacheCommonsIO(sourceFileName,distFileName);
     }
 
 }
