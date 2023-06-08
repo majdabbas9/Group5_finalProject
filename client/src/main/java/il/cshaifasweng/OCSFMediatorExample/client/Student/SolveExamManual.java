@@ -4,7 +4,6 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,25 +37,30 @@ public class SolveExamManual {
     @FXML
     private Button wordFile;
 
+    private String sourceFileName, source, dist;
     @FXML
     void getWordFile(ActionEvent event) throws IOException {
-        WordGeneratorFile.openWord(((ManualExamToExecute)(GlobalDataSaved.examToExecute)).getFileName()+
-        GlobalDataSaved.connectedUser.getId());
+        List<Object> objects = sendStudentManualAnswerToServer(false);
+        Message msg = new Message("#create student copy and grade", objects);
+        SimpleClient.getClient().sendToServer(msg);
+        WordGeneratorFile.openWord(dist);
         examCountDownTimer();
     }
-    private void sendStudentManualAnswerToServer(boolean onTime , int grade) throws IOException {
+    private List<Object> sendStudentManualAnswerToServer(boolean onTime) {
         List<Object> objects = new ArrayList<>();
-        objects.add(0);
-        objects.add(1,GlobalDataSaved.connectedUser.getId());
-        objects.add(2,GlobalDataSaved.examToExecute.getId());
-        objects.add(3,grade);
+        objects.add(0, dist);
+        objects.add(1,GlobalDataSaved.connectedUser);
+        objects.add(2,GlobalDataSaved.examToExecute);
+        objects.add(3,-1);
         objects.add(4, onTime);
-        Message msg = new Message("#update student manual answer", objects);
-        SimpleClient.getClient().sendToServer(msg);
+        return objects;
     }
     @FXML
-    void submitExam(ActionEvent event) {
+    void submitExam(ActionEvent event) throws IOException {
         timer.cancel();
+        List<Object> objects = sendStudentManualAnswerToServer(true);
+        Message msg = new Message("#update student answers", objects);
+        SimpleClient.getClient().sendToServer(msg);
 
     }
     void examCountDownTimer()
@@ -83,7 +87,6 @@ public class SolveExamManual {
                 }
                 if (hour == 0 && minute < 10) {
                     examTimer.setFill(Paint.valueOf("#ff0000"));
-                    //examTimer.setStyle("-fx-text-fill: red;");
                 }
                 ddHour = decimalFormat.format(hour);
                 ddMinute = decimalFormat.format(minute);
@@ -103,11 +106,13 @@ public class SolveExamManual {
     }
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-        Message msg = new Message("#time finished");
+        List<Object> objects = sendStudentManualAnswerToServer(false);
+        Message msg = new Message("#time finished", objects);
         SimpleClient.getClient().sendToServer(msg);
     }
     @FXML
     void initialize() throws IOException {
+
         int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
         while (examTime > 60) {
             hour++;
@@ -116,16 +121,18 @@ public class SolveExamManual {
         minute = examTime;
         if (hour == 0 && minute < 10) {
             examTimer.setFill(Paint.valueOf("#ff0000"));
-            //examTimer.setStyle("-fx-text-fill: red;");
         }
         ddHour = decimalFormat.format(hour);
         ddMinute = decimalFormat.format(minute);
         ddSecond = decimalFormat.format(second);
         examTimer.setText(ddHour+":"+ddMinute+":"+ddSecond);
-        String distFileName="";
-        String sourceFileName=((ManualExamToExecute)GlobalDataSaved.examToExecute).getFileName();
-        distFileName=sourceFileName+GlobalDataSaved.connectedUser.getId();
-        WordGeneratorFile.copyFileUsingApacheCommonsIO(sourceFileName,distFileName);
+        source="";
+        dist="";
+        sourceFileName=GlobalDataSaved.examToExecute.getExam().getExam_ID()+
+                GlobalDataSaved.examToExecute.getExam().getTeacherThatCreated().getUserID();
+        source=WordGeneratorFile.examsPath+sourceFileName+".docx";
+        dist=sourceFileName+GlobalDataSaved.examToExecute.getCode()+GlobalDataSaved.connectedUser.getId();
+        WordGeneratorFile.copyFileUsingApacheCommonsIO(source,dist);
     }
 
 }

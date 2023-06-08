@@ -7,39 +7,19 @@ import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 public class StudentGrades {
 
     @FXML
@@ -74,16 +54,14 @@ public class StudentGrades {
 
     @FXML
     void getCopy(ActionEvent event) throws IOException {
-        ExamToExecute examToExecute=studentGradesTableView.getSelectionModel().getSelectedItem().getGradeObject().getExamCopy().getCompExamToExecute();
-        if(examToExecute.getClass().equals(ManualExamToExecute.class))
-        {
-            WordGeneratorFile.openWord(WordGeneratorFile.examsPath+((ManualExamToExecute)examToExecute).getFileName());
-            return;
-        }
         GlobalDataSaved.selectedGradeForExamCopy = studentGradesTableView.getSelectionModel().getSelectedIndex();
         GradesDetails details = studentGradesTableView.getSelectionModel().getSelectedItem();
         Message msg = new Message("#get exam copy", details.getGradeObject());
         SimpleClient.getClient().sendToServer(msg);
+        if (GlobalDataSaved.currentGrade.isManuel()) {
+            WordGeneratorFile.openWord(WordGeneratorFile.examsPath + GlobalDataSaved.currentGrade.getExamCopy().getAnswers());
+        }
+        App.setRoot("examStudentNotes");
     }
 
     @FXML
