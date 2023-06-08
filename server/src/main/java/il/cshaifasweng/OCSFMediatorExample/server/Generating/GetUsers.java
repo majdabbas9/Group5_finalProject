@@ -43,7 +43,7 @@ public class GetUsers {
         List<Course> coursesList=new ArrayList<>();
         for(Teacher_Course tc:subs)
         {
-            Course course1=new Course(tc.getCourse(),"get needed");
+            Course course1=new Course(tc.getCourse());
             course1.setCourseSubject(new Subject(tc.getCourse().getCourseSubject()));
             coursesList.add(course1);
         }

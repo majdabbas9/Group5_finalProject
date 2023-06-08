@@ -10,6 +10,7 @@ import aidClasses.aidClassesForTeacher.ExamQuestion;
 import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.collections.FXCollections;
@@ -25,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExamChooseQuestions {
+public class ShowExamToCopy {
 
     @FXML // fx:id="buttonBack"
     private Button buttonBack; // Value injected by FXMLLoader
@@ -83,9 +84,11 @@ public class ExamChooseQuestions {
         }
         Question question = examQuestionToSelectTable.getSelectionModel().getSelectedItem();
         questionNotes.setText(question.getTeacherNotes());
-        if (selectedQuestions.contains(question)) {
-            return;
-        }
+       for(Question question1:selectedQuestions)
+       {
+           if(question1.getStudentNotes().equals(question.getStudentNotes()))
+               return;
+       }
         selectedQuestions.add(question);
         TextField textField=new TextField("0");
         textField.setStyle("-fx-alignment: CENTER;");
@@ -107,7 +110,8 @@ public class ExamChooseQuestions {
     }
     @FXML
     void backToBuildExam(ActionEvent event) throws IOException {
-        App.setRoot("makeExam");
+        Message msg1 = new Message("#allExamsForTeacherToCopy", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server;
     }
     @FXML
     void submitExam(ActionEvent event) {
@@ -173,19 +177,19 @@ public class ExamChooseQuestions {
         }
         Exam exam=new Exam(time,QuestionsExamsID.examID(MakeExam.selectedCourse.getCourseName(),MakeExam.selectedSubject.getId(),
                 MakeExam.selectedCourse.getId()),teacherNotes.getText(),studentNotes.getText());
-        List<Object>objects=new ArrayList<>();
-        objects.add(exam);
-        objects.add(GlobalDataSaved.connectedUser.getId());
-        objects.add(MakeExam.selectedCourse.getId());
-        objects.add(MakeExam.selectedSubject.getId());
+        List<Object>dataToServer=new ArrayList<>();
+        dataToServer.add(exam);
+        dataToServer.add(GlobalDataSaved.connectedUser.getId());
+        dataToServer.add(MakeExam.selectedCourse.getId());
+        dataToServer.add(MakeExam.selectedSubject.getId());
         List<Integer> questionsIds=new ArrayList<>();
         for(Question question:selectedQuestions)
         {
             questionsIds.add(question.getId());
         }
-        objects.add(questionsIds);
-        objects.add(examPoints);
-        Message msg = new Message("#addExam", objects); // creating a msg to the server demanding the students
+        dataToServer.add(questionsIds);
+        dataToServer.add(examPoints);
+        Message msg = new Message("#addExamToCopy", dataToServer); // creating a msg to the server demanding the students
         try {
             SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
         }
@@ -205,12 +209,20 @@ public class ExamChooseQuestions {
         examQuestionsTheQuestion.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Question>("question"));
         examQuestionsTheQuestion.setStyle("-fx-alignment: CENTER;");
         examQuestionPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, TextField>("points"));
-
+        for(Exam_Question exam_question:GlobalDataSaved.selectedExamToCopy.getExamQuestions())
+        {
+            Question question=exam_question.getQuestion();
+            TextField textField=new TextField("0");
+            textField.setStyle("-fx-alignment: CENTER;");
+            observableList.add(new ExamQuestion(question.getQuestionID(),question,textField));
+            selectedQuestions.add(question);
+        }
+        examQuestionTable.setItems(observableList);
         ObservableList<Question> courseQuestions = FXCollections.observableArrayList();
         examQuestionsTheQuestionToSelect.setCellValueFactory(new PropertyValueFactory<Question, String>("studentNotes"));
         examQuestionsTheQuestionToSelect.setStyle("-fx-alignment: CENTER;");
         examQuestionIDToSelect.setCellValueFactory(new PropertyValueFactory<Question,String>("questionID"));
-        courseQuestions.setAll(GlobalDataSaved.courseQuestionsForMakeExam);
+        courseQuestions.setAll(GlobalDataSaved.allQuestionsForExamToCopy);
         examQuestionToSelectTable.setItems(courseQuestions);
     }
 

@@ -44,7 +44,7 @@ public class Exam implements Serializable{
         this.notes = notes;
     }
 
-    public Exam(Exam exam,String str) {
+    public Exam(Exam exam) {
         this.id = exam.id;
         this.time = exam.time;
         this.exam_ID = exam.exam_ID;

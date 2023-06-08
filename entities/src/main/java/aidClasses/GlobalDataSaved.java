@@ -66,4 +66,9 @@ public class GlobalDataSaved {
     public static boolean isManualToApprove;
     public static List<ExamToExecute> allExamsToExecuteForPrincipal = new ArrayList<>();
     public static List<Question> allQuestionsForTeacher;
+    public static Question selectedQuestionsToCopy;
+    public static Subject selectedSubjectToCopy;
+    public static List<Exam> allExamsForTeacherToCopy;
+    public static Exam selectedExamToCopy;
+    public static List<Question> allQuestionsForExamToCopy;
 }

@@ -51,7 +51,7 @@ public class Course implements  Serializable{
         this.courseName = courseName;
         this.courseQuestions =new HashSet<>();
     }
-    public Course(Course course,String str)
+    public Course(Course course)
     {
         this.id=course.id;
         this.courseName=course.getCourseName();

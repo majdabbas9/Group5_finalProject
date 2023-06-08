@@ -11,7 +11,7 @@
     <children>
         <Pane prefHeight="150.0" prefWidth="850.0" style="-fx-background-color: #003000;">
             <children>
-                <Label layoutX="28.0" layoutY="42.0" text="Student DashBoard" textFill="WHITE">
+                <Label layoutX="28.0" layoutY="42.0" text="teacher DashBoard" textFill="WHITE">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -21,7 +21,7 @@
                         <Font size="13.0" />
                     </font>
                 </Label>
-                <Text fx:id="studentName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="student name">
+                <Text fx:id="teacherName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
                     <font>
                         <Font size="13.0" />
                     </font>

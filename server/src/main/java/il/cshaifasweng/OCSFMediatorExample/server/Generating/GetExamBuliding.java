@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
@@ -46,14 +47,14 @@ public class GetExamBuliding {
             List<Exam> courseExamResult = query.getResultList();
             for(Exam exam : courseExamResult)
             {
-                Exam exam1=new Exam(exam,"all needed");
+                Exam exam1=new Exam(exam);
                 Set<Exam_Question> examQuestions=exam.getExamQuestions();
                 for(Exam_Question exam_question:examQuestions)
                 {
                     Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()));
                     exam1.getExamQuestions().add(eq);
                 }
-                exam1.setExamCourse(new Course(exam.getExamCourse(),"hit"));
+                exam1.setExamCourse(new Course(exam.getExamCourse()));
                 allExams.add(exam1);
             }
         }
@@ -103,7 +104,7 @@ public class GetExamBuliding {
             if(compareDates(date,compExam.getDateOfExam(),endDate))
             {
                 ExamToExecute exam=new ExamToExecute(compExam);
-                exam.setExam(new Exam(compExam.getExam(),"all needed"));
+                exam.setExam(new Exam(compExam.getExam()));
                 list1.add(exam);
             }
         }
@@ -207,6 +208,61 @@ public class GetExamBuliding {
             Question q=new Question(question);
             q.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
             Subject subject=new Subject(question.getQuestionSubject());
+            q.setQuestionSubject(new Subject(question.getQuestionSubject()));
+            questions.add(q);
+        }
+        return questions;
+    }
+    public static List<Exam> getAllExamsForTeacher(Session session)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Exam> query = builder.createQuery(Exam.class);
+        query.from(Exam.class);
+        List<Exam> data = session.createQuery(query).getResultList();
+        List<Exam> exams=new ArrayList<>();
+        for(Exam exam:data)
+        {
+            Exam q=new Exam(exam);
+            Exam exam1=new Exam(exam);
+            Set<Exam_Question> examQuestions=exam.getExamQuestions();
+            for(Exam_Question exam_question:examQuestions)
+            {
+                Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()));
+                exam1.getExamQuestions().add(eq);
+            }
+            exam1.setExamCourse(new Course(exam.getExamCourse()));
+            exam1.setExamSubject(new Subject(exam.getExamSubject()));
+            exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+            exams.add(exam1);
+        }
+        return exams;
+    }
+    public static List<Question> getAllQuestionsForExamToCopy(Session session,int courseId,int subjectId)
+    {
+        Subject subject=GetExamBuliding.getSubjectById(session,subjectId);
+        Course course=GetExamBuliding.getCourseById(session,courseId);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Question> query = builder.createQuery(Question.class);
+        query.from(Question.class);
+        List<Question> data = session.createQuery(query).getResultList();
+        for(Question question:data)
+        {
+            if(!question.getQuestionSubject().getSubjectName().equals(subject.getSubjectName()))
+                data.remove(question);
+            boolean isExist=false;
+            for(Course_Question courseQuestion:question.getQuestionCourses())
+            {
+                if(courseQuestion.getCourse().getCourseName().equals(course.getCourseName()))
+                    isExist=true;
+            }
+            if(!isExist)data.remove(question);
+        }
+        List<Question> questions=new ArrayList<>();
+        for(Question question:data)
+        {
+            Question q=new Question(question);
+            q.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
+            Subject subject1=new Subject(question.getQuestionSubject());
             q.setQuestionSubject(new Subject(question.getQuestionSubject()));
             questions.add(q);
         }

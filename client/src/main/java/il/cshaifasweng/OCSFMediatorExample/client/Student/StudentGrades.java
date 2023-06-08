@@ -59,7 +59,7 @@ public class StudentGrades {
         Message msg = new Message("#get exam copy", details.getGradeObject());
         SimpleClient.getClient().sendToServer(msg);
         if (GlobalDataSaved.currentGrade.isManuel()) {
-            WordGeneratorFile.openWord(WordGeneratorFile.examsPath + GlobalDataSaved.currentGrade.getExamCopy().getAnswers());
+            WordGeneratorFile.openWord(GlobalDataSaved.currentGrade.getExamCopy().getAnswers());
         }
         App.setRoot("examStudentNotes");
     }

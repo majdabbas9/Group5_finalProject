@@ -5,6 +5,7 @@
 package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
+import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -20,6 +21,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class AllQuestions {
 
@@ -48,18 +51,26 @@ public class AllQuestions {
     private Text warning; // Value injected by FXMLLoader
 
     @FXML
-    void BackToMenu(ActionEvent event) {
-
+    void BackToMenu(ActionEvent event) throws IOException {
+        App.setRoot("teacherHome");
     }
 
     @FXML
-    void ShowQuestion(ActionEvent event) {
-
+    void ShowQuestion(ActionEvent event) throws IOException {
+        warning.setText("");
+        if(table.getSelectionModel().getSelectedItem()==null)
+        {
+            warning.setText("no selected question");
+            return;
+        }
+        GlobalDataSaved.selectedSubjectToCopy=table.getSelectionModel().getSelectedItem().getQuestionSubject();
+        GlobalDataSaved.selectedQuestionsToCopy=table.getSelectionModel().getSelectedItem();
+        App.setRoot("showQuestionToEdit");
     }
 
     @FXML
     void selectQuestion(MouseEvent event) {
-
+        return;
     }
     @FXML
    void initialize()

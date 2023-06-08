@@ -57,10 +57,71 @@ public class HandleMsgTeacher {
             }
             return true;
         }
+        if (contentOfMsg.equals("#addQuestionToCopy")) {
+            List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+            Question question = (Question) (dataFromClient.get(0));
+
+            String queryString="FROM Question WHERE studentNotes = : studentNotes";
+            Query query = session.createQuery(queryString,Question.class);
+            query.setParameter("studentNotes",(question.getStudentNotes()));
+            List<Question> res=query.getResultList();
+            session.clear();
+
+            if(res.size()!=0)
+            {
+                Warning warning = new Warning("the question already existed");
+                try {
+                    client.sendToClient(warning);
+                    System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            SimpleServer.addQuestion(question,(List<Integer>)dataFromClient.get(1),(int)dataFromClient.get(2),(int)dataFromClient.get(3));
+            Message messageToClient = new Message("copied the question successfully");
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }//
         if (contentOfMsg.equals("#addExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
             SimpleServer.addExam((Exam) dataFromClient.get(0),(int) dataFromClient.get(1), (int) dataFromClient.get(2),(int)dataFromClient.get(3),(List<Integer>) dataFromClient.get(4),(List<Integer>)dataFromClient.get(5));
             Message messageToClient = new Message("added the exam successfully");
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (contentOfMsg.equals("#addExamToCopy")) {
+            List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+            SimpleServer.addExam((Exam) dataFromClient.get(0),(int) dataFromClient.get(1), (int) dataFromClient.get(2),(int)dataFromClient.get(3),(List<Integer>) dataFromClient.get(4),(List<Integer>)dataFromClient.get(5));
+            Message messageToClient = new Message("copied the exam successfully");
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (contentOfMsg.equals("#allExamsForTeacherToCopy")) {
+            Message messageToClient = new Message("all the exams for teacher copy",GetExamBuliding.getAllExamsForTeacher(session));
+            try {
+                client.sendToClient(messageToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        if (contentOfMsg.equals("#allQuestionForExamsForTeacherToCopy")) {
+            List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+            Message messageToClient = new Message("all the questions for teacher exam to copy",GetExamBuliding.getAllQuestionsForExamToCopy(session,
+                    (int)(dataFromClient.get(0)),(int)(dataFromClient.get(1))));
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {

@@ -47,7 +47,7 @@
          </font>
       </Button>
       <TextField fx:id="teacherNotes" alignment="CENTER" layoutX="61.0" layoutY="103.0" prefHeight="56.0" prefWidth="150.0" promptText="teacher notes" />
-      <ListView fx:id="selectedCourseList" layoutX="561.0" layoutY="362.0" prefHeight="174.0" prefWidth="223.0" />
+      <ListView fx:id="selectedCourseList" layoutX="561.0" layoutY="362.0" onMouseClicked="#removeCourse" prefHeight="174.0" prefWidth="223.0" />
       <Text fill="WHITE" layoutX="616.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="selected courses" wrappingWidth="113.33673477172852">
          <font>
             <Font size="14.0" />

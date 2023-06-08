@@ -7,6 +7,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalHome;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ public class BuildExam {
     private Button makeQuestionButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="studentName"
-    private Text studentName; // Value injected by FXMLLoader
+    private Text teacherName; // Value injected by FXMLLoader
 
     @FXML
     void backToMenu(ActionEvent event) throws IOException {
@@ -60,6 +61,11 @@ public class BuildExam {
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server;
         Message msg = new Message("#teacherSubjects", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
+    }
+    @FXML
+    public void initialize()
+    {
+        PrincipalHome.dataOnHome(teacherName,currentDate,currentTime);
     }
 
 }

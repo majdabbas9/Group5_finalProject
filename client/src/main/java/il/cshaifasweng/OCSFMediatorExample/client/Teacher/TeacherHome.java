@@ -109,8 +109,9 @@ public class TeacherHome {
     }
 
     @FXML
-    void showAllExams(ActionEvent event) {
-
+    void showAllExams(ActionEvent event) throws IOException {
+        Message msg1 = new Message("#allExamsForTeacherToCopy", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server;
     }
 
     @FXML

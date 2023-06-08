@@ -146,11 +146,23 @@ public class SimpleClient extends AbstractClient {
 					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added question" + Color.ANSI_RESET);
 					App.setRoot("makeQuestion");
 					return;
+				}//
+				if (contentOfMsg.equals("copied the question successfully")) {
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
+					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " copied question" + Color.ANSI_RESET);
+					App.setRoot("teacherHome");
+					return;
 				}
 				if (contentOfMsg.equals("added the exam successfully")) {
 					EventBus.getDefault().post(new MessageEvent((Message) msg));
 					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " added Exam" + Color.ANSI_RESET);
 					App.setRoot("makeExam");
+					return;
+				}
+				if (contentOfMsg.equals("copied the exam successfully")) {
+					EventBus.getDefault().post(new MessageEvent((Message) msg));
+					System.out.println(Color.GREEN_BOLD + "teacher : " + GlobalDataSaved.connectedUser.getFirstName() + " " + GlobalDataSaved.connectedUser.getLastName() + " copied Exam" + Color.ANSI_RESET);
+					App.setRoot("teacherHome");
 					return;
 				}
 				if (contentOfMsg.equals("added the CompExam successfully")) {
@@ -285,7 +297,15 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.allQuestionsForTeacher=(List<Question>) msgFromServer.getObj();
 					App.setRoot("allQuestions");
 				}
-
+				if(contentOfMsg.equals("all the exams for teacher copy")) {
+					GlobalDataSaved.allExamsForTeacherToCopy=(List<Exam>) msgFromServer.getObj();
+					App.setRoot("allExams");
+				}
+				if(contentOfMsg.equals("all the questions for teacher exam to copy"))
+				{
+					GlobalDataSaved.allQuestionsForExamToCopy=(List<Question>) msgFromServer.getObj();
+					App.setRoot("showExamToCopy");
+				}
 
 				}
             catch(Exception ex){
