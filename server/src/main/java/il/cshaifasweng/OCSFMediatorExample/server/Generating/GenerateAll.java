@@ -107,8 +107,8 @@ public class GenerateAll {
         /*adding teachers*/
 
         Teacher t1=new Teacher("21212","1","1","mohamed","abbas");
-        Teacher t2=new Teacher("33333","11","11","aa","aa");
-        Teacher t3=new Teacher("33333","111","111","aaa","aaa");
+        Teacher t2=new Teacher("33333","11","11","adam","agbaria");
+        Teacher t3=new Teacher("31313","111","111","majd","hijazi");
 
         session.save(t1);
         session.save(t2);
@@ -333,7 +333,7 @@ public class GenerateAll {
         session.save(ss3);
         session.flush();
 
-        Student_Course sc3=new Student_Course(s3,algebra2);
+        Student_Course sc3=new Student_Course(s3,discMath);
         session.save(sc3);
         session.flush();
 
@@ -341,7 +341,7 @@ public class GenerateAll {
         session.save(ss33);
         session.flush();
 
-        Student_Course sc33=new Student_Course(s3,softWare);
+        Student_Course sc33=new Student_Course(s3,operatingSystem);
         session.save(sc22);
         session.flush();
 
@@ -349,7 +349,7 @@ public class GenerateAll {
         session.save(ss333);
         session.flush();
 
-        Student_Course sc333=new Student_Course(s3,mechanic);
+        Student_Course sc333=new Student_Course(s3,electromagnetism);
         session.save(sc333);
         session.flush();
 
@@ -357,21 +357,137 @@ public class GenerateAll {
 
 
         /*adding question*/
-        List<String> cho=new ArrayList<>();
-        cho.add("1");cho.add("2");cho.add("3");cho.add("4");
-        Question question=new Question("","2+2","00000",cho,"4");
-        List<Course> courses=new ArrayList<>();
-        courses.add(algebra);
-        Adding.addQuestion(SimpleServer.getSession(),question,courses,math,t1);
+
+        /*adding question for t1*/
+
+        List<String> ch1=new ArrayList<>();
+        ch1.add("1");ch1.add("2");ch1.add("3");ch1.add("4");
+        Question q1=new Question("","2+2","00000",ch1,"4");
+        List<Course> courses1=new ArrayList<>();
+        courses1.add(algebra);
+        Adding.addQuestion(SimpleServer.getSession(),q1,courses1,math,t1);
+
+        List<String> ch2=new ArrayList<>();
+        ch2.add("4");ch2.add("5");ch2.add("6");ch2.add("10");
+        Question q2=new Question("","1*5","00001",ch2,"5");
+        Adding.addQuestion(SimpleServer.getSession(),q2,courses1,math,t1);
+
+        List<String> ch3=new ArrayList<>();
+        ch3.add("1");ch3.add("5");ch3.add("3");ch3.add("15");
+        Question q3=new Question("","3x+3=12","00002",ch3,"3");
+        List<Course> courses2=new ArrayList<>();
+        courses2.add(algebra2);
+        Adding.addQuestion(SimpleServer.getSession(),q3,courses2,math,t1);
+
+        List<String> ch4=new ArrayList<>();
+        ch4.add("4");ch4.add("5");ch4.add("15");ch4.add("10");
+        Question q4=new Question("","(2x-6)5=10","00003",ch4,"4");
+        Adding.addQuestion(SimpleServer.getSession(),q4,courses2,math,t1);
+
+        List<String> ch5=new ArrayList<>();
+        ch5.add("x=1,y=2");ch5.add("x=2,y=3");ch5.add("x=2,y=1");ch5.add("x=1,y=1");
+        Question q5=new Question("","3x+2y=8,2y+x=4","00004",ch5,"x=2,y=1");
+        List<Course> courses3=new ArrayList<>();
+        courses3.add(discMath);
+        Adding.addQuestion(SimpleServer.getSession(),q5,courses3,math,t1);
+
+        List<String> ch6=new ArrayList<>();
+        ch6.add("x=8,y=-2");ch6.add("x=-2,y=8");ch6.add("x=8,y=2");ch6.add("x=-8,y=2");
+        Question q6=new Question("","2x-2y=20,x+4y=0","00005",ch6,"x=8,y=-2");
+        Adding.addQuestion(SimpleServer.getSession(),q6,courses3,math,t1);
+
+        /*end of adding question for t1*/
+
+        /*adding question for t2*/
+
+        List<String> ch11=new ArrayList<>();
+        ch11.add("1");ch11.add("2");ch11.add("3");ch11.add("4");
+        Question q11=new Question("","int x=4; x=?","00010",ch11,"4");
+        List<Course> courses11=new ArrayList<>();
+        courses11.add(csIntro);
+        Adding.addQuestion(SimpleServer.getSession(),q11,courses11,cs,t2);
+
+        List<String> ch22=new ArrayList<>();
+        ch22.add("4");ch22.add("5");ch22.add("6");ch22.add("10");
+        Question q22=new Question("","int x=4; x++; x=?","00011",ch22,"5");
+        Adding.addQuestion(SimpleServer.getSession(),q22,courses11,cs,t2);
+
+        List<String> ch33=new ArrayList<>();
+        ch33.add("exception");ch33.add("b");ch33.add("true");ch33.add("false");
+        Question q33=new Question("","boolean b=true;if(b)return false; else return true; what is the output","00012",ch33,"false");
+        List<Course> courses22=new ArrayList<>();
+        courses22.add(softWare);
+        Adding.addQuestion(SimpleServer.getSession(),q33,courses22,cs,t2);
+
+        List<String> ch44=new ArrayList<>();
+        ch44.add("exception");ch44.add("notGreater");ch44.add("x");ch44.add("greater");
+        Question q44=new Question("","int x=5; if(x>5) return greater; else return notGreater","00013",ch44,"notGreater");
+        Adding.addQuestion(SimpleServer.getSession(),q44,courses22,cs,t2);
+
+        List<String> ch55=new ArrayList<>();
+        ch55.add("exception");ch55.add("x");ch55.add("7");ch55.add("x=7");
+        Question q55=new Question("","x=7; return x; what is the output","00014",ch55,"exception");
+        List<Course> courses33=new ArrayList<>();
+        courses33.add(operatingSystem);
+        Adding.addQuestion(SimpleServer.getSession(),q55,courses33,cs,t2);
+
+        List<String> ch66=new ArrayList<>();
+        ch66.add("y");ch66.add("8");ch66.add("10");ch66.add("3");
+        Question q66=new Question("","int x=5,y=3;while(x<10){x++;y++}return y;","00015",ch66,"8");
+        Adding.addQuestion(SimpleServer.getSession(),q66,courses33,cs,t2);
+
+        /*end of adding question for t2*/
+
+        /*adding question for t3*/
+
+        List<String> ch111=new ArrayList<>();
+        ch111.add("100");ch111.add("20");ch111.add("70");ch111.add("50");
+        Question q111=new Question("","what is the water boiling temperature","00020",ch111,"100");
+        List<Course> courses111=new ArrayList<>();
+        courses111.add(introPhysics);
+        Adding.addQuestion(SimpleServer.getSession(),q111,courses111,physics,t3);
+
+        List<String> ch222=new ArrayList<>();
+        ch222.add("20");ch222.add("0");ch222.add("-10");ch222.add("10");
+        Question q222=new Question("","what is the water freezing temperature","00021",ch222,"0");
+        Adding.addQuestion(SimpleServer.getSession(),q222,courses11,physics,t3);
+
+        List<String> ch333=new ArrayList<>();
+        ch333.add("0");ch333.add("5");ch333.add("100");ch333.add("10");
+        Question q333=new Question("","what is the gravity on earth","00022",ch333,"10");
+        List<Course> courses222=new ArrayList<>();
+        courses222.add(mechanic);
+        Adding.addQuestion(SimpleServer.getSession(),q333,courses222,physics,t3);
+
+        List<String> ch444=new ArrayList<>();
+        ch444.add("5/3");ch444.add("1.62");ch444.add("10/6");ch444.add("allChoicesCorrect");
+        Question q444=new Question("","what is the gravity on the moon","00023",ch444,"allChoicesCorrect");
+        Adding.addQuestion(SimpleServer.getSession(),q444,courses222,physics,t3);
+
+        List<String> ch555=new ArrayList<>();
+        ch555.add("300,000km/h");ch555.add("300km/s");ch555.add("300,000km/s");ch555.add("300,000m/s");
+        Question q555=new Question("","what is the light speed","00024",ch555,"300,000km/s");
+        List<Course> courses333=new ArrayList<>();
+        courses333.add(electromagnetism);
+        Adding.addQuestion(SimpleServer.getSession(),q555,courses333,physics,t3);
+
+        List<String> ch666=new ArrayList<>();
+        ch666.add("1235km/h");ch666.add("1235km/s");ch666.add("1235m/h");ch666.add("1235m/s");
+        Question q666=new Question("","What is the speed of sound","00025",ch666,"1235km/h");
+        Adding.addQuestion(SimpleServer.getSession(),q666,courses333,physics,t3);
+
+        /*end of adding question for t3*/
+
+
         /*end of adding question*/
 
         /*adding exam*/
-        List<Integer> points=new ArrayList<>();
-        List<Question> questions=new ArrayList<>();
-        questions.add(question);
-        points.add(100);
-        Exam exam=new Exam(10,"","","",points);
-        Adding.addExam(SimpleServer.getSession(),exam,t1,algebra,math,questions);
+        List<Integer> points1=new ArrayList<>();
+        List<Question> questions1=new ArrayList<>();
+        questions1.add(q1);questions1.add(q2);
+        points1.add(50);points1.add(50);
+        Exam exam=new Exam(30,"","","",points1);
+        Adding.addExam(SimpleServer.getSession(),exam,t1,algebra,math,questions1);
         /*end of adding exam*/
 
         /*adding comp exam*/
@@ -380,7 +496,7 @@ public class GenerateAll {
         /*end of adding comp exam*/
 
         /*adding copy*/
-        Copy copy=new Copy("4",compExam);
+        Copy copy=new Copy("4,5",compExam);
         session.save(copy);session.flush();
         /*end of adding copy*/
 
