@@ -89,11 +89,17 @@ public class PrepareExam {
 
     @FXML
     void displayQuestions(MouseEvent event) {
+        warningTxt.setText("");
         examQuestionsText.setVisible(true);
         examQuestionTable.setVisible(true);
         observableListQuestions.clear();
         int i=0;
         Exam exam=examTable.getSelectionModel().getSelectedItem();
+        if(exam==null)
+        {
+            warningTxt.setText("no selected exam");
+            return;
+        }
         List<Exam_Question> examQuestion=new ArrayList<>(exam.getExamQuestions());
         List<Integer> examPoints=new ArrayList<>(exam.getPoints());
         for(Exam_Question exam_question:examQuestion)
