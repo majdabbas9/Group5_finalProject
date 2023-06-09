@@ -33,6 +33,10 @@ public class ExamStudentNotes {
         else {
             teacherNotes.setText(grade.getTeacherNotes());
         }
+        if(GlobalDataSaved.currentGrade.isManuel())
+        {
+            goToQuestions.setVisible(false);
+        }
     }
     @FXML
     void backToGradesTable(ActionEvent event) throws IOException {

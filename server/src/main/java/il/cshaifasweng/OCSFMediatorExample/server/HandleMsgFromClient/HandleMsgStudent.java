@@ -12,6 +12,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExe
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +51,7 @@ public class HandleMsgStudent {
                     e.printStackTrace();
                 }
             }
-            String examDate[];
+            /*String examDate[];
             String date, time;
             examDate = examToExecute.get(0).getDateOfExam().split(" ");
             date = examDate[0];
@@ -84,6 +85,18 @@ public class HandleMsgStudent {
             if (dateElements[0].equals(year) && dateElements[1].equals(month) && dateElements[2].equals(day)
                     && t1 + examHour >= Integer.parseInt(hour) && t2 + examMinutes + ExtraTime >= Integer.parseInt(minutes)
                     && t1 <= Integer.parseInt(hour) && t2 <= Integer.parseInt(minutes)){
+
+            }*/
+            String now = LocalDateTime.now().toString();
+            String year=now.substring(0,4);
+            String month=now.substring(5,7);
+            String day=now.substring(8,10);
+            String hourMinute=now.substring(11,16);
+            String date="";
+            date+=year+"-"+month+"-"+day+" "+hourMinute;
+            if(GetExamBuliding.compareDates(date,examToExecute.get(0).getDateOfExam(),GetExamBuliding.toNewDate(
+                    examToExecute.get(0).getDateOfExam(),examToExecute.get(0).getExam().getTime()+examToExecute.get(0).getExtraTime())))
+            {
 
             }
             else {

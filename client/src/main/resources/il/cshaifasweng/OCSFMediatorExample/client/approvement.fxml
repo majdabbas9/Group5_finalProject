@@ -36,15 +36,15 @@
                 <Text fx:id="currentTime1" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-          <TableView fx:id="gradesTable" layoutX="27.0" layoutY="182.0" onMouseClicked="#updateGrade" prefHeight="394.0" prefWidth="820.0">
+          <TableView fx:id="gradesTable" layoutX="15.0" layoutY="184.0" onMouseClicked="#updateGrade" prefHeight="394.0" prefWidth="830.0">
               <columns>
                   <TableColumn fx:id="studentIdColumn" prefWidth="133.60001182556152" text="Student ID" />
                   <TableColumn fx:id="studentNameColumn" minWidth="7.199951171875" prefWidth="119.20004272460938" text="Student Name" />
                   <TableColumn fx:id="dateColumn" prefWidth="201.60003662109375" text="date" />
                   <TableColumn fx:id="gradeColumn" prefWidth="45.599945068359375" text="grade" />
             <TableColumn fx:id="gradeObjectColumn" prefWidth="75.0" text="gradeObjectColumn" visible="false" />
-            <TableColumn fx:id="wordColumn" prefWidth="52.79998779296875" text="word" />
             <TableColumn fx:id="notesColumn" prefWidth="264.0" text="notes" />
+            <TableColumn fx:id="wordColumn" prefWidth="75.0" text="word" />
               </columns>
           </TableView>
         <Button layoutX="14.0" layoutY="589.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">

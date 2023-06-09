@@ -59,11 +59,11 @@ public class ExamsNeedApprovement {
     }
 
     @FXML
-    void nextClick(ActionEvent event) throws IOException {
+    void nextClick(ActionEvent event) throws IOException { // TODO add manual exam approve
         if(examsTable.getSelectionModel().getSelectedItem()==null)return;
         if(examsTable.getSelectionModel().getSelectedItem().isManual())GlobalDataSaved.isManualToApprove=true;
         else GlobalDataSaved.isManualToApprove=false;
-        Message msg1 = new Message("#showAllCompExamGrades",examsTable.getSelectionModel().getSelectedItem().getDate().getId()); // creating a msg to the server demanding the students
+        Message msg1 = new Message("#showAllExamGrades",examsTable.getSelectionModel().getSelectedItem().getDate().getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
     }
     @FXML

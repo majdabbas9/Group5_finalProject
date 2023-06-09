@@ -47,6 +47,14 @@ public class WordGeneratorFile {
         titleRun.setFontFamily("Courier");
         titleRun.setFontSize(20);
 
+        XWPFParagraph grade = doc.createParagraph();
+        XWPFRun gradeRun = grade.createRun();
+        gradeRun.setText("grade = ");
+        gradeRun.setColor("0000FF");
+        gradeRun.setBold(true);
+        gradeRun.setFontFamily("Courier");
+        gradeRun.setFontSize(18);
+
         int i=0,size=questions.size();
         while (i<size)
         {
@@ -101,6 +109,7 @@ public class WordGeneratorFile {
             tmpRun.setFontSize(18);
             i++;
         }
+
         XWPFParagraph end = doc.createParagraph();
         end.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun endRun = end.createRun();

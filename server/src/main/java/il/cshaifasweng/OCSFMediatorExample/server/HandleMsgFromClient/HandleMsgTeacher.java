@@ -263,17 +263,17 @@ public class HandleMsgTeacher {
             }
             return true;
         }
-        if(contentOfMsg.equals("#showAllCompExamGrades"))
+        if(contentOfMsg.equals("#showAllExamGrades"))
         {
             int compExamId=(int)msgFromClient.getObj();
-            String queryString="FROM ComputerizedExamToExecute WHERE id = : id";
-            Query query = session.createQuery(queryString,ComputerizedExamToExecute.class);
+            String queryString="FROM ExamToExecute WHERE id = : id";
+            Query query = session.createQuery(queryString,ExamToExecute.class);
             query.setParameter("id",compExamId);
 
-            List<ComputerizedExamToExecute> compExam=(List<ComputerizedExamToExecute>)(query.getResultList());
+            List<ExamToExecute> exam=(List<ExamToExecute>)(query.getResultList());
 
             List<Grade> compExamGrades=new ArrayList<>();
-            for(Copy copy : compExam.get(0).getCopies())
+            for(Copy copy : exam.get(0).getCopies())
             {
                 if(!copy.getGrade().isTeacherApprovement())compExamGrades.add(copy.getGrade());
             }

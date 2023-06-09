@@ -8,6 +8,7 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.aidClassesForTeacher.DisplayGrade;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
+import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
@@ -65,6 +66,7 @@ public class Approvement {
     private Text warning; // Value injected by FXMLLoader
     @FXML
     private TableColumn<DisplayGrade, Button> wordColumn;
+    private Button[] buttons;
 
     private ObservableList<DisplayGrade> observableList= FXCollections.observableArrayList();
     @FXML
@@ -106,30 +108,56 @@ public class Approvement {
 
 
     }
+    private void handleButtonAction(ActionEvent event)
+    {
+        for(int i=0;i<buttons.length;i++)
+        {
+            if(event.getSource()==buttons[i])
+            {
+                WordGeneratorFile.openWord(gradesTable.getItems().get(i).getGradeObject().getExamCopy().getAnswers());
+                return;
+            }
+        }
+    }
+
 
     @FXML
     public void initialize()
     {
+        int i=0;
+        buttons=new Button[GlobalDataSaved.compExamGrades.size()];
+        for(int j=0;j<buttons.length;j++)
+        {
+            buttons[i]=new Button("word");
+           buttons[i].setOnAction(this::handleButtonAction);
+        }
         studentIdColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, String>("studentID"));
         studentNameColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, String>("studentName"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, String>("date"));
         gradeColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, TextField>("grade"));
         notesColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, TextField>("notes"));
         gradeObjectColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Grade>("gradeObject"));
-       wordColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Button>("gradeObject"));
-
+        wordColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Button>("word"));
+        if(!GlobalDataSaved.isManualToApprove)
+        {
+            wordColumn.setVisible(false);
+        }
         for(Grade grade: GlobalDataSaved.compExamGrades)
         {
             Student student=grade.getStudent();
             TextField textFieldGrade=new TextField(Integer.toString(grade.getGrade()));
             textFieldGrade.setStyle("-fx-alignment: CENTER;");
-
             TextField textFieldNotes=new TextField();textFieldNotes.setPromptText("add notes");
             textFieldNotes.setStyle("-fx-alignment: CENTER;");
+            DisplayGrade displayGrade=new DisplayGrade(student.getUserID(),student.getFirstName(),grade.getDate(),textFieldGrade,textFieldNotes,grade);
             if(!GlobalDataSaved.isManualToApprove)
             {
-                observableList.add(new DisplayGrade(student.getUserID(),student.getFirstName(),grade.getDate(),textFieldGrade,textFieldNotes,grade));
-                wordColumn.setVisible(false);
+                observableList.add(displayGrade);
+            }
+            else
+            {
+                displayGrade.setWord(buttons[i++]);
+                observableList.add(displayGrade);
             }
 
         }

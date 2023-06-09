@@ -129,6 +129,13 @@ public class GetExamBuliding {
         if(d3.compareTo(d1)>0)return true;  // if d3 occur after d1 return true
         return false;
     }
+    public static Boolean compare2Dates(String date1,String date2) throws ParseException {
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date d1 = sdFormat.parse(date1);
+        Date d2 = sdFormat.parse(date2);
+        if(d1.compareTo(d2)<0)return false; // if d1 occur before d2 return false
+        return true;
+    }
     public static Exam getExamById(Session session,int id)
     {
         String queryString=" FROM Exam WHERE id = : id";
