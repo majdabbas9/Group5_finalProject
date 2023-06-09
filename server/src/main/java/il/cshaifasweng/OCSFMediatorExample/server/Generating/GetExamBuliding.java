@@ -275,5 +275,12 @@ public class GetExamBuliding {
         }
         return questions;
     }
+    public static List<Exam> getAllExamsCreatedForTeacher(Session session,int teacherId)
+    {
+        String queryString=" FROM Exam WHERE teacherThatCreated.id = : id";
+        Query query = session.createQuery(queryString,Exam.class);
+        query.setParameter("id",teacherId);
+        return query.getResultList();
+    }
 
 }

@@ -306,6 +306,16 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.allQuestionsForExamToCopy=(List<Question>) msgFromServer.getObj();
 					App.setRoot("showExamToCopy");
 				}
+				if(contentOfMsg.equals("all exams"))
+				{
+					GlobalDataSaved.allTeacherExamsCreated=(List<Exam>) msgFromServer.getObj();
+					App.setRoot("allTeacherExams");
+				}
+				if(contentOfMsg.equals("all grades for teacher exam"))
+				{
+					GlobalDataSaved.allTeacherExamGrades=(List<Grade>) msgFromServer.getObj();
+					App.setRoot("teacherResultExam");
+				}
 
 				}
             catch(Exception ex){

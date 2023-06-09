@@ -28,6 +28,7 @@ public abstract class User implements  Serializable{
     }
 
     public User(User user) {
+        this.id=user.id;
         this.userID = user.userID;
         this.passWord = user.passWord;
         this.userName = user.userName;

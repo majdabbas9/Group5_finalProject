@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.AllTeacherExams">
+    <children>
+        <Button fx:id="buttonBack" layoutX="21.0" layoutY="571.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To menu" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Text fill="WHITE" layoutX="21.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher exams" wrappingWidth="198.39999999999986">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fx:id="warningTxt" fill="#af0000" layoutX="356.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.39999999999998">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Text>
+        <Button fx:id="buttonSubmit" layoutX="606.0" layoutY="570.0" mnemonicParsing="false" onAction="#showResult" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="show Results" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+      <TableView fx:id="examsTable" layoutX="22.0" layoutY="72.0" prefHeight="482.0" prefWidth="775.0">
+        <columns>
+          <TableColumn fx:id="examIdColumn" prefWidth="75.0" text="ExamID" />
+          <TableColumn fx:id="courseNameColumn" prefWidth="105.60003662109375" text="Course name" />
+            <TableColumn fx:id="subjectNameColumn" prefWidth="99.19999694824219" text="Subject name" />
+            <TableColumn fx:id="timeColumn" prefWidth="89.60003662109375" text="time" />
+            <TableColumn fx:id="notesColumn" prefWidth="403.20000000000005" text="notes" />
+        </columns>
+      </TableView>
+    </children>
+</AnchorPane>

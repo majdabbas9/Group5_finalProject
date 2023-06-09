@@ -46,6 +46,17 @@ public class Grade implements Serializable {
         this.hour = hour;
         this.teacherApprovement = teacherApprovement;
     }
+    public Grade(Grade grade1)
+    {
+        this.id=grade1.id;
+        this.grade = grade1.grade;
+        this.isManuel = grade1.isManuel;
+        this.timeToSolve = grade1.timeToSolve;
+        this.doneOnTime = grade1.doneOnTime;
+        this.date = grade1.date;
+        this.hour = grade1.hour;
+        this.teacherApprovement = grade1.teacherApprovement;
+    }
 
     public Grade() {
 

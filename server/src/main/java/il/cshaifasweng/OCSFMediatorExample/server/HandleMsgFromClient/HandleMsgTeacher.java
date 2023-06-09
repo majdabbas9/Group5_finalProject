@@ -13,6 +13,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetGrading;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetUsers;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
@@ -355,6 +356,24 @@ public class HandleMsgTeacher {
         if(contentOfMsg.equals("#allQuestions")) {
             try {
                 Message message = new Message("all questions",GetExamBuliding.getAllQuestionsForTeacher(session));
+                client.sendToClient(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }if(contentOfMsg.equals("#getAllExamsCreated")) {
+            try {
+                List<Exam>exams=GetExamBuliding.getAllExamsCreatedForTeacher(session,(int)msgFromClient.getObj());
+                Message message = new Message("all exams",exams);
+                client.sendToClient(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if(contentOfMsg.equals("#getMyExamGrades")) {
+            try {
+                int teacherId = (int) ((List<Object>) msgFromClient.getObj()).get(0);
+                int examId = (int) ((List<Object>) msgFromClient.getObj()).get(1);
+                Message message = new Message("all grades for teacher exam", GetGrading.getAllTeacherExamsGrade(session,teacherId,examId));
                 client.sendToClient(message);
             } catch (IOException e) {
                 e.printStackTrace();

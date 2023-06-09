@@ -26,6 +26,11 @@ public class Copy implements Serializable {
         this.answers=answers;
         setCompExamToExecute(compExamToExecute);
     }
+    public Copy(Copy copy)
+    {
+        this.id=copy.id;
+        this.answers=copy.answers;
+    }
 
     public int getId() {
         return id;

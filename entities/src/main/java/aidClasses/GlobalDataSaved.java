@@ -71,4 +71,6 @@ public class GlobalDataSaved {
     public static List<Exam> allExamsForTeacherToCopy;
     public static Exam selectedExamToCopy;
     public static List<Question> allQuestionsForExamToCopy;
+    public static List<Exam> allTeacherExamsCreated;
+    public static List<Grade> allTeacherExamGrades;
 }

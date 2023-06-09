@@ -127,9 +127,15 @@ public class TeacherHome {
         SimpleClient.getClient().sendToServer(msg3); // sending the msg to the server
     }
     @FXML
+    void allExamsCreated(ActionEvent event) throws IOException {
+        Message msg3 = new Message("#getAllExamsCreated",GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
+        SimpleClient.getClient().sendToServer(msg3); // sending the msg to the server
+    }
+    @FXML
     public void initialize()
     {
         PrincipalHome.dataOnHome(teacherName,currentDate,currentTime);
     }
+
 
 }
