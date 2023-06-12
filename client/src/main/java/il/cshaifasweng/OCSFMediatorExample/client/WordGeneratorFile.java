@@ -60,7 +60,7 @@ public class WordGeneratorFile {
         {
             XWPFParagraph tmpPar=doc.createParagraph();
             XWPFRun tmpRun=tmpPar.createRun();
-            tmpRun.setText(questions.get(i).getQuestion().getQuestionTitle(points.get(i),i+1));
+            tmpRun.setText(questions.get(i).getQuestion().getQuestionTitle(questions.get(i).getPoints(),i+1));
             tmpRun.setFontSize(18);
 
             XWPFParagraph tmpPar2=doc.createParagraph();

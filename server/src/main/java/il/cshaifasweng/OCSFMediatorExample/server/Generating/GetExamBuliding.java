@@ -63,7 +63,7 @@ public class GetExamBuliding {
         List<Exam_Question> examQuestions=new ArrayList<>();
         for(Exam_Question exam_question:(List<Exam_Question>)query.getResultList())
         {
-            examQuestions.add(new Exam_Question(exam_question.getQuestion(),exam_question.getPoints()));
+            examQuestions.add(new Exam_Question(new Question(exam_question.getQuestion()),exam_question.getPoints()));
         }
         return examQuestions;
     }
