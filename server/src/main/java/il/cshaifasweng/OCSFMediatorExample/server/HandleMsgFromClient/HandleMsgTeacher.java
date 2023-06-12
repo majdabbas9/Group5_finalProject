@@ -149,6 +149,17 @@ public class HandleMsgTeacher {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }//showExamQuestionsToPrepare
+        if (contentOfMsg.equals("#showExamQuestionsToPrepare"))
+        {
+            try {
+                Message msgToClient=new Message("exam questions for prepare",
+                        GetExamBuliding.getExamQuestionsById(session,(int) msgFromClient.getObj()));
+                client.sendToClient(msgToClient);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (contentOfMsg.equals("#addCompExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();

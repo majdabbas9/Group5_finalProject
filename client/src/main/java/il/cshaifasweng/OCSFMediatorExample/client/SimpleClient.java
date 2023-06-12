@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
 import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExam;
 import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExamManual;
 import il.cshaifasweng.OCSFMediatorExample.client.Teacher.BuildExam;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -141,6 +142,11 @@ public class SimpleClient extends AbstractClient {
 				if (contentOfMsg.equals("course questions")) {
 					GlobalDataSaved.courseQuestionsForMakeExam = (List<Question>) msgFromServer.getObj();
 					App.setRoot("examChooseQuestions");
+					return;
+				}
+				if (contentOfMsg.equals("exam questions for prepare")) {
+					GlobalDataSaved.examQuestionsToShowPrepare = (List<Exam_Question>) msgFromServer.getObj();
+					App.setRoot("prepareExamShowQuestions");
 					return;
 				}
 				if (contentOfMsg.equals("added the question successfully")) {

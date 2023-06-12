@@ -29,7 +29,6 @@ import java.util.*;
 public class GetExamBuliding {
     public static  int counter=0;
 
-    @Transactional
     public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
     {
         List<Exam> allExams=new ArrayList<>();
@@ -48,17 +47,25 @@ public class GetExamBuliding {
             for(Exam exam : courseExamResult)
             {
                 Exam exam1=new Exam(exam);
-                Set<Exam_Question> examQuestions=exam.getExamQuestions();
-                for(Exam_Question exam_question:examQuestions)
-                {
-                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()),exam_question.getPoints());
-                    exam1.getExamQuestions().add(eq);
-                }
+                exam1.setExamSubject(new Subject(exam.getExamSubject()));
                 exam1.setExamCourse(new Course(exam.getExamCourse()));
+                exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
                 allExams.add(exam1);
             }
         }
         return  allExams;
+    }
+    public static List<Exam_Question> getExamQuestionsById(Session session,int id)
+    {
+        String queryString=" FROM Exam_Question WHERE exam.id = : id";
+        Query query = session.createQuery(queryString,Exam_Question.class);
+        query.setParameter("id",id);
+        List<Exam_Question> examQuestions=new ArrayList<>();
+        for(Exam_Question exam_question:(List<Exam_Question>)query.getResultList())
+        {
+            examQuestions.add(new Exam_Question(exam_question.getQuestion(),exam_question.getPoints()));
+        }
+        return examQuestions;
     }
     @Transactional
     public static List<ExamToExecute> getAllExamsForTeacher(Session session, int teacherId)
