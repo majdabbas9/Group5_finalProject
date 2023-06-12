@@ -8,6 +8,7 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.aidClassesForTeacher.DisplayCompExamForApprove;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalHome;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
@@ -31,12 +32,6 @@ public class ExamsNeedApprovement {
     @FXML // fx:id="backButton1"
     private Button backButton1; // Value injected by FXMLLoader
 
-    @FXML // fx:id="currentDate1"
-    private Text currentDate1; // Value injected by FXMLLoader
-
-    @FXML // fx:id="currentTime1"
-    private Text currentTime1; // Value injected by FXMLLoader
-
     @FXML // fx:id="dataColumn"
     private TableColumn<DisplayCompExamForApprove, ComputerizedExamToExecute> dataColumn; // Value injected by FXMLLoader
 
@@ -46,8 +41,13 @@ public class ExamsNeedApprovement {
     @FXML // fx:id="examsTable"
     private TableView<DisplayCompExamForApprove> examsTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="studentName"
-    private Text studentName; // Value injected by FXMLLoader
+    @FXML
+    private Text currentDate;
+
+    @FXML
+    private Text currentTime;
+    @FXML
+    private Text teacherName;
 
     @FXML // fx:id="subjectColumn"
     private TableColumn<DisplayCompExamForApprove, String> subjectColumn; // Value injected by FXMLLoader
@@ -69,6 +69,7 @@ public class ExamsNeedApprovement {
     @FXML
     void initialize()
     {
+        PrincipalHome.dataOnHome(teacherName,currentDate,currentTime);
         ObservableList<DisplayCompExamForApprove> observableList = FXCollections.observableArrayList();
         dataColumn.setCellValueFactory(new PropertyValueFactory<DisplayCompExamForApprove,ComputerizedExamToExecute>("date"));
         dataColumn.setStyle("-fx-alignment: CENTER;");

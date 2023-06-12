@@ -23,17 +23,17 @@
                         <Font size="13.0" />
                     </font>
                 </Label>
-                <Text fx:id="studentName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
+                <Text fx:id="teacherName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
                     <font>
                         <Font size="13.0" />
                     </font>
                 </Text>
-                <Text fx:id="currentDate1" fill="WHITE" layoutX="464.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current date">
+                <Text fx:id="currentDate" fill="WHITE" layoutX="464.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current date">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Text>
-                <Text fx:id="currentTime1" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
+                <Text fx:id="currentTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
         <Button fx:id="backButton" layoutX="19.0" layoutY="587.0" mnemonicParsing="false" onAction="#backClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
