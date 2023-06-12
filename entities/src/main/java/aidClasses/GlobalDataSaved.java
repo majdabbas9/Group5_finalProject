@@ -1,5 +1,6 @@
 package aidClasses;
 
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
@@ -36,6 +37,7 @@ public class GlobalDataSaved {
     public static Copy currentCopy = new Copy();
 
     public static List<Exam> allExamsForTeacher;
+    public static List<Exam_Question> examQuestionsToShowPrepare;
     public static List<Exam> allExamsForPrincipal = new ArrayList<>();
     public static List<Question> allQuestionsForPrincipal = new ArrayList<>();
     public static List<Grade> allGradesForPrincipal = new ArrayList<>();

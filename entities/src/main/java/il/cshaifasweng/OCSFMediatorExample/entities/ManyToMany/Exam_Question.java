@@ -28,8 +28,9 @@ public class Exam_Question implements Serializable {
         this.points=points;
     }
 
-    public Exam_Question(Question question) {
-        this.question = question;
+    public Exam_Question(Question question,int points) {
+        this.question=question;
+        this.points=points;
     }
 
     public Exam_Question() {

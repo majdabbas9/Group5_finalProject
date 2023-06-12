@@ -50,7 +50,6 @@ public class Exam implements Serializable{
         this.exam_ID = exam.exam_ID;
         this.teacherNotes = exam.teacherNotes;
         this.notes = exam.notes;
-        this.points =new ArrayList<>(exam.points);
     }
 
     public Exam() {
