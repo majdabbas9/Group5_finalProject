@@ -14,12 +14,12 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="42.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prepare exam for exection" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="42.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select exam" wrappingWidth="139.21246337890625">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Text fx:id="warningTxt" fill="#af0000" layoutX="335.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.4000244140625">
+        <Text fx:id="warningTxt" fill="#af0000" layoutX="360.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.800048828125">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>

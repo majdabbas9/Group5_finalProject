@@ -22,7 +22,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Text fx:id="warningTxt" fill="#af0000" layoutX="335.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.4000244140625">
+        <Text fx:id="warningTxt" fill="#af0000" layoutX="337.0" layoutY="607.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.39999999999986">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -41,7 +41,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <TableView fx:id="examQuestionTable" layoutX="20.0" layoutY="138.0" prefHeight="422.0" prefWidth="593.0">
+        <TableView fx:id="examQuestionTable" layoutX="14.0" layoutY="137.0" prefHeight="422.0" prefWidth="593.0">
             <columns>
             <TableColumn fx:id="quesionIdColumn" prefWidth="75.0" text="question ID" />
                 <TableColumn fx:id="theQuestionColumn" prefWidth="214.4000244140625" text="the Question" />

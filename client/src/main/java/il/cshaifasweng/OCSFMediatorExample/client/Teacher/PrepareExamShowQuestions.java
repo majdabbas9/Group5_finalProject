@@ -28,6 +28,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +127,20 @@ public class PrepareExamShowQuestions {
             return;
         }
         String dateOfExam=String.valueOf(date.getValue());
+        try
+        {
+            String compDate=dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
+            if(!CompareDates.occurBeforeNow(compDate))
+            {
+                warningTxt.setText("illegal date of exam");
+                return;
+            }
+        }
+        catch (ParseException parseException)
+        {
+            System.out.println(parseException.getMessage());
+        }
+
         dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
         if(wayOfExecution.getSelectionModel().getSelectedItem().equals("computerized"))
         {
@@ -163,6 +179,7 @@ public class PrepareExamShowQuestions {
     @FXML
     void initialize()
     {
+        date.setValue(LocalDate.now());
         wayOfExecution.getItems().add("computerized");
         wayOfExecution.getItems().add("manual");
         hourList.getItems().clear();
@@ -188,6 +205,8 @@ public class PrepareExamShowQuestions {
             }
 
         }
+       hourList.getSelectionModel().select(CompareDates.getCurrentTimeHour());
+        minuteList.getSelectionModel().select(CompareDates.getCurrentTimeMinute());
 
         ObservableList<Exam_Question> observableList = FXCollections.observableArrayList();
 
