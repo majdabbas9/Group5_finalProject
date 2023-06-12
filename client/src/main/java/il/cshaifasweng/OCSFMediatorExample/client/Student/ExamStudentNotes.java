@@ -2,6 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.Student;
 
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,9 +34,9 @@ public class ExamStudentNotes {
         else {
             teacherNotes.setText(grade.getTeacherNotes());
         }
-        if(GlobalDataSaved.currentGrade.isManuel())
+        if(grade.isManuel())
         {
-            goToQuestions.setVisible(false);
+            goToQuestions.setText("Open Exam File");
         }
     }
     @FXML
@@ -45,7 +46,14 @@ public class ExamStudentNotes {
 
     @FXML
     void goToQuestions(ActionEvent event) throws IOException {
-        App.setRoot("examCopy");
+        if(GlobalDataSaved.currentGrade.isManuel())
+        {
+            WordGeneratorFile.openWord(GlobalDataSaved.currentGrade.getExamCopy().getAnswers());
+        }
+        else {
+            App.setRoot("examCopy");
+        }
+
     }
 
 }

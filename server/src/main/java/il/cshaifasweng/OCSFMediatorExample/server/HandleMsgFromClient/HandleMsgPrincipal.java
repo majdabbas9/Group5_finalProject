@@ -194,45 +194,53 @@ public class HandleMsgPrincipal {
                 e.printStackTrace();
             }
         }
-        if (contentOfMsg.equals("Add Extra Time")) {
-            session.beginTransaction();
-            session.clear();
+        if (contentOfMsg.equals("Add Extra Time For CompExam")) {
             ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
-            examToExecute.setIsExtraNeeded(2);
-            session.update(examToExecute);
-            session.flush();
-            session.getTransaction().commit();
-
-            List<ConnectionToClient> list = new ArrayList<>();
-            for (Grade grade : GetEducational.getAllGrades(session)){
-                if (grade.getExamCopy().getCompExamToExecute().getExam().getExam_ID().equals(
-                        examToExecute.getExam().getExam_ID()) && grade.getGrade() == -1){
-                    for (LoggedInClient loggedInClient : SimpleServer._LoggedInList){
-                        if (loggedInClient.get_id().equals(grade.getStudent().getUserID())){
-                            list.add(loggedInClient.getClient());
-                        }
-                    }
-                }
-            }
-
+            List<ConnectionToClient> list = updateForExtraTime(session,msgFromClient);
             try {
-                Message message = new Message("AddTimeToStudent",examToExecute.getExtraTime());
+                Message message = new Message("AddTimeToStudentForCompExam",examToExecute.getExtraTime());
                 for (ConnectionToClient connectionToClient : list){
                     connectionToClient.sendToClient(message);
                 }
             }catch (IOException e){
                 e.printStackTrace();
             }
-
+        }
+        if (contentOfMsg.equals("Add Extra Time For ManualExam")) {
+            ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
+            List<ConnectionToClient> list = updateForExtraTime(session,msgFromClient);
             try {
-                Message message = new Message("Do Not Add Extra Time",GetEducational.getAllRequests(session));
-                client.sendToClient(message);
+                Message message = new Message("AddTimeToStudentForManualExam",examToExecute.getExtraTime());
+                for (ConnectionToClient connectionToClient : list){
+                    connectionToClient.sendToClient(message);
+                }
             }catch (IOException e){
                 e.printStackTrace();
             }
         }
+        return false;
+    }
 
+    static List<ConnectionToClient> updateForExtraTime(Session session, Message msgFromClient) throws Exception {
+        session.beginTransaction();
+        session.clear();
+        ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
+        examToExecute.setIsExtraNeeded(2);
+        session.update(examToExecute);
+        session.flush();
+        session.getTransaction().commit();
 
-            return false;
+        List<ConnectionToClient> list = new ArrayList<>();
+        for (Grade grade : GetEducational.getAllGrades(session)){
+            if (grade.getExamCopy().getCompExamToExecute().getExam().getExam_ID().equals(
+                    examToExecute.getExam().getExam_ID()) && grade.getGrade() == -1){
+                for (LoggedInClient loggedInClient : SimpleServer._LoggedInList){
+                    if (loggedInClient.get_id().equals(grade.getStudent().getUserID())){
+                        list.add(loggedInClient.getClient());
+                    }
+                }
+            }
+        }
+        return list;
     }
 }

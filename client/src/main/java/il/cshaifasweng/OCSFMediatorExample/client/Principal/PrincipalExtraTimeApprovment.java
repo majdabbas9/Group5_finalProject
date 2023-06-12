@@ -17,6 +17,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -73,12 +74,18 @@ public class PrincipalExtraTimeApprovment {
     private ExamToExecute SelectedExam;
     private ObservableList<ExamToExecute> list = FXCollections.observableArrayList();
     @FXML
-    void Approve(ActionEvent event) {
+    void Approve(ActionEvent event) throws IOException {
         if (SelectedExam == null){
             Errortxt.setText("Please Select Exam!");
         }
         try {
-            Message message = new Message("Add Extra Time",SelectedExam);
+            Message message = null;
+            if (SelectedExam instanceof ComputerizedExamToExecute){
+                message = new Message("Add Extra Time For CompExam",SelectedExam);
+            }
+            else if (SelectedExam instanceof ManualExamToExecute) {
+                message = new Message("Add Extra Time For ManualExam",SelectedExam);
+            }
             SimpleClient.getClient().sendToServer(message);
         }catch (IOException e){
             e.printStackTrace();

@@ -4,14 +4,11 @@
 
 package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
-import aidClasses.ExamStatistics;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
-import aidClasses.aidClassesForTeacher.ExamQuestion;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +34,7 @@ public class ExamsInProgress {
     private Button buttonBack; // Value injected by FXMLLoader
 
     @FXML // fx:id="compExamsTable"
-    private TableView<ExamToExecute> compExamsTable; // Value injected by FXMLLoader
+    private TableView<ExamToExecute> examsInProgressTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="examFinishTimeColumn"
     private TableColumn<ExamToExecute, String> examFinishTimeColumn; // Value injected by FXMLLoader
@@ -52,7 +49,7 @@ public class ExamsInProgress {
     @FXML
     private Text warning;
     private Teacher theTeacher;
-    private ObservableList<ExamToExecute> compExamObservableList;
+    private ObservableList<ExamToExecute> examToExecutes;
 
     @FXML
     private TextField ExtraTimeTxt;
@@ -74,7 +71,7 @@ public class ExamsInProgress {
         }
         try {
             List<Object> list = new ArrayList<>();
-            list.add(compExamsTable.getSelectionModel().getSelectedItem().getId());
+            list.add(examsInProgressTable.getSelectionModel().getSelectedItem().getId());
             list.add(Integer.parseInt(ExtraTimeTxt.getText()));
             Message message = new Message("AddExtraTime", list);
             SimpleClient.getClient().sendToServer(message);
@@ -90,15 +87,15 @@ public class ExamsInProgress {
     void initialize()
     {
         theTeacher=(Teacher) GlobalDataSaved.connectedUser;
-        compExamObservableList = FXCollections.observableArrayList();
+        examToExecutes = FXCollections.observableArrayList();
         examIdColumn.setCellValueFactory(new PropertyValueFactory<ExamToExecute,Integer>("code"));
         examFinishTimeColumn.setCellValueFactory(new PropertyValueFactory<ExamToExecute,String>("dateOfExam"));
         numberOfStudentDoingColumn.setCellValueFactory(new PropertyValueFactory<ExamToExecute,Integer>("numOfStudentDoing"));
         for(ExamToExecute examToExecute : GlobalDataSaved.getTeacherExamsToExecutes)
         {
-            compExamObservableList.add(examToExecute);
+            examToExecutes.add(examToExecute);
         }
-        compExamsTable.setItems(compExamObservableList);
+        examsInProgressTable.setItems(examToExecutes);
     }
 
 
