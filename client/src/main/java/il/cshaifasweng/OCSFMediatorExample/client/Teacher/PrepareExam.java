@@ -104,7 +104,7 @@ public class PrepareExam {
         List<Integer> examPoints=new ArrayList<>(exam.getPoints());
         for(Exam_Question exam_question:examQuestion)
         {
-            observableListQuestions.add(new DisplayQuestion(exam_question.getQuestion().getStudentNotes(),examPoints.get(i++)));
+            observableListQuestions.add(new DisplayQuestion(exam_question.getQuestion().getStudentNotes(),exam_question.getPoints()));
         }
         examQuestionTable.setItems(observableListQuestions);
     }

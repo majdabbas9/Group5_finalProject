@@ -51,7 +51,7 @@ public class GetExamBuliding {
                 Set<Exam_Question> examQuestions=exam.getExamQuestions();
                 for(Exam_Question exam_question:examQuestions)
                 {
-                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()));
+                    Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()),exam_question.getPoints());
                     exam1.getExamQuestions().add(eq);
                 }
                 exam1.setExamCourse(new Course(exam.getExamCourse()));
@@ -234,7 +234,7 @@ public class GetExamBuliding {
             Set<Exam_Question> examQuestions=exam.getExamQuestions();
             for(Exam_Question exam_question:examQuestions)
             {
-                Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()));
+                Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()),exam_question.getPoints());
                 exam1.getExamQuestions().add(eq);
             }
             exam1.setExamCourse(new Course(exam.getExamCourse()));

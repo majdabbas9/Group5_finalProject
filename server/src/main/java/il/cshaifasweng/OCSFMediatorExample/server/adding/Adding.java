@@ -91,9 +91,10 @@ public class Adding {
         /*end of updating subject*/
 
         Exam_Question eq;
+        int j=0;
         for(Question question:questions)
         {
-            eq=new Exam_Question(exam,question);
+            eq=new Exam_Question(exam,question,1);
             session.save(eq);
             session.flush();
 
