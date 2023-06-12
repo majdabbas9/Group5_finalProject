@@ -61,7 +61,7 @@ public class SolveExam {
     public List<String> choicesList;
     private int questionCounter = 0;
 
-    public static int hour=0, minute=0, second=0;
+    private static int hour=0, minute=0, second=0;
     private String ddHour, ddMinute, ddSecond;
 
     private DecimalFormat decimalFormat = new DecimalFormat("00");
@@ -161,6 +161,7 @@ public class SolveExam {
         if (hour == 0 && minute < 10) {
             examTimer.setFill(Paint.valueOf("#ff0000"));
         }
+        second = 0;
         ddHour = decimalFormat.format(hour);
         ddMinute = decimalFormat.format(minute);
         ddSecond = decimalFormat.format(second);

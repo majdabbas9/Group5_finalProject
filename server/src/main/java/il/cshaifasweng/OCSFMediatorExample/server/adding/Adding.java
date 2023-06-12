@@ -93,7 +93,7 @@ public class Adding {
         Exam_Question eq;
         for(Question question:questions)
         {
-            eq=new Exam_Question(exam,question);
+            eq=new Exam_Question(exam,question,20);
             session.save(eq);
             session.flush();
 

@@ -141,6 +141,7 @@ public class SolveExamManual {
         if (hour == 0 && minute < 10) {
             examTimer.setFill(Paint.valueOf("#ff0000"));
         }
+        second = 0;
         ddHour = decimalFormat.format(hour);
         ddMinute = decimalFormat.format(minute);
         ddSecond = decimalFormat.format(second);

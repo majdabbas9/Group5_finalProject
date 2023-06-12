@@ -232,8 +232,8 @@ public class HandleMsgPrincipal {
 
         List<ConnectionToClient> list = new ArrayList<>();
         for (Grade grade : GetEducational.getAllGrades(session)){
-            if (grade.getExamCopy().getCompExamToExecute().getExam().getExam_ID().equals(
-                    examToExecute.getExam().getExam_ID()) && grade.getGrade() == -1){
+            if (grade.getExamCopy().getCompExamToExecute().getId() ==
+                    examToExecute.getId() && grade.getGrade() == -1){
                 for (LoggedInClient loggedInClient : SimpleServer._LoggedInList){
                     if (loggedInClient.get_id().equals(grade.getStudent().getUserID())){
                         list.add(loggedInClient.getClient());
