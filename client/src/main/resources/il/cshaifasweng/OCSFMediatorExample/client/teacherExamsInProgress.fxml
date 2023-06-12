@@ -20,7 +20,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <TableView fx:id="compExamsTable" layoutX="161.0" layoutY="57.0" prefHeight="435.0" prefWidth="558.0">
+        <TableView fx:id="examsInProgressTable" layoutX="161.0" layoutY="57.0" prefHeight="435.0" prefWidth="558.0">
             <columns>
                 <TableColumn fx:id="examIdColumn" prefWidth="83.20001220703125" text="exam code" />
                 <TableColumn fx:id="examFinishTimeColumn" prefWidth="291.19993591308594" text="exam finish time" />

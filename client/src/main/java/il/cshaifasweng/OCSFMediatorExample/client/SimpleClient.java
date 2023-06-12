@@ -3,6 +3,7 @@ import aidClasses.*;
 import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
 import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExam;
+import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExamManual;
 import il.cshaifasweng.OCSFMediatorExample.client.Teacher.BuildExam;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -290,8 +291,12 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.allExamsToExecuteForPrincipal = (List<ExamToExecute>) msgFromServer.getObj();
 					App.setRoot("principalExtraTimeApprovment");
 				}
-				if(contentOfMsg.equals("AddTimeToStudent")) {
+				if(contentOfMsg.equals("AddTimeToStudentForCompExam")) {
 					SolveExam.addExtraTime((int) msgFromServer.getObj());
+					EventBus.getDefault().post(new MessageEvent(new Message("Added Extra Time")));
+				}
+				if(contentOfMsg.equals("AddTimeToStudentForManualExam")) {
+					SolveExamManual.addExtraTime((int) msgFromServer.getObj());
 					EventBus.getDefault().post(new MessageEvent(new Message("Added Extra Time")));
 				}
 				if(contentOfMsg.equals("all questions")) {

@@ -56,6 +56,7 @@ public class StudentGrades {
     void getCopy(ActionEvent event) throws IOException {
         GlobalDataSaved.selectedGradeForExamCopy = studentGradesTableView.getSelectionModel().getSelectedIndex();
         GradesDetails details = studentGradesTableView.getSelectionModel().getSelectedItem();
+        GlobalDataSaved.currentGrade = details.getGradeObject();
         Message msg = new Message("#get exam copy", details.getGradeObject());
         SimpleClient.getClient().sendToServer(msg);
         if (GlobalDataSaved.currentGrade.isManuel()) {

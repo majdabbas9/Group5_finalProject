@@ -20,7 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SolveExamManual {
-    private int hour=0, minute=0, second=0;
+    private static int hour=0, minute=0, second=0;
     private String ddHour, ddMinute, ddSecond;
 
     private DecimalFormat decimalFormat = new DecimalFormat("00");
@@ -39,6 +39,7 @@ public class SolveExamManual {
     private Button wordFile;
 
     private String  source, dist;
+
     @FXML
     void getWordFile(ActionEvent event) throws IOException {
         List<Object> objects = sendStudentManualAnswerToServer(false);
@@ -89,6 +90,9 @@ public class SolveExamManual {
                 if (hour == 0 && minute < 10) {
                     examTimer.setFill(Paint.valueOf("#ff0000"));
                 }
+                else {
+                    examTimer.setFill(Paint.valueOf("#ffffff"));
+                }
                 ddHour = decimalFormat.format(hour);
                 ddMinute = decimalFormat.format(minute);
                 ddSecond = decimalFormat.format(second);
@@ -111,6 +115,20 @@ public class SolveExamManual {
         Message msg = new Message("#time finished", objects);
         SimpleClient.getClient().sendToServer(msg);
     }
+
+    public static void addExtraTime(int time){
+        while (time >= 60){
+            hour++;
+            time -= 60;
+        }
+        if (minute + time >= 60) {
+            hour ++;
+            minute = minute + time - 60;
+        }else {
+            minute += time;
+        }
+    }
+
     @FXML
     void initialize() throws IOException {
 

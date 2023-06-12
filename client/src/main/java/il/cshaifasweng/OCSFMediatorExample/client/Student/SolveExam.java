@@ -239,7 +239,9 @@ public class SolveExam {
                 }
                 if (hour == 0 && minute < 10) {
                     examTimer.setFill(Paint.valueOf("#ff0000"));
-                    //examTimer.setStyle("-fx-text-fill: red;");
+                }
+                else {
+                    examTimer.setFill(Paint.valueOf("#ffffff"));
                 }
                 ddHour = decimalFormat.format(hour);
                 ddMinute = decimalFormat.format(minute);
@@ -272,13 +274,6 @@ public class SolveExam {
     }
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-//        List<Object> dataToServer = new ArrayList<>();
-//        dataToServer.add(answers);
-//        dataToServer.add(GlobalDataSaved.examToExecute);
-//        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentDoneInTime());
-//        dataToServer.add(GlobalDataSaved.examToExecute.getNumberOfStudentNotDoneInTime()+1);
-//        Message msg = new Message("#time finished", dataToServer);
-//        SimpleClient.getClient().sendToServer(msg);
         if(questionChoices.getSelectedToggle() != null){
             RadioButton selected = (RadioButton) questionChoices.getSelectedToggle();
             answers.set(questionCounter,selected.getText());

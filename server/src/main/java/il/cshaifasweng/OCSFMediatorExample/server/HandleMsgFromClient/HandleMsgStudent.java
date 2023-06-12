@@ -157,11 +157,11 @@ public class HandleMsgStudent {
             int grade = (int) dataFromClient.get(3);
             if (dataFromClient.get(2) instanceof ComputerizedExamToExecute){
                 ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) dataFromClient.get(2);
-                SimpleServer.createGradeAndCopyToStudent(studentAnswers, user, compExam, grade,compExam.getNumOfStudentDoing());
+                SimpleServer.createGradeAndCopyToStudent(studentAnswers, user, compExam, grade,compExam.getNumOfStudentDoing()+1);
             }
             if (dataFromClient.get(2) instanceof ManualExamToExecute) {
                 ManualExamToExecute manualExamToExecute = (ManualExamToExecute) dataFromClient.get(2);
-                SimpleServer.createGradeAndCopyToManualExam(studentAnswers, user, manualExamToExecute, grade, manualExamToExecute.getNumOfStudentDoing());
+                SimpleServer.createGradeAndCopyToManualExam(studentAnswers, user, manualExamToExecute, grade, manualExamToExecute.getNumOfStudentDoing()+1);
             }
             return true;
         }
