@@ -20,9 +20,12 @@ public class Exam_Question implements Serializable {
     @JoinColumn(name = "question_id")
     Question question;
 
-    public Exam_Question(Exam exam, Question question) {
+    int points;
+
+    public Exam_Question(Exam exam, Question question,int points) {
         this.exam = exam;
         this.question = question;
+        this.points=points;
     }
 
     public Exam_Question(Question question) {
@@ -50,5 +53,17 @@ public class Exam_Question implements Serializable {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

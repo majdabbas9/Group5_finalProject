@@ -61,7 +61,6 @@ public class StudentGrades {
         if (GlobalDataSaved.currentGrade.isManuel()) {
             WordGeneratorFile.openWord(GlobalDataSaved.currentGrade.getExamCopy().getAnswers());
         }
-        App.setRoot("examStudentNotes");
     }
 
     @FXML

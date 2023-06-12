@@ -3,6 +3,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.Student;
 
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.event.ActionEvent;
@@ -58,6 +59,10 @@ public class ExamCopy {
     public List<String> studentAnswers;
     @FXML
     public void initialize() throws IOException {
+        if(GlobalDataSaved.currentCopy.getGrade().isManuel())
+        {
+            WordGeneratorFile.openWord(GlobalDataSaved.currentGrade.getExamCopy().getAnswers());
+        }
         examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
         questionList = sortedQuestionsList(examQuestions);
         studentAnswers = GlobalDataSaved.studentAnswers;
