@@ -79,6 +79,7 @@ public class SimpleClient extends AbstractClient {
 					String answers = grade.getExamCopy().getAnswers();
 					List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
 					GlobalDataSaved.studentAnswers = answersList;
+					App.setRoot("examStudentNotes");
 					return;
 				}
 				if (contentOfMsg.equals("write id to start")) {

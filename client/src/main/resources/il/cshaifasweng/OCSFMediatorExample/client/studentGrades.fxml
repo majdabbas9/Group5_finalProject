@@ -16,6 +16,7 @@
             <TableColumn fx:id="course" prefWidth="140.0" text="Course" />
             <TableColumn fx:id="teacherName" prefWidth="140.0" text="Teacher Name" />
             <TableColumn fx:id="grade" prefWidth="140.0" text="Grade" />
+            <TableColumn fx:id="gradeObjectColumn" prefWidth="75.0" text="Column X" visible="false" />
         </columns>
       </TableView>
       <Button fx:id="backToHome" layoutX="57.0" layoutY="521.0" mnemonicParsing="false" onAction="#backToHome" prefHeight="46.0" prefWidth="155.0" style="-fx-background-color: #0A8A0A;" text="Back To Home" textFill="WHITE">

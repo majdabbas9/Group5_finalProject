@@ -163,7 +163,6 @@ public class SimpleServer extends AbstractServer {
 		exam.setPoints(points);
 		exam.setExamCourse(course);
 		session.save(exam);
-
 		//session.save(exam);
 		//session.flush();
 		/*end of saving exam*/
@@ -205,8 +204,9 @@ public class SimpleServer extends AbstractServer {
 		/*end of updating subject*/
 
 		Exam_Question eq;
+		int i1=0;
 		for(Question question:questions) {
-			eq=new Exam_Question(exam,question);
+			eq=new Exam_Question(exam,question,points.get(i1++));
 			session.save(eq);
 			//session.flush();
 
