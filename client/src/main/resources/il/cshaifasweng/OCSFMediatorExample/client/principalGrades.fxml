@@ -36,7 +36,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-      <Text fx:id="NoCopyText" fill="#ff8600" layoutX="125.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="527.7366943359375">
+      <Text fx:id="NoCopyText" fill="RED" layoutX="125.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="527.7366943359375">
          <font>
             <Font size="18.0" />
          </font>

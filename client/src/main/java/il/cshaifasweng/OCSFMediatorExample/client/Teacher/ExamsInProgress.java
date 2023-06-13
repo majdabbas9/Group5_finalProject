@@ -54,6 +54,10 @@ public class ExamsInProgress {
     private TextField ExtraTimeTxt;
     @FXML
     void addTimeForTheExam(ActionEvent event) {
+        if (examsInProgressTable.getSelectionModel().getSelectedItem() == null){
+            ErrTxt.setText("Please Select Exam!");
+            return;
+        }
         if (ExtraTimeTxt.equals(""))
         {
             ErrTxt.setText("Illegal Input!");
