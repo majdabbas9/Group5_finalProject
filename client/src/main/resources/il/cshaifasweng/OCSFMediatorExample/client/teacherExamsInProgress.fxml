@@ -20,7 +20,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <TableView fx:id="examsInProgressTable" layoutX="161.0" layoutY="57.0" prefHeight="435.0" prefWidth="558.0">
+        <TableView fx:id="examsInProgressTable" layoutX="145.0" layoutY="55.0" prefHeight="435.0" prefWidth="558.0">
             <columns>
                 <TableColumn fx:id="examIdColumn" prefWidth="83.20001220703125" text="exam code" />
                 <TableColumn fx:id="examFinishTimeColumn" prefWidth="291.19993591308594" text="exam finish time" />
@@ -32,13 +32,13 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="ExtraTimeTxt" alignment="CENTER" layoutX="347.0" layoutY="507.0" prefHeight="26.0" prefWidth="186.0" promptText="add time in minutes">
+      <TextField fx:id="ExtraTimeTxt" alignment="CENTER" layoutX="331.0" layoutY="505.0" prefHeight="26.0" prefWidth="186.0" promptText="add time in minutes">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
       <Text fx:id="warning" fill="RED" layoutX="402.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.199951171875" />
-      <Text fx:id="ErrTxt" fill="RED" layoutX="392.0" layoutY="567.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="95.73667907714844">
+      <Text fx:id="ErrTxt" fill="RED" layoutX="255.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="338.1366882324219">
          <font>
             <Font size="18.0" />
          </font>

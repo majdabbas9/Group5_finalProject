@@ -46,6 +46,10 @@ public class MakeExam {
     @FXML
     void addQuestionsButton(ActionEvent event) {
         warning.setText("");
+        if (coursesTable.getSelectionModel().getSelectedItem() == null){
+            warning.setText("you didnt select course!");
+            return;
+        }
         if(coursesTable.getSelectionModel().getSelectedItem().getId()==-1)
         {
             warning.setText("you didnt select course!");
