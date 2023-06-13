@@ -42,27 +42,32 @@ public class SolveExamManual {
 
     @FXML
     void getWordFile(ActionEvent event) throws IOException {
-        List<Object> objects = sendStudentManualAnswerToServer(false);
+        List<Object> objects = sendStudentManualAnswerToServer(false, false);
         Message msg = new Message("#create student copy and grade", objects);
         SimpleClient.getClient().sendToServer(msg);
         WordGeneratorFile.openWord(dist);
         examCountDownTimer();
     }
-    private List<Object> sendStudentManualAnswerToServer(boolean onTime) {
+    private List<Object> sendStudentManualAnswerToServer(boolean onTime, boolean sendToServer) throws IOException {
         List<Object> objects = new ArrayList<>();
         objects.add(0, dist);
-        objects.add(1,GlobalDataSaved.connectedUser);
-        objects.add(2,GlobalDataSaved.examToExecute);
-        objects.add(3,-1);
+        objects.add(1, GlobalDataSaved.connectedUser);
+        objects.add(2, GlobalDataSaved.examToExecute);
+        objects.add(3, -1);
         objects.add(4, onTime);
+        if (sendToServer){
+            Message msg = new Message("#update student answers", objects);
+            SimpleClient.getClient().sendToServer(msg);
+        }
         return objects;
+
     }
     @FXML
     void submitExam(ActionEvent event) throws IOException {
         timer.cancel();
-        List<Object> objects = sendStudentManualAnswerToServer(true);
-        Message msg = new Message("#update student answers", objects);
-        SimpleClient.getClient().sendToServer(msg);
+        WordGeneratorFile.closeWordFile(dist);
+        List<Object> objects = sendStudentManualAnswerToServer(true, true);
+
 
     }
     void examCountDownTimer()
@@ -111,9 +116,8 @@ public class SolveExamManual {
     }
     private void examFinishedTime() throws IOException {
         System.out.println("the end ..... no more time ....");
-        List<Object> objects = sendStudentManualAnswerToServer(false);
-        Message msg = new Message("#time finished", objects);
-        SimpleClient.getClient().sendToServer(msg);
+        WordGeneratorFile.closeWordFile(dist);
+        List<Object> objects = sendStudentManualAnswerToServer(false, true);
     }
 
     public static void addExtraTime(int time){

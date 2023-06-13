@@ -175,5 +175,33 @@ public class WordGeneratorFile {
             // WordDocument.this is to refer to outer class's instance from inner class
         }
     }
+
+
+    public static void closeWordFile(String filePath) {
+        try {
+            // Use the appropriate command based on the operating system
+            String os = System.getProperty("os.name").toLowerCase();
+            String command;
+            if (os.contains("win")) {
+                // Windows
+                command = "taskkill /F /IM winword.exe";
+            } else if (os.contains("mac")) {
+                // macOS
+                command = "pkill -f /Applications/Microsoft\\ Word.app";
+            } else {
+                // Unsupported operating system
+                System.out.println("Unsupported operating system");
+                return;
+            }
+
+            // Execute the system command
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command);
+            processBuilder.start();
+
+            System.out.println("Word file closed successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     }
 
