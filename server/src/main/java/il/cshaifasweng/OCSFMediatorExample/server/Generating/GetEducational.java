@@ -94,7 +94,19 @@ public class GetEducational {
         CriteriaQuery<Question> query = builder.createQuery(Question.class);
         query.from(Question.class);
         List<Question> data = session.createQuery(query).getResultList();
-        return data;
+        List<Question> questions=new ArrayList<>();
+        for(Question question:data)
+        {
+            Question question1=new Question(question);
+            question1.setQuestionSubject(new Subject(question.getQuestionSubject()));
+            List<Course_Question> courses=new ArrayList<>();
+            for(Course_Question course:courses)
+            {
+              courses.add(new Course_Question(course.getCourse()));
+            }
+            question1.getQuestionCourses().addAll(courses);
+        }
+        return questions;
     }
 
     public static List<Grade> getAllGrades(Session session) throws Exception {
