@@ -2,6 +2,8 @@ package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import aidClasses.GlobalDataSaved;
@@ -17,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.LightBase;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -82,7 +85,6 @@ public class PrincipalShowExam {
             err_txt.setText("Please Select A Question!");
             return;
         }
-
         GlobalDataSaved.PrincipalQuestionToShow = question_to_show;
         App.setRoot("principalShowQuestion");
     }
@@ -111,9 +113,10 @@ public class PrincipalShowExam {
         notes.setText("Notes: " + GlobalDataSaved.PrincipalExamToShow.getTeacherNotes());
 
         ObservableList<ExamQuestionDetails> list = FXCollections.observableArrayList();
+        List<Exam_Question> examQuestionList=new ArrayList<>(GlobalDataSaved.PrincipalExamToShow.getExamQuestions());
         for (int i = 0 ; i < exam_to_show.size() ; ++i){
             list.add(new ExamQuestionDetails(exam_to_show.get(i).getQuestion().getStudentNotes(),
-                    GlobalDataSaved.PrincipalExamToShow.getPoints().get(i)));
+                    examQuestionList.get(i).getPoints()));
         }
         the_question.setCellValueFactory(cellData -> {
             ExamQuestionDetails examQuestion = cellData.getValue();

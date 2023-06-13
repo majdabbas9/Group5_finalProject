@@ -26,7 +26,10 @@ public class Course_Question implements Serializable {
         this.course = course;
         this.question = question;
     }
-
+    public Course_Question(Course course)
+    {
+        this.course=course;
+    }
     public Course_Question() {
 
     }
