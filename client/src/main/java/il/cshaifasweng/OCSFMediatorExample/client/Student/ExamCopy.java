@@ -149,7 +149,15 @@ public class ExamCopy {
     }
     @FXML
     void backToGradesTable(ActionEvent event) throws IOException {
-        App.setRoot("studentGrades");
+        if (GlobalDataSaved.copyToStudent){
+            App.setRoot("studentGrades");
+        }
+        else if (GlobalDataSaved.copyToPrincipal){
+            App.setRoot("principalGrades");
+        }
+        else if (GlobalDataSaved.copyToTeacher) {
+            App.setRoot("approvement");
+        }
     }
 
     @FXML

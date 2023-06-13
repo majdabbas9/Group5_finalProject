@@ -91,6 +91,9 @@ public class StudentGrades {
         grade.setStyle("-fx-alignment: CENTER;");
 
         studentGradesTableView.setItems(observableList);
+        GlobalDataSaved.copyToStudent = true;
+        GlobalDataSaved.copyToPrincipal = false;
+        GlobalDataSaved.copyToTeacher = false;
     }
 
     public List<GradesDetails> buildGradeDetailsList(List<Grade> grades)

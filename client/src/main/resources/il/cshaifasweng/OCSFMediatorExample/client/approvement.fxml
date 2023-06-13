@@ -44,7 +44,7 @@
                   <TableColumn fx:id="gradeColumn" prefWidth="45.599945068359375" text="grade" />
             <TableColumn fx:id="gradeObjectColumn" prefWidth="75.0" text="gradeObjectColumn" visible="false" />
             <TableColumn fx:id="notesColumn" prefWidth="264.0" text="notes" />
-            <TableColumn fx:id="wordColumn" prefWidth="75.0" text="word" />
+            <TableColumn fx:id="wordColumn" prefWidth="75.0" text="copy" />
               </columns>
           </TableView>
         <Button layoutX="14.0" layoutY="589.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
