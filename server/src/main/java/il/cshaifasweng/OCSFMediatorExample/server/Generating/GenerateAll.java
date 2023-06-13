@@ -112,6 +112,7 @@ public class GenerateAll {
 
         session.save(t1);
         session.save(t2);
+        session.save(t3);
         session.flush();
 
         Teacher_Subject ts1=new Teacher_Subject(t1,math);
