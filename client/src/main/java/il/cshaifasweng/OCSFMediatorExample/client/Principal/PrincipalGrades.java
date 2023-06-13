@@ -95,8 +95,10 @@ public class PrincipalGrades {
             WordGeneratorFile.openWord(gradeToShow.getExamCopy().getAnswers());
         } else {
             String answers = gradeToShow.getExamCopy().getAnswers();
-            List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
-            GlobalDataSaved.studentAnswers = answersList;
+            if (answers != null) {
+                List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+                GlobalDataSaved.studentAnswers = answersList;
+            }
             GlobalDataSaved.examToExecute = gradeToShow.getExamCopy().getCompExamToExecute();
             App.setRoot("examCopy");
         }

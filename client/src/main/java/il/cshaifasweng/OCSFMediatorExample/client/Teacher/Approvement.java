@@ -118,8 +118,10 @@ public class Approvement {
                     return;
                 } else {
                     String answers = gradesTable.getItems().get(i).getGradeObject().getExamCopy().getAnswers();
-                    List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
-                    GlobalDataSaved.studentAnswers = answersList;
+                    if (answers != null){
+                        List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+                        GlobalDataSaved.studentAnswers = answersList;
+                    }
                     GlobalDataSaved.examToExecute = gradesTable.getItems().get(i).getGradeObject().getExamCopy().getCompExamToExecute();
                     GlobalDataSaved.copyToPrincipal = false;
                     GlobalDataSaved.copyToStudent = false;
