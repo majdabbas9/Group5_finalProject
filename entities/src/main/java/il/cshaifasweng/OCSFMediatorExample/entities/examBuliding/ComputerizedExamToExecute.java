@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "compExams")
+@Table(name = "compexams")
 public class ComputerizedExamToExecute implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
