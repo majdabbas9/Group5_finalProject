@@ -67,7 +67,7 @@ public class GetExamBuliding {
         }
         return examQuestions;
     }
-    @Transactional
+
     public static List<ExamToExecute> getAllExamsForTeacher(Session session, int teacherId)
     {
         String queryString=" FROM ExamToExecute WHERE teacherThatExecuted.id = : id";
@@ -75,17 +75,24 @@ public class GetExamBuliding {
         query.setParameter("id",teacherId);
         List<ExamToExecute> list=new ArrayList<>();
         boolean addExam=false;
-        for(ExamToExecute compExam:(List<ExamToExecute>)(query.getResultList()))
+        for(ExamToExecute examToExe:(List<ExamToExecute>)(query.getResultList()))
         {
             addExam=false;
-            for(Copy copy:compExam.getCopies())
+            for(Copy copy:examToExe.getCopies())
             {
                 if(!copy.getGrade().isTeacherApprovement())
                 {
                     addExam=true;
                 }
             }
-            if(addExam)list.add(compExam);
+            if(addExam)
+            {
+                ExamToExecute examToExecute=new ExamToExecute(examToExe);
+                Exam exam1=new Exam(examToExe.getExam());
+                exam1.setExamSubject(new Subject(examToExe.getExam().getExamSubject()));
+                examToExecute.setExam(exam1);
+                list.add(examToExecute);
+            }
         }
         return list;
     }
