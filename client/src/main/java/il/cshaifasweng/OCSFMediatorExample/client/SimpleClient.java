@@ -328,6 +328,11 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.allTeacherExamGrades=(List<Grade>) msgFromServer.getObj();
 					App.setRoot("teacherResultExam");
 				}
+				if(contentOfMsg.equals("exam questions for principal"))
+				{
+					GlobalDataSaved.PrincipalExamToShow = (Exam)msgFromServer.getObj();
+					App.setRoot("principalShowExam");
+				}
 
 				}
             catch(Exception ex){

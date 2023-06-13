@@ -1,6 +1,7 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
@@ -87,6 +88,38 @@ public class GetEducational {
         List<Exam> data = session.createQuery(query).getResultList();
         return data;
     }
+    public static List<Exam> getAllExamsAllNeeded(Session session)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Exam> query = builder.createQuery(Exam.class);
+        query.from(Exam.class);
+        List<Exam> data = session.createQuery(query).getResultList();
+        List<Exam> exams=new ArrayList<>();
+        for(Exam exam:data)
+        {
+            Exam newExam=new Exam(exam);
+            newExam.setExamSubject(new Subject(exam.getExamSubject()));
+            newExam.setExamCourse(new Course(exam.getExamCourse()));
+            newExam.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+            exams.add(newExam);
+        }
+        return exams;
+    }
+    public static Exam getExamQuestionsByExamId(Session session,int examId)
+    {
+        Exam exam=GetExamBuliding.getExamById(session,examId);
+        List<Exam_Question> examQuestions=new ArrayList<>();
+        for(Exam_Question exam_question:exam.getExamQuestions())
+        {
+           examQuestions.add(new Exam_Question(exam_question.getQuestion(),exam_question.getPoints()));
+        }
+        Exam newExam=new Exam(exam);
+        newExam.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+        newExam.setExamSubject(new Subject(exam.getExamSubject()));
+        newExam.setExamCourse(new Course(exam.getExamCourse()));
+        newExam.getExamQuestions() .addAll(examQuestions);
+        return newExam;
+    }
 
     public static List<Question> getAllQuestions(Session session) throws Exception {
 
@@ -100,11 +133,13 @@ public class GetEducational {
             Question question1=new Question(question);
             question1.setQuestionSubject(new Subject(question.getQuestionSubject()));
             List<Course_Question> courses=new ArrayList<>();
-            for(Course_Question course:courses)
+            for(Course_Question course:question.getQuestionCourses())
             {
               courses.add(new Course_Question(course.getCourse()));
             }
             question1.getQuestionCourses().addAll(courses);
+            question1.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
+            questions.add(question1);
         }
         return questions;
     }

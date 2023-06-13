@@ -71,8 +71,18 @@ public class HandleMsgPrincipal {
                 return true;
             }
         }
+        if(contentOfMsg.equals("#showExamQuestionForPrincipal"))
+        {
+            Message msgToClient=new Message("exam questions for principal",GetEducational.getExamQuestionsByExamId(session,(int) msgFromClient.getObj()));
+            try {
+                client.sendToClient(msgToClient);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
         if (contentOfMsg.equals("AllExamsToPrincipal")) {
-            List<Exam> list = GetEducational.getAllExams(session);
+            List<Exam> list = GetEducational.getAllExamsAllNeeded(session);
             Message messageToClient = new Message("AllExamsToPrincipal",list);
             try {
                 client.sendToClient(messageToClient);
@@ -82,7 +92,7 @@ public class HandleMsgPrincipal {
             return true;
         }
         if (contentOfMsg.equals("UpdateAllExamsToPrincipal")) {
-            List<Exam> list = GetEducational.getAllExams(session);
+            List<Exam> list = GetEducational.getAllExamsAllNeeded(session);
             Message messageToClient = new Message("UpdateAllExamsToPrincipal",list);
             try {
                 client.sendToClient(messageToClient);

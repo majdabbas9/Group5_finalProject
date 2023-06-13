@@ -4,7 +4,9 @@ import java.io.IOException;
 
 
 import aidClasses.GlobalDataSaved;
+import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -88,8 +90,13 @@ public class PrincipalExams {
         ErrTxt.setText("");
         //update that the principal are not in the exam section anymore
         GlobalDataSaved.ThePrincipalInExams = false;
-        GlobalDataSaved.PrincipalExamToShow = examToShow;
-        App.setRoot("principalShowExam");
+        Message msg = new Message("#showExamQuestionForPrincipal",examToShow.getId());
+        try {
+            SimpleClient.getClient().sendToServer(msg);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

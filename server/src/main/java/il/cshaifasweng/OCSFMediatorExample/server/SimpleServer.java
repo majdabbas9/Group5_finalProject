@@ -230,7 +230,7 @@ public class SimpleServer extends AbstractServer {
 			return;
 		} else {
 			try {
-				List<Exam> list = GetEducational.getAllExams(session);
+				List<Exam> list = GetEducational.getAllExamsAllNeeded(session);
 				_LoggedInList.get(i).getClient().sendToClient(new Message("UpdateAllExamsToPrincipal",list));
 			}catch (Exception e){
 				e.printStackTrace();
