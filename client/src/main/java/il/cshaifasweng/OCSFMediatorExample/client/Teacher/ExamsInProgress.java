@@ -48,7 +48,6 @@ public class ExamsInProgress {
 
     @FXML
     private Text warning;
-    private Teacher theTeacher;
     private ObservableList<ExamToExecute> examToExecutes;
 
     @FXML
@@ -86,7 +85,6 @@ public class ExamsInProgress {
     @FXML
     void initialize()
     {
-        theTeacher=(Teacher) GlobalDataSaved.connectedUser;
         examToExecutes = FXCollections.observableArrayList();
         examIdColumn.setCellValueFactory(new PropertyValueFactory<ExamToExecute,Integer>("code"));
         examFinishTimeColumn.setCellValueFactory(new PropertyValueFactory<ExamToExecute,String>("dateOfExam"));

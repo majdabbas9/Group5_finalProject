@@ -326,7 +326,7 @@ public class HandleMsgTeacher {
             }
             return true;
         }
-        if(contentOfMsg.equals("#getTeacherCompExamsNow"))
+        if(contentOfMsg.equals("#getTeacherExeExamsNow"))
         {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
             Message messageToClient = new Message("teacher compExams now",GetExamBuliding.getAllExamsToExecute(session,

@@ -69,7 +69,7 @@ public class TeacherHome {
         List<Object> dataToSever=new ArrayList<>();
         dataToSever.add(GlobalDataSaved.connectedUser.getId());
         dataToSever.add(date);
-        Message msg1 = new Message("#getTeacherCompExamsNow",dataToSever); // creating a msg to the server demanding the students
+        Message msg1 = new Message("#getTeacherExeExamsNow",dataToSever); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
     }
 
