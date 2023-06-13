@@ -2,10 +2,14 @@ package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
@@ -78,15 +82,24 @@ public class PrincipalGrades {
     }
 
     @FXML
-    void ShowCopy(ActionEvent event) {
+    void ShowCopy(ActionEvent event) throws IOException {
         //updating the global variable that the pricnipal are no longer in Grades section
         GlobalDataSaved.ThePrincipalInGrades = false;
 
-        if (gradeToShow.getExamCopy() == null){
+        GlobalDataSaved.currentGrade = gradeToShow;
+        if (gradeToShow.getExamCopy() == null) {
             NoCopyText.setText("No Copy Exists To This Exam");
             return;
         }
-        //TODO:: Show the copy;
+        if (gradeToShow.isManuel()) {
+            WordGeneratorFile.openWord(gradeToShow.getExamCopy().getAnswers());
+        } else {
+            String answers = gradeToShow.getExamCopy().getAnswers();
+            List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
+            GlobalDataSaved.studentAnswers = answersList;
+            GlobalDataSaved.examToExecute = gradeToShow.getExamCopy().getCompExamToExecute();
+            App.setRoot("examCopy");
+        }
     }
 
     @FXML
@@ -102,7 +115,9 @@ public class PrincipalGrades {
     void initialize() {
         //updating the global variable that the pricnipal in Grades section
         GlobalDataSaved.ThePrincipalInGrades = true;
-
+        GlobalDataSaved.copyToPrincipal = true;
+        GlobalDataSaved.copyToTeacher = false;
+        GlobalDataSaved.copyToStudent = false;
         TheGrade.setCellValueFactory(new PropertyValueFactory<Grade, Integer>("grade"));
 
         StudentName.setCellValueFactory(cellData -> {
