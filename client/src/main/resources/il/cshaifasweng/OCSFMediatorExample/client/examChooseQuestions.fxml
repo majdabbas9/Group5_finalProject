@@ -37,7 +37,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="timeLabel" alignment="CENTER" layoutX="509.0" layoutY="37.0" prefHeight="31.0" prefWidth="150.0" promptText="time">
+      <TextField fx:id="timeLabel" alignment="CENTER" layoutX="509.0" layoutY="37.0" prefHeight="31.0" prefWidth="150.0" promptText="time in minutes">
          <font>
             <Font size="14.0" />
          </font>

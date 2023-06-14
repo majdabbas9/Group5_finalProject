@@ -138,7 +138,7 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,GlobalDataSaved.currentCopyId);
         objects.add(1,GlobalDataSaved.currentGradeId);
-        objects.add(2,GlobalDataSaved.examToExecute);
+        objects.add(2,GlobalDataSaved.examToExecute.getId());
         objects.add(3, GlobalDataSaved.connectedUser.getId());
         objects.add(4,answerSt);
         objects.add(5,onTime);
@@ -157,7 +157,7 @@ public class SolveExam {
         List<Object> objects = new ArrayList<>();
         objects.add(0,copy);
         objects.add(1,grade1);
-        objects.add(2,GlobalDataSaved.examToExecute);
+        objects.add(2,GlobalDataSaved.examToExecute.getId());
         objects.add(3, GlobalDataSaved.connectedUser.getId());
         GlobalDataSaved.currentCopyId = copy.getId();
         GlobalDataSaved.currentGradeId = grade1.getId();

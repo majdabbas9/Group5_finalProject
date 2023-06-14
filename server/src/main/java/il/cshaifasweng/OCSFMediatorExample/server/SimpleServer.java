@@ -378,15 +378,19 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
-	public static void updateGradeAndCopyToStudent(int copyId, int gradeId, String studentAnswers, int userId, ComputerizedExamToExecute compExam, int examGrade, boolean onTime) {
+	public static void updateGradeAndCopyToStudent(int copyId, int gradeId, String studentAnswers, int userId, int examId, int examGrade, boolean onTime) {
+		ExamToExecute exam=GetExamBuliding.getExamToExeById(session,examId);
+		Copy copy = GetGrading.getCopyById(session,copyId);
+		Grade grade = GetGrading.getGradeById(session,gradeId);
+
 		session.beginTransaction();
 		session.clear();
-		Copy copy = GetGrading.getCopyById(session,copyId);
+
 		copy.setAnswers(studentAnswers);
 		session.update(copy);
 		//session.flush();
 
-		Grade grade = GetGrading.getGradeById(session,gradeId);
+
 		grade.setGrade(examGrade);
 		grade.setDoneOnTime(onTime);
 
@@ -401,16 +405,16 @@ public class SimpleServer extends AbstractServer {
 		session.update(grade);
 		//session.flush();
 
-		compExam.getCopies().add(copy);
-		session.update(compExam);
+		exam.getCopies().add(copy);
+		session.update(exam);
 
 		if (onTime) {
-			compExam.setNumberOfStudentDoneInTime(compExam.getNumberOfStudentDoneInTime()+1);
-			session.update(compExam);
+			exam.setNumberOfStudentDoneInTime(exam.getNumberOfStudentDoneInTime()+1);
+			session.update(exam);
 		}
 		else {
-			compExam.setNumberOfStudentNotDoneInTime(compExam.getNumberOfStudentNotDoneInTime()+1);
-			session.update(compExam);
+			exam.setNumberOfStudentNotDoneInTime(exam.getNumberOfStudentNotDoneInTime()+1);
+			session.update(exam);
 		}
 		session.flush();
 
@@ -457,19 +461,21 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
-	public static int[] createGradeAndCopyToStudent(Copy copy, Grade grade, int userId, ComputerizedExamToExecute compExam, int studentsDoingNumber) {
+	public static int[] createGradeAndCopyToStudent(Copy copy, Grade grade, int userId, int examId) {
+		ExamToExecute examToExecute=GetExamBuliding.getExamToExeById(session,examId);
+		Student student = GetUsers.getStudentById(session, userId);
 		session.beginTransaction();
 		session.clear();
-		Student student = GetUsers.getStudentById(session, userId);
 
-		compExam.setNumOfStudentDoing(studentsDoingNumber);
-		session.update(compExam);
-
-		copy.setCompExamToExecute(compExam);
-		session.update(copy);
+		session.save(copy);
+		session.save(grade);
 		session.flush();
 
-		session.save(grade);
+		examToExecute.setNumOfStudentDoing(examToExecute.getNumOfStudentDoing()+1);
+		session.update(examToExecute);
+
+		copy.setCompExamToExecute(examToExecute);
+		session.update(copy);
 		session.flush();
 
 		copy.setGrade(grade);

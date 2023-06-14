@@ -127,8 +127,6 @@ public class Approvement {
                     GlobalDataSaved.copyToStudent = false;
                     GlobalDataSaved.copyToTeacher = true;
                     App.setRoot("examCopy");
-
-
                 }
 
             }
