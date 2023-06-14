@@ -62,7 +62,7 @@ public class StudentHome {
 
     @FXML
     void showStudentGrade(ActionEvent event) throws IOException {
-        Message msg = new Message("#show student grades", GlobalDataSaved.connectedUser); // creating a msg to the server demanding the students
+        Message msg = new Message("#show student grades", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg);
     }
     @FXML
