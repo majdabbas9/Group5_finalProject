@@ -208,6 +208,8 @@ public class HandleMsgPrincipal {
             ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
             List<ConnectionToClient> list = updateForExtraTime(session,msgFromClient);
             try {
+                Message messageToClient = new Message("ExtraTime", GetEducational.getAllRequests(session));
+                client.sendToClient(messageToClient);
                 Message message = new Message("AddTimeToStudentForCompExam",examToExecute.getExtraTime());
                 for (ConnectionToClient connectionToClient : list){
                     connectionToClient.sendToClient(message);

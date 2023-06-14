@@ -83,6 +83,10 @@ public class PrincipalGrades {
 
     @FXML
     void ShowCopy(ActionEvent event) throws IOException {
+        if (gradeToShow == null){
+            NoCopyText.setText("Please Select Grade!");
+            return;
+        }
         //updating the global variable that the pricnipal are no longer in Grades section
         GlobalDataSaved.ThePrincipalInGrades = false;
 

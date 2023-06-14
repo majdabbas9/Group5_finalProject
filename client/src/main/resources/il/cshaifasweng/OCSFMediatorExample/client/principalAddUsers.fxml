@@ -20,7 +20,7 @@
         <ListView fx:id="CoursesList" layoutX="430.0" layoutY="188.0" onMouseClicked="#selectCourse" prefHeight="148.0" prefWidth="200.0" />
         <ListView fx:id="selectedSubjectsList" layoutX="151.0" layoutY="378.0" onMouseClicked="#deleteSubject" prefHeight="148.0" prefWidth="200.0" />
         <ListView fx:id="selectedCoursesList" layoutX="430.0" layoutY="378.0" onMouseClicked="#deleteCourse" prefHeight="148.0" prefWidth="200.0" />
-        <Button fx:id="AddBtn" layoutX="598.0" layoutY="534.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Add" textFill="WHITE">
+        <Button fx:id="AddBtn" layoutX="648.0" layoutY="534.0" mnemonicParsing="false" onAction="#Add" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #0A8A0A;" text="Add" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font></Button>
@@ -59,7 +59,7 @@
                 <Font size="18.0" />
             </font>
         </Text>
-      <Button layoutX="307.0" layoutY="534.0" mnemonicParsing="false" onAction="#Clear" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #0A8A0A;" text="Clear" textFill="WHITE">
+      <Button layoutX="648.0" layoutY="487.0" mnemonicParsing="false" onAction="#Clear" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #0A8A0A;" text="Clear" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
