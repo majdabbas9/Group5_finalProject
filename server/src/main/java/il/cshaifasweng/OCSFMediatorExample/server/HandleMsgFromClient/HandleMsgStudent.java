@@ -152,32 +152,36 @@ public class HandleMsgStudent {
         }
         if (contentOfMsg.equals("#create student copy and grade")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
-            String studentAnswers = (String) dataFromClient.get(0);
-            Student user = (Student) dataFromClient.get(1);
-            int grade = (int) dataFromClient.get(3);
+            Copy copy = (Copy) dataFromClient.get(0);
+            int userId = (int) dataFromClient.get(3);
+            Grade grade = (Grade) dataFromClient.get(1);
             if (dataFromClient.get(2) instanceof ComputerizedExamToExecute){
                 ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) dataFromClient.get(2);
-                SimpleServer.createGradeAndCopyToStudent(studentAnswers, user, compExam, grade,compExam.getNumOfStudentDoing()+1);
+                int [] ides = SimpleServer.createGradeAndCopyToStudent(copy,grade,userId, compExam,compExam.getNumOfStudentDoing()+1);
+                Message msgToClient = new Message("save grade id and copy id", ides);
+                client.sendToClient(msgToClient);
             }
             if (dataFromClient.get(2) instanceof ManualExamToExecute) {
                 ManualExamToExecute manualExamToExecute = (ManualExamToExecute) dataFromClient.get(2);
-                SimpleServer.createGradeAndCopyToManualExam(studentAnswers, user, manualExamToExecute, grade, manualExamToExecute.getNumOfStudentDoing()+1);
+                //SimpleServer.createGradeAndCopyToManualExam(studentAnswers, user, manualExamToExecute, grade, manualExamToExecute.getNumOfStudentDoing()+1);
             }
             return true;
         }
         if (contentOfMsg.equals("#update student answers")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
-            String studentAnswers = (String) dataFromClient.get(0);
-            Student user = (Student) dataFromClient.get(1);
-            int grade = (int) dataFromClient.get(3);
-            boolean submitOnTime = (boolean) dataFromClient.get(4);
+            String studentAnswers = (String) dataFromClient.get(4);
+            int userId = (int) dataFromClient.get(3);
+            int gradeId = (int) dataFromClient.get(1);
+            int copyId = (int) dataFromClient.get(0);
+            boolean submitOnTime = (boolean) dataFromClient.get(5);
+            int grade = (int) dataFromClient.get(6);
             if (dataFromClient.get(2) instanceof ComputerizedExamToExecute){
                 ComputerizedExamToExecute compExam = (ComputerizedExamToExecute) dataFromClient.get(2);
-                SimpleServer.updateGradeAndCopyToStudent(studentAnswers, user, compExam, grade, submitOnTime);
+                SimpleServer.updateGradeAndCopyToStudent(copyId, gradeId,studentAnswers, userId, compExam, grade, submitOnTime);
             }
             if (dataFromClient.get(2) instanceof ManualExamToExecute) {
                 ManualExamToExecute manualExamToExecute = (ManualExamToExecute) dataFromClient.get(2);
-                SimpleServer.updateGradeAndCopyToManualExam(studentAnswers, user, manualExamToExecute, grade, submitOnTime);
+                //SimpleServer.updateGradeAndCopyToManualExam(studentAnswers, user, manualExamToExecute, grade, submitOnTime);
             }
             if (submitOnTime) {
                 Message msgToClient = new Message("exam done on time", studentAnswers);

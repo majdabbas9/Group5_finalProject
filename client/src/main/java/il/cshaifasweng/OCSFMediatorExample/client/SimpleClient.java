@@ -193,6 +193,11 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.teacherCourses = (List<Course>) msgFromServer.getObj();
 					return;
 				}
+				if (contentOfMsg.equals("save grade id and copy id")) {
+					int[] ides = (int[]) msgFromServer.getObj();
+					GlobalDataSaved.currentGradeId = ides[0];
+					GlobalDataSaved.currentCopyId = ides[1];
+				}
 				if (contentOfMsg.equals("the grade updated")) {
 					List<Object> dataFromServer=(List<Object>)msgFromServer.getObj();
 					int newGrade=(int)dataFromServer.get(1);

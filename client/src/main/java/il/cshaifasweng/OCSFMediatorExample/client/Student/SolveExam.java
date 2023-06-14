@@ -6,6 +6,8 @@ import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -128,12 +130,19 @@ public class SolveExam {
 
     private void sendStudentAnswersToServer(boolean onTime , int grade) throws IOException {
         String answerSt = String.join(",", answers);
+
+        //Grade grade1 = new Grade(grade,false,GlobalDataSaved.examToExecute.getExam().getTime(),
+        //        onTime,GlobalDataSaved.examToExecute.getDateOfExam(),GlobalDataSaved.examToExecute.getDateOfExam(), false);
+        //Copy copy = new Copy();
+        //copy.setAnswers(answerSt);
         List<Object> objects = new ArrayList<>();
-        objects.add(0,answerSt);
-        objects.add(1,GlobalDataSaved.connectedUser);
+        objects.add(0,GlobalDataSaved.currentCopyId);
+        objects.add(1,GlobalDataSaved.currentGradeId);
         objects.add(2,GlobalDataSaved.examToExecute);
-        objects.add(3,grade);
-        objects.add(4, onTime);
+        objects.add(3, GlobalDataSaved.connectedUser.getId());
+        objects.add(4,answerSt);
+        objects.add(5,onTime);
+        objects.add(6,grade);
         Message msg = new Message("#update student answers", objects);
         SimpleClient.getClient().sendToServer(msg);
     }
@@ -141,11 +150,17 @@ public class SolveExam {
     @FXML
     public void initialize() throws IOException {
         // TODO late
+        Grade grade1 = new Grade(-1,false,GlobalDataSaved.examToExecute.getExam().getTime(),
+                false,GlobalDataSaved.examToExecute.getDateOfExam(),GlobalDataSaved.examToExecute.getDateOfExam(), false);
+        Copy copy = new Copy();
+        copy.setAnswers(null);
         List<Object> objects = new ArrayList<>();
-        objects.add(0,null);
-        objects.add(1,GlobalDataSaved.connectedUser);
+        objects.add(0,copy);
+        objects.add(1,grade1);
         objects.add(2,GlobalDataSaved.examToExecute);
-        objects.add(3,-1);
+        objects.add(3, GlobalDataSaved.connectedUser.getId());
+        GlobalDataSaved.currentCopyId = copy.getId();
+        GlobalDataSaved.currentGradeId = grade1.getId();
         Message msg = new Message("#create student copy and grade", objects);
         SimpleClient.getClient().sendToServer(msg);
 

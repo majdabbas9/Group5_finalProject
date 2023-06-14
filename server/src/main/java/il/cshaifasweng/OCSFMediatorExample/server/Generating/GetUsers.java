@@ -56,4 +56,12 @@ public class GetUsers {
         query.setParameter("id",id);
         return (Teacher) (query.getResultList().get(0));
     }
+
+    public static Student getStudentById(Session session,int id)
+    {
+        String queryString=" FROM Student WHERE id = : id";
+        Query query = session.createQuery(queryString,Student.class);
+        query.setParameter("id",id);
+        return (Student) (query.getResultList().get(0));
+    }
 }

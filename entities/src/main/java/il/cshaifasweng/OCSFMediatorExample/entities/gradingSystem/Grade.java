@@ -46,6 +46,16 @@ public class Grade implements Serializable {
         this.hour = hour;
         this.teacherApprovement = teacherApprovement;
     }
+
+    public Grade(int grade, boolean isManuel, int timeToSolve, boolean doneOnTime, String date, String hour, boolean teacherApprovement) {
+        this.grade = grade;
+        this.isManuel = isManuel;
+        this.timeToSolve = timeToSolve;
+        this.doneOnTime = doneOnTime;
+        this.date = date;
+        this.hour = hour;
+        this.teacherApprovement = teacherApprovement;
+    }
     public Grade(Grade grade1)
     {
         this.id=grade1.id;

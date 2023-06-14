@@ -79,4 +79,6 @@ public class GlobalDataSaved {
     public static boolean copyToStudent;
     public static boolean copyToTeacher;
     public static boolean copyToPrincipal;
+    public static int currentGradeId;
+    public static int currentCopyId;
 }

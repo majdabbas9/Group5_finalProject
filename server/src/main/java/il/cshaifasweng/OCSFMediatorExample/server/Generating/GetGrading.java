@@ -21,6 +21,14 @@ public class GetGrading {
         query.setParameter("id",id);
         return (Grade) (query.getResultList().get(0));
     }
+
+    public static Copy getCopyById(Session session, int id)
+    {
+        String queryString=" FROM Copy WHERE id = : id";
+        Query query = session.createQuery(queryString,Copy.class);
+        query.setParameter("id",id);
+        return (Copy) (query.getResultList().get(0));
+    }
     public static List<Grade> getAllTeacherExamsGrade(Session session,int teacherId,int exaId)
     {
         Teacher teacher=GetUsers.getTeacherById(session,teacherId);
