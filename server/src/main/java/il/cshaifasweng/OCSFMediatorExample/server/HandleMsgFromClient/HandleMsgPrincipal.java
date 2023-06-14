@@ -157,7 +157,7 @@ public class HandleMsgPrincipal {
         if (contentOfMsg.equals("StatisticalDataForPrincipal")) {
             //creating the object which I send to the client
             List<Object> list = new ArrayList<>();
-            list.add(GetEducational.getAllExams(session));
+            list.add(GetEducational.getAllExamsAllNeeded(session));
             list.add(GetEducational.getAllStudents(session));
             list.add(GetEducational.getAllCourses(session));
             list.add(GetEducational.getAllTeachers(session));
@@ -230,7 +230,7 @@ public class HandleMsgPrincipal {
                 e.printStackTrace();
             }
         }
-        return false;
+            return false;
     }
 
     static List<ConnectionToClient> updateForExtraTime(Session session, Message msgFromClient) throws Exception {

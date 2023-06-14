@@ -19,7 +19,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.From;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 
 public class GetEducational {
@@ -31,6 +34,23 @@ public class GetEducational {
         List<Subject> data = session.createQuery(query).getResultList();
         return data;
     }
+
+    public static List<Subject> getAllSubjectsForPrincipal(Session session) throws Exception {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
+        query.from(Subject.class);
+        List<Subject> data = session.createQuery(query).getResultList();
+        List<Subject> subjects = new ArrayList<>();
+        for (Subject subject : data){
+            Subject newSubject = new Subject();
+            newSubject.setSubjectCourses(subject.getSubjectCourses());
+            newSubject.setSubjectName(subject.getSubjectName());
+            subjects.add(newSubject);
+        }
+        return subjects;
+    }
+
 
     public static List<ExamToExecute> getAllRequests(Session session) throws Exception {
         Query query = session.createQuery("from ExamToExecute where isExtraNeeded='"+1+"'");
@@ -44,7 +64,13 @@ public class GetEducational {
         CriteriaQuery<Course> query = builder.createQuery(Course.class);
         query.from(Course.class);
         List<Course> data = session.createQuery(query).getResultList();
-        return data;
+        List<Course> courses = new ArrayList<>();
+        for (Course course : data){
+            Course  newCourse = new Course();
+            newCourse.setCourseName(course.getCourseName());
+            courses.add(newCourse);
+        }
+        return courses;
     }
 
     public static void getCourse(Session session) {
@@ -150,7 +176,7 @@ public class GetEducational {
         CriteriaQuery<Grade> query = builder.createQuery(Grade.class);
         query.from(Grade.class);
         List<Grade> data = session.createQuery(query).getResultList();
-        return data;
+        return GetGrading.SpeedUpGradesData(data);
     }
     public static List<Student> getAllStudents(Session session) throws Exception {
 
@@ -158,7 +184,20 @@ public class GetEducational {
         CriteriaQuery<Student> query = builder.createQuery(Student.class);
         query.from(Student.class);
         List<Student> data = session.createQuery(query).getResultList();
-        return data;
+        List<Student> students = new ArrayList<>();
+        for (Student student : data){
+            Student newStudent = new Student();
+            newStudent.setFirstName(student.getFirstName());
+            newStudent.setLastName(student.getLastName());
+            newStudent.setUserID(student.getUserID());
+            Set<Grade> newGrades = new HashSet<>();
+            for (Grade grade : student.getGrades()){
+              newGrades.add(grade);
+            }
+            newStudent.setGrades(newGrades);
+            students.add(newStudent);
+        }
+        return students;
     }
     public static List<Teacher> getAllTeachers(Session session) throws Exception {
 
@@ -166,6 +205,14 @@ public class GetEducational {
         CriteriaQuery<Teacher> query = builder.createQuery(Teacher.class);
         query.from(Teacher.class);
         List<Teacher> data = session.createQuery(query).getResultList();
-        return data;
+        List<Teacher> teachers = new ArrayList<>();
+        for (Teacher teacher : data){
+            Teacher  newTeacher = new Teacher();
+            newTeacher.setFirstName(teacher.getFirstName());
+            newTeacher.setLastName(teacher.getLastName());
+            newTeacher.setUserID(teacher.getUserID());
+            teachers.add(newTeacher);
+        }
+        return teachers;
     }
 }

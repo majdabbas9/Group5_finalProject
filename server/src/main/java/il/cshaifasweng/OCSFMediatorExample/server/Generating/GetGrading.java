@@ -36,26 +36,7 @@ public class GetGrading {
         String q="from Grade where student='"+ studentId +"' and teacherApprovement='"+ 1 +"'";
         Query query=session.createQuery(q);
         List<Grade> grades = (List<Grade>) (query.getResultList());
-        List<Grade> newGrades = new ArrayList<>();
-        for (Grade grade : grades) {
-
-            Grade newGrade = new Grade(grade);
-            Copy copy=new Copy(grade.getExamCopy());
-            Exam exam=new Exam(grade.getExamCopy().getCompExamToExecute().getExam());
-            ExamToExecute examToExecute = new ExamToExecute(grade.getExamCopy().getCompExamToExecute());
-            Subject subject=new Subject(grade.getExamCopy().getCompExamToExecute().getExam().getExamSubject());
-            Course course=new Course(grade.getExamCopy().getCompExamToExecute().getExam().getExamCourse());
-            Teacher teacher=new Teacher(grade.getExamCopy().getCompExamToExecute().getTeacherThatExecuted());
-
-            exam.setExamSubject(subject);
-            exam.setExamCourse(course);
-            examToExecute.setExam(exam);
-            examToExecute.setTeacherThatExecuted(teacher);
-            copy.setCompExamToExecute(examToExecute);
-            newGrade.setExamCopy(copy);
-            newGrades.add(newGrade);
-        }
-        return newGrades;
+        return SpeedUpGradesData(grades);
     }
     public static List<Grade> getAllTeacherExamsGrade(Session session,int teacherId,int exaId)
     {
@@ -95,5 +76,29 @@ public class GetGrading {
                 }
             }
         return grades;
+    }
+    public static List<Grade> SpeedUpGradesData(List<Grade> grades){
+        List<Grade> newGrades = new ArrayList<>();
+        for (Grade grade : grades) {
+
+            Grade newGrade = new Grade(grade);
+            Copy copy=new Copy(grade.getExamCopy());
+            Exam exam=new Exam(grade.getExamCopy().getCompExamToExecute().getExam());
+            ExamToExecute examToExecute = new ExamToExecute(grade.getExamCopy().getCompExamToExecute());
+            Subject subject=new Subject(grade.getExamCopy().getCompExamToExecute().getExam().getExamSubject());
+            Course course=new Course(grade.getExamCopy().getCompExamToExecute().getExam().getExamCourse());
+            Teacher teacher=new Teacher(grade.getExamCopy().getCompExamToExecute().getTeacherThatExecuted());
+            Student student = new Student(grade.getStudent());
+
+            exam.setExamSubject(subject);
+            exam.setExamCourse(course);
+            examToExecute.setExam(exam);
+            examToExecute.setTeacherThatExecuted(teacher);
+            copy.setCompExamToExecute(examToExecute);
+            newGrade.setStudent(student);
+            newGrade.setExamCopy(copy);
+            newGrades.add(newGrade);
+        }
+        return newGrades;
     }
 }
