@@ -28,7 +28,10 @@ public class ExamStudentNotes {
     @FXML
     public void initialize() throws IOException {
         grade = GlobalDataSaved.currentGrade;
-        if (grade.getTeacherNotes() == null) {
+        if (GlobalDataSaved.copyToTeacher) {
+            backToGradesTable.setText("Back To Exams");
+        }
+        if (grade.getTeacherNotes() == null || grade.getTeacherNotes().equals("")) {
             teacherNotes.setText("There Is No Notes");
         }
         else {
@@ -41,7 +44,15 @@ public class ExamStudentNotes {
     }
     @FXML
     void backToGradesTable(ActionEvent event) throws IOException {
-        App.setRoot("studentGrades");
+        if (GlobalDataSaved.copyToStudent){
+            App.setRoot("studentGrades");
+        }
+        else if (GlobalDataSaved.copyToPrincipal){
+            App.setRoot("principalGrades");
+        }
+        else if (GlobalDataSaved.copyToTeacher) {
+            App.setRoot("approvement");
+        }
     }
 
     @FXML

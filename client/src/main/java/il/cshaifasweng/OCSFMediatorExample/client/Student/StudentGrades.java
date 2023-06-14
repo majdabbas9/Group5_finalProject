@@ -59,8 +59,8 @@ public class StudentGrades {
         if (details == null){
             return;
         }
-        GlobalDataSaved.currentGrade = details.getGradeObject();
-        Message msg = new Message("#get exam copy", details.getGradeObject());
+        //GlobalDataSaved.currentGrade = details.getGradeObject();
+        Message msg = new Message("#get exam copy", details.getGradeObject().getId());
         SimpleClient.getClient().sendToServer(msg);
     }
 

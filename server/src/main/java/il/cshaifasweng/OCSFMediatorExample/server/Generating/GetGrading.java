@@ -2,6 +2,8 @@ package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
@@ -28,6 +30,32 @@ public class GetGrading {
         Query query = session.createQuery(queryString,Copy.class);
         query.setParameter("id",id);
         return (Copy) (query.getResultList().get(0));
+    }
+
+    public static List<Grade> getStudentGrades(Session session, int studentId) {
+        String q="from Grade where student='"+ studentId +"' and teacherApprovement='"+ 1 +"'";
+        Query query=session.createQuery(q);
+        List<Grade> grades = (List<Grade>) (query.getResultList());
+        List<Grade> newGrades = new ArrayList<>();
+        for (Grade grade : grades) {
+
+            Grade newGrade = new Grade(grade);
+            Copy copy=new Copy(grade.getExamCopy());
+            Exam exam=new Exam(grade.getExamCopy().getCompExamToExecute().getExam());
+            ExamToExecute examToExecute = new ExamToExecute(grade.getExamCopy().getCompExamToExecute());
+            Subject subject=new Subject(grade.getExamCopy().getCompExamToExecute().getExam().getExamSubject());
+            Course course=new Course(grade.getExamCopy().getCompExamToExecute().getExam().getExamCourse());
+            Teacher teacher=new Teacher(grade.getExamCopy().getCompExamToExecute().getTeacherThatExecuted());
+
+            exam.setExamSubject(subject);
+            exam.setExamCourse(course);
+            examToExecute.setExam(exam);
+            examToExecute.setTeacherThatExecuted(teacher);
+            copy.setCompExamToExecute(examToExecute);
+            newGrade.setExamCopy(copy);
+            newGrades.add(newGrade);
+        }
+        return newGrades;
     }
     public static List<Grade> getAllTeacherExamsGrade(Session session,int teacherId,int exaId)
     {

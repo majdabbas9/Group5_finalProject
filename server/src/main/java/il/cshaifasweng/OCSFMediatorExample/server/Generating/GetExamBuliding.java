@@ -297,4 +297,12 @@ public class GetExamBuliding {
         return query.getResultList();
     }
 
+    public static List<Question> copyQuestions(Set<Exam_Question> examQuestions) {
+        List<Question>  questionList = new ArrayList<>();
+        for (Exam_Question exam_question : examQuestions) {
+            questionList.add(new Question(exam_question.getQuestion()));
+        }
+        return questionList;
+    }
+
 }
