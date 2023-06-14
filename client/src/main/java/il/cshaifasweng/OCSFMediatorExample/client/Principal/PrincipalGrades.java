@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import aidClasses.GlobalDataSaved;
+import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
@@ -104,8 +106,8 @@ public class PrincipalGrades {
                 GlobalDataSaved.studentAnswers = answersList;
             }
             GlobalDataSaved.examToExecute = gradeToShow.getExamCopy().getCompExamToExecute();
-            App.setRoot("examCopy");
-        }
+            Message msg = new Message("#get exam copy", gradeToShow.getId());
+            SimpleClient.getClient().sendToServer(msg);        }
     }
 
     @FXML

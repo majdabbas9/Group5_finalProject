@@ -57,7 +57,7 @@ public class GlobalDataSaved {
     public static List<Student> allStudentsForPrincipal = new ArrayList<>();
     public static List<Teacher> allTeachersForPrincipal = new ArrayList<>();
     public static ObservableList<Exam> allStatisticalDataExamsForPrincipal = FXCollections.observableArrayList();
-    public static String CurrentStatisticalCatagory;
+    public static String CurrentStatisticalCatagory = "Course";
 
     public static Teacher StatisticalTeacherForPrincipal = null;
     public static Course StatisticalCourseForPrincipal = null;

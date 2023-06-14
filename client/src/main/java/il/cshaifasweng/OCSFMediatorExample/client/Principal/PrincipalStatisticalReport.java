@@ -114,8 +114,7 @@ public class PrincipalStatisticalReport {
                     " ( ID:" + GlobalDataSaved.StatisticalTeacherForPrincipal.getUserID() +" )");
         }else {
             InfoTxt.setText(InfoTxt.getText() + "The Course: " +
-                    GlobalDataSaved.StatisticalCourseForPrincipal.getCourseName() +
-                    " ( ID:" + GlobalDataSaved.StatisticalCourseForPrincipal.getId() + " )");
+                    GlobalDataSaved.StatisticalCourseForPrincipal.getCourseName());
         }
         ObservableList<ExamStatistics> list = FXCollections.observableArrayList();
         for (Exam exam : GlobalDataSaved.allStatisticalDataExamsForPrincipal){

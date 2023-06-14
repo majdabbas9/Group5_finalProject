@@ -340,8 +340,7 @@ public class SimpleClient extends AbstractClient {
 					GlobalDataSaved.PrincipalExamToShow = (Exam)msgFromServer.getObj();
 					App.setRoot("principalShowExam");
 				}
-
-				}
+			}
             catch(Exception ex){
 					System.out.println(ex.getMessage());
 				}
@@ -357,7 +356,7 @@ public class SimpleClient extends AbstractClient {
 
 	public static SimpleClient getClient() {
 		if (client == null) {
-			client = new SimpleClient("192.168.43.31", 3020);
+			client = new SimpleClient("localhost", 3020);
 		}
 		return client;
 	}

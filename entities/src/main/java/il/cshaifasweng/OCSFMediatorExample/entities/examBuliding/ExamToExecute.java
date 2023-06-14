@@ -20,8 +20,6 @@ public class ExamToExecute implements Serializable{
     private int code;
     private int examAverage;
     private int numOfStudentDoing;
-    @ElementCollection
-    private List<Integer> histogram;
     @Column(name = "inTime")
     private int numberOfStudentDoneInTime;
     @Column(name = "notInTime")
@@ -38,7 +36,6 @@ public class ExamToExecute implements Serializable{
     private int extraTime;
     public ExamToExecute(String dateOfExam,int code) {
         this.examAverage = 0;
-        this.histogram = new ArrayList<>();
         this.numberOfStudentDoneInTime = 0;
         this.numberOfStudentNotDoneInTime = 0;
         this.code=code;
@@ -51,7 +48,6 @@ public class ExamToExecute implements Serializable{
     {
         this.id=ex.id;
         this.examAverage = ex.examAverage;
-        this.histogram = new ArrayList<>(ex.histogram);
         this.numberOfStudentDoneInTime = ex.numberOfStudentDoneInTime;
         this.numberOfStudentNotDoneInTime = ex.numberOfStudentNotDoneInTime;
         this.code=ex.code;
@@ -93,15 +89,6 @@ public class ExamToExecute implements Serializable{
     public void setExamAverage(int average) {
         this.examAverage = average;
     }
-
-    public List<Integer> getHistogram() {
-        return histogram;
-    }
-
-    public void setHistogram(List<Integer> histogram) {
-        this.histogram = histogram;
-    }
-
     public int getNumberOfStudentDoneInTime() {
         return numberOfStudentDoneInTime;
     }
