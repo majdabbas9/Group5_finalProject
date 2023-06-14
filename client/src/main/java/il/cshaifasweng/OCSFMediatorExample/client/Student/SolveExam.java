@@ -141,6 +141,9 @@ public class SolveExam {
     @FXML
     public void initialize() throws IOException {
         // TODO late
+        hour = 0;
+        minute = 0;
+        second = 0;
         List<Object> objects = new ArrayList<>();
         objects.add(0,null);
         objects.add(1,GlobalDataSaved.connectedUser);
