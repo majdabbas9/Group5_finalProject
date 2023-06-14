@@ -50,17 +50,19 @@ public class SolveExamManual {
     }
     private List<Object> sendStudentManualAnswerToServer(boolean onTime, boolean sendToServer) throws IOException {
         List<Object> objects = new ArrayList<>();
-        objects.add(0, dist);
-        objects.add(1, GlobalDataSaved.connectedUser);
-        objects.add(2, GlobalDataSaved.examToExecute);
-        objects.add(3, -1);
-        objects.add(4, onTime);
-        if (sendToServer){
+        objects.add(0,GlobalDataSaved.currentCopyId);
+        objects.add(1,GlobalDataSaved.currentGradeId);
+        objects.add(2,GlobalDataSaved.examToExecute.getId());
+        objects.add(3, GlobalDataSaved.connectedUser.getId());
+        objects.add(4,dist);
+        objects.add(5,onTime);
+        objects.add(6,-1);
+        if(sendToServer)
+        {
             Message msg = new Message("#update student answers", objects);
             SimpleClient.getClient().sendToServer(msg);
         }
         return objects;
-
     }
     @FXML
     void submitExam(ActionEvent event) throws IOException {

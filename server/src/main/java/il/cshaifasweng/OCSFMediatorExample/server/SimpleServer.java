@@ -421,45 +421,6 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
-	public static void updateGradeAndCopyToManualExam(String studentAnswers, Student user, ManualExamToExecute manualExamToExecute, int examGrade, boolean onTime) {
-		session.beginTransaction();
-		session.clear();
-		Copy copy = GlobalDataSaved.currentCopy;
-		copy.setAnswers(studentAnswers);
-		copy.setCompExamToExecute(manualExamToExecute);
-		session.update(copy);
-		//session.flush();
-
-		Grade grade = GlobalDataSaved.currentGrade;
-		grade.setGrade(examGrade);
-		grade.setDoneOnTime(onTime);
-
-		session.update(grade);
-		//session.flush();
-
-		copy.setGrade(grade);
-		grade.setExamCopy(copy);
-		session.update(copy);
-		//session.flush();
-
-		session.update(grade);
-		//session.flush();
-
-		manualExamToExecute.getCopies().add(copy);
-		session.update(manualExamToExecute);
-
-		if (onTime) {
-			manualExamToExecute.setNumberOfStudentDoneInTime(manualExamToExecute.getNumberOfStudentDoneInTime()+1);
-			session.update(manualExamToExecute);
-		}
-		else {
-			manualExamToExecute.setNumberOfStudentNotDoneInTime(manualExamToExecute.getNumberOfStudentNotDoneInTime()+1);
-			session.update(manualExamToExecute);
-		}
-		session.flush();
-
-		session.getTransaction().commit();
-	}
 
 	public static int[] createGradeAndCopyToStudent(Copy copy, Grade grade, int userId, int examId) {
 		ExamToExecute examToExecute=GetExamBuliding.getExamToExeById(session,examId);
@@ -491,38 +452,6 @@ public class SimpleServer extends AbstractServer {
 
 		return new int[]{grade.getId(), copy.getId()};
 	}
-	public static void createGradeAndCopyToManualExam(String studentAnswers, Student user, ManualExamToExecute manualExamToExecute, int grade, int studentsDoingNumber) {
-		session.beginTransaction();
-		session.clear();
-
-		manualExamToExecute.setNumOfStudentDoing(studentsDoingNumber);
-		session.update(manualExamToExecute);
-
-		Copy copy = new Copy();
-		copy.setAnswers(studentAnswers);
-		copy.setCompExamToExecute(manualExamToExecute);
-		session.save(copy);
-		//session.flush();
-
-		Grade grade1 = new Grade(user,grade,true,manualExamToExecute.getExam().getTime(),
-				false,manualExamToExecute.getDateOfExam(),manualExamToExecute.getDateOfExam(), false);
-
-		session.save(grade1);
-		//session.flush();
-
-		copy.setGrade(grade1);
-		grade1.setExamCopy(copy);
-		session.update(copy);
-		//session.flush();
-		session.update(grade1);
-		//session.flush();
-
-		GlobalDataSaved.currentGrade = grade1;
-		GlobalDataSaved.currentCopy = copy;
-		session.flush();
-		session.getTransaction().commit();
-	}
-
 	public static void teacherApproveStudentGrade(int gradeId,int newGrade,String notes) {
 		Grade grade= GetGrading.getGradeById(session,gradeId);
 		session.beginTransaction();

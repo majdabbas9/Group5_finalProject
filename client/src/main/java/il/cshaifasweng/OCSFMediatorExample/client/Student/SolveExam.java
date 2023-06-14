@@ -130,11 +130,6 @@ public class SolveExam {
 
     private void sendStudentAnswersToServer(boolean onTime , int grade) throws IOException {
         String answerSt = String.join(",", answers);
-
-        //Grade grade1 = new Grade(grade,false,GlobalDataSaved.examToExecute.getExam().getTime(),
-        //        onTime,GlobalDataSaved.examToExecute.getDateOfExam(),GlobalDataSaved.examToExecute.getDateOfExam(), false);
-        //Copy copy = new Copy();
-        //copy.setAnswers(answerSt);
         List<Object> objects = new ArrayList<>();
         objects.add(0,GlobalDataSaved.currentCopyId);
         objects.add(1,GlobalDataSaved.currentGradeId);
