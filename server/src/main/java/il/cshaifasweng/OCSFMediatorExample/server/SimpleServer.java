@@ -90,11 +90,9 @@ public class SimpleServer extends AbstractServer {
 		GenerateAll.generateEducational(session);  // moving the students to the database
 		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	public static void addQuestion(Question question,List<Integer> CoursesIds,int subjectId,int teacherId) {
-		session = session.getSessionFactory().openSession();
 		List<Course>questionCourses=GetExamBuliding.getCoursesById(session,CoursesIds);
 		Subject questionSubject=GetExamBuliding.getSubjectById(session,subjectId);
 		Teacher theTeacher=GetUsers.getTeacherById(session,teacherId);
@@ -150,11 +148,9 @@ public class SimpleServer extends AbstractServer {
 				e.printStackTrace();
 			}
 		}
-		session.close();
 	}
 
 	public static void addExam(Exam exam,int teacherId,int courseId,int subjectId,List<Integer> questionsIds,List<Integer> points) {
-		session = session.getSessionFactory().openSession();
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Course course=GetExamBuliding.getCourseById(session,courseId);
 		Subject subject=GetExamBuliding.getSubjectById(session,subjectId);
@@ -240,11 +236,10 @@ public class SimpleServer extends AbstractServer {
 				e.printStackTrace();
 			}
 		}
-		session.close();
 	}
 
 	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId) {
-		session = session.getSessionFactory().openSession();
+
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Exam exam=GetExamBuliding.getExamById(session,examId);
 		session.beginTransaction();
@@ -271,10 +266,9 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		session.getTransaction().commit();
-		session.close();
 	}
 	public static void addManualExam(ManualExamToExecute compExam, int teacherId, int examId) {
-		session = session.getSessionFactory().openSession();
+
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Exam exam=GetExamBuliding.getExamById(session,examId);
 		session.beginTransaction();
@@ -301,10 +295,8 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		session.getTransaction().commit();
-		session.close();
 	}
 	public static void addTeacher(Teacher teacher,List<Integer> subjectsIds,List<Integer> coursesIds) {
-		session = session.getSessionFactory().openSession();
 		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesIds);
 		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsIds);
 		session.beginTransaction();
@@ -343,11 +335,9 @@ public class SimpleServer extends AbstractServer {
 		}
 		session.flush();
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	public static void addStudent(Student student,List<Integer> subjectsids,List<Integer> coursesids) {
-		session = session.getSessionFactory().openSession();
 		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesids);
 		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsids);
 		session.beginTransaction();
@@ -386,11 +376,9 @@ public class SimpleServer extends AbstractServer {
 		}
 		session.flush();
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	public static void updateGradeAndCopyToStudent(int copyId, int gradeId, String studentAnswers, int userId, int examId, int examGrade, boolean onTime) {
-		session = session.getSessionFactory().openSession();
 		ExamToExecute exam=GetExamBuliding.getExamToExeById(session,examId);
 		Copy copy = GetGrading.getCopyById(session,copyId);
 		Grade grade = GetGrading.getGradeById(session,gradeId);
@@ -431,53 +419,10 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		session.getTransaction().commit();
-		session.close();
 	}
 
-	public static void updateGradeAndCopyToManualExam(String studentAnswers, Student user, ManualExamToExecute manualExamToExecute, int examGrade, boolean onTime) {
-		session = session.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.clear();
-		Copy copy = GlobalDataSaved.currentCopy;
-		copy.setAnswers(studentAnswers);
-		copy.setCompExamToExecute(manualExamToExecute);
-		session.update(copy);
-		//session.flush();
-
-		Grade grade = GlobalDataSaved.currentGrade;
-		grade.setGrade(examGrade);
-		grade.setDoneOnTime(onTime);
-
-		session.update(grade);
-		//session.flush();
-
-		copy.setGrade(grade);
-		grade.setExamCopy(copy);
-		session.update(copy);
-		//session.flush();
-
-		session.update(grade);
-		//session.flush();
-
-		manualExamToExecute.getCopies().add(copy);
-		session.update(manualExamToExecute);
-
-		if (onTime) {
-			manualExamToExecute.setNumberOfStudentDoneInTime(manualExamToExecute.getNumberOfStudentDoneInTime()+1);
-			session.update(manualExamToExecute);
-		}
-		else {
-			manualExamToExecute.setNumberOfStudentNotDoneInTime(manualExamToExecute.getNumberOfStudentNotDoneInTime()+1);
-			session.update(manualExamToExecute);
-		}
-		session.flush();
-
-		session.getTransaction().commit();
-		session.close();
-	}
 
 	public static int[] createGradeAndCopyToStudent(Copy copy, Grade grade, int userId, int examId) {
-		session = session.getSessionFactory().openSession();
 		ExamToExecute examToExecute=GetExamBuliding.getExamToExeById(session,examId);
 		Student student = GetUsers.getStudentById(session, userId);
 		session.beginTransaction();
@@ -504,45 +449,10 @@ public class SimpleServer extends AbstractServer {
 		session.update(grade);
 		session.flush();
 		session.getTransaction().commit();
-		session.close();
+
 		return new int[]{grade.getId(), copy.getId()};
 	}
-	public static void createGradeAndCopyToManualExam(String studentAnswers, Student user, ManualExamToExecute manualExamToExecute, int grade, int studentsDoingNumber) {
-		session = session.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.clear();
-
-		manualExamToExecute.setNumOfStudentDoing(studentsDoingNumber);
-		session.update(manualExamToExecute);
-
-		Copy copy = new Copy();
-		copy.setAnswers(studentAnswers);
-		copy.setCompExamToExecute(manualExamToExecute);
-		session.save(copy);
-		//session.flush();
-
-		Grade grade1 = new Grade(user,grade,true,manualExamToExecute.getExam().getTime(),
-				false,manualExamToExecute.getDateOfExam(),manualExamToExecute.getDateOfExam(), false);
-
-		session.save(grade1);
-		//session.flush();
-
-		copy.setGrade(grade1);
-		grade1.setExamCopy(copy);
-		session.update(copy);
-		//session.flush();
-		session.update(grade1);
-		//session.flush();
-
-		GlobalDataSaved.currentGrade = grade1;
-		GlobalDataSaved.currentCopy = copy;
-		session.flush();
-		session.getTransaction().commit();
-		session.close();
-	}
-
 	public static void teacherApproveStudentGrade(int gradeId,int newGrade,String notes) {
-		session = session.getSessionFactory().openSession();
 		Grade grade= GetGrading.getGradeById(session,gradeId);
 		session.beginTransaction();
 		session.clear();
@@ -560,11 +470,9 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	public static void updateStudentsNumber(ComputerizedExamToExecute compExam, int studentNumOnTime, int studentNumNotOnTime) {
-		session = session.getSessionFactory().openSession();
 		session.beginTransaction();
 		session.clear();
 		compExam.setNumberOfStudentDoneInTime(studentNumOnTime);
@@ -575,12 +483,10 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		session.getTransaction().commit();
-		session.close();
 	}
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
-		session = session.getSessionFactory().openSession();
 		if (msg.getClass().equals(Message.class)) {
 			try {
 				Message msgFromClient = (Message) msg;
@@ -679,11 +585,11 @@ public class SimpleServer extends AbstractServer {
 					e.printStackTrace();
 				}
 			}
+
 		}
-		session.close();
+
 	}
 	public static void AddExtraTime(ExamToExecute examToExecute, int ExtraTime){
-		session = session.getSessionFactory().openSession();
 		session.beginTransaction();
 		session.clear();
 		examToExecute.setExtraTime(ExtraTime);
@@ -691,6 +597,5 @@ public class SimpleServer extends AbstractServer {
 		session.update(examToExecute);
 		session.flush();
 		session.getTransaction().commit();
-		session.close();
 	}
 }
