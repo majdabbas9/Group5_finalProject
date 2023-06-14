@@ -74,9 +74,11 @@ public class SimpleClient extends AbstractClient {
 					return;
 				}
 				if (contentOfMsg.equals("exam copy")) {
-					Grade grade = (Grade) msgFromServer.getObj();
+					List<Object> objects = (List<Object>) msgFromServer.getObj();
+					Grade grade = (Grade) objects.get(1);
 					GlobalDataSaved.currentGrade = grade;
-					GlobalDataSaved.examToExecute = (ExamToExecute) grade.getExamCopy().getCompExamToExecute();
+					GlobalDataSaved.questionList = (List<Question>) objects.get(0);
+					//GlobalDataSaved.examToExecute = (ExamToExecute) grade.getExamCopy().getCompExamToExecute();
 					String answers = grade.getExamCopy().getAnswers();
 					List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
 					GlobalDataSaved.studentAnswers = answersList;

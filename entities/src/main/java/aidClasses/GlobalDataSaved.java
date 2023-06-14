@@ -30,6 +30,7 @@ public class GlobalDataSaved {
     public static ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
     public static ExamToExecute examToExecute;
+    public static List<Question> questionList;
     public static List<String> studentAnswers;
     public static int changeTextCounter = 0;
     public static int selectedGradeForExamCopy = 0;

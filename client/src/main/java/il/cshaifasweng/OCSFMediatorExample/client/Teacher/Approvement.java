@@ -122,11 +122,12 @@ public class Approvement {
                         List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
                         GlobalDataSaved.studentAnswers = answersList;
                     }
-                    GlobalDataSaved.examToExecute = gradesTable.getItems().get(i).getGradeObject().getExamCopy().getCompExamToExecute();
                     GlobalDataSaved.copyToPrincipal = false;
                     GlobalDataSaved.copyToStudent = false;
                     GlobalDataSaved.copyToTeacher = true;
-                    App.setRoot("examCopy");
+                    Message msg1 = new Message("#get exam copy", gradesTable.getItems().get(i).getGradeObject().getId());
+                    SimpleClient.getClient().sendToServer(msg1);
+                    //App.setRoot("examCopy");
                 }
 
             }

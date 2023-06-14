@@ -52,14 +52,14 @@ public class ExamCopy {
     @FXML
     private Text correctAnswer;
 
-    public Set<Exam_Question> examQuestions = new HashSet<>();
+    public List<Question> examQuestions = new ArrayList<>();
     private int questionCounter = 0;
     public List<String> choicesList;
     public List<Question> questionList;
     public List<String> studentAnswers;
     @FXML
     public void initialize() throws IOException {
-        examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
+        examQuestions = GlobalDataSaved.questionList;
         questionList = sortedQuestionsList(examQuestions);
         studentAnswers = GlobalDataSaved.studentAnswers;
         question();
@@ -70,15 +70,12 @@ public class ExamCopy {
         getCurrentQuestion(q);
     }
 
-    public List<Question> sortedQuestionsList(Set<Exam_Question> list)
+    public List<Question> sortedQuestionsList(List<Question> list)
     {
-        List<Object> examQ= Arrays.asList(examQuestions.toArray());
-        Question q;
         List<Question> questionList = new ArrayList<>();
 
-        for(Object exam_question:examQ) {
-            q = ((Exam_Question) exam_question).getQuestion();
-            questionList.add(q);
+        for(Question exam_question:list) {
+            questionList.add(exam_question);
         }
 
         Collections.sort(questionList, new sortById());

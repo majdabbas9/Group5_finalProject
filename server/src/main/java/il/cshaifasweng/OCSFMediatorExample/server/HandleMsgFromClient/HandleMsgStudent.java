@@ -4,15 +4,18 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.Warning;
 import antlr.debug.MessageEvent;
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetGrading;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import org.greenrobot.eventbus.EventBus;
@@ -26,12 +29,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 public class HandleMsgStudent {
     public static boolean handleStudent(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
         if (contentOfMsg.equals("#get exam copy")) {
-            Grade grade = (Grade) msgFromClient.getObj();
-            Message msgToClient = new Message("exam copy", grade);
+            int gradeId = (int) msgFromClient.getObj();
+            Grade grade = GetGrading.getGradeById(session,gradeId);
+            List<Object> objects = new ArrayList<>();
+            List<Question> questionList = GetExamBuliding.copyQuestions(GetExamBuliding.getExamById(session,grade.getExamCopy().getCompExamToExecute().getExam().getId()).getExamQuestions());
+            objects.add(0, questionList);
+            objects.add(1, grade);
+            Message msgToClient = new Message("exam copy", objects);
             client.sendToClient(msgToClient);
             return true;
         }
@@ -191,11 +200,7 @@ public class HandleMsgStudent {
         }
         if (contentOfMsg.equals("#show student grades"))
         {
-            User user = (User) msgFromClient.getObj();
-            String q="from Grade where student='"+ user.getId() +"' and teacherApprovement='"+ 1 +"'";
-            Query query=session.createQuery(q);
-            List<Grade> grades = (List<Grade>) (query.getResultList());
-            Message msgToClient = new Message("student grades",grades);
+            Message msgToClient = new Message("student grades", GetGrading.getStudentGrades(session,(int) msgFromClient.getObj()));
             client.sendToClient(msgToClient);
             return true;
         }
