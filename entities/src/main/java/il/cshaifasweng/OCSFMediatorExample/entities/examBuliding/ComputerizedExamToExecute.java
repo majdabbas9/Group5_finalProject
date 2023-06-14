@@ -17,6 +17,10 @@ public class ComputerizedExamToExecute extends ExamToExecute implements Serializ
     {
         super(dateOfExam,code);
     }
+    public ComputerizedExamToExecute(ExamToExecute computerizedExamToExecute)
+    {
+        super(computerizedExamToExecute);
+    }
 
     public ComputerizedExamToExecute() {
 

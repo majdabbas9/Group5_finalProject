@@ -20,6 +20,9 @@ public class ManualExamToExecute extends ExamToExecute implements Serializable{
         super(dateOfExam, code);
         this.fileName = fileName;
     }
+    public ManualExamToExecute(ExamToExecute examToExecute) {
+        super(examToExecute);
+    }
 
     public ManualExamToExecute(String fileName) {
         this.fileName = fileName;

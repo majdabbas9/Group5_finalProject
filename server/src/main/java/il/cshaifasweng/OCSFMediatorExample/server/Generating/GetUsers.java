@@ -5,6 +5,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import org.hibernate.Session;
@@ -63,5 +64,12 @@ public class GetUsers {
         Query query = session.createQuery(queryString,Student.class);
         query.setParameter("id",id);
         return (Student) (query.getResultList().get(0));
+    }
+    public static User getUserById(Session session, int id)
+    {
+        String queryString=" FROM User WHERE id = : id";
+        Query query = session.createQuery(queryString,User.class);
+        query.setParameter("id",id);
+        return (User) (query.getResultList().get(0));
     }
 }

@@ -76,7 +76,10 @@ public class AllQuestions {
    void initialize()
     {
         TheQuestion.setCellValueFactory(new PropertyValueFactory<Question, String>("studentNotes"));
+        TheQuestion.setStyle("-fx-alignment: CENTER;");
+
         QuestionId.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
+        QuestionId.setStyle("-fx-alignment: CENTER;");
 
         QuestionTeacherID.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -84,6 +87,7 @@ public class AllQuestions {
             String teacherId = teacher.getUserID();
             return new SimpleStringProperty(teacherId);
         });
+        QuestionTeacherID.setStyle("-fx-alignment: CENTER;");
 
         QuestionTeacherName.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -92,6 +96,7 @@ public class AllQuestions {
             String teacherLastName = teacher.getLastName();
             return new SimpleStringProperty(teacherFirstName + " " + teacherLastName);
         });
+        QuestionTeacherName.setStyle("-fx-alignment: CENTER;");
 
         SubjectName.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -99,6 +104,8 @@ public class AllQuestions {
             String subjectName = subject.getSubjectName();
             return new SimpleStringProperty(subjectName);
         });
+        SubjectName.setStyle("-fx-alignment: CENTER;");
+
         ObservableList<Question> observableList = FXCollections.observableArrayList();
         observableList.addAll(GlobalDataSaved.allQuestionsForTeacher);
         table.setItems(observableList);

@@ -1,5 +1,6 @@
 package aidClasses;
 
+import aidClasses.aidClassesForTeacher.DisplayGrade;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
@@ -82,4 +83,5 @@ public class GlobalDataSaved {
     public static boolean copyToPrincipal;
     public static int currentGradeId;
     public static int currentCopyId;
+    public static ObservableList<DisplayGrade> observableListForTeacherToApprove;
 }

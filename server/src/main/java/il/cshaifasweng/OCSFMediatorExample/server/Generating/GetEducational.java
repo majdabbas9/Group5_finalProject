@@ -55,6 +55,20 @@ public class GetEducational {
     public static List<ExamToExecute> getAllRequests(Session session) throws Exception {
         Query query = session.createQuery("from ExamToExecute where isExtraNeeded='"+1+"'");
         List<ExamToExecute> data =(List<ExamToExecute>) query.getResultList();
+        List<ExamToExecute> newExams=new ArrayList<>();
+        for(ExamToExecute examToExecute : data)
+        {
+            ExamToExecute newExam=new ExamToExecute(examToExecute);
+            Exam exam=new Exam(examToExecute.getExam());
+            Subject subject=new Subject(examToExecute.getExam().getExamSubject());
+            Course course=new Course(examToExecute.getExam().getExamCourse());
+            Teacher teacher=new Teacher(examToExecute.getTeacherThatExecuted());
+            exam.setExamCourse(course);
+            exam.setExamSubject(subject);
+            newExam.setExam(exam);
+            newExam.setTeacherThatExecuted(teacher);
+            newExams.add(newExam);
+        }
         return data;
     }
 

@@ -28,6 +28,10 @@ public class Student extends User implements  Serializable{
     {
         super(student);
     }
+    public Student(User user)
+    {
+        super(user);
+    }
     public Student() {
         super();
     }

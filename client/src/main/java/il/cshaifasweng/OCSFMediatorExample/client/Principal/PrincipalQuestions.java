@@ -90,7 +90,10 @@ public class PrincipalQuestions {
         list1.add(questionToShow);
 
         _TheQuestion.setCellValueFactory(new PropertyValueFactory<Question, String>("studentNotes"));
+        _TheQuestion.setStyle("-fx-alignment: CENTER;");
+
         _TheQuestionId.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
+        _TheQuestionId.setStyle("-fx-alignment: CENTER;");
 
         _TheQuestionTeacherID.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -98,6 +101,7 @@ public class PrincipalQuestions {
             String teacherId = teacher.getUserID();
             return new SimpleStringProperty(teacherId);
         });
+        _TheQuestionTeacherID.setStyle("-fx-alignment: CENTER;");
 
         _TheQuestionTeacherName.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -106,6 +110,7 @@ public class PrincipalQuestions {
             String teacherLastName = teacher.getLastName();
             return new SimpleStringProperty(teacherFirstName + " " + teacherLastName);
         });
+        _TheQuestionTeacherName.setStyle("-fx-alignment: CENTER;");
 
         _TheQuestipnSubjectName.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -113,6 +118,7 @@ public class PrincipalQuestions {
             String subjectName = subject.getSubjectName();
             return new SimpleStringProperty(subjectName);
         });
+        _TheQuestipnSubjectName.setStyle("-fx-alignment: CENTER;");
 
         _QuestionToShowTabel.getItems().clear();
         _QuestionToShowTabel.setItems(list1);
@@ -128,7 +134,10 @@ public class PrincipalQuestions {
             UpdateQuestionToShowTable();
         }
         TheQuestion.setCellValueFactory(new PropertyValueFactory<Question, String>("studentNotes"));
+        TheQuestion.setStyle("-fx-alignment: CENTER;");
+
         QuestionId.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
+        QuestionId.setStyle("-fx-alignment: CENTER;");
 
         QuestionTeacherID.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -136,6 +145,7 @@ public class PrincipalQuestions {
             String teacherId = teacher.getUserID();
             return new SimpleStringProperty(teacherId);
         });
+        QuestionTeacherID.setStyle("-fx-alignment: CENTER;");
 
         QuestionTeacherName.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -144,6 +154,7 @@ public class PrincipalQuestions {
             String teacherLastName = teacher.getLastName();
             return new SimpleStringProperty(teacherFirstName + " " + teacherLastName);
         });
+        QuestionTeacherName.setStyle("-fx-alignment: CENTER;");
 
         SubjectName.setCellValueFactory(cellData -> {
             Question question = cellData.getValue();
@@ -151,6 +162,8 @@ public class PrincipalQuestions {
             String subjectName = subject.getSubjectName();
             return new SimpleStringProperty(subjectName);
         });
+        SubjectName.setStyle("-fx-alignment: CENTER;");
+
         table.setItems(list);
     }
 

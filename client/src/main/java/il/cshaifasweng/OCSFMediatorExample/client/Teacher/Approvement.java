@@ -71,10 +71,10 @@ public class Approvement {
     private TableColumn<DisplayGrade, Button> wordColumn;
     private Button[] buttons;
 
-    private ObservableList<DisplayGrade> observableList = FXCollections.observableArrayList();
 
     @FXML
     void backToMenu(ActionEvent event) throws IOException {
+        GlobalDataSaved.observableListForTeacherToApprove=null;
         Message msg1 = new Message("#showAllExamsForTeahcerToApprove", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
         SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
     }
@@ -99,7 +99,7 @@ public class Approvement {
         dataToServer.add(dg.getGradeObject().getId());
         dataToServer.add(newGrade);
         dataToServer.add(notes);
-        observableList.remove(dg);
+        GlobalDataSaved.observableListForTeacherToApprove.remove(dg);
         try {
             Message msg1 = new Message("#teacherApproveGrade", dataToServer); // creating a msg to the server demanding the students
             SimpleClient.getClient().sendToServer(msg1); // sending the msg to the server
@@ -137,40 +137,59 @@ public class Approvement {
 
     @FXML
     public void initialize() {
-        int i = 0;
-        buttons = new Button[GlobalDataSaved.compExamGrades.size()];
-        for (int j = 0; j < buttons.length; j++) {
-            buttons[i] = new Button("copy");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    try {
-                        handleButtonAction(actionEvent);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+        if(GlobalDataSaved.observableListForTeacherToApprove==null)
+        {
+            GlobalDataSaved.observableListForTeacherToApprove=FXCollections.observableArrayList();
+            int i = 0;
+            buttons = new Button[GlobalDataSaved.compExamGrades.size()];
+            for (int j = 0; j < buttons.length; j++) {
+                buttons[i] = new Button("copy");
+                buttons[i++].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        try {
+                            handleButtonAction(actionEvent);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-                }
-            });
+                });
+            }
+            i=0;
+            for (Grade grade : GlobalDataSaved.compExamGrades) {
+                Student student = grade.getStudent();
+                TextField textFieldGrade = new TextField(Integer.toString(grade.getGrade()));
+                textFieldGrade.setStyle("-fx-alignment: CENTER;");
+                TextField textFieldNotes = new TextField();
+                textFieldNotes.setPromptText("add notes");
+                textFieldNotes.setStyle("-fx-alignment: CENTER;");
+                DisplayGrade displayGrade = new DisplayGrade(student.getUserID(), student.getFirstName(), grade.getDate(), textFieldGrade, textFieldNotes, grade);
+                displayGrade.setWord(buttons[i++]);
+                GlobalDataSaved.observableListForTeacherToApprove.add(displayGrade);
+            }
         }
         studentIdColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, String>("studentID"));
+        studentIdColumn.setStyle("-fx-alignment: CENTER;");
+
         studentNameColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, String>("studentName"));
+        studentNameColumn.setStyle("-fx-alignment: CENTER;");
+
         dateColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, String>("date"));
+        dateColumn.setStyle("-fx-alignment: CENTER;");
+
         gradeColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, TextField>("grade"));
+        gradeColumn.setStyle("-fx-alignment: CENTER;");
+
         notesColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, TextField>("notes"));
+        notesColumn.setStyle("-fx-alignment: CENTER;");
+
         gradeObjectColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Grade>("gradeObject"));
+        gradeObjectColumn.setStyle("-fx-alignment: CENTER;");
+
         wordColumn.setCellValueFactory(new PropertyValueFactory<DisplayGrade, Button>("word"));
-        for (Grade grade : GlobalDataSaved.compExamGrades) {
-            Student student = grade.getStudent();
-            TextField textFieldGrade = new TextField(Integer.toString(grade.getGrade()));
-            textFieldGrade.setStyle("-fx-alignment: CENTER;");
-            TextField textFieldNotes = new TextField();
-            textFieldNotes.setPromptText("add notes");
-            textFieldNotes.setStyle("-fx-alignment: CENTER;");
-            DisplayGrade displayGrade = new DisplayGrade(student.getUserID(), student.getFirstName(), grade.getDate(), textFieldGrade, textFieldNotes, grade);
-            observableList.add(displayGrade);
-            displayGrade.setWord(buttons[i++]);
-        }
-        gradesTable.setItems(observableList);
+        wordColumn.setStyle("-fx-alignment: CENTER;");
+
+        gradesTable.setItems(GlobalDataSaved.observableListForTeacherToApprove);
     }
 
 

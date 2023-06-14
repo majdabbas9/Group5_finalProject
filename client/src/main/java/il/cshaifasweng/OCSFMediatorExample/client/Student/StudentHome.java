@@ -49,7 +49,7 @@ public class StudentHome {
     @FXML
     void logOut(ActionEvent event) {
         try {
-            Message msg = new Message("#logout", GlobalDataSaved.connectedUser); // creating a msg to the server demanding the students
+            Message msg = new Message("#logout", GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
             SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
         }
         catch (IOException ex)

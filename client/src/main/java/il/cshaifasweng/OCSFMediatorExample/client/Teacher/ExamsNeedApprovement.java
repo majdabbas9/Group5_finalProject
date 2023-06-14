@@ -60,6 +60,7 @@ public class ExamsNeedApprovement {
 
     @FXML
     void nextClick(ActionEvent event) throws IOException { // TODO add manual exam approve
+        GlobalDataSaved.observableListForTeacherToApprove=null;
         if(examsTable.getSelectionModel().getSelectedItem()==null)return;
         if(examsTable.getSelectionModel().getSelectedItem().isManual())GlobalDataSaved.isManualToApprove=true;
         else GlobalDataSaved.isManualToApprove=false;

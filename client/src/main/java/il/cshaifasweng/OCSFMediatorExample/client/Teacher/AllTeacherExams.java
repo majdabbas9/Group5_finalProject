@@ -79,8 +79,10 @@ public class AllTeacherExams {
         ObservableList<Exam> observableList= FXCollections.observableArrayList();
         examIdColumn.setCellValueFactory(new PropertyValueFactory<Exam,String>("exam_ID"));
         examIdColumn.setStyle("-fx-alignment: CENTER;");
+
         timeColumn.setCellValueFactory(new PropertyValueFactory<Exam,Integer>("time"));
         timeColumn.setStyle("-fx-alignment: CENTER;");
+
         notesColumn.setCellValueFactory(new PropertyValueFactory<Exam,String>("teacherNotes"));
         notesColumn.setStyle("-fx-alignment: CENTER;");
         courseNameColumn.setCellValueFactory(cellData -> {

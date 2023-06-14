@@ -123,6 +123,7 @@ public class PrincipalExams {
 
         //initializing the table of all exams.
         ExamId.setCellValueFactory(new PropertyValueFactory<Exam,String>("exam_ID"));
+        ExamId.setStyle("-fx-alignment: CENTER;");
 
         ExamTeacherID.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -130,6 +131,7 @@ public class PrincipalExams {
             int teacherId = teacher.getId();
             return new SimpleIntegerProperty(teacherId).asObject();
         });
+        ExamTeacherID.setStyle("-fx-alignment: CENTER;");
 
         ExamTeacherFN.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -137,6 +139,7 @@ public class PrincipalExams {
             String teacherFirstName = teacher.getFirstName();
             return new SimpleStringProperty(teacherFirstName);
         });
+        ExamTeacherFN.setStyle("-fx-alignment: CENTER;");
 
         ExamTeacherLN.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -144,6 +147,7 @@ public class PrincipalExams {
             String teacherLastName = teacher.getLastName();
             return new SimpleStringProperty(teacherLastName);
         });
+        ExamTeacherLN.setStyle("-fx-alignment: CENTER;");
 
         SubjectName.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -151,6 +155,7 @@ public class PrincipalExams {
             String subjectName = subject.getSubjectName();
             return new SimpleStringProperty(subjectName);
         });
+        SubjectName.setStyle("-fx-alignment: CENTER;");
 
         SubjectID.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -158,6 +163,7 @@ public class PrincipalExams {
             int subjectId = subject.getId();
             return new SimpleIntegerProperty(subjectId).asObject();
         });
+        SubjectID.setStyle("-fx-alignment: CENTER;");
 
         CourseID.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -165,6 +171,7 @@ public class PrincipalExams {
             int courseId = course.getId();
             return new SimpleIntegerProperty(courseId).asObject();
         });
+        CourseID.setStyle("-fx-alignment: CENTER;");
 
         CourseName.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -172,6 +179,7 @@ public class PrincipalExams {
             String courseName = course.getCourseName();
             return new SimpleStringProperty(courseName);
         });
+        CourseName.setStyle("-fx-alignment: CENTER;");
 
         table.setItems(list);
     }
@@ -180,6 +188,7 @@ public class PrincipalExams {
         ObservableList<Exam> list1 = FXCollections.observableArrayList();
         list1.add(examToShow);
         ExamShownId.setCellValueFactory(new PropertyValueFactory<Exam,String>("exam_ID"));
+        ExamShownId.setStyle("-fx-alignment: CENTER;");
 
         ExamShownTeacherID.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -187,6 +196,7 @@ public class PrincipalExams {
             int teacherId = teacher.getId();
             return new SimpleIntegerProperty(teacherId).asObject();
         });
+        ExamShownTeacherID.setStyle("-fx-alignment: CENTER;");
 
         ExamShownTeacherFN.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -194,6 +204,7 @@ public class PrincipalExams {
             String teacherFirstName = teacher.getFirstName();
             return new SimpleStringProperty(teacherFirstName);
         });
+        ExamShownTeacherFN.setStyle("-fx-alignment: CENTER;");
 
         ExamShownTeacherLN.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -201,6 +212,7 @@ public class PrincipalExams {
             String teacherLastName = teacher.getLastName();
             return new SimpleStringProperty(teacherLastName);
         });
+        ExamShownTeacherLN.setStyle("-fx-alignment: CENTER;");
 
         ExamShownSubjectName.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -208,6 +220,7 @@ public class PrincipalExams {
             String subjectName = subject.getSubjectName();
             return new SimpleStringProperty(subjectName);
         });
+        ExamShownSubjectName.setStyle("-fx-alignment: CENTER;");
 
         ExamShownSubjectID.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -215,6 +228,7 @@ public class PrincipalExams {
             int subjectId = subject.getId();
             return new SimpleIntegerProperty(subjectId).asObject();
         });
+        ExamShownSubjectID.setStyle("-fx-alignment: CENTER;");
 
         ExamShownCourseID.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -222,6 +236,7 @@ public class PrincipalExams {
             int courseId = course.getId();
             return new SimpleIntegerProperty(courseId).asObject();
         });
+        ExamShownCourseID.setStyle("-fx-alignment: CENTER;");
 
         ExamShownCourseName.setCellValueFactory(cellData -> {
             Exam exam = cellData.getValue();
@@ -229,6 +244,7 @@ public class PrincipalExams {
             String courseName = course.getCourseName();
             return new SimpleStringProperty(courseName);
         });
+        ExamShownCourseName.setStyle("-fx-alignment: CENTER;");
 
         ShownExamTable.getItems().clear();
         ShownExamTable.setItems(list1);

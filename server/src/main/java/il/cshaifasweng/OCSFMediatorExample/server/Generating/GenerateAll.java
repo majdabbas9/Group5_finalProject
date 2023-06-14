@@ -158,6 +158,7 @@ public class GenerateAll {
         session.flush();
 
         Student_Subject ss1=new Student_Subject(s1,math);
+
         session.save(ss1);
         session.flush();
 
@@ -165,7 +166,7 @@ public class GenerateAll {
         session.save(sc1);
         session.flush();
 
-        Student s2=new Student("555","5","5","mohamad","abbas");
+        Student s2=new Student("222","22","22","mohamad","abbas");
         session.save(s2);
         session.flush();
 

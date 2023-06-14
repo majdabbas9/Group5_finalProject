@@ -81,10 +81,10 @@ public class PrincipalExtraTimeApprovment {
         try {
             Message message = null;
             if (SelectedExam instanceof ComputerizedExamToExecute){
-                message = new Message("Add Extra Time For CompExam",SelectedExam);
+                message = new Message("Add Extra Time For CompExam",SelectedExam.getId());
             }
             else if (SelectedExam instanceof ManualExamToExecute) {
-                message = new Message("Add Extra Time For ManualExam",SelectedExam);
+                message = new Message("Add Extra Time For ManualExam",SelectedExam.getId());
             }
             SimpleClient.getClient().sendToServer(message);
         }catch (IOException e){
@@ -103,7 +103,7 @@ public class PrincipalExtraTimeApprovment {
             Errortxt.setText("Please Select Exam!");
         }
         try {
-            Message message = new Message("Do Not Add Extra Time",SelectedExam);
+            Message message = new Message("Do Not Add Extra Time",SelectedExam.getId());
             SimpleClient.getClient().sendToServer(message);
         }catch (IOException e){
             e.printStackTrace();
@@ -146,7 +146,7 @@ public class PrincipalExtraTimeApprovment {
 
         _Teacher.setCellValueFactory(cellData -> {
             ExamToExecute examToExecute = cellData.getValue();
-            String teacher = examToExecute.getExam().getTeacherThatCreated().toString();
+            String teacher = examToExecute.getTeacherThatExecuted().toString();
             return new SimpleStringProperty(teacher);
         });
 

@@ -541,12 +541,25 @@ public class SimpleServer extends AbstractServer {
 					} else if (users.get(0).getClass().equals(Student.class)) {
 						_LoggedInList.add(new LoggedInClient(client,2,users.get(0).getUserID()));
 					}
-					Message msgToClient = new Message("successful login", users.get(0));
+					User newUser=null;
+					if(users.get(0).getClass().equals(Principal.class))
+					{
+						newUser = new Principal(users.get(0));
+					}
+					if(users.get(0).getClass().equals(Teacher.class))
+					{
+						newUser = new Teacher(users.get(0));
+					}
+					if(users.get(0).getClass().equals(Student.class))
+					{
+						newUser = new Student(users.get(0));
+					}
+					Message msgToClient = new Message("successful login",newUser);
 					client.sendToClient(msgToClient);
 					return;
 				}
 				if (contentOfMsg.equals("#logout")) {
-					User userToLogout = (User) msgFromClient.getObj();
+					User userToLogout = GetUsers.getUserById(session,(int) msgFromClient.getObj());
 					Iterator<LoggedInClient> iterator = _LoggedInList.iterator();
 					while (iterator.hasNext()) {
 						LoggedInClient _loggedInClient = iterator.next();

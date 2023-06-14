@@ -104,7 +104,7 @@ public class PrincipalHome {
     @FXML
     void logOut(ActionEvent event) throws IOException {
         try {
-            Message msg = new Message("#logout", GlobalDataSaved.connectedUser);
+            Message msg = new Message("#logout", GlobalDataSaved.connectedUser.getId());
             SimpleClient.getClient().sendToServer(msg);
         } catch (IOException e) {
             e.printStackTrace();

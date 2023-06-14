@@ -6,10 +6,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Session;
@@ -87,7 +84,15 @@ public class GetExamBuliding {
             }
             if(addExam)
             {
-                ExamToExecute examToExecute=new ExamToExecute(examToExe);
+                ExamToExecute examToExecute;
+                if(examToExe.getClass().equals(ComputerizedExamToExecute.class))
+                {
+                    examToExecute=new ComputerizedExamToExecute(examToExe);
+                }
+                else
+                {
+                    examToExecute=new ManualExamToExecute(examToExe);
+                }
                 Exam exam1=new Exam(examToExe.getExam());
                 exam1.setExamSubject(new Subject(examToExe.getExam().getExamSubject()));
                 examToExecute.setExam(exam1);

@@ -123,12 +123,14 @@ public class PrincipalShowExam {
             String question = examQuestion.get_The_Question();
             return new SimpleStringProperty(question);
         });
+        the_question.setStyle("-fx-alignment: CENTER;");
 
         points.setCellValueFactory(cellData -> {
             ExamQuestionDetails examQuestion = cellData.getValue();
             Integer points = examQuestion.get_Points();
             return new SimpleIntegerProperty(points).asObject();
         });
+        points.setStyle("-fx-alignment: CENTER;");
 
         questions_table.setItems(list);
     }

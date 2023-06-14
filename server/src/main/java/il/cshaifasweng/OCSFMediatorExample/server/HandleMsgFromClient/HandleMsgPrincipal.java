@@ -12,6 +12,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
+import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.LoggedInClient;
@@ -191,7 +192,7 @@ public class HandleMsgPrincipal {
         if (contentOfMsg.equals("Do Not Add Extra Time")) {
             session.beginTransaction();
             session.clear();
-            ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
+            ExamToExecute examToExecute = GetExamBuliding.getExamToExeById(session,(int) msgFromClient.getObj());
             examToExecute.setExtraTime(0);
             examToExecute.setIsExtraNeeded(0);
             session.update(examToExecute);
@@ -205,8 +206,8 @@ public class HandleMsgPrincipal {
             }
         }
         if (contentOfMsg.equals("Add Extra Time For CompExam")) {
-            ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
-            List<ConnectionToClient> list = updateForExtraTime(session,msgFromClient);
+            ExamToExecute examToExecute = GetExamBuliding.getExamToExeById(session,(int) msgFromClient.getObj());
+            List<ConnectionToClient> list = updateForExtraTime(session,examToExecute);
             try {
                 Message messageToClient = new Message("ExtraTime", GetEducational.getAllRequests(session));
                 client.sendToClient(messageToClient);
@@ -219,8 +220,8 @@ public class HandleMsgPrincipal {
             }
         }
         if (contentOfMsg.equals("Add Extra Time For ManualExam")) {
-            ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
-            List<ConnectionToClient> list = updateForExtraTime(session,msgFromClient);
+            ExamToExecute examToExecute = GetExamBuliding.getExamToExeById(session,(int) msgFromClient.getObj());
+            List<ConnectionToClient> list = updateForExtraTime(session,examToExecute);
             try {
                 Message message = new Message("AddTimeToStudentForManualExam",examToExecute.getExtraTime());
                 for (ConnectionToClient connectionToClient : list){
@@ -233,10 +234,9 @@ public class HandleMsgPrincipal {
             return false;
     }
 
-    static List<ConnectionToClient> updateForExtraTime(Session session, Message msgFromClient) throws Exception {
+    static List<ConnectionToClient> updateForExtraTime(Session session, ExamToExecute examToExecute) throws Exception {
         session.beginTransaction();
         session.clear();
-        ExamToExecute examToExecute = (ExamToExecute) msgFromClient.getObj();
         examToExecute.setIsExtraNeeded(2);
         session.update(examToExecute);
         session.flush();
