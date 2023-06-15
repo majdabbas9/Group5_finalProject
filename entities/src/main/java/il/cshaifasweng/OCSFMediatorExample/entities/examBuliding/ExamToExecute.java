@@ -17,7 +17,7 @@ public class ExamToExecute implements Serializable{
     private int id;
 
     private String dateOfExam;
-    private int code;
+    private String code;
     private int examAverage;
     private int numOfStudentDoing;
     @Column(name = "inTime")
@@ -34,7 +34,7 @@ public class ExamToExecute implements Serializable{
     private Teacher teacherThatExecuted;
     private int isExtraNeeded; // 0-> unrequested, 1-> requested, 2-> approved
     private int extraTime;
-    public ExamToExecute(String dateOfExam,int code) {
+    public ExamToExecute(String dateOfExam,String code) {
         this.examAverage = 0;
         this.numberOfStudentDoneInTime = 0;
         this.numberOfStudentNotDoneInTime = 0;
@@ -136,11 +136,11 @@ public class ExamToExecute implements Serializable{
         this.dateOfExam = dateOfExam;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -61,7 +61,7 @@ public class App extends Application {
 	public void stop() throws Exception {
         EventBus.getDefault().unregister(this);
         try {
-            Message ms1 = new Message("#logout"); // creating a msg to the server demanding the students
+            Message ms1 = new Message("#logout",GlobalDataSaved.connectedUser.getId()); // creating a msg to the server demanding the students
             SimpleClient.getClient().sendToServer(ms1); // sending the msg to the server
         }
         catch (IOException ex)

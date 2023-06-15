@@ -151,13 +151,27 @@ public class GetEducational {
         List<Exam_Question> examQuestions=new ArrayList<>();
         for(Exam_Question exam_question:exam.getExamQuestions())
         {
-           examQuestions.add(new Exam_Question(exam_question));
+            Question question=new Question(exam_question.getQuestion());
+            Set<Course_Question> courseQuestions=new HashSet<>();
+            for(Course_Question course:exam_question.getQuestion().getQuestionCourses())
+            {
+                Course_Question newCourse=new Course_Question(new Course(course.getCourse()));
+                courseQuestions.add(newCourse);
+            }
+            Teacher teacher=new Teacher(exam_question.getQuestion().getTeacherThatCreated());
+            Subject subject=new Subject(exam_question.getQuestion().getQuestionSubject());
+
+            question.setTeacherThatCreated(teacher);
+            question.setQuestionCourses(courseQuestions);
+            question.setQuestionSubject(subject);
+
+           examQuestions.add(new Exam_Question(question,exam_question.getPoints()));
         }
         Exam newExam=new Exam(exam);
         newExam.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
         newExam.setExamSubject(new Subject(exam.getExamSubject()));
         newExam.setExamCourse(new Course(exam.getExamCourse()));
-        newExam.getExamQuestions() .addAll(examQuestions);
+        newExam.getExamQuestions().addAll(examQuestions);
         return newExam;
     }
 

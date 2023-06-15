@@ -117,15 +117,17 @@ public class PrepareExamShowQuestions {
             warningTxt.setText("illegal exam code");
             return;
         }
-        int code=0;
-        try {
-            code=Integer.valueOf(codeLablel.getText());
-        }
-        catch (Exception ex)
+        String code=codeLablel.getText();
+        for(int i2=0;i2<4;i2++)
         {
-            warningTxt.setText("illegal exam code");
-            return;
+            char ch=code.charAt(i2);
+            if(code.charAt(i2)>'z' || ((code.charAt(i2)<'a') && (code.charAt(i2)<'0' || code.charAt(i2)>'9')))
+            {
+                warningTxt.setText("exam code must contain small letters and digits only!");
+                return;
+            }
         }
+
         String dateOfExam=String.valueOf(date.getValue());
         try
         {

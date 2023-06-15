@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name = "manualExams")
 public class ManualExamToExecute extends ExamToExecute implements Serializable{
     String fileName;
-    public ManualExamToExecute(String dateOfExam, int code)
+    public ManualExamToExecute(String dateOfExam, String code)
     {
         super(dateOfExam,code);
     }
@@ -16,7 +16,7 @@ public class ManualExamToExecute extends ExamToExecute implements Serializable{
 
     }
 
-    public ManualExamToExecute(String dateOfExam, int code, String fileName) {
+    public ManualExamToExecute(String dateOfExam, String code, String fileName) {
         super(dateOfExam, code);
         this.fileName = fileName;
     }

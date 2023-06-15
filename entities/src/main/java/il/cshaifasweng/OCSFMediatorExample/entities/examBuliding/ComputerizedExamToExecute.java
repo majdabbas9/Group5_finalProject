@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "compExams")
 public class ComputerizedExamToExecute extends ExamToExecute implements Serializable {
-    public ComputerizedExamToExecute(String dateOfExam,int code)
+    public ComputerizedExamToExecute(String dateOfExam,String code)
     {
         super(dateOfExam,code);
     }

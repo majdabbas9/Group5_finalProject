@@ -96,7 +96,7 @@ public class HandleMsgStudent {
             Query query1 = session.createQuery(q1);
             List<Grade> grades = query1.getResultList();
             for (Grade grade : grades) {
-                if (grade.getExamCopy().getCompExamToExecute().getCode() == Integer.parseInt(examCode)) {
+                if (grade.getExamCopy().getCompExamToExecute().getCode().equals(examCode)) {
                     Warning warning = new Warning("You Already Did This Exam");
                     try {
                         client.sendToClient(warning);
