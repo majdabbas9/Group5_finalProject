@@ -151,7 +151,7 @@ public class GetEducational {
         List<Exam_Question> examQuestions=new ArrayList<>();
         for(Exam_Question exam_question:exam.getExamQuestions())
         {
-           examQuestions.add(new Exam_Question(exam_question.getQuestion(),exam_question.getPoints()));
+           examQuestions.add(new Exam_Question(exam_question));
         }
         Exam newExam=new Exam(exam);
         newExam.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));

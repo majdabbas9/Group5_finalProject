@@ -111,16 +111,16 @@ public class SolveExam {
 
     private int calculateStudentExamGrade() {
         Exam exam = GlobalDataSaved.examToExecute.getExam();
-        List<Integer> points = new ArrayList<>(exam.getPoints());
 
         examQuestions = GlobalDataSaved.examToExecute.getExam().getExamQuestions();
+        List<Exam_Question> examQuestionsToGetPoints=new ArrayList<>(GlobalDataSaved.examToExecute.getExam().getExamQuestions());
         List<Question> questionList = sortedQuestionsList(examQuestions);
         Question q;
         int grade = 0;
         for (int i=0; i<answers.size(); i++) {
             q = questionList.get(i);
             if (q.getCorrectChoice().equals(answers.get(i))) {
-                grade += points.get(i);
+                grade += examQuestionsToGetPoints.get(i).getPoints();
             }
         }
         System.out.println("the exam grade is : "+ grade+ "/100");

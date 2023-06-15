@@ -60,7 +60,7 @@ public class GetExamBuliding {
         List<Exam_Question> examQuestions=new ArrayList<>();
         for(Exam_Question exam_question:(List<Exam_Question>)query.getResultList())
         {
-            examQuestions.add(new Exam_Question(new Question(exam_question.getQuestion()),exam_question.getPoints()));
+            examQuestions.add(new Exam_Question(exam_question));
         }
         return examQuestions;
     }
@@ -253,7 +253,7 @@ public class GetExamBuliding {
             Set<Exam_Question> examQuestions=exam.getExamQuestions();
             for(Exam_Question exam_question:examQuestions)
             {
-                Exam_Question eq=new Exam_Question(new Question(exam_question.getQuestion()),exam_question.getPoints());
+                Exam_Question eq=new Exam_Question(exam_question);
                 exam1.getExamQuestions().add(eq);
             }
             exam1.setExamCourse(new Course(exam.getExamCourse()));
@@ -308,6 +308,31 @@ public class GetExamBuliding {
             questionList.add(new Question(exam_question.getQuestion()));
         }
         return questionList;
+    }
+    public static ExamToExecute CopyExamToExe(ExamToExecute examToExecute)
+    {
+        ExamToExecute newExamToExe;
+        if(examToExecute.getClass().equals(ManualExamToExecute.class))
+        {
+            newExamToExe=new ManualExamToExecute(examToExecute);
+        }
+        else
+        {
+           newExamToExe=new ComputerizedExamToExecute(examToExecute);
+        }
+        Exam exam=new Exam(examToExecute.getExam());
+        Subject subject=new Subject(examToExecute.getExam().getExamSubject());
+        Course course=new Course(examToExecute.getExam().getExamCourse());
+        Set<Exam_Question> newExamQuestions=new HashSet<>();
+        for(Exam_Question exam_question:examToExecute.getExam().getExamQuestions())
+        {
+            newExamQuestions.add(new Exam_Question(exam_question));
+        }
+        exam.setExamSubject(subject);
+        exam.setExamCourse(course);
+        exam.setExamQuestions(newExamQuestions);
+        newExamToExe.setExam(exam);
+        return newExamToExe;
     }
 
 }

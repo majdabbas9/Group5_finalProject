@@ -60,42 +60,6 @@ public class HandleMsgStudent {
                     e.printStackTrace();
                 }
             }
-            /*String examDate[];
-            String date, time;
-            examDate = examToExecute.get(0).getDateOfExam().split(" ");
-            date = examDate[0];
-            time = examDate[1];
-            int examTime = examToExecute.get(0).getExam().getTime();
-            int examHour=0, examMinutes=0;
-            while (examTime > 60) {
-                examHour++;
-                examTime -= 60;
-            }
-            examMinutes = examTime;
-            String now = LocalDateTime.now().toString();
-            String year=now.substring(0,4);
-            String month=now.substring(5,7);
-            String day=now.substring(8,10);
-            String hour=now.substring(11,13);
-            String minutes = now.substring(14,16);
-            String dateElements[] = date.split("-");
-            String timeElements[] = time.split(":");
-            int t1 = Integer.parseInt(timeElements[0]);
-            int t2 = Integer.parseInt(timeElements[1]);
-            int ExtraTime = examToExecute.get(0).getExtraTime();
-            if (examToExecute.get(0).getIsExtraNeeded() == 2){
-                while (ExtraTime >= 60){
-                    examHour++;
-                    ExtraTime -= 60;
-                }
-            }else {
-                ExtraTime = 0;
-            }
-            if (dateElements[0].equals(year) && dateElements[1].equals(month) && dateElements[2].equals(day)
-                    && t1 + examHour >= Integer.parseInt(hour) && t2 + examMinutes + ExtraTime >= Integer.parseInt(minutes)
-                    && t1 <= Integer.parseInt(hour) && t2 <= Integer.parseInt(minutes)){
-
-            }*/
             String now = LocalDateTime.now().toString();
             String year=now.substring(0,4);
             String month=now.substring(5,7);
@@ -118,7 +82,7 @@ public class HandleMsgStudent {
                     e.printStackTrace();
                 }
             }
-            Message msgToClient = new Message("write id to start", examToExecute.get(0));
+            Message msgToClient = new Message("write id to start",GetExamBuliding.CopyExamToExe(examToExecute.get(0)));
             client.sendToClient(msgToClient);
 
             return true;
