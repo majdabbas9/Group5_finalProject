@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
+import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
@@ -333,6 +334,34 @@ public class GetExamBuliding {
         exam.setExamQuestions(newExamQuestions);
         newExamToExe.setExam(exam);
         return newExamToExe;
+    }
+    public static String questionID(int subjectQuestionsNumber,int id)
+    {
+        String questionID="";
+        questionID+=(id-1)/10+(id-1);
+
+        if(subjectQuestionsNumber<10)
+        {
+            questionID+="00"+subjectQuestionsNumber;
+        }
+        if(subjectQuestionsNumber <100 && subjectQuestionsNumber>9)
+        {
+            questionID+="0"+subjectQuestionsNumber;
+        }
+        if(subjectQuestionsNumber>99)
+        {
+            questionID+=subjectQuestionsNumber;
+        }
+
+        return questionID;
+    }
+    public static String examID(int courseQuestionsNumber ,int subjectId,int courseId)
+    {
+        String exam_ID="";
+        exam_ID+=String.valueOf((subjectId-1)/10)+String.valueOf(subjectId-1);
+        exam_ID+=String.valueOf((courseId-1)/10)+String.valueOf(courseId-1);
+        exam_ID+=String.valueOf((courseQuestionsNumber)/10)+String.valueOf(courseQuestionsNumber);
+        return exam_ID;
     }
 
 }

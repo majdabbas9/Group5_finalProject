@@ -32,7 +32,19 @@ public class GetEducational {
         CriteriaQuery<Subject> query = builder.createQuery(Subject.class);
         query.from(Subject.class);
         List<Subject> data = session.createQuery(query).getResultList();
-        return data;
+        List<Subject> newSubjects=new ArrayList<>();
+        for(Subject subject:data)
+        {
+            Subject newSubject=new Subject(subject);
+            Set<Course> newCourses=new HashSet<>();
+            for(Course course:subject.getSubjectCourses())
+            {
+                newCourses.add(new Course(course));
+            }
+            newSubject.setSubjectCourses(newCourses);
+            newSubjects.add(newSubject);
+        }
+        return newSubjects;
     }
 
     public static List<Subject> getAllSubjectsForPrincipal(Session session) throws Exception {

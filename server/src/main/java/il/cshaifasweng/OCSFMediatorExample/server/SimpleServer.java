@@ -96,6 +96,7 @@ public class SimpleServer extends AbstractServer {
 		List<Course>questionCourses=GetExamBuliding.getCoursesById(session,CoursesIds);
 		Subject questionSubject=GetExamBuliding.getSubjectById(session,subjectId);
 		Teacher theTeacher=GetUsers.getTeacherById(session,teacherId);
+		question.setQuestionID(GetExamBuliding.questionID(questionSubject.getSubjectQuestions().size(),subjectId));
 		//session.flush();
 		session.beginTransaction();
 		session.clear();
@@ -104,14 +105,6 @@ public class SimpleServer extends AbstractServer {
 
 		session.save(question);
 		session.flush();
-//
-//		question.setQuestionSubject(questionSubject);
-//		session.update(question);
-//		//session.flush();
-//
-//		question.setTeacherThatCreated(theTeacher);
-//		session.update(question);
-//		//session.flush();
 
 		theTeacher.getQuestionsCreated().add(question);
 		session.update(theTeacher);
@@ -155,6 +148,7 @@ public class SimpleServer extends AbstractServer {
 		Course course=GetExamBuliding.getCourseById(session,courseId);
 		Subject subject=GetExamBuliding.getSubjectById(session,subjectId);
 		List<Question> questions=GetExamBuliding.getQuestionsById(session,questionsIds);
+		exam.setExam_ID(GetExamBuliding.examID(course.getCourseExams().size(),subjectId,courseId));
 		/*saving exam*/
 		session.beginTransaction();
 		session.clear();
@@ -163,44 +157,24 @@ public class SimpleServer extends AbstractServer {
 		exam.setPoints(points);
 		exam.setExamCourse(course);
 		session.save(exam);
-		//session.save(exam);
-		//session.flush();
-		/*end of saving exam*/
-
-//		/updating exam/
-//		exam.setPoints(points);
-//		session.update(exam);
-//		//session.flush();
-//
-//		exam.setTeacherThatCreated(teacher);
-//		session.update(exam);
-//		//session.flush();
-//
-//		exam.setExamSubject(subject);
-//		session.update(exam);
-//		//session.flush();
-//
-//		exam.setExamCourse(course);
-//		session.update(exam);
-//		//session.flush();
-//		/end of updating exam/
+		session.flush();
 
 		/*updating teacher*/
 		teacher.getExamsCreated().add(exam);
 		session.update(teacher);
-		//session.flush();
+		session.flush();
 		/*end of updating teacher*/
 
 		/*updating course*/
 		course.getCourseExams().add(exam);
 		session.update(course);
-		//session.flush();
+		session.flush();
 		/*end of updating course*/
 
 		/*updating subject*/
 		subject.getSubjectExams().add(exam);
 		session.update(subject);
-		//session.flush();
+		session.flush();
 		/*end of updating subject*/
 
 		Exam_Question eq;
@@ -208,7 +182,7 @@ public class SimpleServer extends AbstractServer {
 		for(Question question:questions) {
 			eq=new Exam_Question(exam,question,points.get(i1++));
 			session.save(eq);
-			//session.flush();
+			session.flush();
 
 			question.getQuestionExams().add(eq);
 			session.update(question);
@@ -216,12 +190,10 @@ public class SimpleServer extends AbstractServer {
 
 			exam.getExamQuestions().add(eq);
 			session.update(exam);
-			//session.flush();
+			session.flush();
 
 
 		}
-		//session.flush();
-		//session.clear();
 		session.getTransaction().commit();
 
 		int i;

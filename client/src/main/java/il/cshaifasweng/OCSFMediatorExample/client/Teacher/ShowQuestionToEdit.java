@@ -179,8 +179,6 @@ public class ShowQuestionToEdit {
             QuestionsExamsID.init();
         }
         Question question=new Question(teacherNotes.getText(),theQuestion.getText(),correctChoice,choices);
-        question.setQuestionID(QuestionsExamsID.questionID(GlobalDataSaved.selectedSubjectToCopy.getSubjectName(),
-                GlobalDataSaved.selectedSubjectToCopy.getId()));
         question.setStudentNotesToShow(studentNotes.getText());
         //question.setQuestionCourses(selectedCourses);
         List<Object> dataToServer=new ArrayList<>();

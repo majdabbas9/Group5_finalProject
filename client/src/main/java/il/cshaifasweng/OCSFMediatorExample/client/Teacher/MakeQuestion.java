@@ -181,8 +181,6 @@ public class MakeQuestion {
            QuestionsExamsID.init();
         }
         Question question=new Question(teacherNotes.getText(),theQuestion.getText(),correctChoice,choices);
-        question.setQuestionID(QuestionsExamsID.questionID(subjectList.getSelectionModel().getSelectedItem().getSubjectName(),
-                subjectList.getSelectionModel().getSelectedItem().getId()));
         question.setStudentNotesToShow(studentNotes.getText());
         //question.setQuestionCourses(selectedCourses);
         List<Object> dataToServer=new ArrayList<>();
