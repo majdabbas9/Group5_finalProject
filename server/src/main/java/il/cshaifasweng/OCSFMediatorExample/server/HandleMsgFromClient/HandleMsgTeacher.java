@@ -185,11 +185,10 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#addManualExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-            String queryString="FROM ExamToExecute WHERE code = : code";
-            Query query = session.createQuery(queryString, ExamToExecute.class);
-            query.setParameter("code",((ExamToExecute)dataFromClient.get(0)).getCode());
-            List<ExamToExecute> res=query.getResultList();
-            if(res.size()!=0)
+            String queryString = "SELECT code FROM ExamToExecute WHERE code="+"'"+((String)dataFromClient.get(3))+"'";
+            org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
+            List<Object[]> results = query.getResultList();
+            if(results.size()!=0)
             {
                 Warning warning = new Warning("code already used!");
                 try {

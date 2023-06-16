@@ -88,7 +88,6 @@ public class SimpleServer extends AbstractServer {
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		GenerateAll.generateEducational(session);  // moving the students to the database
-		//GetUsers.generateUsers(session);
 		session.getTransaction().commit();
 	}
 
@@ -144,11 +143,13 @@ public class SimpleServer extends AbstractServer {
 	}
 
 	public static void addExam(Exam exam,int teacherId,int courseId,int subjectId,List<Integer> questionsIds,List<Integer> points) {
+		counter++;
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Course course=GetExamBuliding.getCourseById(session,courseId);
 		Subject subject=GetExamBuliding.getSubjectById(session,subjectId);
 		List<Question> questions=GetExamBuliding.getQuestionsById(session,questionsIds);
 		exam.setExam_ID(GetExamBuliding.examID(course.getCourseExams().size(),subjectId,courseId));
+
 		/*saving exam*/
 		session.beginTransaction();
 		session.clear();
@@ -214,8 +215,10 @@ public class SimpleServer extends AbstractServer {
 
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Exam exam=GetExamBuliding.getExamById(session,examId);
+
 		session.beginTransaction();
 		session.clear();
+
 		session.save(compExam);
 		session.flush();
 
@@ -227,7 +230,6 @@ public class SimpleServer extends AbstractServer {
 		session.update(compExam);
 		session.flush();
 
-		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
 		session.flush();
@@ -256,7 +258,6 @@ public class SimpleServer extends AbstractServer {
 		session.update(compExam);
 		session.flush();
 
-		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
 		session.flush();
@@ -473,6 +474,10 @@ public class SimpleServer extends AbstractServer {
 					String[] userDetails = (String[]) (((Message) msg).getObj());
 					String userName = userDetails[0];
 					String password = userDetails[1];
+
+					/*String queryString = "SELECT studentNotes, FROM Question WHERE studentNotes="+"'"+question.getStudentNotes()+"'";
+					org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
+					List<Object[]> results = query.getResultList();*/
 
 					String queryString="FROM User WHERE userName = : userName";
 					Query query = session.createQuery(queryString,User.class);

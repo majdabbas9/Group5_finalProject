@@ -55,7 +55,9 @@ public class Exam implements Serializable{
     public Exam() {
 
     }
-
+    public Exam(int id) {
+        this.id=id;
+    }
     public int getId() {
         return id;
     }
