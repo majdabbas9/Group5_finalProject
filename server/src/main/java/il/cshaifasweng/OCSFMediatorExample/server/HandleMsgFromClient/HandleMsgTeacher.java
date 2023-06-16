@@ -32,13 +32,11 @@ public class HandleMsgTeacher {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
             Question question = (Question) (dataFromClient.get(0));
 
-            String queryString="FROM Question WHERE studentNotes = : studentNotes";
-            Query query = session.createQuery(queryString,Question.class);
-            query.setParameter("studentNotes",(question.getStudentNotes()));
-            List<Question> res=query.getResultList();
-            session.clear();
+            String queryString = "SELECT studentNotes FROM Question WHERE studentNotes="+"'"+question.getStudentNotes()+"'";
+            org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
+            List<Object[]> results = query.getResultList();
 
-            if(res.size()!=0)
+            if(results.size()!=0)
             {
                 Warning warning = new Warning("the question already existed");
                 try {
@@ -278,18 +276,7 @@ public class HandleMsgTeacher {
         if(contentOfMsg.equals("#showAllExamGrades"))
         {
             int compExamId=(int)msgFromClient.getObj();
-            String queryString="FROM ExamToExecute WHERE id = : id";
-            Query query = session.createQuery(queryString,ExamToExecute.class);
-            query.setParameter("id",compExamId);
-
-            List<ExamToExecute> exam=(List<ExamToExecute>)(query.getResultList());
-
-            List<Grade> compExamGrades=new ArrayList<>();
-            for(Copy copy : exam.get(0).getCopies())
-            {
-                if(!copy.getGrade().isTeacherApprovement())compExamGrades.add(copy.getGrade());
-            }
-            Message messageToClient = new Message("show all grades",compExamGrades);
+            Message messageToClient = new Message("show all grades",GetGrading.getCopiesToApprove(session,compExamId));
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {

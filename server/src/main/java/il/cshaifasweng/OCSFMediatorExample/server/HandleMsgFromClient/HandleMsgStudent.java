@@ -129,7 +129,15 @@ public class HandleMsgStudent {
             int userId = (int) dataFromClient.get(3);
             Grade grade = (Grade) dataFromClient.get(1);
             int examId = (int) dataFromClient.get(2);
-            int [] ides = SimpleServer.createGradeAndCopyToStudent(copy,grade,userId, examId);
+            int [] ides;
+            if(dataFromClient.size()>4)
+            {
+                 ides = SimpleServer.createGradeAndCopyToStudent(copy,grade,userId, examId,true);
+            }
+            else
+            {
+                ides = SimpleServer.createGradeAndCopyToStudent(copy,grade,userId, examId,false);
+            }
             Message msgToClient = new Message("save grade id and copy id", ides);
             client.sendToClient(msgToClient);
             return true;

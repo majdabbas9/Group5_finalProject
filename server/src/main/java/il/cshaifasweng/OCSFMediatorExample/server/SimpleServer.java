@@ -394,9 +394,10 @@ public class SimpleServer extends AbstractServer {
 	}
 
 
-	public static int[] createGradeAndCopyToStudent(Copy copy, Grade grade, int userId, int examId) {
+	public static int[] createGradeAndCopyToStudent(Copy copy, Grade grade, int userId, int examId,boolean isManual) {
 		ExamToExecute examToExecute=GetExamBuliding.getExamToExeById(session,examId);
 		Student student = GetUsers.getStudentById(session, userId);
+		grade.setManuel(isManual);
 		session.beginTransaction();
 		session.clear();
 
@@ -439,6 +440,11 @@ public class SimpleServer extends AbstractServer {
 
 		grade.setTeacherNotes(notes);
 		session.update(grade);
+		session.flush();
+
+		ExamToExecute examToExecute=grade.getExamCopy().getCompExamToExecute();
+		examToExecute.setNumOfStudentDoing(examToExecute.getNumOfStudentDoing()-1);
+		session.update(examToExecute);
 		session.flush();
 
 		session.getTransaction().commit();

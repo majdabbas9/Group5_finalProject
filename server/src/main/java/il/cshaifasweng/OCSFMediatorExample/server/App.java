@@ -6,6 +6,12 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -14,12 +20,11 @@ import org.greenrobot.eventbus.EventBus;
  */
 public class App
 {
-	private static SimpleServer server;
-    public static void main( String[] args ) throws IOException
-    {
-        server = new SimpleServer(3020);
-        server.listen();
+
+    public static SimpleServer server;
+    public static void main(String[] args) throws IOException {
+        App.server = new SimpleServer(3020);
+        App.server.listen();
         System.out.println(Color.GREEN_BOLD+"Server is listening"+Color.ANSI_RESET);
     }
-
 }

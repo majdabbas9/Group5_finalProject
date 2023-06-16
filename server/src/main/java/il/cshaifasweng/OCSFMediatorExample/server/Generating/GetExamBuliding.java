@@ -75,15 +75,7 @@ public class GetExamBuliding {
         boolean addExam=false;
         for(ExamToExecute examToExe:(List<ExamToExecute>)(query.getResultList()))
         {
-            addExam=false;
-            for(Copy copy:examToExe.getCopies())
-            {
-                if(!copy.getGrade().isTeacherApprovement())
-                {
-                    addExam=true;
-                }
-            }
-            if(addExam)
+            if(examToExe.getNumOfStudentDoing()>0)
             {
                 ExamToExecute examToExecute;
                 if(examToExe.getClass().equals(ComputerizedExamToExecute.class))

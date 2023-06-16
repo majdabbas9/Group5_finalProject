@@ -5,6 +5,8 @@ import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,9 +44,6 @@ public class SolveExamManual {
 
     @FXML
     void getWordFile(ActionEvent event) throws IOException {
-        List<Object> objects = sendStudentManualAnswerToServer(false, false);
-        Message msg = new Message("#create student copy and grade", objects);
-        SimpleClient.getClient().sendToServer(msg);
         WordGeneratorFile.openWord(dist);
         examCountDownTimer();
     }
@@ -137,7 +136,6 @@ public class SolveExamManual {
 
     @FXML
     void initialize() throws IOException {
-
         int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
         while (examTime > 60) {
             hour++;
@@ -155,6 +153,21 @@ public class SolveExamManual {
         source=((ManualExamToExecute)(GlobalDataSaved.examToExecute)).getFileName();
         dist=source+GlobalDataSaved.connectedUser.getId();
         WordGeneratorFile.copyFileUsingApacheCommonsIO(source,dist);
+
+        Grade grade1 = new Grade(-1,false,GlobalDataSaved.examToExecute.getExam().getTime(),
+                false,GlobalDataSaved.examToExecute.getDateOfExam(),GlobalDataSaved.examToExecute.getDateOfExam(), false);
+        Copy copy = new Copy();
+        copy.setAnswers(dist);
+        List<Object> objects = new ArrayList<>();
+        objects.add(0,copy);
+        objects.add(1,grade1);
+        objects.add(2,GlobalDataSaved.examToExecute.getId());
+        objects.add(3, GlobalDataSaved.connectedUser.getId());
+        objects.add(true);
+        GlobalDataSaved.currentCopyId = copy.getId();
+        GlobalDataSaved.currentGradeId = grade1.getId();
+        Message msg = new Message("#create student copy and grade", objects);
+        SimpleClient.getClient().sendToServer(msg);
     }
 
 }

@@ -101,4 +101,39 @@ public class GetGrading {
         }
         return newGrades;
     }
+    public static List<Grade> getCopiesToApprove(Session session,int compExamId)
+    {
+        String queryString="FROM ExamToExecute WHERE id = : id";
+        Query query = session.createQuery(queryString,ExamToExecute.class);
+        query.setParameter("id",compExamId);
+
+        List<ExamToExecute> exam=(List<ExamToExecute>)(query.getResultList());
+
+        List<Grade> compExamGrades=new ArrayList<>();
+        for(Copy copy : exam.get(0).getCopies())
+        {
+            if(!copy.getGrade().isTeacherApprovement())
+            {
+                Grade newGrade = new Grade(copy.getGrade());
+                Copy newCopy=new Copy(copy.getGrade().getExamCopy());
+                Exam newExam=new Exam(copy.getGrade().getExamCopy().getCompExamToExecute().getExam());
+                ExamToExecute examToExecute = new ExamToExecute(copy.getGrade().getExamCopy().getCompExamToExecute());
+                Subject subject=new Subject(copy.getGrade().getExamCopy().getCompExamToExecute().getExam().getExamSubject());
+                Course course=new Course(copy.getGrade().getExamCopy().getCompExamToExecute().getExam().getExamCourse());
+                Teacher teacher=new Teacher(copy.getGrade().getExamCopy().getCompExamToExecute().getTeacherThatExecuted());
+                Student student = new Student(copy.getGrade().getStudent());
+
+                newExam.setExamSubject(subject);
+                newExam.setExamCourse(course);
+                examToExecute.setExam(newExam);
+                examToExecute.setTeacherThatExecuted(teacher);
+                copy.setCompExamToExecute(examToExecute);
+                newGrade.setStudent(student);
+                newGrade.setExamCopy(copy);
+                compExamGrades.add(newGrade);
+            }
+
+        }
+        return compExamGrades;
+    }
 }
