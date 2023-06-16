@@ -326,7 +326,7 @@ public class GetExamBuliding {
     public static String questionID(int subjectQuestionsNumber,int id)
     {
         String questionID="";
-        questionID+=(id-1)/10+(id-1);
+        questionID+=String.valueOf((id-1)/10)+String.valueOf(id-1);
 
         if(subjectQuestionsNumber<10)
         {

@@ -181,49 +181,6 @@ public class GenerateAll {
         session.save(sc2);
         session.flush();
 
-        /*end of student add */
-
-//        /*adding questions*/
-//        List<String> choices=new ArrayList<>();
-//        for(int i=1;i<=10;i++)
-//        {
-//            choices.add(String.valueOf(i));choices.add(String.valueOf(i)+String.valueOf(i));
-//            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
-//            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
-//            Question question=new Question("hi","hi",String.valueOf(i),choices);
-//            question.setQuestionID("0000"+(i-1));
-//            session.save(question);
-//
-//            question.setQuestionSubject(math);
-//            question.setTeacherThatCreated(t1);
-//            session.update(question);
-//            session.flush();
-//
-//            t1.getQuestionsCreated().add(question);
-//            session.update(t1);
-//
-//            math.getSubjectQuestions().add(question);
-//            session.update(math);
-//            session.flush();
-//
-//            Course_Question cq;
-//                cq=new Course_Question(algebra,question);
-//                session.save(cq);
-//                session.flush();
-//
-//                algebra.getCourseQuestions().add(cq);
-//                session.update(algebra);
-//                session.flush();
-//
-//                question.getQuestionCourses().add(cq);
-//                session.update(question);
-//                session.flush();
-//
-//            choices.clear();
-//        }
-//        /*end of adding questions*/
-
-        /*adding questions */
         List<String> choices = new ArrayList<>();
         choices.add("6");
         choices.add("7");
@@ -343,6 +300,7 @@ public class GenerateAll {
         teacher.getQuestionsCreated().add(question);
         session.update(teacher);
         session.flush();
+
         questionSubject.getSubjectQuestions().add(question);
         session.update(questionSubject);
         session.flush();
