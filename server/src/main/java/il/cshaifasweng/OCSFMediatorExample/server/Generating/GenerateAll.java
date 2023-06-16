@@ -183,50 +183,184 @@ public class GenerateAll {
 
         /*end of student add */
 
-        /*adding questions*/
-        List<String> choices=new ArrayList<>();
-        for(int i=1;i<=10;i++)
-        {
-            choices.add(String.valueOf(i));choices.add(String.valueOf(i)+String.valueOf(i));
-            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
-            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
-            Question question=new Question("hi","hi",String.valueOf(i),choices);
-            question.setQuestionID("0000"+(i-1));
-            session.save(question);
+//        /*adding questions*/
+//        List<String> choices=new ArrayList<>();
+//        for(int i=1;i<=10;i++)
+//        {
+//            choices.add(String.valueOf(i));choices.add(String.valueOf(i)+String.valueOf(i));
+//            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
+//            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
+//            Question question=new Question("hi","hi",String.valueOf(i),choices);
+//            question.setQuestionID("0000"+(i-1));
+//            session.save(question);
+//
+//            question.setQuestionSubject(math);
+//            question.setTeacherThatCreated(t1);
+//            session.update(question);
+//            session.flush();
+//
+//            t1.getQuestionsCreated().add(question);
+//            session.update(t1);
+//
+//            math.getSubjectQuestions().add(question);
+//            session.update(math);
+//            session.flush();
+//
+//            Course_Question cq;
+//                cq=new Course_Question(algebra,question);
+//                session.save(cq);
+//                session.flush();
+//
+//                algebra.getCourseQuestions().add(cq);
+//                session.update(algebra);
+//                session.flush();
+//
+//                question.getQuestionCourses().add(cq);
+//                session.update(question);
+//                session.flush();
+//
+//            choices.clear();
+//        }
+//        /*end of adding questions*/
 
-            question.setQuestionSubject(math);
-            question.setTeacherThatCreated(t1);
+        /*adding questions */
+        List<String> choices = new ArrayList<>();
+        choices.add("6");
+        choices.add("7");
+        choices.add("8");
+        choices.add("9");
+        Question question1 = new Question("", "5 + 3 = ", "8", choices);
+        List<Integer> coursesIds = new ArrayList<>();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question1,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("25");
+        choices.add("31");
+        choices.add("28");
+        choices.add("29");
+        Question question2 = new Question("", "7 * 4 = ", "28", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question2,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("1");
+        choices.add("2");
+        choices.add("3");
+        choices.add("4");
+        Question question3 = new Question("", "x - 5 + 4 * x = 10", "3", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        coursesIds.add(algebra2.getId());
+        buildQuestions(session,question3,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("-10");
+        choices.add("-15");
+        choices.add("10");
+        choices.add("15");
+        Question question4 = new Question("", "5 * (-5) - 9 * 4 / 6 + 16 =", "-15", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question4,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("x");
+        choices.add("1");
+        choices.add("0");
+        choices.add("x-1");
+        Question question5 = new Question("", "2 * x - 1 = x ", "1", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question5,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("101");
+        choices.add("102");
+        choices.add("103");
+        choices.add("104");
+        Question question6 = new Question("", "1000 / 8 * 2 - 12 * 13 + 9 = ", "103", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question6,coursesIds, math.getId(),t1.getId());
+
+
+        choices.clear();
+        choices.add("34");
+        choices.add("31");
+        choices.add("28");
+        choices.add("29");
+        Question question7 = new Question("", "6 * 7 - 24 / 3 = ", "34", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question7,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("<1,2,2>");
+        choices.add("<1,1,2>");
+        choices.add("<1,0,2>");
+        choices.add("<2,1,2>");
+        Question question8 = new Question("", "<1,1,0> + <0,1,2> =", "<1,2,2>", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question8,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("<1,2,2>");
+        choices.add("<1,1,2>");
+        choices.add("<1,0,2>");
+        choices.add("<2,1,2>");
+        Question question9 = new Question("", "<6,10,13> - <5,10,11> =", "<1,0,2>", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question9,coursesIds, math.getId(),t1.getId());
+
+        choices.clear();
+        choices.add("<24,4,7>");
+        choices.add("<22,5,7>");
+        choices.add("<23,4,6>");
+        choices.add("<23,4,7>");
+        Question question10 = new Question("", "<1,1,0> + <3,1,2> + <19,2,5> = ", "<23,4,7>", choices);
+        coursesIds.clear();
+        coursesIds.add(algebra.getId());
+        buildQuestions(session,question10,coursesIds, math.getId(),t1.getId());
+    }
+
+    public static void buildQuestions(Session session, Question question, List<Integer> CoursesIds,int subjectId,int teacherId) {
+        List<Course>questionCourses=GetExamBuliding.getCoursesById(session,CoursesIds);
+        Subject questionSubject=GetExamBuliding.getSubjectById(session,subjectId);
+        Teacher teacher=GetUsers.getTeacherById(session,teacherId);
+        session.save(question);
+        session.flush();
+        question.setQuestionID(GetExamBuliding.questionID(questionSubject.getSubjectQuestions().size(),subjectId));
+        question.setTeacherThatCreated(teacher);
+        question.setQuestionSubject(questionSubject);
+
+        session.update(question);
+        session.flush();
+
+        teacher.getQuestionsCreated().add(question);
+        session.update(teacher);
+        session.flush();
+        questionSubject.getSubjectQuestions().add(question);
+        session.update(questionSubject);
+        session.flush();
+
+        Course_Question courseQuestion;
+        for(Course course:questionCourses) {
+            courseQuestion=new Course_Question(course,question);
+            session.save(courseQuestion);
+            //session.flush();
+
+            course.getCourseQuestions().add(courseQuestion);
+            session.update(course);
+            //session.flush();
+
+            question.getQuestionCourses().add(courseQuestion);
             session.update(question);
             session.flush();
-
-            t1.getQuestionsCreated().add(question);
-            session.update(t1);
-
-            math.getSubjectQuestions().add(question);
-            session.update(math);
-            session.flush();
-
-            Course_Question cq;
-                cq=new Course_Question(algebra,question);
-                session.save(cq);
-                session.flush();
-
-                algebra.getCourseQuestions().add(cq);
-                session.update(algebra);
-                session.flush();
-
-                question.getQuestionCourses().add(cq);
-                session.update(question);
-                session.flush();
-
-            choices.clear();
         }
-        /*end of adding questions*/
-
-
-    }
-    public static void generateQuestions(Session session)
-    {
 
     }
 
