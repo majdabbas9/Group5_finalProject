@@ -149,6 +149,7 @@ public class PrepareExamShowQuestions {
             List<Object> dataToServer=new ArrayList<>();
             ComputerizedExamToExecute compExam=new ComputerizedExamToExecute(dateOfExam,code);
             dataToServer.add(compExam);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(PrepareExam.selectedExam.getId());
+            dataToServer.add(code);
             Message msg = new Message("#addCompExam", dataToServer); // creating a msg to the server demanding the students
             try {
                 SimpleClient.getClient().sendToServer(msg); // sending the msg to the server
@@ -165,6 +166,7 @@ public class PrepareExamShowQuestions {
             ManualExamToExecute manualExamToExecute=new ManualExamToExecute(dateOfExam,code,fileName);
             List<Object> dataToServer=new ArrayList<>();
             dataToServer.add(manualExamToExecute);dataToServer.add(GlobalDataSaved.connectedUser.getId());dataToServer.add(PrepareExam.selectedExam.getId());
+            dataToServer.add(code);
             Message msg = new Message("#addManualExam", dataToServer); // creating a msg to the server demanding the students
             try {
                 SimpleClient.getClient().sendToServer(msg); // sending the msg to the server

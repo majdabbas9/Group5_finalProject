@@ -30,19 +30,15 @@ public class GetExamBuliding {
     public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
     {
         List<Exam> allExams=new ArrayList<>();
-        String queryString;
-        List<Teacher_Course> teacherCourses=teacherCourses(session,teacherId);
-        for(Teacher_Course teacherCourse:teacherCourses)
-        {
-            queryString="";
-           queryString = "FROM Exam  WHERE";
-            queryString+=" ";
-            queryString+="course_id";
-            queryString+=" = ";
-            queryString+=teacherCourse.getCourse().getId();
-            Query query = session.createQuery(queryString, Exam.class);
-            List<Exam> courseExamResult = query.getResultList();
-            for(Exam exam : courseExamResult)
+        /*String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
+        Query query = session.createQuery(queryString,Teacher_Course.class);
+        query.setParameter("id",teacherId);
+
+        for(Teacher_Course teacherCourse:(List<Teacher_Course>)query.getResultList())
+        {*/
+            Query query1=session.createQuery("FROM Exam WHERE examCourse.id = : id",Exam.class);
+            query1.setParameter("id",1);
+            for(Exam exam : (List<Exam>)query1.getResultList())
             {
                 Exam exam1=new Exam(exam);
                 exam1.setExamSubject(new Subject(exam.getExamSubject()));
@@ -50,7 +46,7 @@ public class GetExamBuliding {
                 exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
                 allExams.add(exam1);
             }
-        }
+        /*}*/
         return  allExams;
     }
     public static List<Exam_Question> getExamQuestionsById(Session session,int id)

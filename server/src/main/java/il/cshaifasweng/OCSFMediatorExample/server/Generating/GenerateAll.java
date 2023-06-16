@@ -1,16 +1,19 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import aidClasses.aidClassesForTeacher.QuestionsExamsID;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Student_Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Student_Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Subject;
+import java.util.List;
+
+import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import org.hibernate.Session;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 public class GenerateAll {
 
@@ -180,10 +183,50 @@ public class GenerateAll {
 
         /*end of student add */
 
-    }
-    public static void generateUsers(Session session)
-    {
+        /*adding questions*/
+        List<String> choices=new ArrayList<>();
+        for(int i=1;i<=10;i++)
+        {
+            choices.add(String.valueOf(i));choices.add(String.valueOf(i)+String.valueOf(i));
+            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
+            choices.add(String.valueOf(i)+String.valueOf(i)+String.valueOf(i)+String.valueOf(i));
+            Question question=new Question("hi","hi",String.valueOf(i),choices);
+            question.setQuestionID("0000"+(i-1));
+            session.save(question);
 
+            question.setQuestionSubject(math);
+            question.setTeacherThatCreated(t1);
+            session.update(question);
+            session.flush();
+
+            t1.getQuestionsCreated().add(question);
+            session.update(t1);
+
+            math.getSubjectQuestions().add(question);
+            session.update(math);
+            session.flush();
+
+            Course_Question cq;
+                cq=new Course_Question(algebra,question);
+                session.save(cq);
+                session.flush();
+
+                algebra.getCourseQuestions().add(cq);
+                session.update(algebra);
+                session.flush();
+
+                question.getQuestionCourses().add(cq);
+                session.update(question);
+                session.flush();
+
+            choices.clear();
+        }
+        /*end of adding questions*/
+
+
+    }
+    public static void generateQuestions(Session session)
+    {
 
     }
 

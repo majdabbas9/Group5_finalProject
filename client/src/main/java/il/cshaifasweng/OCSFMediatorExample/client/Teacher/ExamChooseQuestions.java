@@ -171,8 +171,7 @@ public class ExamChooseQuestions {
             warning.setText("the exam have number of points above 100!");
             return;
         }
-        Exam exam=new Exam(time,QuestionsExamsID.examID(MakeExam.selectedCourse.getCourseName(),MakeExam.selectedSubject.getId(),
-                MakeExam.selectedCourse.getId()),teacherNotes.getText(),studentNotes.getText());
+        Exam exam=new Exam(time,"",teacherNotes.getText(),studentNotes.getText());
         List<Object>objects=new ArrayList<>();
         objects.add(exam);
         objects.add(GlobalDataSaved.connectedUser.getId());

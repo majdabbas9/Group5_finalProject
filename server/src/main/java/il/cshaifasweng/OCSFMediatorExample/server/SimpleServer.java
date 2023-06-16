@@ -217,20 +217,20 @@ public class SimpleServer extends AbstractServer {
 		session.beginTransaction();
 		session.clear();
 		session.save(compExam);
-		//session.flush();
+		session.flush();
 
 		compExam.setExam(exam);
 		session.update(compExam);
-		//session.flush();
+		session.flush();
 
 		compExam.setTeacherThatExecuted(teacher);
 		session.update(compExam);
-		//session.flush();
+		session.flush();
 
 		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
-		//session.flush();
+		session.flush();
 
 
 		exam.getCompExamsToExecute().add(compExam);
@@ -246,20 +246,20 @@ public class SimpleServer extends AbstractServer {
 		session.beginTransaction();
 		session.clear();
 		session.save(compExam);
-		//session.flush();
+		session.flush();
 
 		compExam.setExam(exam);
 		session.update(compExam);
-		//session.flush();
+		session.flush();
 
 		compExam.setTeacherThatExecuted(teacher);
 		session.update(compExam);
-		//session.flush();
+		session.flush();
 
 		teacher=compExam.getTeacherThatExecuted();
 		teacher.getExecutedExams().add(compExam);
 		session.update(teacher);
-		//session.flush();
+		session.flush();
 
 
 		exam.getCompExamsToExecute().add(compExam);
@@ -275,35 +275,35 @@ public class SimpleServer extends AbstractServer {
 		session.clear();
 
 		session.save(teacher);
-		//session.flush();
+		session.flush();
 
 		Teacher_Subject ts;
 		Teacher_Course tc;
 		for(Subject subject:subjects) {
 			ts=new Teacher_Subject(teacher,subject);
 			session.save(ts);
-			//session.flush();
+			session.flush();
 
 			teacher.getTeacherSubjects().add(ts);
 			session.update(teacher);
-			//session.flush();
+			session.flush();
 
 			subject.getSubjectTeachers().add(ts);
 			session.update(subject);
-			//session.flush();
+			session.flush();
 		}
 		for(Course course:courses) {
 			tc=new Teacher_Course(teacher,course);
 			session.save(tc);
-			//session.flush();
+			session.flush();
 
 			teacher.getTeacherCourses().add(tc);
 			session.update(teacher);
-			//session.flush();
+			session.flush();
 
 			course.getCourseTeachers().add(tc);
 			session.update(course);
-			//session.flush();
+			session.flush();
 		}
 		session.flush();
 		session.getTransaction().commit();
@@ -316,35 +316,35 @@ public class SimpleServer extends AbstractServer {
 		session.clear();
 
 		session.save(student);
-		//session.flush();
+		session.flush();
 
 		Student_Subject ss;
 		Student_Course sc;
 		for(Subject subject:subjects) {
 			ss=new Student_Subject(student,subject);
 			session.save(ss);
-			//session.flush();
+			session.flush();
 
 			student.getStudentSubjects().add(ss);
 			session.update(student);
-			//session.flush();
+			session.flush();
 
 			subject.getSubjectStudents().add(ss);
 			session.update(subject);
-			//session.flush();
+			session.flush();
 		}
 		for(Course course:courses) {
 			sc=new Student_Course(student,course);
 			session.save(sc);
-			//session.flush();
+			session.flush();
 
 			student.getStudentCourses().add(sc);
 			session.update(student);
-			//session.flush();
+			session.flush();
 
 			course.getCourseStudents().add(sc);
 			session.update(course);
-			//session.flush();
+			session.flush();
 		}
 		session.flush();
 		session.getTransaction().commit();
@@ -360,22 +360,22 @@ public class SimpleServer extends AbstractServer {
 
 		copy.setAnswers(studentAnswers);
 		session.update(copy);
-		//session.flush();
+		session.flush();
 
 
 		grade.setGrade(examGrade);
 		grade.setDoneOnTime(onTime);
 
 		session.update(grade);
-		//session.flush();
+		session.flush();
 
 		copy.setGrade(grade);
 		grade.setExamCopy(copy);
 		session.update(copy);
-		//session.flush();
+		session.flush();
 
 		session.update(grade);
-		//session.flush();
+		session.flush();
 
 		exam.getCopies().add(copy);
 		session.update(exam);
@@ -417,7 +417,7 @@ public class SimpleServer extends AbstractServer {
 		grade.setStudent(student);
 		session.update(copy);
 		student.setGrades(grade.getStudent().getGrades());
-		//session.flush();
+		session.flush();
 		session.update(student);
 		session.update(grade);
 		session.flush();
@@ -432,11 +432,11 @@ public class SimpleServer extends AbstractServer {
 
 		grade.setGrade(newGrade);
 		session.update(grade);
-		//session.flush();
+		session.flush();
 
 		grade.setTeacherApprovement(true);
 		session.update(grade);
-		//session.flush();
+		session.flush();
 
 		grade.setTeacherNotes(notes);
 		session.update(grade);
@@ -455,7 +455,7 @@ public class SimpleServer extends AbstractServer {
 		session.clear();
 		compExam.setNumberOfStudentDoneInTime(studentNumOnTime);
 		session.update(compExam);
-		//session.flush();
+		session.flush();
 		compExam.setNumberOfStudentNotDoneInTime(studentNumNotOnTime);
 		session.update(compExam);
 		session.flush();

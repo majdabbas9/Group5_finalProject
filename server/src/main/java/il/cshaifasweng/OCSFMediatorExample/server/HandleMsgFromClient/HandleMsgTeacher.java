@@ -60,13 +60,11 @@ public class HandleMsgTeacher {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
             Question question = (Question) (dataFromClient.get(0));
 
-            String queryString="FROM Question WHERE studentNotes = : studentNotes";
-            Query query = session.createQuery(queryString,Question.class);
-            query.setParameter("studentNotes",(question.getStudentNotes()));
-            List<Question> res=query.getResultList();
-            session.clear();
+            String queryString = "SELECT studentNotes FROM Question WHERE studentNotes="+"'"+question.getStudentNotes()+"'";
+            org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
+            List<Object[]> results = query.getResultList();
 
-            if(res.size()!=0)
+            if(results.size()!=0)
             {
                 Warning warning = new Warning("the question already existed");
                 try {
@@ -161,11 +159,10 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#addCompExam")) {
             List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
-            String queryString="FROM ExamToExecute WHERE code = : code";
-            Query query = session.createQuery(queryString, ExamToExecute.class);
-            query.setParameter("code",((ExamToExecute)dataFromClient.get(0)).getCode());
-            List<ExamToExecute> res=query.getResultList();
-            if(res.size()!=0)
+            String queryString = "SELECT code FROM ExamToExecute WHERE code="+"'"+((String)dataFromClient.get(3))+"'";
+            org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
+            List<Object[]> results = query.getResultList();
+            if(results.size()!=0)
             {
                 Warning warning = new Warning("code already used!");
                 try {
@@ -215,10 +212,7 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#showAllExamsForTeacher"))
         {
-            int teacherId=(int)msgFromClient.getObj();
-            List<Teacher_Course> teacherCourses=new ArrayList<>();
-            List<Exam> ExamsToClient= GetExamBuliding.getAllExamsForCourses(session,teacherId);
-            Message messageToClient = new Message("sending all exams for teacher",ExamsToClient);
+            Message messageToClient = new Message("sending all exams for teacher",GetExamBuliding.getAllExamsForCourses(session,(int)msgFromClient.getObj()));
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
@@ -228,9 +222,7 @@ public class HandleMsgTeacher {
         }
         if (contentOfMsg.equals("#showAllExamsForTeahcerToApprove"))
         {
-            int teacherId=(int)msgFromClient.getObj();
-            List<ExamToExecute> exams= GetExamBuliding.getAllExamsForTeacher(session,teacherId);
-            Message messageToClient = new Message("sending all compExams for teacher",exams);
+            Message messageToClient = new Message("sending all compExams for teacher",GetExamBuliding.getAllExamsForTeacher(session,(int)msgFromClient.getObj()));
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
