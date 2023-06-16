@@ -315,7 +315,7 @@ public class SolveExam {
             submitBtn.setDisable(false);
         }
         choicesList = question.getChoices();
-        if (!question.getStudentNotesToShow().equals("")){
+        if (question.getStudentNotesToShow() != null){
             questionContent.setText(question.getStudentNotes() + "\nNotes: "+ question.getStudentNotesToShow());
         }
         else {
