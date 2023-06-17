@@ -30,23 +30,21 @@ public class GetExamBuliding {
     public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
     {
         List<Exam> allExams=new ArrayList<>();
-        /*String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
+        String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
         Query query = session.createQuery(queryString,Teacher_Course.class);
         query.setParameter("id",teacherId);
 
-        for(Teacher_Course teacherCourse:(List<Teacher_Course>)query.getResultList())
-        {*/
-            Query query1=session.createQuery("FROM Exam WHERE examCourse.id = : id",Exam.class);
-            query1.setParameter("id",1);
-            for(Exam exam : (List<Exam>)query1.getResultList())
-            {
-                Exam exam1=new Exam(exam);
+        for(Teacher_Course teacherCourse:(List<Teacher_Course>)query.getResultList()) {
+            Query query1 = session.createQuery("FROM Exam WHERE examCourse.id = : id", Exam.class);
+            query1.setParameter("id", teacherCourse.getCourse().getId());
+            for (Exam exam : (List<Exam>) query1.getResultList()) {
+                Exam exam1 = new Exam(exam);
                 exam1.setExamSubject(new Subject(exam.getExamSubject()));
                 exam1.setExamCourse(new Course(exam.getExamCourse()));
                 exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
                 allExams.add(exam1);
             }
-        /*}*/
+        }
         return  allExams;
     }
     public static List<Exam_Question> getExamQuestionsById(Session session,int id)
@@ -298,9 +296,19 @@ public class GetExamBuliding {
         }
         return questionList;
     }
-    public static ExamToExecute CopyExamToExe(ExamToExecute examToExecute)
-    {
+    public static ExamToExecute CopyExamToExe(Session session,String code,String date) throws ParseException {
+
+
         ExamToExecute newExamToExe;
+        String q = "from ExamToExecute where code = '"+ code +"'";
+        Query query=session.createQuery(q);
+        ExamToExecute examToExecute=((List<ExamToExecute>) (query.getResultList())).get(0);
+        if(!GetExamBuliding.compareDates(date,examToExecute.getDateOfExam(),GetExamBuliding.toNewDate(
+                examToExecute.getDateOfExam(),examToExecute.getExam().getTime()+examToExecute.getExtraTime())))
+        {
+            return null;
+        }
+
         if(examToExecute.getClass().equals(ManualExamToExecute.class))
         {
             newExamToExe=new ManualExamToExecute(examToExecute);

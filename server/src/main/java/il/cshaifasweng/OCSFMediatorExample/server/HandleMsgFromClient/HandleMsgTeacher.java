@@ -174,7 +174,7 @@ public class HandleMsgTeacher {
                 }
             }
 
-            SimpleServer.addCompExam((ComputerizedExamToExecute)dataFromClient.get(0),(int)dataFromClient.get(1),(int) dataFromClient.get(2));
+            SimpleServer.addCompExam((ComputerizedExamToExecute) dataFromClient.get(0),(int)dataFromClient.get(1),(int) dataFromClient.get(2));
             Message messageToClient = new Message("added the CompExam successfully");
             try {
                 client.sendToClient(messageToClient);

@@ -143,7 +143,6 @@ public class SimpleServer extends AbstractServer {
 	}
 
 	public static void addExam(Exam exam,int teacherId,int courseId,int subjectId,List<Integer> questionsIds,List<Integer> points) {
-		counter++;
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
 		Course course=GetExamBuliding.getCourseById(session,courseId);
 		Subject subject=GetExamBuliding.getSubjectById(session,subjectId);
@@ -214,7 +213,7 @@ public class SimpleServer extends AbstractServer {
 	public static void addCompExam(ComputerizedExamToExecute compExam,int teacherId,int examId) {
 
 		Teacher teacher=GetUsers.getTeacherById(session,teacherId);
-		Exam exam=GetExamBuliding.getExamById(session,examId);
+		Exam exam=GetExamBuliding.getExamById(session,examId);//
 
 		session.beginTransaction();
 		session.clear();
@@ -247,6 +246,7 @@ public class SimpleServer extends AbstractServer {
 		Exam exam=GetExamBuliding.getExamById(session,examId);
 		session.beginTransaction();
 		session.clear();
+
 		session.save(compExam);
 		session.flush();
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "examsToExecute")
 public class ExamToExecute implements Serializable{
     @Id
@@ -151,6 +152,7 @@ public class ExamToExecute implements Serializable{
     public void setNumOfStudentDoing(int numOfStudentDoing) {
         this.numOfStudentDoing = numOfStudentDoing;
     }
+
 
     @Override
     public String toString() {

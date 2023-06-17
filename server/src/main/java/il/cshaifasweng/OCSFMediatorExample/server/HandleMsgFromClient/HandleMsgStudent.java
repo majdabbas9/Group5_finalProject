@@ -47,10 +47,11 @@ public class HandleMsgStudent {
         if (contentOfMsg.equals("#check code validation"))
         {
             String code = (String) msgFromClient.getObj().toString();
-            String q = "from ExamToExecute where code = '"+ code +"'";
-            Query query=session.createQuery(q);
-            List<ExamToExecute> examToExecute=(List<ExamToExecute>) (query.getResultList());
-            if (examToExecute.size() == 0){
+            String queryString = "SELECT code FROM ExamToExecute WHERE code="+"'"+code+"'";
+            org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
+            List<Object[]> results = query.getResultList();
+            if(results.size()!=0)
+            if (results.size() == 0){
                 Warning warning = new Warning("code is not correct");
                 try {
                     client.sendToClient(warning);
@@ -67,10 +68,13 @@ public class HandleMsgStudent {
             String hourMinute=now.substring(11,16);
             String date="";
             date+=year+"-"+month+"-"+day+" "+hourMinute;
-            if(GetExamBuliding.compareDates(date,examToExecute.get(0).getDateOfExam(),GetExamBuliding.toNewDate(
-                    examToExecute.get(0).getDateOfExam(),examToExecute.get(0).getExam().getTime()+examToExecute.get(0).getExtraTime())))
+            ExamToExecute examToExecute=GetExamBuliding.CopyExamToExe(session.getSession(),code,date);
+            if(examToExecute!=null)
             {
+                Message msgToClient = new Message("write id to start",examToExecute);
+                client.sendToClient(msgToClient);
 
+                return true;
             }
             else {
                 Warning warning = new Warning("You Can't Do This Exam");
@@ -82,10 +86,6 @@ public class HandleMsgStudent {
                     e.printStackTrace();
                 }
             }
-            Message msgToClient = new Message("write id to start",GetExamBuliding.CopyExamToExe(examToExecute.get(0)));
-            client.sendToClient(msgToClient);
-
-            return true;
         }
         if (contentOfMsg.equals("#check id")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();;
