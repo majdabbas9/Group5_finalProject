@@ -21,9 +21,9 @@
                 <TableColumn fx:id="CourseID" prefWidth="62.4000244140625" text="Course ID" />
             </columns>
         </TableView>
-        <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams" wrappingWidth="110.13672637939453">
+        <Text fill="WHITE" layoutX="43.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exams" wrappingWidth="110.13672637939453">
             <font>
-                <Font size="18.0" />
+                <Font size="22.0" />
             </font>
         </Text>
         <Button fx:id="ShowExamBtn" layoutX="543.0" layoutY="580.0" mnemonicParsing="false" onAction="#ShowExam" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #0A8A0A;" text="Show Exam" textFill="WHITE">

@@ -9,14 +9,14 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.TeacherResultExam">
     <children>
-        <Button fx:id="buttonBack" layoutX="32.0" layoutY="582.0" mnemonicParsing="false" onAction="#backToExams" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back to my exams" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="32.0" layoutY="582.0" mnemonicParsing="false" onAction="#backToExams" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Back To My Exams" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="21.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher exams Result" wrappingWidth="198.39999999999986">
+        <Text fill="WHITE" layoutX="32.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher Exams Result" wrappingWidth="247.9999603271483">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="24.0" />
             </font>
         </Text>
         <Text fx:id="warningTxt" fill="#af0000" layoutX="356.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.39999999999998">

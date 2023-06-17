@@ -8,6 +8,7 @@ import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.aidClassesForTeacher.DisplayGrade;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
+import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalHome;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
 import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
@@ -35,11 +36,11 @@ import java.util.List;
 public class Approvement {
 
 
-    @FXML // fx:id="currentDate1"
-    private Text currentDate1; // Value injected by FXMLLoader
+    @FXML // fx:id="currentDate"
+    private Text currentDate; // Value injected by FXMLLoader
 
-    @FXML // fx:id="currentTime1"
-    private Text currentTime1; // Value injected by FXMLLoader
+    @FXML // fx:id="currentTime"
+    private Text currentTime; // Value injected by FXMLLoader
 
     @FXML
     private TableColumn<DisplayGrade, Grade> gradeObjectColumn;
@@ -62,8 +63,8 @@ public class Approvement {
     @FXML // fx:id="studentIdColumn"
     private TableColumn<DisplayGrade, String> studentIdColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="studentName"
-    private Text studentName; // Value injected by FXMLLoader
+    @FXML // fx:id="teacherName"
+    private Text teacherName; // Value injected by FXMLLoader
 
     @FXML // fx:id="warning"
     private Text warning; // Value injected by FXMLLoader
@@ -137,6 +138,7 @@ public class Approvement {
 
     @FXML
     public void initialize() {
+        PrincipalHome.dataOnHome(teacherName,currentDate,currentTime);
         if(GlobalDataSaved.observableListForTeacherToApprove==null)
         {
             GlobalDataSaved.observableListForTeacherToApprove=FXCollections.observableArrayList();

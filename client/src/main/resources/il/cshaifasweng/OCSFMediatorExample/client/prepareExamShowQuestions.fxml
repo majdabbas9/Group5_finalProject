@@ -12,14 +12,14 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.PrepareExamShowQuestions">
     <children>
-        <Button fx:id="buttonBack" layoutX="18.0" layoutY="577.0" mnemonicParsing="false" onAction="#backToExams" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="back to exams" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="18.0" layoutY="577.0" mnemonicParsing="false" onAction="#backToExams" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="Back To Exams" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="42.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="prepare exam for exection" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prepare Exam For Exection" wrappingWidth="310.41246032714844">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="24.0" />
             </font>
         </Text>
         <Text fx:id="warningTxt" fill="#af0000" layoutX="337.0" layoutY="607.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.39999999999986">
@@ -27,7 +27,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <ComboBox fx:id="wayOfExecution" layoutX="662.0" layoutY="96.0" prefWidth="150.0" promptText="pick way of exection" />
+        <ComboBox fx:id="wayOfExecution" layoutX="637.0" layoutY="96.0" prefHeight="26.0" prefWidth="175.0" promptText="pick way of exection" />
         <TextField fx:id="codeLablel" alignment="CENTER" layoutX="636.0" layoutY="325.0" prefHeight="30.0" prefWidth="174.0" promptText="code">
             <font>
                 <Font size="14.0" />
@@ -36,7 +36,7 @@
         <DatePicker fx:id="date" layoutX="636.0" layoutY="195.0" />
         <ComboBox fx:id="hourList" layoutX="636.0" layoutY="264.0" prefHeight="26.0" prefWidth="78.0" promptText="hour" />
         <ComboBox fx:id="minuteList" layoutX="724.0" layoutY="264.0" prefHeight="26.0" prefWidth="86.0" promptText="minute" />
-        <Button layoutX="614.0" layoutY="577.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="execute exam" textFill="WHITE">
+        <Button layoutX="614.0" layoutY="577.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="Execute Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
@@ -49,9 +49,9 @@
                 <TableColumn fx:id="pointsColumn" prefWidth="100.0" text="points" />
             </columns>
         </TableView>
-        <Text fx:id="examQuestionsText" fill="WHITE" layoutX="224.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="the exam questions">
+        <Text fx:id="examQuestionsText" fill="WHITE" layoutX="214.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="the exam questions">
             <font>
-                <Font name="Arial Bold" size="14.0" />
+                <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
     </children>
