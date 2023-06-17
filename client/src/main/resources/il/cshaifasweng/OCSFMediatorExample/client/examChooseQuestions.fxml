@@ -10,17 +10,17 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.ExamChooseQuestions">
     <children>
-        <Button fx:id="buttonBack" layoutX="11.0" layoutY="582.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To add exam" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="11.0" layoutY="582.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Back To Add Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="19.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="add questions to exam" wrappingWidth="212.012451171875">
+        <Text fill="WHITE" layoutX="19.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Questions To Exam" wrappingWidth="212.012451171875">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Button fx:id="buttonSubmit" layoutX="642.0" layoutY="582.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="submit exam" textFill="WHITE">
+        <Button fx:id="buttonSubmit" layoutX="642.0" layoutY="582.0" mnemonicParsing="false" onAction="#submitExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Submit Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
@@ -32,9 +32,9 @@
             <TableColumn fx:id="examQuestionPoints" prefWidth="88.79998779296875" text="points" />
          </columns>
       </TableView>
-      <Text fx:id="course1" fill="WHITE" layoutX="11.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="course questions" wrappingWidth="139.21246337890625">
+      <Text fx:id="course1" fill="WHITE" layoutX="11.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="course questions" wrappingWidth="139.21246337890625">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Text>
       <TextField fx:id="timeLabel" alignment="CENTER" layoutX="509.0" layoutY="37.0" prefHeight="31.0" prefWidth="150.0" promptText="time in minutes">
@@ -48,7 +48,7 @@
             <TableColumn fx:id="examQuestionsTheQuestionToSelect" prefWidth="231.99998474121094" text="the question" />
          </columns>
       </TableView>
-      <Text fx:id="warning" fill="RED" layoutX="350.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="150.40000000000032">
+      <Text fx:id="warning" fill="RED" layoutX="350.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="150.40000000000032">
          <font>
             <Font size="14.0" />
          </font>

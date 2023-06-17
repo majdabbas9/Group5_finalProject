@@ -115,7 +115,7 @@ public class GetGrading {
             if(!copy.getGrade().isTeacherApprovement())
             {
                 Grade newGrade = new Grade(copy.getGrade());
-                Copy newCopy=new Copy(copy.getGrade().getExamCopy());
+                //Copy newCopy=new Copy(copy.getGrade().getExamCopy());
                 Exam newExam=new Exam(copy.getGrade().getExamCopy().getCompExamToExecute().getExam());
                 ExamToExecute examToExecute = new ExamToExecute(copy.getGrade().getExamCopy().getCompExamToExecute());
                 Subject subject=new Subject(copy.getGrade().getExamCopy().getCompExamToExecute().getExam().getExamSubject());

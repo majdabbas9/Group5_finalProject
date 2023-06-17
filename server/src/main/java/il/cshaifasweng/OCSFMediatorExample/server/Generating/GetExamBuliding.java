@@ -27,26 +27,44 @@ import java.util.*;
 public class GetExamBuliding {
     public static  int counter=0;
 
-    public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
-    {
-        List<Exam> allExams=new ArrayList<>();
-        String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
-        Query query = session.createQuery(queryString,Teacher_Course.class);
-        query.setParameter("id",teacherId);
+//    public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
+//    {
+//        List<Exam> allExams=new ArrayList<>();
+//        String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
+//        Query query = session.createQuery(queryString,Teacher_Course.class);
+//        query.setParameter("id",teacherId);
+//
+//        for(Teacher_Course teacherCourse:(List<Teacher_Course>)query.getResultList()) {
+//            Query query1 = session.createQuery("FROM Exam WHERE examCourse.id = : id", Exam.class);
+//            query1.setParameter("id", teacherCourse.getCourse().getId());
+//            for (Exam exam : (List<Exam>) query1.getResultList()) {
+//                Exam exam1 = new Exam(exam);
+//                exam1.setExamSubject(new Subject(exam.getExamSubject()));
+//                exam1.setExamCourse(new Course(exam.getExamCourse()));
+//                exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+//                allExams.add(exam1);
+//            }
+//        }
+//        return  allExams;
+//    }
 
-        for(Teacher_Course teacherCourse:(List<Teacher_Course>)query.getResultList()) {
-            Query query1 = session.createQuery("FROM Exam WHERE examCourse.id = : id", Exam.class);
-            query1.setParameter("id", teacherCourse.getCourse().getId());
-            for (Exam exam : (List<Exam>) query1.getResultList()) {
-                Exam exam1 = new Exam(exam);
-                exam1.setExamSubject(new Subject(exam.getExamSubject()));
-                exam1.setExamCourse(new Course(exam.getExamCourse()));
-                exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
-                allExams.add(exam1);
-            }
-        }
-        return  allExams;
+    public static List<Exam> getAllExamsForCourses(Session session, int teacherId) {
+        List<Exam> allExams = new ArrayList<>();
+        String queryString = "SELECT e FROM Exam e " +
+                "JOIN FETCH e.examSubject " +
+                "JOIN FETCH e.examCourse " +
+                "JOIN FETCH e.teacherThatCreated " +
+                "JOIN e.examCourse.courseTeachers tc " +
+                "WHERE tc.teacher.id = :id";
+
+        Query query = session.createQuery(queryString);
+        query.setParameter("id", teacherId);
+
+        allExams.addAll(query.getResultList());
+
+        return allExams;
     }
+
     public static List<Exam_Question> getExamQuestionsById(Session session,int id)
     {
         String queryString=" FROM Exam_Question WHERE exam.id = : id";
@@ -66,21 +84,16 @@ public class GetExamBuliding {
         Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",teacherId);
         List<ExamToExecute> list=new ArrayList<>();
-        boolean addExam=false;
         for(ExamToExecute examToExe:(List<ExamToExecute>)(query.getResultList()))
         {
-            if(examToExe.getNumOfStudentDoing()>0)
-            {
+            if(examToExe.getNumOfStudentDoing()>0) {
                 ExamToExecute examToExecute;
-                if(examToExe.getClass().equals(ComputerizedExamToExecute.class))
-                {
-                    examToExecute=new ComputerizedExamToExecute(examToExe);
+                if (examToExe.getClass().equals(ComputerizedExamToExecute.class)) {
+                    examToExecute = new ComputerizedExamToExecute(examToExe);
+                } else {
+                    examToExecute = new ManualExamToExecute(examToExe);
                 }
-                else
-                {
-                    examToExecute=new ManualExamToExecute(examToExe);
-                }
-                Exam exam1=new Exam(examToExe.getExam());
+                Exam exam1 = new Exam(examToExe.getExam());
                 exam1.setExamSubject(new Subject(examToExe.getExam().getExamSubject()));
                 examToExecute.setExam(exam1);
                 list.add(examToExecute);
@@ -88,6 +101,7 @@ public class GetExamBuliding {
         }
         return list;
     }
+
     public static List<Teacher_Course> teacherCourses(Session session,int teacherId)
     {
         String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
@@ -97,8 +111,6 @@ public class GetExamBuliding {
     }
     public static List<ExamToExecute> getAllExamsToExecute(Session session, int teacherId, String date) throws ParseException {
         counter++;
-        if(counter==2)
-            System.out.println("hi");
         String queryString=" FROM ExamToExecute WHERE teacherThatExecuted.id = : id";
         Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",teacherId);

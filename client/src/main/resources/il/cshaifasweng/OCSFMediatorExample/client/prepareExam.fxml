@@ -9,14 +9,14 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.PrepareExam">
     <children>
-        <Button fx:id="buttonBack" layoutX="18.0" layoutY="577.0" mnemonicParsing="false" onAction="#backToTeacherHome" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="back to taecher home" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="22.0" layoutY="577.0" mnemonicParsing="false" onAction="#backToTeacherHome" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="42.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select exam" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="22.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Exam" wrappingWidth="139.21246337890625">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="22.0" />
             </font>
         </Text>
         <Text fx:id="warningTxt" fill="#af0000" layoutX="360.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.800048828125">
@@ -34,14 +34,14 @@
             <TableColumn fx:id="teacherNotesColumn" prefWidth="267.99993896484375" text="teacher notes" />
             </columns>
         </TableView>
-        <Button layoutX="614.0" layoutY="577.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="show questions" textFill="WHITE">
+        <Button layoutX="616.0" layoutY="577.0" mnemonicParsing="false" onAction="#showQuestions" prefHeight="46.0" prefWidth="205.0" style="-fx-background-color: #0A8A0A;" text="Show Questions" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-      <Text fill="WHITE" layoutX="335.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="exam related to teacher" wrappingWidth="156.40625">
+      <Text fill="WHITE" layoutX="305.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="exam related to teacher" wrappingWidth="233.20623779296875">
          <font>
-            <Font name="Arial Bold" size="14.0" />
+            <Font name="Arial Bold" size="18.0" />
          </font>
       </Text>
     </children>

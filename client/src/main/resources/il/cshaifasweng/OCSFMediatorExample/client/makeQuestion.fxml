@@ -12,14 +12,14 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.MakeQuestion">
     <children>
-        <Button fx:id="buttonBack" layoutX="21.0" layoutY="571.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To Build Exam" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="21.0" layoutY="571.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Back To Build Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="33.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Question" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="21.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make Question" wrappingWidth="159.21246337890625">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="22.0" />
             </font>
         </Text>
         <Text fx:id="warningTxt" fill="#af0000" layoutX="356.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.39999999999998">
@@ -41,19 +41,19 @@
       <RadioButton fx:id="radioChoice1" layoutX="255.0" layoutY="197.0" mnemonicParsing="false" toggleGroup="$radioGroup" />
       <RadioButton fx:id="radioChoice3" layoutX="523.0" layoutY="197.0" mnemonicParsing="false" toggleGroup="$radioGroup" />
       <RadioButton fx:id="radioChoice4" layoutX="523.0" layoutY="256.0" mnemonicParsing="false" toggleGroup="$radioGroup" />
-      <Button fx:id="buttonSubmit" layoutX="606.0" layoutY="570.0" mnemonicParsing="false" onAction="#submitQuestion" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="submit" textFill="WHITE">
+      <Button fx:id="buttonSubmit" layoutX="606.0" layoutY="570.0" mnemonicParsing="false" onAction="#submitQuestion" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Submit" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="teacherNotes" alignment="CENTER" layoutX="61.0" layoutY="103.0" prefHeight="56.0" prefWidth="150.0" promptText="teacher notes" />
+      <TextField fx:id="teacherNotes" alignment="CENTER" layoutX="56.0" layoutY="103.0" prefHeight="56.0" prefWidth="150.0" promptText="teacher notes" />
       <ListView fx:id="selectedCourseList" layoutX="561.0" layoutY="362.0" onMouseClicked="#removeCourse" prefHeight="174.0" prefWidth="223.0" />
       <Text fill="WHITE" layoutX="616.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="selected courses" wrappingWidth="113.33673477172852">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="263.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="subject courses" wrappingWidth="113.33673477172852">
+      <Text fill="WHITE" layoutX="263.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="subject courses" wrappingWidth="113.33673477172852">
          <font>
             <Font size="14.0" />
          </font>

@@ -34,17 +34,17 @@
                 <Text fx:id="currentTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-        <Button fx:id="makeExamButton" layoutX="442.0" layoutY="303.0" mnemonicParsing="false" onAction="#makeExam" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="make Exam" textFill="WHITE">
+        <Button fx:id="makeExamButton" layoutX="442.0" layoutY="303.0" mnemonicParsing="false" onAction="#makeExam" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Make Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="makeQuestionButton" layoutX="239.0" layoutY="303.0" mnemonicParsing="false" onAction="#makeQuestion" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="make Question" textFill="WHITE">
+        <Button fx:id="makeQuestionButton" layoutX="239.0" layoutY="303.0" mnemonicParsing="false" onAction="#makeQuestion" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Make Question" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="backButton" layoutX="14.0" layoutY="566.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="46.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
+        <Button fx:id="backButton" layoutX="14.0" layoutY="566.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="46.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
