@@ -11,8 +11,12 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
+import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -312,6 +316,80 @@ public class GenerateAll {
 
         Exam exam2=new Exam(15,"","","");
         buildExam(session,exam2,examQuestions,1,math,t2);
+
+        /*creating exams to execute*/
+
+        /*first exam*/
+        ExamToExecute examToExecute=new ComputerizedExamToExecute("2023-6-18 20:48","1234");
+        examToExecute.setExam(exam);
+        examToExecute.setTeacherThatExecuted(t2);
+        session.save(examToExecute);
+        session.flush();
+
+        exam.getCompExamsToExecute().add(examToExecute);
+        session.update(exam);
+        /*end of first exam*/
+
+        /*second exam*/
+        ExamToExecute examToExecute1=new ComputerizedExamToExecute("2023-6-18 21:05","1235");
+        examToExecute1.setExam(exam1);
+        examToExecute1.setTeacherThatExecuted(t1);
+        session.save(examToExecute1);
+        session.flush();
+
+        exam1.getCompExamsToExecute().add(examToExecute1);
+        session.update(exam1);
+        /*end of second exam*/
+
+        /*third exam*/
+        ExamToExecute examToExecute2=new ComputerizedExamToExecute("2023-6-18 21:05","1236");
+        examToExecute2.setExam(exam2);
+        examToExecute2.setTeacherThatExecuted(t1);
+        session.save(examToExecute2);
+        session.flush();
+
+        exam2.getCompExamsToExecute().add(examToExecute2);
+        session.update(exam2);
+        /*end of third exam*/
+        /*end of adding examToExe*/
+
+
+        /*adding copies to the first exam*/
+        Copy copy=new Copy("6,25,2,-10");
+        Grade grade=new Grade(50,false,5,true,"2023-6-18","20:52",true);
+
+        addCopy(session,examToExecute,grade,copy,s1);
+
+        Copy copy1=new Copy("6,31,3,-10");
+        Grade grade1=new Grade(25,false,7,true,"2023-6-18","20:55",true);
+
+        addCopy(session,examToExecute,grade1,copy1,s2);
+        /*end of adding copies to frsit exam*/
+
+        /*adding copies to the seond exam*/
+        Copy copy11=new Copy("x,101,34,<1,2,2>,<1,2,2>,<24,4,7>");
+        Grade grade11=new Grade(20,false,10,true,"2023-6-18","21:10",true);
+
+        addCopy(session,examToExecute1,grade11,copy11,s1);
+
+        Copy copy12=new Copy("1,101,34,<1,2,2>,<1,2,2>,<23,4,7>");
+        Grade grade12=new Grade(25,false,7,true,"2023-6-18","20:55",true);
+
+        addCopy(session,examToExecute1,grade12,copy12,s2);
+        /*end of adding copies to frsit exam*/
+
+        /*adding copies to the third exam*/
+        Copy copy21=new Copy("6,31,3,-10,x,101,34,<1,2,2>,<1,2,2>,<24,4,7>");
+        Grade grade21=new Grade(100,false,15,true,"2023-6-18","21:10",true);
+
+        addCopy(session,examToExecute2,grade21,copy21,s1);
+
+        Copy copy22=new Copy("6,31,3,-10,1,101,34,<1,2,2>,<1,2,2>,<23,4,7>");
+        Grade grade22=new Grade(60,false,10,true,"2023-6-18","21:10",true);
+
+        addCopy(session,examToExecute2,grade22,copy22,s2);
+        /*end of adding copies to third exam*/
+
     }
 
     public static void buildQuestions(Session session, Question question, List<Integer> CoursesIds,int subjectId,int teacherId) {
@@ -389,5 +467,23 @@ public class GenerateAll {
         session.update(exam);
         session.update(teacher);
         session.flush();
+    }
+    public static void addCopy(Session session,ExamToExecute examToExecute,Grade grade,Copy copy ,Student student)
+    {
+        grade.setStudent(student);
+        session.save(grade);
+
+        copy.setCompExamToExecute(examToExecute);
+        session.save(copy);session.flush();
+
+        examToExecute.getCopies().add(copy);
+        session.update(examToExecute);session.flush();
+
+        session.save(grade);
+
+        grade.setExamCopy(copy);
+        copy.setGrade(grade);
+        session.update(grade);
+        session.update(copy);session.flush();
     }
 }

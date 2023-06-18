@@ -80,6 +80,7 @@ public class AllExams {
     void BackToMenu(ActionEvent event) throws IOException {
         App.setRoot("teacherHome");
     }
+    public static Exam selectedExam;
 
     @FXML
     void ShowExam(ActionEvent event) throws IOException {

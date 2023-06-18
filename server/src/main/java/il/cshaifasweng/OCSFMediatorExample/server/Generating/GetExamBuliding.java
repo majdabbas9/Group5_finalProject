@@ -58,17 +58,42 @@ public class GetExamBuliding {
                 "WHERE tc.teacher.id = :id";
         Query query = session.createQuery(queryString);
         query.setParameter("id", teacherId);
-        List<Exam> newExams=new ArrayList<>();
+        List<Exam> newExams = new ArrayList<>();
         for (Exam exam : (List<Exam>) query.getResultList()) {
-               Exam exam1 = new Exam(exam);
-               exam1.setExamSubject(new Subject(exam.getExamSubject()));
-               exam1.setExamCourse(new Course(exam.getExamCourse()));
-               exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
-               newExams.add(exam1);
-            }
+            Exam exam1 = new Exam(exam);
+            exam1.setExamSubject(new Subject(exam.getExamSubject()));
+            exam1.setExamCourse(new Course(exam.getExamCourse()));
+            exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+            newExams.add(exam1);
+        }
         return newExams;
     }
-
+    public static List<Exam> getAllExamsToCopy(Session session, int teacherId) {
+        List<Exam> allExams = new ArrayList<>();
+        String queryString = "SELECT e FROM Exam e " +
+                "join fetch e.examSubject " +
+                "JOIN FETCH e.examCourse " +
+                "JOIN FETCH e.teacherThatCreated " +
+                "JOIN e.examCourse.courseTeachers tc " +
+                "WHERE tc.teacher.id = :id";
+        Query query = session.createQuery(queryString);
+        query.setParameter("id", teacherId);
+        List<Exam> newExams = new ArrayList<>();
+        for (Exam exam : (List<Exam>) query.getResultList()) {
+            Exam exam1 = new Exam(exam);
+            exam1.setExamSubject(new Subject(exam.getExamSubject()));
+            exam1.setExamCourse(new Course(exam.getExamCourse()));
+            exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+            Set<Exam_Question> examQuestions=new HashSet<>();
+            for(Exam_Question exam_question:exam.getExamQuestions())
+            {
+                examQuestions.add(new Exam_Question(exam_question));
+            }
+            exam1.setExamQuestions(examQuestions);
+            newExams.add(exam1);
+        }
+        return newExams;
+    }
     public static List<Exam_Question> getExamQuestionsById(Session session,int id)
     {
         String queryString=" FROM Exam_Question WHERE exam.id = : id";

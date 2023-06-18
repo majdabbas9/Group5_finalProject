@@ -179,8 +179,8 @@ public class ShowExamToCopy {
         List<Object>dataToServer=new ArrayList<>();
         dataToServer.add(exam);
         dataToServer.add(GlobalDataSaved.connectedUser.getId());
-        dataToServer.add(MakeExam.selectedCourse.getId());
-        dataToServer.add(MakeExam.selectedSubject.getId());
+        dataToServer.add(GlobalDataSaved.selectedExamToCopy.getExamCourse().getId());
+        dataToServer.add(GlobalDataSaved.selectedExamToCopy.getExamSubject().getId());
         List<Integer> questionsIds=new ArrayList<>();
         for(Question question:selectedQuestions)
         {
@@ -202,6 +202,7 @@ public class ShowExamToCopy {
     public void initialize()
     {
         warning.setText("");
+        timeLabel.setText(String.valueOf(GlobalDataSaved.selectedExamToCopy.getTime()));
         observableList = FXCollections.observableArrayList();
         //courseName.setStyle("-fx-alignment: CENTER;");
         examQuestionID.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));
@@ -213,6 +214,7 @@ public class ShowExamToCopy {
             Question question=exam_question.getQuestion();
             TextField textField=new TextField("0");
             textField.setStyle("-fx-alignment: CENTER;");
+            textField.setText(String.valueOf(exam_question.getPoints()));
             observableList.add(new ExamQuestion(question.getQuestionID(),question,textField));
             selectedQuestions.add(question);
         }

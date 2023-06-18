@@ -107,7 +107,7 @@ public class HandleMsgTeacher {
             return true;
         }
         if (contentOfMsg.equals("#allExamsForTeacherToCopy")) {
-            Message messageToClient = new Message("all the exams for teacher copy",GetExamBuliding.getAllExamsForTeacher(session));
+            Message messageToClient = new Message("all the exams for teacher copy",GetExamBuliding.getAllExamsToCopy(session,(int)msgFromClient.getObj()));
             try {
                 client.sendToClient(messageToClient);
             } catch (IOException e) {
