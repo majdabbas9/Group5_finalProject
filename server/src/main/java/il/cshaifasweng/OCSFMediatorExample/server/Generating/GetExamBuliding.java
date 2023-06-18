@@ -51,18 +51,22 @@ public class GetExamBuliding {
     public static List<Exam> getAllExamsForCourses(Session session, int teacherId) {
         List<Exam> allExams = new ArrayList<>();
         String queryString = "SELECT e FROM Exam e " +
-                "JOIN FETCH e.examSubject " +
+                "join fetch e.examSubject " +
                 "JOIN FETCH e.examCourse " +
                 "JOIN FETCH e.teacherThatCreated " +
                 "JOIN e.examCourse.courseTeachers tc " +
                 "WHERE tc.teacher.id = :id";
-
         Query query = session.createQuery(queryString);
         query.setParameter("id", teacherId);
-
-        allExams.addAll(query.getResultList());
-
-        return allExams;
+        List<Exam> newExams=new ArrayList<>();
+        for (Exam exam : (List<Exam>) query.getResultList()) {
+               Exam exam1 = new Exam(exam);
+               exam1.setExamSubject(new Subject(exam.getExamSubject()));
+               exam1.setExamCourse(new Course(exam.getExamCourse()));
+               exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+               newExams.add(exam1);
+            }
+        return newExams;
     }
 
     public static List<Exam_Question> getExamQuestionsById(Session session,int id)
@@ -80,13 +84,12 @@ public class GetExamBuliding {
 
     public static List<ExamToExecute> getAllExamsForTeacher(Session session, int teacherId)
     {
-        String queryString=" FROM ExamToExecute WHERE teacherThatExecuted.id = : id";
+        String queryString="select e FROM ExamToExecute e WHERE e.teacherThatExecuted.id = : id and e.numOfStudentDoing > 0";
         Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",teacherId);
         List<ExamToExecute> list=new ArrayList<>();
         for(ExamToExecute examToExe:(List<ExamToExecute>)(query.getResultList()))
         {
-            if(examToExe.getNumOfStudentDoing()>0) {
                 ExamToExecute examToExecute;
                 if (examToExe.getClass().equals(ComputerizedExamToExecute.class)) {
                     examToExecute = new ComputerizedExamToExecute(examToExe);
@@ -97,7 +100,6 @@ public class GetExamBuliding {
                 exam1.setExamSubject(new Subject(examToExe.getExam().getExamSubject()));
                 examToExecute.setExam(exam1);
                 list.add(examToExecute);
-            }
         }
         return list;
     }

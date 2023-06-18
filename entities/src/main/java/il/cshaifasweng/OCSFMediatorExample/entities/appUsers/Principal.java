@@ -13,6 +13,9 @@ public class Principal extends User implements Serializable {
     public Principal(String userID, String passWord, String userName, String firstName, String lastName) {
         super(userID, passWord, userName, firstName, lastName);
     }
+    public Principal(int id,String userID, String passWord, String userName, String firstName, String lastName) {
+        super(id,userID, passWord, userName, firstName, lastName);
+    }
     public Principal(User user)
     {
         super(user);

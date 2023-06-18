@@ -1,5 +1,6 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
+import aidClasses.Color;
 import aidClasses.Message;
 import com.mysql.cj.xdevapi.Client;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
@@ -427,7 +428,9 @@ public class SimpleServer extends AbstractServer {
 		return new int[]{grade.getId(), copy.getId()};
 	}
 	public static void teacherApproveStudentGrade(int gradeId,int newGrade,String notes) {
-		Grade grade= GetGrading.getGradeById(session,gradeId);
+		//Grade grade= GetGrading.getGradeById(session,gradeId);
+
+		Grade grade =  (Grade) session.get(Grade.class, gradeId);
 		session.beginTransaction();
 		session.clear();
 
@@ -474,17 +477,16 @@ public class SimpleServer extends AbstractServer {
 					String[] userDetails = (String[]) (((Message) msg).getObj());
 					String userName = userDetails[0];
 					String password = userDetails[1];
-
-					/*String queryString = "SELECT studentNotes, FROM Question WHERE studentNotes="+"'"+question.getStudentNotes()+"'";
+					if(userName.equals("2"))
+					{
+						System.out.print("hi");
+					}
+					String queryString="select id , userID , userName , passWord , firstName , lastName , kind FROM User WHERE userName = : userName and passWord =:passWord ";
 					org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
-					List<Object[]> results = query.getResultList();*/
-
-					String queryString="FROM User WHERE userName = : userName";
-					Query query = session.createQuery(queryString,User.class);
 					query.setParameter("userName",userName);
-					List<User> users=query.getResultList();
-					if (users.size() == 0) {
-						Warning warning = new Warning("there is no such a username");
+					query.setParameter("passWord",password);
+					if (query.getResultList().size() == 0) {
+						Warning warning = new Warning("user name or password is wrong!");
 						try {
 							client.sendToClient(warning);
 							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
@@ -494,19 +496,10 @@ public class SimpleServer extends AbstractServer {
 						}
 
 					}
-					if (!users.get(0).getPassWord().equals(password)) {
-						Warning warning = new Warning("wrong password");
-						try {
-							client.sendToClient(warning);
-							System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-							return;
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+					List<Object> objectList=new ArrayList<>(List.of(query.getResultList().get(0)));
 
-					}
 					for (LoggedInClient _loggedInClient : _LoggedInList) {
-						if (_loggedInClient.get_id().equals(users.get(0).getUserID())) {
+						if (_loggedInClient.get_id().equals(objectList.get(6))) {
 							Warning warning = new Warning("user already logged in!");
 							try {
 								client.sendToClient(warning);
@@ -517,32 +510,31 @@ public class SimpleServer extends AbstractServer {
 							}
 						}
 					}
-					if(users.get(0).getClass().equals(Principal.class)){
-						_LoggedInList.add(new LoggedInClient(client,0,users.get(0).getUserID()));
-					} else if (users.get(0).getClass().equals(Teacher.class)) {
-						_LoggedInList.add(new LoggedInClient(client,1,users.get(0).getUserID()));
-					} else if (users.get(0).getClass().equals(Student.class)) {
-						_LoggedInList.add(new LoggedInClient(client,2,users.get(0).getUserID()));
+					if(objectList.get(6).equals("principal")){
+						_LoggedInList.add(new LoggedInClient(client,0,(String) objectList.get(1)));
+					} else if (objectList.get(6).equals("teacher")) {
+						_LoggedInList.add(new LoggedInClient(client,1,(String) objectList.get(1)));
+					} else if (objectList.get(6).equals("student")) {
+						_LoggedInList.add(new LoggedInClient(client,2,(String) objectList.get(1)));
 					}
 					User newUser=null;
-					if(users.get(0).getClass().equals(Principal.class))
+					if(objectList.get(6).equals("principal"))
 					{
-						newUser = new Principal(users.get(0));
+						newUser = new Principal((int)objectList.get(0),(String) objectList.get(1),(String)objectList.get(2),(String)objectList.get(3),(String)objectList.get(4),(String)objectList.get(5));
 					}
-					if(users.get(0).getClass().equals(Teacher.class))
+					if(objectList.get(6).equals("teacher"))
 					{
-						newUser = new Teacher(users.get(0));
+						newUser = new Teacher((int)objectList.get(0),(String) objectList.get(1),(String)objectList.get(2),(String)objectList.get(3),(String)objectList.get(4),(String)objectList.get(5));
 					}
-					if(users.get(0).getClass().equals(Student.class))
+					if(objectList.get(6).equals("student"))
 					{
-						newUser = new Student(users.get(0));
+						newUser = new Student((int)objectList.get(0),(String) objectList.get(1),(String)objectList.get(2),(String)objectList.get(3),(String)objectList.get(4),(String)objectList.get(5));
 					}
 					Message msgToClient = new Message("successful login",newUser);
 					client.sendToClient(msgToClient);
 					return;
 				}
 				if (contentOfMsg.equals("#logout")) {
-					User userToLogout = GetUsers.getUserById(session,(int) msgFromClient.getObj());
 					Iterator<LoggedInClient> iterator = _LoggedInList.iterator();
 					while (iterator.hasNext()) {
 						LoggedInClient _loggedInClient = iterator.next();

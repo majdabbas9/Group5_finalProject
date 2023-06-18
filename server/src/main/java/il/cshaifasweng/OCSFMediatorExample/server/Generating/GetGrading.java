@@ -103,7 +103,8 @@ public class GetGrading {
     }
     public static List<Grade> getCopiesToApprove(Session session,int compExamId)
     {
-        String queryString="FROM ExamToExecute WHERE id = : id";
+        String queryString="select e FROM ExamToExecute e join e.copies copies JOIN copies.grade g WHERE e.id = : id " +
+                " and g.teacherApprovement=false";
         Query query = session.createQuery(queryString,ExamToExecute.class);
         query.setParameter("id",compExamId);
 
@@ -112,8 +113,6 @@ public class GetGrading {
         List<Grade> compExamGrades=new ArrayList<>();
         for(Copy copy : exam.get(0).getCopies())
         {
-            if(!copy.getGrade().isTeacherApprovement())
-            {
                 Grade newGrade = new Grade(copy.getGrade());
                 //Copy newCopy=new Copy(copy.getGrade().getExamCopy());
                 Exam newExam=new Exam(copy.getGrade().getExamCopy().getCompExamToExecute().getExam());
@@ -131,8 +130,6 @@ public class GetGrading {
                 newGrade.setStudent(student);
                 newGrade.setExamCopy(copy);
                 compExamGrades.add(newGrade);
-            }
-
         }
         return compExamGrades;
     }

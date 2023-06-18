@@ -24,6 +24,9 @@ public class Student extends User implements  Serializable{
     public Student(String userID, String passWord, String userName, String firstName, String lastName) {
         super(userID, passWord, userName, firstName, lastName);
     }
+    public Student(int id,String userID,String userName,String passWord, String firstName, String lastName) {
+        super(id,userID, passWord, userName, firstName, lastName);
+    }
     public Student(Student student)
     {
         super(student);

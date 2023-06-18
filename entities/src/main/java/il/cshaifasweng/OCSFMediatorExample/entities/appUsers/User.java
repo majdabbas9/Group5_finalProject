@@ -15,6 +15,7 @@ public abstract class User implements  Serializable{
     private String firstName;
     private String lastName;
     private Boolean isConnected;
+    private String kind;
     public User() {
 
     }
@@ -34,6 +35,15 @@ public abstract class User implements  Serializable{
         this.userName = user.userName;
         this.firstName = user.firstName;
         this.lastName = user.lastName;
+        this.isConnected=false;
+    }
+    public User(int id,String userID, String passWord, String userName, String firstName, String lastName) {
+       this.id=id;
+        this.userID = userID;
+        this.passWord = passWord;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.isConnected=false;
     }
 
@@ -87,5 +97,13 @@ public abstract class User implements  Serializable{
 
     public void setConnected(Boolean connected) {
         isConnected = connected;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 }

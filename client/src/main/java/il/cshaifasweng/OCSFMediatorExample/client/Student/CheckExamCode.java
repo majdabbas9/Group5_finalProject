@@ -56,7 +56,9 @@ public class CheckExamCode {
         }
         else {
             examCode = studentCode.getText();
-            msg = new Message("#check code validation", examCode);
+            List<Object> dataToServer=new ArrayList<>();
+            dataToServer.add(examCode);dataToServer.add(GlobalDataSaved.connectedUser.getId());
+            msg = new Message("#check code validation", dataToServer);
         }
         SimpleClient.getClient().sendToServer(msg);
     }

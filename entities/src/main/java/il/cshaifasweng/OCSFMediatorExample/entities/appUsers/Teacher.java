@@ -37,6 +37,9 @@ public class Teacher extends User implements Serializable {
         this.teacherSubjects=new HashSet<>();
         this.questionsCreated=new HashSet<>();
     }
+    public Teacher(int id,String userID, String passWord, String userName, String firstName, String lastName) {
+        super(id,userID, passWord, userName, firstName, lastName);
+    }
     public Teacher() {
 
     }

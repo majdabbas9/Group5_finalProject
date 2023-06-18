@@ -46,11 +46,12 @@ public class HandleMsgStudent {
         }
         if (contentOfMsg.equals("#check code validation"))
         {
-            String code = (String) msgFromClient.getObj().toString();
+            List<Object> dataFromClient=(List<Object>) msgFromClient.getObj();
+            int userId=(int)dataFromClient.get(1);
+            String code = (String) dataFromClient.get(0);
             String queryString = "SELECT code FROM ExamToExecute WHERE code="+"'"+code+"'";
             org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
             List<Object[]> results = query.getResultList();
-            if(results.size()!=0)
             if (results.size() == 0){
                 Warning warning = new Warning("code is not correct");
                 try {
@@ -71,6 +72,23 @@ public class HandleMsgStudent {
             ExamToExecute examToExecute=GetExamBuliding.CopyExamToExe(session.getSession(),code,date);
             if(examToExecute!=null)
             {
+                String queryString1 = "select g.id FROM Grade g join  g.examCopy e join  e.compExamToExecute comp WHERE comp.code = :code and g.student.id= :id";
+                org.hibernate.Query<Object[]> query1 = session.createQuery(queryString1, Object[].class);
+                query1.setParameter("code", code);
+                query1.setParameter("id", userId);
+                List<Object[]> results1 = query1.getResultList();
+                if(results1.size()>0)
+                {
+                    Warning warning = new Warning("You Already Did This Exam");
+                    try {
+                        client.sendToClient(warning);
+                        System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
+                        return true;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 Message msgToClient = new Message("write id to start",examToExecute);
                 client.sendToClient(msgToClient);
 
@@ -92,7 +110,7 @@ public class HandleMsgStudent {
             String userId = (String) dataFromClient.get(0);
             String connectUserId = (String) dataFromClient.get(1);
             String examCode = (String) dataFromClient.get(2);
-            String q1 = "from Grade where student.userID = '"+connectUserId+"'";
+           /* String q1 = "from Grade where student.userID = '"+connectUserId+"'";
             Query query1 = session.createQuery(q1);
             List<Grade> grades = query1.getResultList();
             for (Grade grade : grades) {
@@ -106,7 +124,7 @@ public class HandleMsgStudent {
                         e.printStackTrace();
                     }
                 }
-            }
+            }*/
             if (!userId.equals(connectUserId)) {
                     Warning warning = new Warning("Your ID is not correct");
                     try {

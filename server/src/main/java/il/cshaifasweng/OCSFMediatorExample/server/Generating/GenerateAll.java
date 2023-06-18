@@ -24,6 +24,7 @@ public class GenerateAll {
     {
         /*adding the principal*/
         Principal principal=new Principal("1111","0","0","moustfa","jbraeen");
+        principal.setKind("principal");
         session.save(principal);
         session.flush();
         /*end of adding principal*/
@@ -99,8 +100,9 @@ public class GenerateAll {
         /*end of adding courses*/
 
         Teacher t1=new Teacher("21212","1","1","mohamed","abbas");
+        t1.setKind("teacher");
         Teacher t2=new Teacher("33333","3","3","aa","aa");
-
+        t2.setKind("teacher");
         session.save(t1);
         session.save(t2);
         session.flush();
@@ -160,6 +162,7 @@ public class GenerateAll {
         /*student Add*/
 
         Student s1=new Student("111","2","2","abdo","abbas");
+        s1.setKind("student");
         session.save(s1);
         session.flush();
 
@@ -173,6 +176,7 @@ public class GenerateAll {
         session.flush();
 
         Student s2=new Student("222","22","22","mohamad","abbas");
+        s2.setKind("student");
         session.save(s2);
         session.flush();
 
@@ -287,7 +291,27 @@ public class GenerateAll {
         buildQuestions(session,question10,coursesIds, math.getId(),t1.getId());
 
         Exam exam=new Exam(10,"","","");
+        List<Question> examQuestions=new ArrayList<>();
 
+        examQuestions.add(question1);examQuestions.add(question2);examQuestions.add(question3);examQuestions.add(question4);
+        buildExam(session,exam,examQuestions,1,math,t1);
+
+        examQuestions.clear();
+
+        examQuestions.add(question5);examQuestions.add(question6); examQuestions.add(question7);examQuestions.add(question8);
+        examQuestions.add(question9); examQuestions.add(question10);
+
+        Exam exam1=new Exam(20,"","","");
+        buildExam(session,exam1,examQuestions,1,math,t2);
+
+        examQuestions.clear();
+
+        examQuestions.add(question1);examQuestions.add(question2);examQuestions.add(question3);examQuestions.add(question4);
+        examQuestions.add(question5);examQuestions.add(question6); examQuestions.add(question7);examQuestions.add(question8);
+        examQuestions.add(question9);examQuestions.add(question10);
+
+        Exam exam2=new Exam(15,"","","");
+        buildExam(session,exam2,examQuestions,1,math,t2);
     }
 
     public static void buildQuestions(Session session, Question question, List<Integer> CoursesIds,int subjectId,int teacherId) {
@@ -359,6 +383,11 @@ public class GenerateAll {
         exam.setExamSubject(subject);
         session.update(exam);
         session.update(subject);
+
+        teacher.getExamsCreated().add(exam);
+        exam.setTeacherThatCreated(teacher);
+        session.update(exam);
+        session.update(teacher);
         session.flush();
     }
 }
