@@ -15,7 +15,7 @@
                         <Font size="24.0" />
                     </font>
                 </Text>
-              <Text fx:id="questionContent" fill="#fff9f9" layoutX="37.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="manual exam" wrappingWidth="425.3367385864258">
+              <Text fx:id="questionContent" fill="#fff9f9" layoutX="37.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manual Exam" wrappingWidth="425.3367385864258">
                   <font>
                       <Font size="26.0" />
                   </font>

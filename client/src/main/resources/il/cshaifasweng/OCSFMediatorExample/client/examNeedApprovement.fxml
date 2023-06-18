@@ -36,7 +36,7 @@
                 <Text fx:id="currentTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
-        <Button fx:id="backButton" layoutX="19.0" layoutY="587.0" mnemonicParsing="false" onAction="#backClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
+        <Button fx:id="backButton" layoutX="19.0" layoutY="587.0" mnemonicParsing="false" onAction="#backClick" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>

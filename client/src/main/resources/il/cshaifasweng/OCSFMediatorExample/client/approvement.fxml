@@ -23,17 +23,17 @@
                         <Font size="13.0" />
                     </font>
                 </Label>
-                <Text fx:id="studentName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
+                <Text fx:id="teacherName" fill="WHITE" layoutX="85.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher name">
                     <font>
                         <Font size="13.0" />
                     </font>
                 </Text>
-                <Text fx:id="currentDate1" fill="WHITE" layoutX="464.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current date">
+                <Text fx:id="currentDate" fill="WHITE" layoutX="464.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current date">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Text>
-                <Text fx:id="currentTime1" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
+                <Text fx:id="currentTime" fill="WHITE" layoutX="464.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="current time" />
             </children>
         </Pane>
           <TableView fx:id="gradesTable" layoutX="15.0" layoutY="184.0" onMouseClicked="#updateGrade" prefHeight="394.0" prefWidth="830.0">

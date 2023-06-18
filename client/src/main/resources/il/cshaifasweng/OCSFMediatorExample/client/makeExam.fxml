@@ -10,18 +10,18 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.MakeExam">
     <children>
-        <Button fx:id="buttonBack" layoutX="14.0" layoutY="574.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To Build Exam" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="14.0" layoutY="574.0" mnemonicParsing="false" onAction="#backToBuildExam" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Back To Build Exam" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="19.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="make Exam" wrappingWidth="139.21246337890625">
+        <Text fill="WHITE" layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Make Exam" wrappingWidth="139.21246337890625">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="23.0" />
             </font>
         </Text>
-        <ComboBox fx:id="subjectList" layoutX="331.0" layoutY="71.0" onAction="#subjectSelected" prefWidth="150.0" promptText="pick Subject" />
-        <Button layoutX="631.0" layoutY="574.0" mnemonicParsing="false" onAction="#addQuestionsButton" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="add questions" textFill="WHITE">
+        <ComboBox fx:id="subjectList" layoutX="305.0" layoutY="73.0" onAction="#subjectSelected" prefHeight="26.0" prefWidth="200.0" promptText="pick Subject" />
+        <Button layoutX="631.0" layoutY="574.0" mnemonicParsing="false" onAction="#addQuestionsButton" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Add Questions" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
@@ -32,7 +32,7 @@
           <TableColumn fx:id="courseName" prefWidth="343.1999877929687" text="course name" />
         </columns>
       </TableView>
-      <Text fx:id="warning" fill="#f70000" layoutX="344.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="warining text" wrappingWidth="161.33673095703125">
+      <Text fx:id="warning" fill="#f70000" layoutX="344.0" layoutY="602.0" strokeType="OUTSIDE" strokeWidth="0.0" text="warining text" textAlignment="CENTER" wrappingWidth="161.33673095703125">
          <font>
             <Font size="14.0" />
          </font>

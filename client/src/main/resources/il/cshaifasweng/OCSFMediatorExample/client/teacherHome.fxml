@@ -59,17 +59,17 @@
               <Font size="18.0" />
           </font>
       </Button>
-      <Button fx:id="buildExamBtn1" layoutX="218.0" layoutY="439.0" mnemonicParsing="false" onAction="#showAllQuestions" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="question data base" textFill="WHITE">
+      <Button fx:id="buildExamBtn1" layoutX="217.0" layoutY="439.0" mnemonicParsing="false" onAction="#showAllQuestions" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Question DataBase" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="buildExamBtn11" layoutX="462.0" layoutY="439.0" mnemonicParsing="false" onAction="#showAllExams" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="exams data base" textFill="WHITE">
+      <Button fx:id="buildExamBtn11" layoutX="462.0" layoutY="439.0" mnemonicParsing="false" onAction="#showAllExams" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="Exams DataBase" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="buildExamBtn2" layoutX="342.0" layoutY="539.0" mnemonicParsing="false" onAction="#allExamsCreated" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="my exams " textFill="WHITE">
+      <Button fx:id="buildExamBtn2" layoutX="342.0" layoutY="539.0" mnemonicParsing="false" onAction="#allExamsCreated" prefHeight="78.0" prefWidth="178.0" style="-fx-background-color: #0A8A0A;" text="My Exams " textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

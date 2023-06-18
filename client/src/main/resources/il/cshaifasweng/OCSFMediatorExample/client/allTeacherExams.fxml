@@ -9,14 +9,14 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="850.0" style="-fx-background-color: #003000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.cshaifasweng.OCSFMediatorExample.client.Teacher.AllTeacherExams">
     <children>
-        <Button fx:id="buttonBack" layoutX="21.0" layoutY="571.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="back To menu" textFill="WHITE">
+        <Button fx:id="buttonBack" layoutX="21.0" layoutY="571.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Back To menu" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="21.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teacher exams" wrappingWidth="198.39999999999986">
+        <Text fill="WHITE" layoutX="22.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher Exams" wrappingWidth="198.39999999999986">
             <font>
-                <Font name="System Bold" size="18.0" />
+                <Font name="System Bold" size="22.0" />
             </font>
         </Text>
         <Text fx:id="warningTxt" fill="#af0000" layoutX="356.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="150.39999999999998">
@@ -24,7 +24,7 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Button fx:id="buttonSubmit" layoutX="606.0" layoutY="570.0" mnemonicParsing="false" onAction="#showResult" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="show Results" textFill="WHITE">
+        <Button fx:id="buttonSubmit" layoutX="606.0" layoutY="570.0" mnemonicParsing="false" onAction="#showResult" prefHeight="46.0" prefWidth="186.0" style="-fx-background-color: #0A8A0A;" text="Show Results" textFill="WHITE">
             <font>
                 <Font size="18.0" />
             </font>

@@ -18,9 +18,9 @@
                 <TableColumn fx:id="SubjectName" prefWidth="81.5999755859375" text="Subject" />
             </columns>
         </TableView>
-        <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions">
+        <Text fill="WHITE" layoutX="24.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questions">
             <font>
-                <Font size="18.0" />
+                <Font size="22.0" />
             </font>
         </Text>
         <Button fx:id="BackToMenuBtn" layoutX="14.0" layoutY="582.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="40.0" prefWidth="258.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
