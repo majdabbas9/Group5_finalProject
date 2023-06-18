@@ -1,6 +1,8 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import aidClasses.aidClassesForTeacher.QuestionsExamsID;
+
+import java.util.HashSet;
 import java.util.List;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
@@ -9,6 +11,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
+import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import org.hibernate.Session;
 
@@ -282,6 +285,9 @@ public class GenerateAll {
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question10,coursesIds, math.getId(),t1.getId());
+
+        Exam exam=new Exam(10,"","","");
+
     }
 
     public static void buildQuestions(Session session, Question question, List<Integer> CoursesIds,int subjectId,int teacherId) {
@@ -321,6 +327,38 @@ public class GenerateAll {
         }
 
     }
+    public static void buildExam(Session session, Exam exam, List<Question> questions, int courseId, Subject subject, Teacher teacher)
+    {
+        Course course=GetExamBuliding.getCourseById(session,courseId);
+        int size= 100/questions.size();
+        exam.setExam_ID(GetExamBuliding.examID(course.getCourseExams().size(),subject.getId(),courseId));
+        session.save(exam);
+        session.flush();
 
+        Set<Exam_Question> examQuestions=new HashSet<>();
+        for(Question question:questions)
+        {
+            Exam_Question exam_question=new Exam_Question(exam,question,size);
+            session.save(exam_question);
+            session.flush();
 
+            exam.getExamQuestions().add(exam_question);
+            question.getQuestionExams().add(exam_question);
+            session.update(exam);
+            session.update(question);
+            session.flush();
+        }
+
+        course.getCourseExams().add(exam);
+        exam.setExamCourse(course);
+        session.update(exam);
+        session.update(course);
+        session.flush();
+
+        subject.getSubjectExams().add(exam);
+        exam.setExamSubject(subject);
+        session.update(exam);
+        session.update(subject);
+        session.flush();
+    }
 }
