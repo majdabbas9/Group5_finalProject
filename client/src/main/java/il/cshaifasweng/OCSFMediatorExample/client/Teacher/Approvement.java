@@ -95,6 +95,11 @@ public class Approvement {
             return;
         }
         int newGrade = Integer.valueOf(gradesTable.getSelectionModel().getSelectedItem().getGrade().getText());
+        if(newGrade!=gradesTable.getSelectionModel().getSelectedItem().getGradeObject().getGrade() && gradesTable.getSelectionModel().getSelectedItem().getNotes().getText().equals(""))
+        {
+            warning.setText("you should add explanation for changing the grade");
+            return;
+        }
         String notes = gradesTable.getSelectionModel().getSelectedItem().getNotes().getText();
         List<Object> dataToServer = new ArrayList<>();
         dataToServer.add(dg.getGradeObject().getId());
