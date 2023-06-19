@@ -380,6 +380,7 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		exam.getCopies().add(copy);
+		exam.setNumOfStudentDoing(exam.getNumOfStudentDoing()-1);
 		session.update(exam);
 
 		if (onTime) {
