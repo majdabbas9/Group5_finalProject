@@ -145,8 +145,10 @@ public class SolveExam {
     @FXML
     public void initialize() throws IOException {
         // TODO late
+        String date = GlobalDataSaved.examToExecute.getDateOfExam();
+        String[] dateAndHour = date.split(" ");
         Grade grade1 = new Grade(-1,false,GlobalDataSaved.examToExecute.getExam().getTime(),
-                false,GlobalDataSaved.examToExecute.getDateOfExam(),GlobalDataSaved.examToExecute.getDateOfExam(), false);
+                false,dateAndHour[0], dateAndHour[1], false);
         Copy copy = new Copy();
         copy.setAnswers(null);
         List<Object> objects = new ArrayList<>();
