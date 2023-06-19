@@ -499,7 +499,7 @@ public class SimpleServer extends AbstractServer {
 					List<Object> objectList=new ArrayList<>(List.of(query.getResultList().get(0)));
 
 					for (LoggedInClient _loggedInClient : _LoggedInList) {
-						if (_loggedInClient.get_id().equals(objectList.get(6))) {
+						if (_loggedInClient.get_id().equals(objectList.get(1))) {
 							Warning warning = new Warning("user already logged in!");
 							try {
 								client.sendToClient(warning);
