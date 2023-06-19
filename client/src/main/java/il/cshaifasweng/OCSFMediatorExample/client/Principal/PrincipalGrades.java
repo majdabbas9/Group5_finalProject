@@ -97,9 +97,9 @@ public class PrincipalGrades {
             NoCopyText.setText("No Copy Exists To This Exam");
             return;
         }
-        if (gradeToShow.isManuel()) {
-            WordGeneratorFile.openWord(gradeToShow.getExamCopy().getAnswers());
-        } else {
+//        if (gradeToShow.isManuel()) {
+//            WordGeneratorFile.openWord(gradeToShow.getExamCopy().getAnswers());
+//        } else {
             String answers = gradeToShow.getExamCopy().getAnswers();
             if (answers != null) {
                 List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
@@ -107,7 +107,8 @@ public class PrincipalGrades {
             }
             GlobalDataSaved.examToExecute = gradeToShow.getExamCopy().getCompExamToExecute();
             Message msg = new Message("#get exam copy", gradeToShow.getId());
-            SimpleClient.getClient().sendToServer(msg);        }
+            SimpleClient.getClient().sendToServer(msg);
+        //}
     }
 
     @FXML
