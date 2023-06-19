@@ -40,21 +40,22 @@ public class GetGrading {
     }
     public static List<Grade> getAllTeacherExamsGrade(Session session,int teacherId,int exaId)
     {
-        Teacher teacher=GetUsers.getTeacherById(session,teacherId);
-        Exam exam=GetExamBuliding.getExamById(session,exaId);
+        String queryString="select g FROM Grade g join g.examCopy copy JOIN copy.compExamToExecute exe " +
+                "join  exe.exam exam join exam.teacherThatCreated teacher  WHERE teacher.id = : id and exam.id = :examId and g.teacherApprovement=true ";
+        Query query = session.createQuery(queryString,Grade.class);
+        query.setParameter("id",teacherId);
+        query.setParameter("examId",exaId);
         List<Grade> grades=new ArrayList<>();
-        for(ExamToExecute examToExecute:exam.getCompExamsToExecute())
+
+        for(Grade grade:(List<Grade>)query.getResultList())
         {
-            for(Copy copy:examToExecute.getCopies())
-            {
-                if(copy.getGrade().isTeacherApprovement()) {
-                        /*creating the new objects*/
-                        Student newStudent = new Student(copy.getGrade().getStudent());
-                        Grade newGrade = new Grade(copy.getGrade());
-                        Copy newCopy = new Copy(copy);
-                        ExamToExecute newExamToExecute = new ExamToExecute(examToExecute);
-                        Exam newExam = new Exam(exam);
-                        Teacher teacher1 = new Teacher(examToExecute.getTeacherThatExecuted());
+            /*creating the new objects*/
+            Student newStudent = new Student(grade.getStudent());
+                        Grade newGrade = new Grade(grade);
+                        Copy newCopy = new Copy(grade.getExamCopy());
+                        ExamToExecute newExamToExecute = new ExamToExecute(grade.getExamCopy().getCompExamToExecute());
+                        Exam newExam = new Exam(grade.getExamCopy().getCompExamToExecute().getExam());
+                        Teacher teacher1 = new Teacher(grade.getExamCopy().getCompExamToExecute().getTeacherThatExecuted());
                         /*end of creating the new objects*/
 
                         /*updating the exam*/
@@ -73,10 +74,9 @@ public class GetGrading {
 
                         grades.add(newGrade);
                     }
-                }
-            }
         return grades;
-    }
+            }
+
     public static List<Grade> SpeedUpGradesData(List<Grade> grades){
         List<Grade> newGrades = new ArrayList<>();
         for (Grade grade : grades) {
