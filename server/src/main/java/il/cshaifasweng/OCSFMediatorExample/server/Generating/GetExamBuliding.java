@@ -325,7 +325,16 @@ public class GetExamBuliding {
         String queryString=" FROM Exam WHERE teacherThatCreated.id = : id";
         Query query = session.createQuery(queryString,Exam.class);
         query.setParameter("id",teacherId);
-        return query.getResultList();
+        List<Exam> exams=new ArrayList<>();
+        for(Exam exam:(List<Exam>)query.getResultList())
+        {
+            Exam newExam=new Exam(exam);
+            newExam.setExamCourse(new Course(exam.getExamCourse()));
+            newExam.setExamSubject(new Subject(exam.getExamSubject()));
+            newExam.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
+            exams.add(newExam);
+        }
+        return exams;
     }
 
     public static List<Question> copyQuestions(Set<Exam_Question> examQuestions) {

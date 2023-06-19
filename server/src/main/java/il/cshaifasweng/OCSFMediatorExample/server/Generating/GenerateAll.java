@@ -473,6 +473,9 @@ public class GenerateAll {
         grade.setStudent(student);
         session.save(grade);
 
+        student.getGrades().add(grade);
+        session.update(student);session.flush();
+
         copy.setCompExamToExecute(examToExecute);
         session.save(copy);session.flush();
 
