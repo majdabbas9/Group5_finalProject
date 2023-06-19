@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import java.awt.font.GlyphJustificationInfo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

@@ -47,7 +47,7 @@
             <TableColumn fx:id="wordColumn" prefWidth="75.0" text="copy" />
               </columns>
           </TableView>
-        <Button layoutX="14.0" layoutY="589.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="back to menu" textFill="WHITE">
+        <Button layoutX="14.0" layoutY="589.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #0A8A0A;" text="Back To Menu" textFill="WHITE">
             <font>
                 <Font size="15.0" />
             </font>

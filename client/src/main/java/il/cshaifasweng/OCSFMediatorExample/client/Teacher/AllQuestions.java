@@ -7,7 +7,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.beans.property.SimpleStringProperty;

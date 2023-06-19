@@ -2,12 +2,7 @@ package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
-import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,8 +17,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PrincipalHome {
 

@@ -3,14 +3,10 @@ package il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient;
 import aidClasses.Message;
 import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.*;
-import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
-import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetGrading;
@@ -22,7 +18,6 @@ import org.hibernate.Session;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HandleMsgTeacher {

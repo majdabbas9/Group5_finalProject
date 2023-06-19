@@ -1,13 +1,14 @@
 package il.cshaifasweng.OCSFMediatorExample.server;
 
-import aidClasses.Color;
 import aidClasses.Message;
-import com.mysql.cj.xdevapi.Client;
+import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
+import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
@@ -29,20 +30,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
-
-import aidClasses.GlobalDataSaved;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.*;
-
-import aidClasses.Warning;
-
-import javax.persistence.Query;
-import javax.persistence.spi.LoadState;
 
 public class SimpleServer extends AbstractServer {
-	public static int counter;
 
+	//public static int counter;
 	public static ArrayList<LoggedInClient> _LoggedInList = new ArrayList<>();
 
 	private static Session session;
@@ -380,7 +371,7 @@ public class SimpleServer extends AbstractServer {
 		session.flush();
 
 		exam.getCopies().add(copy);
-		exam.setNumOfStudentDoing(exam.getNumOfStudentDoing()-1);
+		//exam.setNumOfStudentDoing(exam.getNumOfStudentDoing()-1);
 		session.update(exam);
 
 		if (onTime) {
@@ -455,19 +446,6 @@ public class SimpleServer extends AbstractServer {
 		session.getTransaction().commit();
 	}
 
-	public static void updateStudentsNumber(ComputerizedExamToExecute compExam, int studentNumOnTime, int studentNumNotOnTime) {
-		session.beginTransaction();
-		session.clear();
-		compExam.setNumberOfStudentDoneInTime(studentNumOnTime);
-		session.update(compExam);
-		session.flush();
-		compExam.setNumberOfStudentNotDoneInTime(studentNumNotOnTime);
-		session.update(compExam);
-		session.flush();
-
-		session.getTransaction().commit();
-	}
-
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) throws IOException {
 		if (msg.getClass().equals(Message.class)) {
@@ -478,11 +456,8 @@ public class SimpleServer extends AbstractServer {
 					String[] userDetails = (String[]) (((Message) msg).getObj());
 					String userName = userDetails[0];
 					String password = userDetails[1];
-					if(userName.equals("2"))
-					{
-						System.out.print("hi");
-					}
-					String queryString="select id , userID , userName , passWord , firstName , lastName , kind FROM User WHERE userName = : userName and passWord =:passWord ";
+					String queryString="select id , userID , userName , passWord , firstName , lastName , kind " +
+							"FROM User WHERE userName = : userName and passWord =:passWord ";
 					org.hibernate.Query<Object[]> query = session.createQuery(queryString, Object[].class);
 					query.setParameter("userName",userName);
 					query.setParameter("passWord",password);

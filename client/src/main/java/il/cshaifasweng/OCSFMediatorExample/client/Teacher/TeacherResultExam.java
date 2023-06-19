@@ -6,9 +6,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.Teacher;
 
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
-import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,7 +19,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 
 public class TeacherResultExam {
