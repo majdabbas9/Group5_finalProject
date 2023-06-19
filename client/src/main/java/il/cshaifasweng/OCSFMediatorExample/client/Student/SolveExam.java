@@ -145,6 +145,7 @@ public class SolveExam {
     @FXML
     public void initialize() throws IOException {
         // TODO late
+        hour=0;minute=0;second=0;
         String date = GlobalDataSaved.examToExecute.getDateOfExam();
         String[] dateAndHour = date.split(" ");
         Grade grade1 = new Grade(-1,false,GlobalDataSaved.examToExecute.getExam().getTime(),
@@ -162,6 +163,10 @@ public class SolveExam {
         SimpleClient.getClient().sendToServer(msg);
 
         int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
+        if(examTime==15)
+        {
+            System.out.println("hi");
+        }
         if (GlobalDataSaved.examToExecute.getIsExtraNeeded() == 2){
             examTime += GlobalDataSaved.examToExecute.getExtraTime();
         }

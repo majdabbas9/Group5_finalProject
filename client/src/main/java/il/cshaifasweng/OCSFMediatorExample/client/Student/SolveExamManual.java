@@ -136,6 +136,7 @@ public class SolveExamManual {
 
     @FXML
     void initialize() throws IOException {
+        hour=0;minute=0;second=0;
         int examTime = GlobalDataSaved.examToExecute.getExam().getTime();
         while (examTime > 60) {
             hour++;
