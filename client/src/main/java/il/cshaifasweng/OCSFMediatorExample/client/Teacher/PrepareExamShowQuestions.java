@@ -131,7 +131,7 @@ public class PrepareExamShowQuestions {
         String dateOfExam=String.valueOf(date.getValue());
         try
         {
-            String compDate=dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
+            String compDate=dateOfExam;
             if(!CompareDates.occurBeforeNow(compDate))
             {
                 warningTxt.setText("illegal date of exam");
@@ -143,7 +143,6 @@ public class PrepareExamShowQuestions {
             System.out.println(parseException.getMessage());
         }
 
-        dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
         if(wayOfExecution.getSelectionModel().getSelectedItem().equals("computerized"))
         {
             List<Object> dataToServer=new ArrayList<>();
