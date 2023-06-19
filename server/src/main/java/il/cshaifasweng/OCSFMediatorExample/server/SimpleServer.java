@@ -418,7 +418,7 @@ public class SimpleServer extends AbstractServer {
 		grade.setExamCopy(copy);
 		grade.setStudent(student);
 		session.update(copy);
-		student.setGrades(grade.getStudent().getGrades());
+		student.getGrades().add(grade);
 		session.flush();
 		session.update(student);
 		session.update(grade);

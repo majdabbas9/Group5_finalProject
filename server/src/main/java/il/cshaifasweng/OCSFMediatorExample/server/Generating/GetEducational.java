@@ -231,6 +231,11 @@ public class GetEducational {
             newStudent.setLastName(student.getLastName());
             newStudent.setUserID(student.getUserID());
             Set<Grade> newGrades = new HashSet<>();
+            for (Grade grade : student.getGrades()){
+                Grade newGrade = new Grade();
+                newGrade.setExamCopy(grade.getExamCopy());
+                newGrades.add(newGrade);
+            }
             newStudent.setGrades(newGrades);
             students.add(newStudent);
         }
