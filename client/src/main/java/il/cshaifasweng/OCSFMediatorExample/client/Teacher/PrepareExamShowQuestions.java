@@ -129,6 +129,7 @@ public class PrepareExamShowQuestions {
         }
 
         String dateOfExam=String.valueOf(date.getValue());
+        dateOfExam+=" "+hourList.getSelectionModel().getSelectedItem()+":"+minuteList.getSelectionModel().getSelectedItem();
         try
         {
             String compDate=dateOfExam;
