@@ -262,31 +262,31 @@ public class GenerateAll {
         buildQuestions(session,question7,coursesIds, math.getId(),t1.getId());
 
         choices.clear();
-        choices.add("<1,2,2>");
-        choices.add("<1,1,2>");
-        choices.add("<1,0,2>");
-        choices.add("<2,1,2>");
-        Question question8 = new Question("", "<1,1,0> + <0,1,2> =", "<1,2,2>", choices);
+        choices.add("<1;2;2>");
+        choices.add("<1;1;2>");
+        choices.add("<1;0;2>");
+        choices.add("<2;1;2>");
+        Question question8 = new Question("", "<1;1;0> + <0;1;2> =", "<1;2;2>", choices);
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question8,coursesIds, math.getId(),t1.getId());
 
         choices.clear();
-        choices.add("<1,2,2>");
-        choices.add("<1,1,2>");
-        choices.add("<1,0,2>");
-        choices.add("<2,1,2>");
-        Question question9 = new Question("", "<6,10,13> - <5,10,11> =", "<1,0,2>", choices);
+        choices.add("<1;2;2>");
+        choices.add("<1;1;2>");
+        choices.add("<1;0;2>");
+        choices.add("<2;1;2>");
+        Question question9 = new Question("", "<6;10;13> - <5;10;11> =", "<1;0;2>", choices);
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question9,coursesIds, math.getId(),t1.getId());
 
         choices.clear();
-        choices.add("<24,4,7>");
-        choices.add("<22,5,7>");
-        choices.add("<23,4,6>");
-        choices.add("<23,4,7>");
-        Question question10 = new Question("", "<1,1,0> + <3,1,2> + <19,2,5> = ", "<23,4,7>", choices);
+        choices.add("<24;4;7>");
+        choices.add("<22;5;7>");
+        choices.add("<23;4;6>");
+        choices.add("<23;4;7>");
+        Question question10 = new Question("", "<1;1;0> + <3;1;2> + <19;2;5> = ", "<23;4;7>", choices);
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question10,coursesIds, math.getId(),t1.getId());
