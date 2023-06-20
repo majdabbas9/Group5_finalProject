@@ -27,7 +27,7 @@ public class HandleMsgPrincipal {
         if (contentOfMsg.equals("#add teacher")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
             String id = ((Teacher) dataFromClient.get(0)).getUserID();
-            boolean check = GetEducational.checkID(session, id);
+            boolean check = GetEducational.checkID(session,id);
             if (!check) {
                 GlobalDataSaved.AddFlag = false;
                 Warning warning = new Warning("User Already in the System");
@@ -51,7 +51,7 @@ public class HandleMsgPrincipal {
         if (contentOfMsg.equals("#add student")) {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();
             String id = ((Student) dataFromClient.get(0)).getUserID();
-            boolean check = GetEducational.checkID(session, id);
+            boolean check = GetEducational.checkID(session,id);
             if (!check) {
                 GlobalDataSaved.AddFlag = false;
                 Warning warning = new Warning("User Already in the System");

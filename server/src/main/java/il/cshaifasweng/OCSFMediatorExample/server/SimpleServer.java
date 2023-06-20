@@ -275,7 +275,7 @@ public class SimpleServer extends AbstractServer {
 		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsIds);
 		session.beginTransaction();
 		session.clear();
-
+		teacher.setKind("teacher");
 		session.save(teacher);
 		session.flush();
 
@@ -314,6 +314,7 @@ public class SimpleServer extends AbstractServer {
 	public static void addStudent(Student student,List<Integer> subjectsids,List<Integer> coursesids) {
 		List<Course> courses=GetExamBuliding.getCoursesById(session,coursesids);
 		List<Subject> subjects=GetExamBuliding.getSubjectsById(session,subjectsids);
+		student.setKind("student");
 		session.beginTransaction();
 		session.clear();
 
@@ -474,6 +475,11 @@ public class SimpleServer extends AbstractServer {
 				Message msgFromClient = (Message) msg;
 				String contentOfMsg = msgFromClient.getMsg();
 				if (contentOfMsg.equals("#login")) {
+					counter++;
+					if(counter==2)
+					{
+						System.out.println("");
+					}
 					String[] userDetails = (String[]) (((Message) msg).getObj());
 					String userName = userDetails[0];
 					String password = userDetails[1];
