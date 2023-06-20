@@ -454,11 +454,6 @@ public class SimpleServer extends AbstractServer {
 				Message msgFromClient = (Message) msg;
 				String contentOfMsg = msgFromClient.getMsg();
 				if (contentOfMsg.equals("#login")) {
-					counter++;
-					if(counter==2)
-					{
-						System.out.println("");
-					}
 					String[] userDetails = (String[]) (((Message) msg).getObj());
 					String userName = userDetails[0];
 					String password = userDetails[1];
