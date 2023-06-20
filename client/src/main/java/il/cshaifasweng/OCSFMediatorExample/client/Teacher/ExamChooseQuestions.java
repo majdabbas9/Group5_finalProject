@@ -168,9 +168,14 @@ public class ExamChooseQuestions {
             sum+=points;
             examPoints.add(points);
         }
-        if(sum!=100)
+        if(sum>100)
         {
             warning.setText("the exam have number of points above 100!");
+            return;
+        }
+        if(sum<100)
+        {
+            warning.setText("the exam have number of points under 100!");
             return;
         }
         Exam exam=new Exam(time,"",teacherNotes.getText(),studentNotes.getText());

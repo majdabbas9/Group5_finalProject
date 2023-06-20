@@ -100,9 +100,9 @@ public class GenerateAll {
 
         /*end of adding courses*/
 
-        Teacher t1=new Teacher("21212","1","1","mohamed","abbas");
+        Teacher t1=new Teacher("21212","1","1","adam","rayan");
         t1.setKind("teacher");
-        Teacher t2=new Teacher("33333","3","3","aa","aa");
+        Teacher t2=new Teacher("33333","3","3","majd","abbas");
         t2.setKind("teacher");
         session.save(t1);
         session.save(t2);
@@ -162,7 +162,7 @@ public class GenerateAll {
 
         /*student Add*/
 
-        Student s1=new Student("111","2","2","abdo","abbas");
+        Student s1=new Student("111","2","2","mohamed","hijazi");
         s1.setKind("student");
         session.save(s1);
         session.flush();
@@ -176,7 +176,7 @@ public class GenerateAll {
         session.save(sc1);
         session.flush();
 
-        Student s2=new Student("222","22","22","mohamad","abbas");
+        Student s2=new Student("222","22","22","mohamad","jbaren");
         s2.setKind("student");
         session.save(s2);
         session.flush();
