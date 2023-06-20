@@ -6,7 +6,6 @@ import aidClasses.GradesDetails;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,6 @@ public class StudentGrades {
         if (details == null){
             return;
         }
-        //GlobalDataSaved.currentGrade = details.getGradeObject();
         Message msg = new Message("#get exam copy", details.getGradeObject().getId());
         SimpleClient.getClient().sendToServer(msg);
     }

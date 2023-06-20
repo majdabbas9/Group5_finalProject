@@ -1,12 +1,4 @@
-/**
- * Sample Skeleton for 'principalStatisticalReport.fxml' Controller Class
- */
-
 package il.cshaifasweng.OCSFMediatorExample.client.Principal;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import aidClasses.ExamStatistics;
 import aidClasses.GlobalDataSaved;
@@ -23,6 +15,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class PrincipalStatisticalReport {
 

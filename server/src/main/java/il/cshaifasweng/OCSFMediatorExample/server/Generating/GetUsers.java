@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
-import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
@@ -13,7 +12,6 @@ import org.hibernate.Session;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class GetUsers {
     public static List<Subject> getTeacherSubjects(Session session, int id)

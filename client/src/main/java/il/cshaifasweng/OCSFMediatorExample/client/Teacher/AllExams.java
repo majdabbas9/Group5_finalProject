@@ -14,11 +14,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -26,25 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllExams {
-
-    @FXML
-    private TableColumn<Exam, Integer> ExamShownCourseID;
-    @FXML
-    private TableColumn<Exam, String> ExamShownCourseName;
-    @FXML
-    private TableColumn<Exam, String> ExamShownId;
-    @FXML
-    private TableColumn<Exam, String> ExamShownSubjectName;
-    @FXML
-    private TableColumn<Exam, String> ExamShownTeacherFN;
-    @FXML
-    private TableColumn<Exam, Integer> ExamShownTeacherID;
-    @FXML
-    private TableColumn<Exam, String> ExamShownTeacherLN;
-    @FXML
-    private TableColumn<Exam, Integer> ExamShownSubjectID;
-    @FXML
-    private TableView<Exam> ShownExamTable;
     @FXML
     private Text ErrTxt;
 

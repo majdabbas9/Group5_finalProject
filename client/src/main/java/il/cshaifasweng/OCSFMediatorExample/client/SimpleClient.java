@@ -1,11 +1,17 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
-import aidClasses.*;
-import aidClasses.aidClassesForTeacher.QuestionsExamsID;
-import il.cshaifasweng.OCSFMediatorExample.client.Principal.PrincipalQuestions;
+
+import aidClasses.Color;
+import aidClasses.GlobalDataSaved;
+import aidClasses.Message;
+import aidClasses.Warning;
 import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExam;
 import il.cshaifasweng.OCSFMediatorExample.client.Student.SolveExamManual;
-import il.cshaifasweng.OCSFMediatorExample.client.Teacher.BuildExam;
+import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
+import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
@@ -14,11 +20,7 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import org.greenrobot.eventbus.EventBus;
-import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,7 +80,6 @@ public class SimpleClient extends AbstractClient {
 					Grade grade = (Grade) objects.get(1);
 					GlobalDataSaved.currentGrade = grade;
 					GlobalDataSaved.questionList = (List<Question>) objects.get(0);
-					//GlobalDataSaved.examToExecute = (ExamToExecute) grade.getExamCopy().getCompExamToExecute();
 					String answers = grade.getExamCopy().getAnswers();
 					List<String> answersList = new ArrayList<String>(Arrays.asList(answers.split(",")));
 					GlobalDataSaved.studentAnswers = answersList;
@@ -359,10 +360,6 @@ public class SimpleClient extends AbstractClient {
 			client = new SimpleClient("localhost", 3020);
 		}
 		return client;
-	}
-
-	protected void closeConnectionWithServer() {
-
 	}
 
 }

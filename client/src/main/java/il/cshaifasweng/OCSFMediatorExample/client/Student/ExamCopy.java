@@ -3,8 +3,6 @@ package il.cshaifasweng.OCSFMediatorExample.client.Student;
 
 import aidClasses.GlobalDataSaved;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
-import il.cshaifasweng.OCSFMediatorExample.client.WordGeneratorFile;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +13,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ExamCopy {
 

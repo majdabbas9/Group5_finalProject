@@ -1,21 +1,10 @@
-/**
- * Sample Skeleton for 'principalExtraTimeApprovment.fxml' Controller Class
- */
-
 package il.cshaifasweng.OCSFMediatorExample.client.Principal;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import aidClasses.ExamQuestionDetails;
 import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import il.cshaifasweng.OCSFMediatorExample.client.App;
 import il.cshaifasweng.OCSFMediatorExample.client.SimpleClient;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -30,6 +19,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class PrincipalExtraTimeApprovment {
 

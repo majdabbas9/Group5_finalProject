@@ -1,10 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
-import aidClasses.aidClassesForTeacher.QuestionsExamsID;
-
-import java.util.HashSet;
-import java.util.List;
-
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.*;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
@@ -20,6 +15,8 @@ import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GenerateAll {
@@ -265,31 +262,31 @@ public class GenerateAll {
         buildQuestions(session,question7,coursesIds, math.getId(),t1.getId());
 
         choices.clear();
-        choices.add("<1,2,2>");
-        choices.add("<1,1,2>");
-        choices.add("<1,0,2>");
-        choices.add("<2,1,2>");
-        Question question8 = new Question("", "<1,1,0> + <0,1,2> =", "<1,2,2>", choices);
+        choices.add("<1;2;2>");
+        choices.add("<1;1;2>");
+        choices.add("<1;0;2>");
+        choices.add("<2;1;2>");
+        Question question8 = new Question("", "<1;1;0> + <0;1;2> =", "<1;2;2>", choices);
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question8,coursesIds, math.getId(),t1.getId());
 
         choices.clear();
-        choices.add("<1,2,2>");
-        choices.add("<1,1,2>");
-        choices.add("<1,0,2>");
-        choices.add("<2,1,2>");
-        Question question9 = new Question("", "<6,10,13> - <5,10,11> =", "<1,0,2>", choices);
+        choices.add("<1;2;2>");
+        choices.add("<1;1;2>");
+        choices.add("<1;0;2>");
+        choices.add("<2;1;2>");
+        Question question9 = new Question("", "<6;10;13> - <5;10;11> =", "<1;0;2>", choices);
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question9,coursesIds, math.getId(),t1.getId());
 
         choices.clear();
-        choices.add("<24,4,7>");
-        choices.add("<22,5,7>");
-        choices.add("<23,4,6>");
-        choices.add("<23,4,7>");
-        Question question10 = new Question("", "<1,1,0> + <3,1,2> + <19,2,5> = ", "<23,4,7>", choices);
+        choices.add("<24;4;7>");
+        choices.add("<22;5;7>");
+        choices.add("<23;4;6>");
+        choices.add("<23;4;7>");
+        Question question10 = new Question("", "<1;1;0> + <3;1;2> + <19;2;5> = ", "<23;4;7>", choices);
         coursesIds.clear();
         coursesIds.add(algebra.getId());
         buildQuestions(session,question10,coursesIds, math.getId(),t1.getId());
@@ -320,7 +317,7 @@ public class GenerateAll {
         /*creating exams to execute*/
 
         /*first exam*/
-        ExamToExecute examToExecute=new ComputerizedExamToExecute("2023-6-18 20:48","1234");
+        ExamToExecute examToExecute=new ComputerizedExamToExecute("2023-06-18 20:48","1234");
         examToExecute.setExam(exam);
         examToExecute.setTeacherThatExecuted(t2);
         session.save(examToExecute);
@@ -331,7 +328,7 @@ public class GenerateAll {
         /*end of first exam*/
 
         /*second exam*/
-        ExamToExecute examToExecute1=new ComputerizedExamToExecute("2023-6-18 21:05","1235");
+        ExamToExecute examToExecute1=new ComputerizedExamToExecute("2023-06-18 21:05","1235");
         examToExecute1.setExam(exam1);
         examToExecute1.setTeacherThatExecuted(t1);
         session.save(examToExecute1);
@@ -342,7 +339,7 @@ public class GenerateAll {
         /*end of second exam*/
 
         /*third exam*/
-        ExamToExecute examToExecute2=new ComputerizedExamToExecute("2023-6-18 21:05","1236");
+        ExamToExecute examToExecute2=new ComputerizedExamToExecute("2023-06-18 21:05","1236");
         examToExecute2.setExam(exam2);
         examToExecute2.setTeacherThatExecuted(t1);
         session.save(examToExecute2);
@@ -356,36 +353,36 @@ public class GenerateAll {
 
         /*adding copies to the first exam*/
         Copy copy=new Copy("6,25,2,-10");
-        Grade grade=new Grade(50,false,5,true,"2023-6-18","20:52",true);
+        Grade grade=new Grade(50,false,5,true,"2023-06-18","20:52",true);
 
         addCopy(session,examToExecute,grade,copy,s1);
 
         Copy copy1=new Copy("6,31,3,-10");
-        Grade grade1=new Grade(25,false,7,true,"2023-6-18","20:55",true);
+        Grade grade1=new Grade(25,false,7,true,"2023-06-18","20:55",true);
 
         addCopy(session,examToExecute,grade1,copy1,s2);
         /*end of adding copies to frsit exam*/
 
         /*adding copies to the seond exam*/
         Copy copy11=new Copy("x,101,34,<1,2,2>,<1,2,2>,<24,4,7>");
-        Grade grade11=new Grade(20,false,10,true,"2023-6-18","21:10",true);
+        Grade grade11=new Grade(20,false,10,true,"2023-06-18","21:10",true);
 
         addCopy(session,examToExecute1,grade11,copy11,s1);
 
         Copy copy12=new Copy("1,101,34,<1,2,2>,<1,2,2>,<23,4,7>");
-        Grade grade12=new Grade(25,false,7,true,"2023-6-18","20:55",true);
+        Grade grade12=new Grade(25,false,7,true,"2023-06-18","20:55",true);
 
         addCopy(session,examToExecute1,grade12,copy12,s2);
         /*end of adding copies to frsit exam*/
 
         /*adding copies to the third exam*/
         Copy copy21=new Copy("6,31,3,-10,x,101,34,<1,2,2>,<1,2,2>,<24,4,7>");
-        Grade grade21=new Grade(100,false,15,true,"2023-6-18","21:10",true);
+        Grade grade21=new Grade(100,false,15,true,"2023-06-18","21:10",true);
 
         addCopy(session,examToExecute2,grade21,copy21,s1);
 
         Copy copy22=new Copy("6,31,3,-10,1,101,34,<1,2,2>,<1,2,2>,<23,4,7>");
-        Grade grade22=new Grade(60,false,10,true,"2023-6-18","21:10",true);
+        Grade grade22=new Grade(60,false,10,true,"2023-06-18","21:10",true);
 
         addCopy(session,examToExecute2,grade22,copy22,s2);
         /*end of adding copies to third exam*/

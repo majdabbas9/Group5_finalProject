@@ -1,6 +1,5 @@
 package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
-import aidClasses.aidClassesForTeacher.QuestionsExamsID;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Teacher_Course;
@@ -8,48 +7,19 @@ import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Subject;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.*;
-import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
-import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 public class GetExamBuliding {
     public static  int counter=0;
 
-//    public static List<Exam> getAllExamsForCourses(Session session, int teacherId)
-//    {
-//        List<Exam> allExams=new ArrayList<>();
-//        String queryString=" FROM Teacher_Course WHERE teacher.id = : id";
-//        Query query = session.createQuery(queryString,Teacher_Course.class);
-//        query.setParameter("id",teacherId);
-//
-//        for(Teacher_Course teacherCourse:(List<Teacher_Course>)query.getResultList()) {
-//            Query query1 = session.createQuery("FROM Exam WHERE examCourse.id = : id", Exam.class);
-//            query1.setParameter("id", teacherCourse.getCourse().getId());
-//            for (Exam exam : (List<Exam>) query1.getResultList()) {
-//                Exam exam1 = new Exam(exam);
-//                exam1.setExamSubject(new Subject(exam.getExamSubject()));
-//                exam1.setExamCourse(new Course(exam.getExamCourse()));
-//                exam1.setTeacherThatCreated(new Teacher(exam.getTeacherThatCreated()));
-//                allExams.add(exam1);
-//            }
-//        }
-//        return  allExams;
-//    }
-
     public static List<Exam> getAllExamsForCourses(Session session, int teacherId) {
-        List<Exam> allExams = new ArrayList<>();
         String queryString = "SELECT e FROM Exam e " +
                 "join fetch e.examSubject " +
                 "JOIN FETCH e.examCourse " +
@@ -69,7 +39,6 @@ public class GetExamBuliding {
         return newExams;
     }
     public static List<Exam> getAllExamsToCopy(Session session, int teacherId) {
-        List<Exam> allExams = new ArrayList<>();
         String queryString = "SELECT e FROM Exam e " +
                 "join fetch e.examSubject " +
                 "JOIN FETCH e.examCourse " +
@@ -170,15 +139,18 @@ public class GetExamBuliding {
         Date d1 = sdFormat.parse(date1);
         Date d2 = sdFormat.parse(date2);
         Date d3=sdFormat.parse(date3);
-        if(d1.compareTo(d2)<0)return false; // if d1 occur before d2 return false
-        if(d3.compareTo(d1)>0)return true;  // if d3 occur after d1 return true
+        if(d1.compareTo(d2)<0)              // if d1 occur before d2 return false
+            return false;
+        if(d3.compareTo(d1)>0)              // if d3 occur after d1 return true
+            return true;
         return false;
     }
     public static Boolean compare2Dates(String date1,String date2) throws ParseException {
         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date d1 = sdFormat.parse(date1);
         Date d2 = sdFormat.parse(date2);
-        if(d1.compareTo(d2)<0)return false; // if d1 occur before d2 return false
+        if(d1.compareTo(d2)<0)              // if d1 occur before d2 return false
+            return false;
         return true;
     }
     public static Exam getExamById(Session session,int id)
@@ -186,7 +158,7 @@ public class GetExamBuliding {
         String queryString=" FROM Exam WHERE id = : id";
         Query query = session.createQuery(queryString,Exam.class);
         query.setParameter("id",id);
-       return  (Exam) (query.getResultList().get(0));
+        return  (Exam) (query.getResultList().get(0));
     }
     public static List<Course> getCoursesById(Session session,List<Integer> courseIndexes)
     {
@@ -259,7 +231,6 @@ public class GetExamBuliding {
         {
             Question q=new Question(question);
             q.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
-            Subject subject=new Subject(question.getQuestionSubject());
             q.setQuestionSubject(new Subject(question.getQuestionSubject()));
             questions.add(q);
         }
@@ -314,7 +285,6 @@ public class GetExamBuliding {
         {
             Question q=new Question(question);
             q.setTeacherThatCreated(new Teacher(question.getTeacherThatCreated()));
-            Subject subject1=new Subject(question.getQuestionSubject());
             q.setQuestionSubject(new Subject(question.getQuestionSubject()));
             questions.add(q);
         }

@@ -2,7 +2,6 @@ package il.cshaifasweng.OCSFMediatorExample.server.Generating;
 
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Course_Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Principal;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
 import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Teacher;
 import il.cshaifasweng.OCSFMediatorExample.entities.educational.Course;
@@ -12,18 +11,14 @@ import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
 import org.hibernate.Session;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.From;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Exam;
 
 public class GetEducational {
     public static List<Subject> getAllSubjects(Session session) throws Exception {

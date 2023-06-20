@@ -1,35 +1,21 @@
 package il.cshaifasweng.OCSFMediatorExample.server.HandleMsgFromClient;
 
-import aidClasses.GlobalDataSaved;
 import aidClasses.Message;
 import aidClasses.Warning;
-import antlr.debug.MessageEvent;
-import il.cshaifasweng.OCSFMediatorExample.entities.ManyToMany.Exam_Question;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.Student;
-import il.cshaifasweng.OCSFMediatorExample.entities.appUsers.User;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ComputerizedExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ExamToExecute;
-import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.ManualExamToExecute;
 import il.cshaifasweng.OCSFMediatorExample.entities.examBuliding.Question;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Copy;
 import il.cshaifasweng.OCSFMediatorExample.entities.gradingSystem.Grade;
-import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetEducational;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetExamBuliding;
 import il.cshaifasweng.OCSFMediatorExample.server.Generating.GetGrading;
 import il.cshaifasweng.OCSFMediatorExample.server.SimpleServer;
 import il.cshaifasweng.OCSFMediatorExample.server.ocsf.ConnectionToClient;
-import org.greenrobot.eventbus.EventBus;
 import org.hibernate.Session;
 
-import javax.persistence.Query;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 public class HandleMsgStudent {
     public static boolean handleStudent(Session session, Message msgFromClient, String contentOfMsg, ConnectionToClient client) throws Exception {
@@ -109,22 +95,7 @@ public class HandleMsgStudent {
             List<Object> dataFromClient = (List<Object>) msgFromClient.getObj();;
             String userId = (String) dataFromClient.get(0);
             String connectUserId = (String) dataFromClient.get(1);
-            String examCode = (String) dataFromClient.get(2);
-           /* String q1 = "from Grade where student.userID = '"+connectUserId+"'";
-            Query query1 = session.createQuery(q1);
-            List<Grade> grades = query1.getResultList();
-            for (Grade grade : grades) {
-                if (grade.getExamCopy().getCompExamToExecute().getCode().equals(examCode)) {
-                    Warning warning = new Warning("You Already Did This Exam");
-                    try {
-                        client.sendToClient(warning);
-                        System.out.format("Sent warning to client %s\n", client.getInetAddress().getHostAddress());
-                        return true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }*/
+            //String examCode = (String) dataFromClient.get(2);
             if (!userId.equals(connectUserId)) {
                     Warning warning = new Warning("Your ID is not correct");
                     try {
