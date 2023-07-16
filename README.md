@@ -3,7 +3,9 @@ An Application for creating and executing high school exams in Java and MySql.
 
 ## Classes
 1.**Teacher** - a teacher can create questions and exams that are saved in the database
+
 2.**Student** - a student can execute both manual and computrized exams, also a student can get statistical data about his grades.
+
 3.**Principal** - a principal can get reports and statistical data about the school.
 
 ## Structure
