@@ -31,3 +31,5 @@ The system relies on a SQL database to store and manage data related to exams, q
 2. Run the server using the exec:java goal in the server module.
 3. Run the client using the javafx:run goal in the client module.
 4. Press the button and see what happens!
+
+* Check out server/src/main/java/il/cshaifasweng/OCSFMediatorExample/server/Generating/GenerateAll.java file to see the initial data of the App.
