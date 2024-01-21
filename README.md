@@ -1,18 +1,30 @@
 # High School Exams System
-An Application for creating and executing high school exams in Java and MySql.
+# Overview
+The High School Exams System (Server-Client App) is an advanced solution for managing exams in high schools with a client-server architecture. The system incorporates three main user roles: teachers, students, and principals, each with unique interfaces and functionalities. The project is built using Java, leveraging the Hibernate library for database interactions, JavaFX for the graphical user interface, and SQL for database management. The server-client architecture ensures scalability, centralized control, and efficient communication between users.
 
-## Classes
-1.**Teacher** - a teacher can create questions and exams that are saved in the database
+# Features
+# 1.User Roles
+a. Teacher:
+Create Exams: Teachers can create and manage exams by specifying details such as exam name, date, duration, and associated subjects.
+Assign Questions: Teachers can add and assign questions to exams, along with marking schemes.
+Grade Exams: After exams are conducted, teachers can input and manage student grades.
 
-2.**Student** - a student can execute both manual and computrized exams, also a student can get statistical data about his grades.
+b. Student:
+Take Exams: Students can take exams online through the system, adhering to the specified time and guidelines.
+View Grades: Students can access their grades and feedback provided by teachers.
 
-3.**Principal** - a principal can get reports and statistical data about the school.
+c. Principal:
+Generate Reports: Principals can generate reports on exam performance, student grades, and other relevant statistics.
+User Management: Principals can add or remove users (teachers and students) and manage their roles within the system.
 
-## Structure
-Pay attention to the three modules:
-1. **client** - a simple client built using JavaFX and OCSF. We use EventBus (which implements the mediator pattern) in order to pass events between classes
-2. **server** - a simple server built using OCSF.
-3. **entities** - a shared module where all the entities of the project live.
+# 2. Java Hibernate Library
+The project utilizes the Hibernate library for efficient and object-relational mapping. This allows seamless interaction with the underlying SQL database, ensuring data integrity and reliability.
+
+# 3. JavaFX Interface
+The user interfaces for teachers, students, and principals are built using JavaFX, providing a user-friendly and intuitive experience. The graphical elements enhance the overall usability of the system.
+
+# 4. SQL Database
+The system relies on a SQL database to store and manage data related to exams, questions, students, teachers, and grades. The database structure is designed to accommodate the diverse needs of the system's users.
 
 ## Running
 1. Run Maven install **in the parent project**.
